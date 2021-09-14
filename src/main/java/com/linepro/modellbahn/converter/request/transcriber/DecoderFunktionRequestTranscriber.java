@@ -6,8 +6,8 @@ import java.util.Optional;
 
 import com.linepro.modellbahn.converter.Transcriber;
 import com.linepro.modellbahn.entity.DecoderFunktion;
-import com.linepro.modellbahn.repository.DecoderTypFunktionRepository;
 import com.linepro.modellbahn.repository.lookup.DecoderLookup;
+import com.linepro.modellbahn.repository.lookup.DecoderTypFunktionLookup;
 import com.linepro.modellbahn.request.DecoderFunktionRequest;
 
 import lombok.RequiredArgsConstructor;
@@ -17,19 +17,19 @@ public class DecoderFunktionRequestTranscriber implements Transcriber<DecoderFun
 
     private final DecoderLookup decoderLookup;
 
-    private final DecoderTypFunktionRepository funktionLookup;
+    private final DecoderTypFunktionLookup funktionLookup;
 
     @Override
     public DecoderFunktion apply(DecoderFunktionRequest source, DecoderFunktion destination) {
         if (isAvailable(source) && isAvailable(destination)) {
             if (destination.getDecoder() == null) {
-                destination.setDecoder(decoderLookup.find(source.getDecoderId()));
+                decoderLookup.find(source.getDecoderId())
+                             .ifPresent(d -> destination.setDecoder(d));
             }
 
             if (destination.getDecoder() != null && destination.getFunktion() == null) {
-                    destination.setFunktion(funktionLookup.findByFunktion(destination.getDecoder().getDecoderTyp().getHersteller().getName(), 
-                                                                          destination.getDecoder().getDecoderTyp().getBestellNr(), source.getReihe(), source.getFunktion())
-                                                          .orElse(null));
+                funktionLookup.find(destination.getDecoder().getDecoderTyp(), source.getReihe(), source.getFunktion())
+                              .ifPresent(f -> destination.setFunktion(f));
             }
 
             destination.setBezeichnung(source.getBezeichnung());

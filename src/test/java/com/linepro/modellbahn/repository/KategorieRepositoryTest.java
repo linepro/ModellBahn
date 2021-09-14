@@ -67,13 +67,13 @@ public class KategorieRepositoryTest {
         Page<Kategorie> page = kategorieRepository.findAll(Pageable.unpaged());
 
         List<Kategorie> kategorien = page.getContent();
-        assertEquals(18, kategorien.size());
+        assertEquals(21, kategorien.size());
         assertFalse(isAvailable(kategorien.get(0).getUnterKategorien()));
     }
 
     @Test
     public void testFindAllCriterion() {
-        Criterion criterion = new KategorieenCriteria(Optional.of(Arrays.asList("LOKOMOTIV", "WAGEN")));
+        Criterion criterion = new KategorieenCriteria(Optional.of(Arrays.asList("LOKOMOTIV", "GUTERWAGEN")));
         Page<Kategorie> page = kategorieRepository.findAll(criterion, Pageable.unpaged());
 
         List<Kategorie> kategorien = page.getContent();

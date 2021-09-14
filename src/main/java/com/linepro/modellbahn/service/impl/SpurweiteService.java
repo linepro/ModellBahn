@@ -17,13 +17,14 @@ import com.linepro.modellbahn.converter.request.SpurweiteRequestMapper;
 import com.linepro.modellbahn.entity.Spurweite;
 import com.linepro.modellbahn.model.SpurweiteModel;
 import com.linepro.modellbahn.repository.SpurweiteRepository;
+import com.linepro.modellbahn.repository.lookup.SpurweiteLookup;
 import com.linepro.modellbahn.request.SpurweiteRequest;
 
 @Service(PREFIX + "SpurweiteService")
 public class SpurweiteService extends NamedItemServiceImpl<SpurweiteModel, SpurweiteRequest, Spurweite> {
 
     @Autowired
-    public SpurweiteService(SpurweiteRepository repository, SpurweiteRequestMapper requestMapper, SpurweiteMapper entityMapper) {
-        super(repository, requestMapper, entityMapper);
+    public SpurweiteService(SpurweiteRepository repository, SpurweiteRequestMapper requestMapper, SpurweiteMapper entityMapper, SpurweiteLookup lookup) {
+        super(repository, requestMapper, entityMapper, lookup);
     }
 }

@@ -37,6 +37,7 @@ import com.linepro.modellbahn.repository.DecoderTypAdressRepository;
 import com.linepro.modellbahn.repository.DecoderTypCvRepository;
 import com.linepro.modellbahn.repository.DecoderTypFunktionRepository;
 import com.linepro.modellbahn.repository.DecoderTypRepository;
+import com.linepro.modellbahn.repository.lookup.DecoderTypLookup;
 import com.linepro.modellbahn.request.DecoderTypAdressRequest;
 import com.linepro.modellbahn.request.DecoderTypCvRequest;
 import com.linepro.modellbahn.request.DecoderTypFunktionRequest;
@@ -66,8 +67,9 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel, DecoderT
     public DecoderTypService(DecoderTypRepository repository, FileService fileService, DecoderTypRequestMapper decoderTypRequestMapper, 
                     DecoderTypMapper decoderTypMapper, DecoderTypAdressRepository adressRepository, DecoderTypAdressRequestMapper adressRequestMapper, 
                     DecoderTypAdressMapper adressMapper, DecoderTypCvRepository cvRepository, DecoderTypCvRequestMapper cvRequestMapper, DecoderTypCvMapper cvMapper,
-                    DecoderTypFunktionRepository funktionRepository,  DecoderTypFunktionRequestMapper funktionRequestMapper, DecoderTypFunktionMapper funktionMapper) {
-        super(repository, decoderTypRequestMapper, decoderTypMapper);
+                    DecoderTypFunktionRepository funktionRepository,  DecoderTypFunktionRequestMapper funktionRequestMapper, DecoderTypFunktionMapper funktionMapper,
+                    DecoderTypLookup lookup) {
+        super(repository, decoderTypRequestMapper, decoderTypMapper, lookup);
         this.repository = repository;
 
         this.fileService = fileService;
@@ -86,15 +88,15 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel, DecoderT
     }
 
     public Optional<DecoderTypModel> get(String hersteller, String bestellNr) {
-        return super.get(() -> repository.findByBestellNr(hersteller, bestellNr));
+        return super.get(DecoderTypModel.builder().hersteller(hersteller).bestellNr(bestellNr).build());
     }
 
     public Optional<DecoderTypModel> update(String hersteller, String bestellNr, DecoderTypRequest model) {
-        return super.update(() -> repository.findByBestellNr(hersteller, bestellNr), model);
+        return super.update(DecoderTypModel.builder().hersteller(hersteller).bestellNr(bestellNr).build(), model);
     }
 
     public boolean delete(String hersteller, String bestellNr) {
-        return super.delete(() -> repository.findByBestellNr(hersteller, bestellNr));
+        return super.delete(DecoderTypModel.builder().hersteller(hersteller).bestellNr(bestellNr).build());
     }
 
     @Transactional(readOnly = true)

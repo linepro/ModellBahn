@@ -31,6 +31,7 @@ import com.linepro.modellbahn.persistence.util.AssetIdGenerator;
 import com.linepro.modellbahn.repository.AnderungRepository;
 import com.linepro.modellbahn.repository.ArtikelRepository;
 import com.linepro.modellbahn.repository.DecoderRepository;
+import com.linepro.modellbahn.repository.lookup.ArtikelLookup;
 import com.linepro.modellbahn.request.AnderungRequest;
 import com.linepro.modellbahn.request.ArtikelRequest;
 
@@ -54,8 +55,9 @@ public class ArtikelService extends ItemServiceImpl<ArtikelModel, ArtikelRequest
     @Autowired
     public ArtikelService(ArtikelRepository repository, DecoderRepository decoderRepository, ArtikelRequestMapper requestMapper, 
                     ArtikelMapper entityMapper, FileService fileService, AnderungRepository anderungRepository, 
-                    AnderungMapper anderungMapper, AnderungRequestMapper anderungRequestMapper, AssetIdGenerator assetIdGenerator) {
-        super(repository, requestMapper, entityMapper);
+                    AnderungMapper anderungMapper, AnderungRequestMapper anderungRequestMapper, AssetIdGenerator assetIdGenerator,
+                    ArtikelLookup lookup) {
+        super(repository, requestMapper, entityMapper, lookup);
 
         this.repository = repository;
         this.decoderRepository = decoderRepository;
@@ -69,7 +71,7 @@ public class ArtikelService extends ItemServiceImpl<ArtikelModel, ArtikelRequest
     }
 
     public Optional<ArtikelModel> get(String artikelId) {
-        return super.get(() -> repository.findByArtikelId(artikelId));
+        return super.get(ArtikelModel.builder().artikelId(artikelId).build());
     }
 
     @Override
@@ -119,64 +121,75 @@ public class ArtikelService extends ItemServiceImpl<ArtikelModel, ArtikelRequest
     }
 
     public boolean delete(String artikelId) {
-        return super.delete(() -> repository.findByArtikelId(artikelId));
+        return super.delete(ArtikelModel.builder().artikelId(artikelId).build());
     }
 
     @Transactional
     public Optional<ArtikelModel> updateAbbildung(String artikelId, MultipartFile multipart) {
-        return repository.findByArtikelId(artikelId).map(a -> {
-            a.setAbbildung(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.ARTIKEL, ApiNames.ABBILDUNG, artikelId));
-            return entityMapper.convert(a);
-        });
+        return repository.findByArtikelId(artikelId)
+                         .map(a -> {
+                              a.setAbbildung(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.ARTIKEL, ApiNames.ABBILDUNG, artikelId));
+                              return entityMapper.convert(a);
+                              });
     }
 
     @Transactional
     public Optional<ArtikelModel> deleteAbbildung(String artikelId) {
         return repository.findByArtikelId(artikelId)
-                        .map(a -> { a.setAbbildung(fileService.deleteFile(a.getAbbildung())); return entityMapper.convert(a); });
+                         .map(a -> {
+                              a.setAbbildung(fileService.deleteFile(a.getAbbildung()));
+                              return entityMapper.convert(a);
+                              });
     }
 
     @Transactional
     public Optional<ArtikelModel> updateGrossansicht(String artikelId, MultipartFile multipart) {
-        return repository.findByArtikelId(artikelId).map(a -> {
-            a.setGrossansicht(
-                            fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.ARTIKEL, ApiNames.GROSSANSICHT, artikelId));
-            return entityMapper.convert(a);
-        });
+        return repository.findByArtikelId(artikelId)
+                         .map(a -> {
+                              a.setGrossansicht(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.ARTIKEL, ApiNames.GROSSANSICHT, artikelId));
+                              return entityMapper.convert(a);
+                              });
     }
 
     @Transactional
     public Optional<ArtikelModel> deleteGrossansicht(String artikelId) {
         return repository.findByArtikelId(artikelId)
-                        .map(a -> { a.setGrossansicht(fileService.deleteFile(a.getGrossansicht())); return entityMapper.convert(a); });
+                         .map(a -> {
+                              a.setGrossansicht(fileService.deleteFile(a.getGrossansicht()));
+                              return entityMapper.convert(a);
+                              });
     }
 
     @Transactional
     public Optional<AnderungModel> addAnderung(String artikelId, AnderungRequest anderungRequest) {
-        return repository.findByArtikelId(artikelId).map(a -> {
-            Anderung anderung = anderungRequestMapper.convert(anderungRequest);
-
-            a.addAnderung(anderung);
-
-            repository.saveAndFlush(a);
-
-            return anderungMapper.convert(anderung);
-        });
+        return repository.findByArtikelId(artikelId)
+                         .map(a -> {
+                              Anderung anderung = anderungRequestMapper.convert(anderungRequest);
+                              a.addAnderung(anderung);
+                              repository.saveAndFlush(a);
+                              return anderungMapper.convert(anderung);
+                              });
     }
 
     @Transactional
     public Optional<AnderungModel> updateAnderung(String artikelId, Integer anderungId, AnderungRequest anderungRequest) {
-        return anderungRepository.findByAnderungId(artikelId, anderungId).map(a -> {
-            Boolean deleted = a.getDeleted();
-            Anderung anderung = anderungRequestMapper.apply(anderungRequest, a);
-            anderung.setDeleted(deleted);
-            anderung.setDeleted(false);
-            return anderungMapper.convert(anderungRepository.saveAndFlush(anderung));
-        });
+        return anderungRepository.findByAnderungId(artikelId, anderungId)
+                                 .map(a -> {
+                                      Boolean deleted = a.getDeleted();
+                                      Anderung anderung = anderungRequestMapper.apply(anderungRequest, a);
+                                      anderung.setDeleted(deleted);
+                                      anderung.setDeleted(false);
+                                      return anderungMapper.convert(anderungRepository.saveAndFlush(anderung));
+                                      });
     }
 
     @Transactional
     public boolean deleteAnderung(String artikelId, Integer anderungId) {
-        return anderungRepository.findByAnderungId(artikelId, anderungId).map(a -> { anderungRepository.delete(a); return true; }).orElse(false);
+        return anderungRepository.findByAnderungId(artikelId, anderungId)
+                                 .map(a -> {
+                                      anderungRepository.delete(a);
+                                      return true;
+                                      })
+                                 .orElse(false);
     }
 }

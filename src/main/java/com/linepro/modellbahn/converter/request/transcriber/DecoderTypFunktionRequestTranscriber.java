@@ -20,7 +20,7 @@ public class DecoderTypFunktionRequestTranscriber implements Transcriber<Decoder
     public DecoderTypFunktion apply(DecoderTypFunktionRequest source, DecoderTypFunktion destination) {
         if (isAvailable(source) && isAvailable(destination)) {
             if (destination.getDecoderTyp() == null) {
-                destination.setDecoderTyp(typLookup.find(source.getHersteller(), source.getBestellNr()));
+                typLookup.find(source.getHersteller(), source.getBestellNr()).ifPresent(t -> destination.setDecoderTyp(t));
             }
             if (destination.getReihe() == null) {
                 destination.setReihe(source.getReihe());

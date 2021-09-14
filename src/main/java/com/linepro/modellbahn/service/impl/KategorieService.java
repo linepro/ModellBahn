@@ -27,6 +27,7 @@ import com.linepro.modellbahn.model.KategorieModel;
 import com.linepro.modellbahn.model.UnterKategorieModel;
 import com.linepro.modellbahn.repository.KategorieRepository;
 import com.linepro.modellbahn.repository.UnterKategorieRepository;
+import com.linepro.modellbahn.repository.lookup.KategorieLookup;
 import com.linepro.modellbahn.request.KategorieRequest;
 import com.linepro.modellbahn.request.UnterKategorieRequest;
 import com.linepro.modellbahn.service.criterion.KategorieenCriteria;
@@ -44,8 +45,8 @@ public class KategorieService extends NamedItemServiceImpl<KategorieModel, Kateg
     private final UnterKategorieRequestMapper unterKategorieRequestMapper;
 
     @Autowired
-    public KategorieService(KategorieRepository repository, KategorieRequestMapper requestMapper, KategorieMapper entityMapper, UnterKategorieRepository unterKategorieRepository, UnterKategorieMapper unterKategorieMapper, UnterKategorieRequestMapper unterKategorieRequestMapper) {
-        super(repository, requestMapper, entityMapper);
+    public KategorieService(KategorieRepository repository, KategorieRequestMapper requestMapper, KategorieMapper entityMapper, UnterKategorieRepository unterKategorieRepository, UnterKategorieMapper unterKategorieMapper, UnterKategorieRequestMapper unterKategorieRequestMapper, KategorieLookup lookup) {
+        super(repository, requestMapper, entityMapper, lookup);
 
         this.repository = repository;
         this.unterKategorieRepository = unterKategorieRepository;

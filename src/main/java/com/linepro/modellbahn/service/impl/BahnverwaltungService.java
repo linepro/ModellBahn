@@ -23,32 +23,42 @@ import com.linepro.modellbahn.entity.Bahnverwaltung;
 import com.linepro.modellbahn.io.FileService;
 import com.linepro.modellbahn.model.BahnverwaltungModel;
 import com.linepro.modellbahn.repository.BahnverwaltungRepository;
+import com.linepro.modellbahn.repository.lookup.BahnverwaltungLookup;
 import com.linepro.modellbahn.request.BahnverwaltungRequest;
 
 @Service(PREFIX + "BahnverwaltungService")
 public class BahnverwaltungService extends NamedItemServiceImpl<BahnverwaltungModel, BahnverwaltungRequest,  Bahnverwaltung> {
 
+    private final BahnverwaltungRepository repository;
+
     private final FileService fileService;
 
     @Autowired
     public BahnverwaltungService(BahnverwaltungRepository repository, BahnverwaltungRequestMapper requestMapper, BahnverwaltungMapper entityMapper,
-                    FileService fileService) {
-        super(repository, requestMapper, entityMapper);
+                    FileService fileService, BahnverwaltungLookup lookup) {
+        super(repository, requestMapper, entityMapper, lookup);
 
+        this.repository = repository;
         this.fileService = fileService;
     }
 
     @Transactional
     public Optional<BahnverwaltungModel> updateAbbildung(String name, MultipartFile multipart) {
-        return repository.findByName(name).map(a -> {
-            a.setAbbildung(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.BAHNVERWALTUNG, ApiNames.ABBILDUNG, name));
-            return repository.saveAndFlush(a);
-        }).flatMap(e -> this.get(name));
+        return repository.findByName(name)
+                         .map(a -> {
+                              a.setAbbildung(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.BAHNVERWALTUNG, ApiNames.ABBILDUNG, name));
+                              return repository.saveAndFlush(a);
+                              })
+                         .flatMap(e -> this.get(name));
     }
 
     @Transactional
     public Optional<BahnverwaltungModel> deleteAbbildung(String name) {
-        return repository.findByName(name).map(a -> { a.setAbbildung(fileService.deleteFile(a.getAbbildung())); return repository.saveAndFlush(a); })
-                        .flatMap(e -> this.get(name));
+        return repository.findByName(name)
+                         .map(a -> {
+                              a.setAbbildung(fileService.deleteFile(a.getAbbildung()));
+                              return repository.saveAndFlush(a);
+                              })
+                         .flatMap(e -> this.get(name));
     }
 }
