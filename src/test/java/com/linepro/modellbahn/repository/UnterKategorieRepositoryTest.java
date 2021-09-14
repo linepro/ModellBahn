@@ -64,7 +64,7 @@ public class UnterKategorieRepositoryTest {
         Page<UnterKategorie> page = unterKategorieRepository.findAll(Pageable.unpaged());
 
         List<UnterKategorie> unterKategorie = page.getContent();
-        assertEquals(146, unterKategorie.size());
-        assertTrue(isAvailable(unterKategorie.get(145).getKategorie()));
+        assertEquals(166, unterKategorie.size());
+        assertTrue(isAvailable(unterKategorie.get(165).getKategorie()));
     }
 }

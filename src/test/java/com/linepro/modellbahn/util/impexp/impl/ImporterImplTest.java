@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.linepro.modellbahn.converter.Mapper;
@@ -24,8 +25,10 @@ import com.linepro.modellbahn.model.enums.Stecker;
 import com.linepro.modellbahn.repository.lookup.Lookup;
 import com.linepro.modellbahn.request.DecoderRequest;
 import com.linepro.modellbahn.util.impexp.Importer;
+import static org.mockito.quality.Strictness.LENIENT;
 
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = LENIENT)
 public class ImporterImplTest {
 
     private static final String DECODER_ID = "00010";
