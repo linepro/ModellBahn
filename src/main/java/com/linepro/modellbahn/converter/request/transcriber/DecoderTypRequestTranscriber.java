@@ -6,9 +6,8 @@ import java.util.Optional;
 
 import com.linepro.modellbahn.converter.Transcriber;
 import com.linepro.modellbahn.entity.DecoderTyp;
-import com.linepro.modellbahn.repository.HerstellerRepository;
-import com.linepro.modellbahn.repository.ProtokollRepository;
-import com.linepro.modellbahn.repository.lookup.ItemLookup;
+import com.linepro.modellbahn.repository.lookup.HerstellerLookup;
+import com.linepro.modellbahn.repository.lookup.ProtokollLookup;
 import com.linepro.modellbahn.request.DecoderTypRequest;
 
 import lombok.RequiredArgsConstructor;
@@ -16,24 +15,22 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class DecoderTypRequestTranscriber implements Transcriber<DecoderTypRequest, DecoderTyp> {
 
-    private final HerstellerRepository herstellerRepository;
+    private final HerstellerLookup herstellerLookup;
 
-    private final ProtokollRepository protokollRepository;
-
-    private final ItemLookup lookup;
+    private final ProtokollLookup protokollLookup;
 
     @Override
     public DecoderTyp apply(DecoderTypRequest source, DecoderTyp destination) {
         if (isAvailable(source) && isAvailable(destination)) {
             if (destination.getHersteller() == null) {
-                destination.setHersteller(lookup.find(source.getHersteller(), herstellerRepository));
+                herstellerLookup.find(source.getHersteller()).ifPresent(h -> destination.setHersteller(h));
             }
             if (destination.getBestellNr() == null) {
                 destination.setBestellNr(source.getBestellNr());
             }
             destination.setBezeichnung(source.getBezeichnung());
             destination.setIMax(source.getIMax());
-            destination.setProtokoll(lookup.find(source.getProtokoll(), protokollRepository));
+            protokollLookup.find(source.getProtokoll()).ifPresent(p -> destination.setProtokoll(p));
             destination.setFahrstufe(source.getFahrstufe());
             destination.setSound(source.getSound());
             destination.setKonfiguration(source.getKonfiguration());

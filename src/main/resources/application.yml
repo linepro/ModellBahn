@@ -7,7 +7,7 @@ com:
 server:
    error:
       include-binding-errors: always
-      include-exception: always
+      include-exception: true
       include-message: always
       include-stacktrace: always
       path: /error
@@ -17,6 +17,9 @@ server:
    servlet:
       application-display-name: ModellBahn
       context-path: /
+      multipart:
+         maxFileSize: 50MB
+         maxRequestSize: 50MB
       session:
         cookie:
            http-only: false

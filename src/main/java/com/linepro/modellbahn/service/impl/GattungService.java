@@ -16,13 +16,14 @@ import com.linepro.modellbahn.converter.request.GattungRequestMapper;
 import com.linepro.modellbahn.entity.Gattung;
 import com.linepro.modellbahn.model.GattungModel;
 import com.linepro.modellbahn.repository.GattungRepository;
+import com.linepro.modellbahn.repository.lookup.GattungLookup;
 import com.linepro.modellbahn.request.GattungRequest;
 
 @Service(PREFIX + "GattungService")
 public class GattungService extends NamedItemServiceImpl<GattungModel, GattungRequest, Gattung> {
 
     @Autowired
-    public GattungService(GattungRepository repository, GattungRequestMapper requestMapper, GattungMapper entityMapper) {
-        super(repository, requestMapper, entityMapper);
+    public GattungService(GattungRepository repository, GattungRequestMapper requestMapper, GattungMapper entityMapper, GattungLookup lookup) {
+        super(repository, requestMapper, entityMapper, lookup);
     }
 }

@@ -2,6 +2,7 @@ INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'Ausgestal
 INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'Bahndienstwagen', 'BAHNDIENSTWAGEN', 672);
 INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'Beleuchtung', 'BELEUCHTUNG', 521);
 INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'Decoder', 'DECODER', 529);
+INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'Elektronik', 'ELEKTRONIK', 673);
 INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'Ersatzteil', 'ERSATZTEIL', 532);
 INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'Fahrzeug', 'FAHRZEUG', 582);
 INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'Gebaüde', 'GEBAUDE', 584);
@@ -18,4 +19,4 @@ INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'Steuerung
 INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'Treibwagen', 'TREIBWAGEN', 611);
 INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'Werkzeug', 'WERKZEUG', 665);
 INSERT INTO kategorie (deleted, bezeichnung, name, id) VALUES (FALSE, 'Zubehör', 'ZUBEHOR', 670);
-ALTER TABLE kategorie ALTER COLUMN id RESTART WITH 673;
+ALTER TABLE kategorie ALTER COLUMN id RESTART WITH 674;

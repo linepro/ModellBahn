@@ -10,6 +10,7 @@ INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUE
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Zeichen', 'ZEICHEN', 510, 520);
 
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Beleuchtung', 'BELEUCHTUNG', 521, 522);
+INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Fahrwerks', 'FAHRWERKS', 521, 687);
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Gluehlampe', 'GLUEHLAMPE', 521, 523);
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Innenbeleuchtung', 'INNENBELEUCHTUNG', 521, 524);
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Leuchteinsatz', 'LEUCHTEINSATZ', 521, 525);
@@ -20,16 +21,29 @@ INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUE
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Decoder', 'DECODER', 529, 530);
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Lautsprecher', 'LAUTSPRECHER', 529, 531);
 
-INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Ersatzteil', 'ERSATZTEIL', 532, 538);
+INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Diode', 'DIODE', 673, 688);
+INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Drossel', 'DROSSEL', 673, 689);
+INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Gleichrichter', 'GLEICHRICHTER', 673, 690);
+INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Kondensator', 'KONDENSATOR', 673, 691);
+INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'LED', 'LED', 673, 692);
+INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Halbleiter', 'HALBLEITER', 673, 693);
+INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Relais', 'RELAIS', 673, 694);
+INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Widerstand', 'WIDERSTAND', 673, 695);
+
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Anker', 'ANKER', 532, 533);
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Beschwerung', 'BESCHWERUNG', 532, 534);
+INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Birne', 'BIRNE', 532, 680);
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Bürsten', 'BURSTEN', 532, 673);
+INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Dampfgenerator', 'DAMPFGENERATOR', 532, 681);
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Drehgestell', 'DREHGESTELL', 532, 535);
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Drehgestellrahmen', 'DREHGESTELLRAHMEN', 532, 536);
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Entstördrossel', 'ENTSTORDROSSEL', 532, 537);
+INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Ersatzteil', 'ERSATZTEIL', 532, 538);
+INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Faltenbalg', 'FALTENBALG', 532, 682);
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Feder', 'FEDER', 532, 539);
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Feldmagnet', 'FELDMAGNET', 532, 540);
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Fenster', 'FENSTER', 532, 541);
+INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Fenstersatz', 'FENSTERSATZ', 532, 683);
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Grundplatte', 'GRUNDPLATTE', 532, 542);
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Haftreifen', 'HAFTREIFEN', 532, 543);
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Halteplatte', 'HALTEPLATTE', 532, 544);
@@ -37,6 +51,7 @@ INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUE
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Isolierung', 'ISOLIERUNG', 532, 546);
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Kabel', 'KABEL', 532, 547);
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Kabelklemmen', 'KABELKLEMMEN', 532, 548);
+INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Kabelsatz', 'KABELSATZ', 532, 684);
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Klappe', 'KLAPPE', 532, 549);
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Kohlbursten', 'KOHLBURSTEN', 532, 550);
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Kuppelstange', 'KUPPELSTANGE', 532, 551);
@@ -47,7 +62,9 @@ INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUE
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Kupplungsschacht', 'KUPPLUNGSSCHACHT', 532, 556);
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Kurzkupplung', 'KURZKUPPLUNG', 532, 557);
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Leitschaufel', 'LEITSCHAUFEL', 532, 558);
+INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Lichtkorper', 'LICHTKORPER', 532, 685);
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Lokumbausätze', 'LOKUMBAUSATZE', 532, 559);
+INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Lotstutzpunkt', 'LOTSTUTZPUNKT', 532, 686);
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Massefeder', 'MASSEFEDER', 532, 560);
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Messingblech', 'MESSINGBLECH', 532, 561);
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Motorschild', 'MOTORSCHILD', 532, 562);
@@ -168,4 +185,4 @@ INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUE
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Zubehör', 'ZUBEHOR', 670, 671);
 INSERT INTO unter_kategorie (deleted, bezeichnung, name, kategorie_id, id) VALUES (FALSE, 'Beschriftigung', 'BESCHRIFTIGUNG', 670, 672);
 
-ALTER TABLE unter_kategorie ALTER COLUMN id RESTART WITH 677;
+ALTER TABLE unter_kategorie ALTER COLUMN id RESTART WITH 696;

@@ -34,6 +34,7 @@ import com.linepro.modellbahn.repository.DecoderCvRepository;
 import com.linepro.modellbahn.repository.DecoderFunktionRepository;
 import com.linepro.modellbahn.repository.DecoderRepository;
 import com.linepro.modellbahn.repository.DecoderTypRepository;
+import com.linepro.modellbahn.repository.lookup.DecoderLookup;
 import com.linepro.modellbahn.request.DecoderRequest;
 
 @Service(PREFIX + "DecoderService")
@@ -61,8 +62,8 @@ public class DecoderService extends ItemServiceImpl<DecoderModel, DecoderRequest
     public DecoderService(DecoderRepository repository, DecoderTypRepository typRepository, DecoderRequestMapper decoderRequestMapper,
                     DecoderMapper decoderMapper, DecoderAdressRepository adressRepository, DecoderAdressMapper adressMapper,
                     DecoderCvRepository cvRepository, DecoderCvMapper cvMapper, DecoderFunktionRepository funktionRepository,
-                    DecoderFunktionMapper funktionMapper, AssetIdGenerator assetIdGenerator) {
-        super(repository, decoderRequestMapper, decoderMapper);
+                    DecoderFunktionMapper funktionMapper, AssetIdGenerator assetIdGenerator, DecoderLookup decoderLookup) {
+        super(repository, decoderRequestMapper, decoderMapper, decoderLookup);
         this.repository = repository;
 
         this.typRepository = typRepository;
@@ -109,31 +110,39 @@ public class DecoderService extends ItemServiceImpl<DecoderModel, DecoderRequest
     }
 
     public Optional<DecoderModel> get(String decoderId) {
-        return super.get(() -> repository.findByDecoderId(decoderId));
+        return super.get(DecoderModel.builder().decoderId(decoderId).build());
     }
 
     public Optional<DecoderModel> update(String decoderId, DecoderRequest request) {
-        return super.update(() -> repository.findByDecoderId(decoderId), request);
+        return super.update(DecoderModel.builder().decoderId(decoderId).build(), request);
     }
 
     public boolean delete(String decoderId) {
-        return super.delete(() -> repository.findByDecoderId(decoderId));
+        return super.delete(DecoderModel.builder().decoderId(decoderId).build());
     }
 
     @Transactional
     public Optional<DecoderAdressModel> updateAdress(String decoderId, Integer index, Integer adress) {
         return adressRepository.findByIndex(decoderId, index)
-                        .map(a -> { a.setAdress(adress); return adressMapper.convert(adressRepository.saveAndFlush(a)); });
+                               .map(a -> {
+                                   a.setAdress(adress);
+                                   return adressMapper.convert(adressRepository.saveAndFlush(a));
+                                   });
     }
 
     @Transactional
     public Optional<DecoderCvModel> updateCv(String decoderId, Integer cv, Integer wert) {
-        return cvRepository.findByCv(decoderId, cv).map(c -> { c.setWert(wert); return cvMapper.convert(cvRepository.saveAndFlush(c)); });
+        return cvRepository.findByCv(decoderId, cv)
+                           .map(c -> {
+                               c.setWert(wert); return cvMapper.convert(cvRepository.saveAndFlush(c));
+                               });
     }
 
     @Transactional
     public Optional<DecoderFunktionModel> updateFunktion(String decoderId, Integer reihe, String funktion, String bezeichnung) {
         return funktionRepository.findByFunktion(decoderId, reihe, funktion)
-                        .map(f -> { f.setBezeichnung(bezeichnung); return funktionMapper.convert(funktionRepository.saveAndFlush(f)); });
+                                 .map(f -> {
+                                     f.setBezeichnung(bezeichnung); return funktionMapper.convert(funktionRepository.saveAndFlush(f));
+                                     });
     }
 }

@@ -8,7 +8,7 @@
             </filter>
 
             <encoder>
-                <pattern>%green(%d{dd-MM-yyyy HH:mm:ss.SSS}) %magenta([%thread]) %highlight(%-5level) %red(%logger{30}) - %magenta(%msg) %rEx{full,java.lang.reflect.Method,
+                <pattern>%green(%d{yyyy-MM-dd HH:mm:ss.SSS}) %magenta([%thread]) %highlight(%-5level) %red(%logger{30}) - %magenta(%msg) %rEx{full,java.lang.reflect.Method,
                     ByCGLIB,
                     BySpringCGLIB,
                     com.zaxxer.hikari,

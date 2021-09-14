@@ -30,19 +30,23 @@ public abstract class ItemServiceImpl<M extends ItemModel, R extends ItemRequest
     protected final Mapper<R,E> requestMapper;
 
     protected final Mapper<E,M> entityMapper;
+
+    protected final Lookup<E, M> lookup;
+
     /**
      * Instantiates a new abstract service.
      * @param entityClass the entity class
      */
-    protected ItemServiceImpl(ItemRepository<E> repository, Mapper<R,E> requestMapper, Mapper<E,M> entityMapper) {
+    protected ItemServiceImpl(ItemRepository<E> repository, Mapper<R,E> requestMapper, Mapper<E,M> entityMapper, Lookup<E,M> lookup) {
         this.repository = repository;
         this.requestMapper = requestMapper;
         this.entityMapper = entityMapper;
+        this.lookup = lookup;
     }
 
     @Transactional(readOnly = true)
-    protected Optional<M> get(Lookup<E> lookup) {
-        return lookup.find()
+    protected Optional<M> get(M model) {
+        return lookup.find(model)
                      .map(e -> entityMapper.convert(e));
     }
 
@@ -54,20 +58,21 @@ public abstract class ItemServiceImpl<M extends ItemModel, R extends ItemRequest
     }
 
     @Transactional
-    protected Optional<M> update(Lookup<E> lookup, R request) {
-        return lookup.find()
+    protected Optional<M> update(M model, R request) {
+        return lookup.find(model)
                      .map(e -> {
                          Boolean deleted = e.getDeleted();
                          E item = requestMapper.apply(request,e);
                          item.setDeleted(deleted);
                          return repository.saveAndFlush(item);
                      })
-                     .flatMap(e -> get(lookup)); // Fetch again to populate entity graphs
+                     .flatMap(e -> lookup.find(e)) // Fetch again to populate entity graphs
+                     .map(e -> entityMapper.convert(e));
     }
 
     @Transactional
-    public boolean delete(Lookup<E> lookup) {
-        return lookup.find()
+    public boolean delete(M model) {
+        return lookup.find(model)
                      .map(e -> {
                          repository.delete(e);
                          return true;

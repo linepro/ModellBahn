@@ -20,10 +20,10 @@ public class ProduktTeilRequestTranscriber implements Transcriber<ProduktTeilReq
     public ProduktTeil apply(ProduktTeilRequest source, ProduktTeil destination) {
         if (isAvailable(source) && isAvailable(destination)) {
             if (destination.getProdukt() == null) {
-                destination.setProdukt(produktLookup.find(source.getHersteller(), source.getBestellNr()));
+                produktLookup.find(source.getHersteller(), source.getBestellNr()).ifPresent(p -> destination.setProdukt(p));
             }
             if (destination.getTeil() == null) {
-                destination.setTeil(produktLookup.find(source.getTeilHersteller(), source.getTeilBestellNr()));
+                produktLookup.find(source.getTeilHersteller(), source.getTeilBestellNr()).ifPresent(t -> destination.setTeil(t));
             }
             destination.setMenge(source.getMenge());
             destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));

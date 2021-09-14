@@ -6,17 +6,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.validation.ConstraintViolationException;
-
 import org.slf4j.helpers.MessageFormatter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.UnexpectedRollbackException;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.RuntimeJsonMappingException;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
@@ -25,6 +23,8 @@ import com.google.common.io.LineReader;
 import com.linepro.modellbahn.controller.impl.ApiMessages;
 import com.linepro.modellbahn.converter.Mapper;
 import com.linepro.modellbahn.entity.Item;
+import com.linepro.modellbahn.model.ItemModel;
+import com.linepro.modellbahn.repository.lookup.Lookup;
 import com.linepro.modellbahn.request.ItemRequest;
 import com.linepro.modellbahn.util.exceptions.ModellBahnException;
 import com.linepro.modellbahn.util.impexp.Importer;
@@ -32,60 +32,69 @@ import com.linepro.modellbahn.util.impexp.Importer;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ImporterImpl<R extends ItemRequest, E extends Item> implements Importer {
+public class ImporterImpl<R extends ItemRequest, E extends Item, M extends ItemModel> implements Importer {
 
     private static final CsvMapper MAPPER = CsvMapper.builder()
                     .findAndAddModules()
                     .configure(JsonGenerator.Feature.IGNORE_UNKNOWN, true)
                     .configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true)
                     .configure(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_AS_NULL, true)
+                    .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                    .configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true)
+                    .configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true)
+                    .configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
                     .build();
 
     private final JpaRepository<E,Long> repository;
 
     private final Mapper<R,E> mapper;
 
+    private final CommitterImpl<R,E,M> committer;
+
     private final Class<R> requestClass;
 
     private final CsvSchemaGenerator generator;
 
-    public ImporterImpl(JpaRepository<E,Long> repository, Mapper<R,E> mapper, CsvSchemaGenerator generator, Class<R> requestClass) {
+    private final Lookup<E,M> lookup;
+
+    public ImporterImpl(JpaRepository<E,Long> repository, Mapper<R,E> mapper, Lookup<E,M> lookup, CommitterImpl<R,E,M> committer, CsvSchemaGenerator generator, Class<R> requestClass) {
         this.repository = repository;
         this.mapper = mapper;
+        this.committer = committer;
         this.generator = generator;
         this.requestClass = requestClass;
+        this.lookup = lookup;
     }
 
     @Override
-    @Transactional
     public void read(Reader in) {
         try {
-            String headerLine = new LineReader(in).readLine();
+            LineReader lineReader = new LineReader(in);
 
             // Filter schema with columns actually in input file header and re-create using specified order...
-            CsvSchema schema = generator.getSchema(requestClass, Arrays.asList(headerLine.split(",")));
+            CsvSchema schema = generator.getSchema(requestClass, columnNames(lineReader.readLine()));
 
             ObjectReader reader = MAPPER.readerFor(requestClass).with(schema);
 
-            MappingIterator<R> mi = reader.readValues(in);
-
+            int rowNum = 0;
             List<String> errors = new ArrayList<>();
-            Integer rowNum = 0;
 
-
-            while (mi.hasNext()) {
-                rowNum++;
-
-                R next = mi.next();
-
+            for (String line = lineReader.readLine(); line != null; rowNum++, line = lineReader.readLine()) {
                 try {
-                    repository.save(mapper.convert(next));
+                    R request = reader.readValue(line);
+
+                    E model = mapper.convert(request);
+                    
+                    try {
+                        committer.saveOrUpdate(repository, lookup, mapper, rowNum, request, model, errors);
+                    } catch (UnexpectedRollbackException e) {
+                    }
                 } catch(Exception e) {
-                    String error = getError(e);
+                    String error = getError(rowNum, "unreadable entry", e);
 
-                    errors.add(MessageFormatter.arrayFormat("#{} - '{}': {}", new Object[] { rowNum, next, error }).getMessage());
+                    errors.add(error);
 
-                    log.error("Error importing #{} - '{}': {}", rowNum, next, error, e);
+                    log.error("Error importing {}: {}", error, e);
                 }
             }
 
@@ -98,24 +107,39 @@ public class ImporterImpl<R extends ItemRequest, E extends Item> implements Impo
             throw ModellBahnException.raise(ApiMessages.IMPORT_ERROR, e)
                                      .addValue(e.getMessage())
                                      .setStatus(HttpStatus.BAD_REQUEST);
+        } catch (ModellBahnException e) {
+            throw e;
         } catch (Exception e) {
             throw ModellBahnException.raise(ApiMessages.IMPORT_ERROR, e);
         }
     }
 
-    private String getError(Exception e) {
-        String error;
+    /**
+     * handle "name","name" and name,name formats
+     * @param headerLine the header
+     * @return a list of names without enclosing '"'
+     */
+    protected List<String> columnNames(String headerLine) {
+        return Arrays.asList(
+                        headerLine.replace("\"", "")
+                        .split(","));
+    }
 
-        if (e instanceof ConstraintViolationException) {
-            error = ((ConstraintViolationException) e).getConstraintViolations()
-                                                       .stream()
-                                                       .map(c -> c.getMessage())
-                                                       .collect(Collectors.joining(","));
-        } else if (e.getCause() != null) {
+    private String getError(int rowNum, Object request, Throwable e) {
+        String error = null;
+
+        if (e.getCause() != null) {
             error = e.getCause().getMessage();
-        } else {
+        }
+        
+        if (!StringUtils.hasText(error)) {
             error = e.getMessage();
         }
-        return error;
+
+        if (!StringUtils.hasText(error)) {
+            error = e.getClass().getSimpleName();
+        }
+
+        return MessageFormatter.arrayFormat("#{} - {}: {}", new Object[] { rowNum, request, error }).getMessage();
     }
 }

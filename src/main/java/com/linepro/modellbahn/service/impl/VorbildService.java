@@ -22,6 +22,7 @@ import com.linepro.modellbahn.entity.Vorbild;
 import com.linepro.modellbahn.io.FileService;
 import com.linepro.modellbahn.model.VorbildModel;
 import com.linepro.modellbahn.repository.VorbildRepository;
+import com.linepro.modellbahn.repository.lookup.VorbildLookup;
 import com.linepro.modellbahn.request.VorbildRequest;
 
 @Service(PREFIX + "VorbildService")
@@ -32,8 +33,8 @@ public class VorbildService extends NamedItemServiceImpl<VorbildModel, VorbildRe
     private final FileService fileService;
 
     @Autowired
-    public VorbildService(VorbildRepository repository, FileService fileService, VorbildRequestMapper vorbildRequestMapper, VorbildMapper vorbildMapper) {
-        super(repository, vorbildRequestMapper, vorbildMapper);
+    public VorbildService(VorbildRepository repository, FileService fileService, VorbildRequestMapper vorbildRequestMapper, VorbildMapper vorbildMapper, VorbildLookup lookup) {
+        super(repository, vorbildRequestMapper, vorbildMapper, lookup);
         this.repository = repository;
         this.fileService = fileService;
     }

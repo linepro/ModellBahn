@@ -27,6 +27,7 @@ import com.linepro.modellbahn.model.ProduktModel;
 import com.linepro.modellbahn.model.ProduktTeilModel;
 import com.linepro.modellbahn.repository.ProduktRepository;
 import com.linepro.modellbahn.repository.ProduktTeilRepository;
+import com.linepro.modellbahn.repository.lookup.ProduktLookup;
 import com.linepro.modellbahn.request.ProduktRequest;
 
 @Service(PREFIX + "ProduktService")
@@ -43,8 +44,8 @@ public class ProduktService extends ItemServiceImpl<ProduktModel, ProduktRequest
 
     @Autowired
     public ProduktService(ProduktRepository repository, ProduktRequestMapper produktRequestMapper, ProduktMapper produktMapper, FileService fileService, 
-                    ProduktTeilRepository teilRepository, ProduktTeilMapper teilMapper) {
-        super(repository, produktRequestMapper, produktMapper);
+                    ProduktTeilRepository teilRepository, ProduktTeilMapper teilMapper, ProduktLookup lookup) {
+        super(repository, produktRequestMapper, produktMapper, lookup);
         this.repository = repository;
         this.fileService = fileService;
 
@@ -53,15 +54,15 @@ public class ProduktService extends ItemServiceImpl<ProduktModel, ProduktRequest
     }
 
     public Optional<ProduktModel> get(String hersteller, String bestellNr) {
-        return super.get(() -> repository.findByBestellNr(hersteller, bestellNr));
+        return super.get(ProduktModel.builder().hersteller(hersteller).bestellNr(bestellNr).build());
     }
 
     public Optional<ProduktModel> update(String hersteller, String bestellNr, ProduktRequest request) {
-        return super.update(() -> repository.findByBestellNr(hersteller, bestellNr), request);
+        return super.update(ProduktModel.builder().hersteller(hersteller).bestellNr(bestellNr).build(), request);
     }
 
     public boolean delete(String hersteller, String bestellNr) {
-        return super.delete(() -> repository.findByBestellNr(hersteller, bestellNr));
+        return super.delete(ProduktModel.builder().hersteller(hersteller).bestellNr(bestellNr).build());
     }
 
     @Transactional
@@ -100,7 +101,7 @@ public class ProduktService extends ItemServiceImpl<ProduktModel, ProduktRequest
                              .map(t -> {
                                  t.setMenge(menge);
                                  return teilMapper.convert(teilRepository.saveAndFlush(t));
-                             });
+                                 });
     }
 
     @Transactional
@@ -109,87 +110,87 @@ public class ProduktService extends ItemServiceImpl<ProduktModel, ProduktRequest
                              .map(t -> {
                                  teilRepository.delete(t);
                                  return true;
-                             })
+                                 })
                              .orElse(false);
     }
 
     @Transactional
     public Optional<ProduktModel> updateAbbildung(String hersteller, String bestellNr, MultipartFile multipart) {
         return  repository.findByBestellNr(hersteller, bestellNr)
-                        .map(a -> {
-                            a.setAbbildung(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.PRODUKT, ApiNames.ABBILDUNG, hersteller, bestellNr));
-                            return repository.saveAndFlush(a);
-                        })
-                        .flatMap(e -> this.get(hersteller, bestellNr));
+                          .map(a -> {
+                              a.setAbbildung(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.PRODUKT, ApiNames.ABBILDUNG, hersteller, bestellNr));
+                              return repository.saveAndFlush(a);
+                              })
+                          .flatMap(e -> this.get(hersteller, bestellNr));
     }
 
     @Transactional
     public Optional<ProduktModel> deleteAbbildung(String hersteller, String bestellNr) {
         return repository.findByBestellNr(hersteller, bestellNr)
-                        .map(a -> {
-                            a.setAbbildung(fileService.deleteFile(a.getAbbildung()));
-                            return repository.saveAndFlush(a);
-                        })
-                        .flatMap(e -> this.get(hersteller, bestellNr));
+                         .map(a -> {
+                             a.setAbbildung(fileService.deleteFile(a.getAbbildung()));
+                             return repository.saveAndFlush(a);
+                             })
+                         .flatMap(e -> this.get(hersteller, bestellNr));
     }
 
     @Transactional
     public Optional<ProduktModel> updateAnleitungen(String hersteller, String bestellNr, MultipartFile multipart) {
         return  repository.findByBestellNr(hersteller, bestellNr)
-                        .map(a -> {
-                            a.setAnleitungen(fileService.updateFile(AcceptableMediaTypes.DOCUMENT_TYPES, multipart, ApiNames.PRODUKT, ApiNames.ANLEITUNGEN, hersteller, bestellNr));
-                            return repository.saveAndFlush(a);
-                        })
-                        .flatMap(e -> this.get(hersteller, bestellNr));
+                          .map(a -> {
+                              a.setAnleitungen(fileService.updateFile(AcceptableMediaTypes.DOCUMENT_TYPES, multipart, ApiNames.PRODUKT, ApiNames.ANLEITUNGEN, hersteller, bestellNr));
+                              return repository.saveAndFlush(a);
+                              })
+                          .flatMap(e -> this.get(hersteller, bestellNr));
     }
 
     @Transactional
     public Optional<ProduktModel> deleteAnleitungen(String hersteller, String bestellNr) {
         return repository.findByBestellNr(hersteller, bestellNr)
-                        .map(a -> {
-                            a.setAnleitungen(fileService.deleteFile(a.getAnleitungen()));
-                            return repository.saveAndFlush(a);
-                        })
-                        .flatMap(e -> this.get(hersteller, bestellNr));
+                         .map(a -> {
+                             a.setAnleitungen(fileService.deleteFile(a.getAnleitungen()));
+                             return repository.saveAndFlush(a);
+                             })
+                         .flatMap(e -> this.get(hersteller, bestellNr));
     }
 
     @Transactional
     public Optional<ProduktModel> updateExplosionszeichnung(String hersteller, String bestellNr, MultipartFile multipart) {
         return  repository.findByBestellNr(hersteller, bestellNr)
-                        .map(a -> {
-                            a.setExplosionszeichnung(fileService.updateFile(AcceptableMediaTypes.DOCUMENT_TYPES, multipart, ApiNames.PRODUKT, ApiNames.EXPLOSIONSZEICHNUNG, hersteller, bestellNr));
-                            return repository.saveAndFlush(a);
-                        })
-                        .flatMap(e -> this.get(hersteller, bestellNr));
+                          .map(a -> {
+                              a.setExplosionszeichnung(fileService.updateFile(AcceptableMediaTypes.DOCUMENT_TYPES, multipart, ApiNames.PRODUKT, ApiNames.EXPLOSIONSZEICHNUNG, hersteller, bestellNr));
+                              return repository.saveAndFlush(a);
+                              })
+                          .flatMap(e -> this.get(hersteller, bestellNr));
     }
 
     @Transactional
     public Optional<ProduktModel> deleteExplosionszeichnung(String hersteller, String bestellNr) {
         return repository.findByBestellNr(hersteller, bestellNr)
-                        .map(a -> {
-                            a.setExplosionszeichnung(fileService.deleteFile(a.getExplosionszeichnung()));
-                            return repository.saveAndFlush(a);
-                        })
-                        .flatMap(e -> this.get(hersteller, bestellNr));
+                         .map(a -> {
+                             a.setExplosionszeichnung(fileService.deleteFile(a.getExplosionszeichnung()));
+                             return repository.saveAndFlush(a);
+                             })
+                         .flatMap(e -> this.get(hersteller, bestellNr));
     }
 
     @Transactional
     public Optional<ProduktModel> updateGrossansicht(String hersteller, String bestellNr, MultipartFile multipart) {
         return  repository.findByBestellNr(hersteller, bestellNr)
-                        .map(a -> {
-                            a.setGrossansicht(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.PRODUKT, ApiNames.GROSSANSICHT, hersteller, bestellNr));
-                            return repository.saveAndFlush(a);
-                        })
-                        .flatMap(e -> this.get(hersteller, bestellNr));
+                          .map(a -> {
+                              a.setGrossansicht(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.PRODUKT, ApiNames.GROSSANSICHT, hersteller, bestellNr));
+                              return repository.saveAndFlush(a);
+                              })
+                          .flatMap(e -> this.get(hersteller, bestellNr));
     }
 
     @Transactional
     public Optional<ProduktModel> deleteGrossansicht(String hersteller, String bestellNr) {
         return repository.findByBestellNr(hersteller, bestellNr)
-                        .map(a -> {
-                            a.setGrossansicht(fileService.deleteFile(a.getGrossansicht()));
-                            return repository.saveAndFlush(a);
-                        })
-                        .flatMap(e -> this.get(hersteller, bestellNr));
+                         .map(a -> {
+                             a.setGrossansicht(fileService.deleteFile(a.getGrossansicht()));
+                             return repository.saveAndFlush(a);
+                             })
+                         .flatMap(e -> this.get(hersteller, bestellNr));
     }
 }

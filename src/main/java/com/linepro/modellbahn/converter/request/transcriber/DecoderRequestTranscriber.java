@@ -6,9 +6,8 @@ import java.util.Optional;
 
 import com.linepro.modellbahn.converter.Transcriber;
 import com.linepro.modellbahn.entity.Decoder;
-import com.linepro.modellbahn.repository.ProtokollRepository;
 import com.linepro.modellbahn.repository.lookup.DecoderTypLookup;
-import com.linepro.modellbahn.repository.lookup.ItemLookup;
+import com.linepro.modellbahn.repository.lookup.ProtokollLookup;
 import com.linepro.modellbahn.request.DecoderRequest;
 
 import lombok.RequiredArgsConstructor;
@@ -18,9 +17,7 @@ public class DecoderRequestTranscriber implements Transcriber<DecoderRequest, De
 
     private final DecoderTypLookup typLookup;
 
-    private final ProtokollRepository protokollRepository;
-
-    private final ItemLookup lookup;
+    private final ProtokollLookup protokollLookup;
 
     @Override
     public Decoder apply(DecoderRequest source, Decoder destination) {
@@ -29,10 +26,10 @@ public class DecoderRequestTranscriber implements Transcriber<DecoderRequest, De
                 destination.setDecoderId(source.getDecoderId());
             }
             if (destination.getDecoderTyp() == null) {
-                destination.setDecoderTyp(typLookup.find(source.getHersteller(), source.getBestellNr()));
+                typLookup.find(source.getHersteller(), source.getBestellNr()).ifPresent(t -> destination.setDecoderTyp(t));
             }
             destination.setBezeichnung(source.getBezeichnung());
-            destination.setProtokoll(lookup.find(source.getProtokoll(), protokollRepository));
+            protokollLookup.find(source.getProtokoll()).ifPresent(p -> destination.setProtokoll(p));
             destination.setFahrstufe(source.getFahrstufe());
             destination.setKaufdatum(source.getKaufdatum());
             destination.setWahrung(source.getWahrung());

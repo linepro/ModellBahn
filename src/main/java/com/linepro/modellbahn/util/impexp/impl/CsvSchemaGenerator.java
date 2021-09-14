@@ -6,6 +6,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -19,57 +20,81 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema.Column;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema.ColumnType;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
+
 @Component(PREFIX + "CsvSchemaGenerator")
 public class CsvSchemaGenerator {
 
+    @Getter
+    @ToString
+    @EqualsAndHashCode
+    @RequiredArgsConstructor
+    class CandidateColumn {
+        private final String name;
+        private final ColumnType type;
+    }
+
     public CsvSchema getSchema(Class<?> modelClass) {
-        return getSchema(Stream.of(modelClass.getDeclaredFields())
-                               .filter(f -> !Modifier.isStatic(f.getModifiers()))
-                               .filter(f -> !Modifier.isVolatile(f.getModifiers()))
-                               .filter(f -> !Modifier.isTransient(f.getModifiers()))
-                               .filter(f -> f.getAnnotation(JsonProperty.class) != null)
-                               .filter(f -> f.getAnnotation(SuppressExport.class) == null)
-                               .filter(f -> !Collection.class.isAssignableFrom(f.getType()))
-                               .map(f -> new Column(0, getColumnName(f), getColumnType(f)))
-                               .collect(Collectors.toList()));
+        return getSchema(getCandidates(modelClass));
     }
 
-    public CsvSchema getSchema(Class<?> modelClass, List<String> columns) {
+    public CsvSchema getSchema(Class<?> modelClass, List<String> headerColumns) {
+        Map<String,CandidateColumn> classColumns = getCandidates(modelClass).stream()
+                                                                            .collect(Collectors.toMap(CandidateColumn::getName, c -> c));
+
+        List<CandidateColumn> columns = headerColumns.stream()
+                                                     .map(c -> mapColumn(classColumns, c))
+                                                     .collect(Collectors.toList());
+
+        return getSchema(columns);
+    }
+
+    protected CandidateColumn mapColumn(Map<String, CandidateColumn> classColumns, String headerName) {
+        return new CandidateColumn(
+                         headerName, 
+                         Optional.ofNullable(classColumns.get(headerName))
+                                 .map(CandidateColumn::getType)
+                                 .orElse(ColumnType.STRING)
+                                 );
+    }
+
+    protected CsvSchema getSchema(List<CandidateColumn> candidates) {
         AtomicInteger colNumber = new AtomicInteger();
 
-        CsvSchema classSchema = getSchema(modelClass);
-        
-        return getSchema(columns.stream()
-                                .map(n -> getColumn(classSchema, colNumber, n))
-                                .collect(Collectors.toList()));
-    }
-    
-    protected Column getColumn(CsvSchema schema, AtomicInteger colNumber, String name) {
-        return Optional.ofNullable(schema.column(name))
-                       .orElse(new Column(colNumber.getAndIncrement(), name));
-    }
-
-    protected String getColumnName(Field f) {
-        return StringUtils.defaultIfBlank(f.getAnnotation(JsonProperty.class).value(), f.getName());
-    }
-    
-    protected CsvSchema getSchema(List<Column> columns) {
-        AtomicInteger colNumber = new AtomicInteger();
+        List<Column> columns = candidates.stream()
+                                         .map(c -> new Column(colNumber.getAndIncrement(), c.getName(), c.getType()))
+                                         .collect(Collectors.toList());
 
         return CsvSchema.builder()
-                        .addColumns(
-                            columns.stream()
-                                   .map(c -> new Column(colNumber.getAndIncrement(),c.getName(), c.getType()))
-                                   .collect(Collectors.toList())
-                        )
+                        .addColumns(columns)
                         .build();
     }
 
-    protected ColumnType getColumnType(Field f) {
-        if (Number.class.isAssignableFrom(f.getType())) return ColumnType.NUMBER;
+    protected List<CandidateColumn> getCandidates(Class<?> modelClass) {
+        return Stream.of(modelClass.getDeclaredFields())
+                 .filter(f -> !Modifier.isStatic(f.getModifiers()))
+                 .filter(f -> !Modifier.isVolatile(f.getModifiers()))
+                 .filter(f -> !Modifier.isTransient(f.getModifiers()))
+                 .filter(f -> f.getAnnotation(JsonProperty.class) != null)
+                 .filter(f -> f.getAnnotation(SuppressExport.class) == null)
+                 .filter(f -> !Collection.class.isAssignableFrom(f.getType()))
+                 .map(this::getCandidate)
+                 .collect(Collectors.toList());
+    }
 
-        if (Boolean.class.isAssignableFrom(f.getType())) return ColumnType.BOOLEAN;
+    protected CandidateColumn getCandidate(Field f) {
+        String name = StringUtils.defaultIfBlank(f.getAnnotation(JsonProperty.class).value(), f.getName());
+        ColumnType type = ColumnType.STRING;
 
-        return ColumnType.STRING;
+        if (Number.class.isAssignableFrom(f.getType())) {
+            type = ColumnType.NUMBER;
+        } else if (Boolean.class.isAssignableFrom(f.getType())) {
+            type = ColumnType.BOOLEAN;
+        }
+
+        return new CandidateColumn(name, type);
     }
 }
