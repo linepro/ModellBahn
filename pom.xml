@@ -76,7 +76,7 @@
         <maven.version>3.6.0</maven.version>
 
         <!-- plugins -->
-        <dependency-check-maven.version>6.2.2</dependency-check-maven.version>
+        <dependency-check-maven.version>6.3.1</dependency-check-maven.version>
         <exec-maven-plugin.version>3.0.0</exec-maven-plugin.version>
         <git-commit-id-maven-plugin.version>5.0.0</git-commit-id-maven-plugin.version>
         <maven-changelog-plugin.version>2.3</maven-changelog-plugin.version>
@@ -131,7 +131,7 @@
         <!-- javascript serving -->
         <org.webjars.webjars-locator-core.version>0.47</org.webjars.webjars-locator-core.version>
         <org.webjars.modellbahn-ui.version>1.0.0</org.webjars.modellbahn-ui.version>
-        <org.webjars.swagger-ui.version>3.51.2</org.webjars.swagger-ui.version>
+        <org.webjars.swagger-ui.version>3.52.1</org.webjars.swagger-ui.version>
 
         <!-- most of these can go if we use react as a webjar -->
         <org.webjars.angular-material.version>1.1.21</org.webjars.angular-material.version>
