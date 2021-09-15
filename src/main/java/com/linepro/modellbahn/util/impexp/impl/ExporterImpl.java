@@ -82,7 +82,7 @@ public class ExporterImpl<M extends ItemModel,E extends Item> implements Exporte
             // Use output stream so error handlers can have a go; hopefully all exceptions are thrown before this..
             writer.flush();
 
-            response.getOutputStream().print(out.toString());
+            response.getWriter().print(out.toString());
         } catch (ModellBahnException e) {
             throw e;
         } catch (Exception e) {
