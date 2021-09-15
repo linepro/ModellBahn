@@ -20,7 +20,7 @@ public class AnderungRequestTranscriber implements Transcriber<AnderungRequest, 
     public Anderung apply(AnderungRequest source, Anderung destination) {
         if (isAvailable(source) && isAvailable(destination)) {
             if (destination.getArtikel() == null) {
-                destination.setArtikel(artikelLookup.find(source.getArtikelId()));
+                artikelLookup.find(source.getArtikelId()).ifPresent(a -> destination.setArtikel(a));
             }
             if (destination.getAnderungId() == null) {
                 destination.setAnderungId(source.getAnderungId());

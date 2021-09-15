@@ -24,6 +24,7 @@ import com.linepro.modellbahn.entity.Antrieb;
 import com.linepro.modellbahn.io.FileService;
 import com.linepro.modellbahn.model.AntriebModel;
 import com.linepro.modellbahn.repository.AntriebRepository;
+import com.linepro.modellbahn.repository.lookup.AntriebLookup;
 import com.linepro.modellbahn.request.AntriebRequest;
 
 @Service(PREFIX + "AntriebService")
@@ -34,8 +35,8 @@ public class AntriebService extends NamedItemServiceImpl<AntriebModel, AntriebRe
     private final FileService fileService;
 
     @Autowired
-    public AntriebService(AntriebRepository repository, AntriebRequestMapper requestMapper, AntriebMapper entityMapper, FileService fileService) {
-        super(repository, requestMapper, entityMapper);
+    public AntriebService(AntriebRepository repository, AntriebRequestMapper requestMapper, AntriebMapper entityMapper, FileService fileService, AntriebLookup lookup) {
+        super(repository, requestMapper, entityMapper, lookup);
 
         this.repository = repository;
         this.fileService = fileService;
@@ -43,15 +44,21 @@ public class AntriebService extends NamedItemServiceImpl<AntriebModel, AntriebRe
 
     @Transactional
     public Optional<AntriebModel> updateAbbildung(String name, MultipartFile multipart) {
-        return repository.findByName(name).map(a -> {
-            a.setAbbildung(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.ANTRIEB, ApiNames.ABBILDUNG, name));
-            return repository.saveAndFlush(a);
-        }).flatMap(e -> this.get(name));
+        return repository.findByName(name)
+                         .map(a -> {
+                              a.setAbbildung(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.ANTRIEB, ApiNames.ABBILDUNG, name));
+                              return repository.saveAndFlush(a);
+                              })
+                         .flatMap(e -> this.get(name));
     }
 
     @Transactional
     public Optional<AntriebModel> deleteAbbildung(String name) {
-        return repository.findByName(name).map(a -> { a.setAbbildung(fileService.deleteFile(a.getAbbildung())); return repository.saveAndFlush(a); })
-                        .flatMap(e -> this.get(name));
+        return repository.findByName(name)
+                         .map(a -> { 
+                              a.setAbbildung(fileService.deleteFile(a.getAbbildung())); 
+                              return repository.saveAndFlush(a);
+                              })
+                         .flatMap(e -> this.get(name));
     }
 }

@@ -6,8 +6,8 @@ import java.util.Optional;
 
 import com.linepro.modellbahn.converter.Transcriber;
 import com.linepro.modellbahn.entity.DecoderCv;
-import com.linepro.modellbahn.repository.DecoderTypCvRepository;
 import com.linepro.modellbahn.repository.lookup.DecoderLookup;
+import com.linepro.modellbahn.repository.lookup.DecoderTypCvLookup;
 import com.linepro.modellbahn.request.DecoderCvRequest;
 
 import lombok.RequiredArgsConstructor;
@@ -17,19 +17,17 @@ public class DecoderCvRequestTranscriber implements Transcriber<DecoderCvRequest
 
     private final DecoderLookup decoderLookup;
 
-    private final DecoderTypCvRepository cvLookup;
+    private final DecoderTypCvLookup cvLookup;
 
     @Override
     public DecoderCv apply(DecoderCvRequest source, DecoderCv destination) {
         if (isAvailable(source) && isAvailable(destination)) {
             if (destination.getDecoder() == null) {
-                destination.setDecoder(decoderLookup.find(source.getDecoderId()));
+                decoderLookup.find(source.getDecoderId()).ifPresent(d -> destination.setDecoder(d));
             }
 
             if (destination.getDecoder() != null && destination.getCv() == null) {
-                destination.setCv(cvLookup.findByCv(destination.getDecoder().getDecoderTyp().getHersteller().getName(),
-                                                    destination.getDecoder().getDecoderTyp().getBestellNr(), source.getCv())
-                                          .orElse(null));
+                cvLookup.find(destination.getDecoder().getDecoderTyp(), source.getCv()).ifPresent(c -> destination.setCv(c));
             }
 
             destination.setWert(source.getWert());

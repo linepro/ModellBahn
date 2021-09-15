@@ -6,13 +6,12 @@ import java.util.Optional;
 
 import com.linepro.modellbahn.converter.Transcriber;
 import com.linepro.modellbahn.entity.Artikel;
-import com.linepro.modellbahn.repository.KupplungRepository;
-import com.linepro.modellbahn.repository.LichtRepository;
-import com.linepro.modellbahn.repository.MotorTypRepository;
-import com.linepro.modellbahn.repository.SteuerungRepository;
 import com.linepro.modellbahn.repository.lookup.DecoderLookup;
-import com.linepro.modellbahn.repository.lookup.ItemLookup;
+import com.linepro.modellbahn.repository.lookup.KupplungLookup;
+import com.linepro.modellbahn.repository.lookup.LichtLookup;
+import com.linepro.modellbahn.repository.lookup.MotorTypLookup;
 import com.linepro.modellbahn.repository.lookup.ProduktLookup;
+import com.linepro.modellbahn.repository.lookup.SteuerungLookup;
 import com.linepro.modellbahn.request.ArtikelRequest;
 
 import lombok.RequiredArgsConstructor;
@@ -22,17 +21,15 @@ public class ArtikelRequestTranscriber implements Transcriber<ArtikelRequest, Ar
 
     private final ProduktLookup produktLookup;
 
-    private final SteuerungRepository steuerungRepository;
+    private final SteuerungLookup steuerungLookup;
 
-    private final MotorTypRepository motorTypRepository;
+    private final MotorTypLookup motorTypLookup;
 
-    private final LichtRepository lichtRepository;
+    private final LichtLookup lichtLookup;
 
-    private final KupplungRepository kupplungRepository;
+    private final KupplungLookup kupplungLookup;
 
     private final DecoderLookup decoderLookup;
-
-    private final ItemLookup lookup;
 
     @Override
     public Artikel apply(ArtikelRequest source, Artikel destination) {
@@ -40,14 +37,15 @@ public class ArtikelRequestTranscriber implements Transcriber<ArtikelRequest, Ar
             if (destination.getArtikelId() == null) {
                 destination.setArtikelId(source.getArtikelId());
             }
-            destination.setProdukt(produktLookup.find(source.getHersteller(), source.getBestellNr()));
+            produktLookup.find(source.getHersteller(), source.getBestellNr())
+                         .ifPresent(p -> destination.setProdukt(p));
             destination.setKaufdatum(source.getKaufdatum());
             destination.setWahrung(source.getWahrung());
-            destination.setSteuerung(lookup.find(source.getSteuerung(), steuerungRepository));
-            destination.setMotorTyp(lookup.find(source.getMotorTyp(), motorTypRepository));
-            destination.setLicht(lookup.find(source.getLicht(), lichtRepository));
-            destination.setKupplung(lookup.find(source.getKupplung(), kupplungRepository));
-            destination.setDecoder(decoderLookup.find(source.getDecoder()));
+            destination.setSteuerung(steuerungLookup.find(source.getSteuerung()).orElse(null));
+            destination.setMotorTyp(motorTypLookup.find(source.getMotorTyp()).orElse(null));
+            destination.setLicht(lichtLookup.find(source.getLicht()).orElse(null));
+            destination.setKupplung(kupplungLookup.find(source.getKupplung()).orElse(null));
+            destination.setDecoder(decoderLookup.find(source.getDecoder()).orElse(null));
             destination.setBezeichnung(source.getBezeichnung());
             destination.setPreis(source.getPreis());
             destination.setMenge(source.getMenge());

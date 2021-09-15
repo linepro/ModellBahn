@@ -8,11 +8,10 @@ import org.springframework.stereotype.Component;
 import com.linepro.modellbahn.converter.impl.MapperImpl;
 import com.linepro.modellbahn.converter.request.transcriber.VorbildRequestTranscriber;
 import com.linepro.modellbahn.entity.Vorbild;
-import com.linepro.modellbahn.repository.AchsfolgRepository;
-import com.linepro.modellbahn.repository.AntriebRepository;
-import com.linepro.modellbahn.repository.BahnverwaltungRepository;
-import com.linepro.modellbahn.repository.GattungRepository;
-import com.linepro.modellbahn.repository.lookup.ItemLookup;
+import com.linepro.modellbahn.repository.lookup.AchsfolgLookup;
+import com.linepro.modellbahn.repository.lookup.AntriebLookup;
+import com.linepro.modellbahn.repository.lookup.BahnverwaltungLookup;
+import com.linepro.modellbahn.repository.lookup.GattungLookup;
 import com.linepro.modellbahn.repository.lookup.UnterKategorieLookup;
 import com.linepro.modellbahn.request.VorbildRequest;
 
@@ -20,9 +19,8 @@ import com.linepro.modellbahn.request.VorbildRequest;
 public class VorbildRequestMapper extends MapperImpl<VorbildRequest, Vorbild> {
 
     @Autowired
-    public VorbildRequestMapper(GattungRepository gattungRepository, UnterKategorieLookup unterKategorieLookup, AntriebRepository antriebRepository,
-                    BahnverwaltungRepository bahnverwaltungRepository, AchsfolgRepository achsfolgRepository, ItemLookup lookup) {
-        super(() -> new Vorbild(), new VorbildRequestTranscriber(gattungRepository, unterKategorieLookup, antriebRepository, bahnverwaltungRepository,
-                        achsfolgRepository, lookup));
+    public VorbildRequestMapper(GattungLookup gattungLookup, UnterKategorieLookup unterKategorieLookup, AntriebLookup antriebLookup,
+                    BahnverwaltungLookup bahnverwaltungLookup, AchsfolgLookup achsfolgLookup) {
+        super(() -> new Vorbild(), new VorbildRequestTranscriber(gattungLookup, unterKategorieLookup, antriebLookup, bahnverwaltungLookup, achsfolgLookup));
     }
 }

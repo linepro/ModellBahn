@@ -4,7 +4,6 @@ import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.nio.charset.StandardCharsets;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -35,10 +34,10 @@ public class DataServiceImpl implements DataService {
     private final ImporterFactory importerFactory;
 
     @Override
-    public void exportCSV(String type, HttpServletResponse response) {
+    public void exportCSV(String type, HttpServletResponse response, String charset) {
         try {
             response.setContentType(TEXT_CSV);
-            response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+            response.setCharacterEncoding(charset);
             response.setHeader("Content-Disposition", String.format("attachment; filename=\"{}.csv\"", type));
 
             DataType dataType = DataType.fromTypeName(type);
@@ -61,7 +60,7 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public void importCSV(String type, MultipartFile multipart) {
+    public void importCSV(String type, MultipartFile multipart, String charset) {
         try {
             DataType dataType = DataType.fromTypeName(type);
 
@@ -73,13 +72,13 @@ public class DataServiceImpl implements DataService {
 
             Importer importer = importerFactory.getImporter(dataType);
 
-            Reader in = new InputStreamReader(multipart.getInputStream());
+            Reader in = new InputStreamReader(multipart.getInputStream(), charset);
 
             importer.read(in);
         } catch (ModellBahnException e) {
             throw e;
         } catch (Exception e) {
-            throw ModellBahnException.raise(ApiMessages.EXPORT_ERROR)
+            throw ModellBahnException.raise(ApiMessages.IMPORT_ERROR)
                                      .addValue(type);
         }
     }

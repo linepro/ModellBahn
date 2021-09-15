@@ -1,20 +1,37 @@
 package com.linepro.modellbahn.repository.lookup;
 
-import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
-
 import java.util.Optional;
 
-import org.springframework.stereotype.Component;
-
 import com.linepro.modellbahn.entity.NamedItem;
+import com.linepro.modellbahn.model.NamedItemModel;
 import com.linepro.modellbahn.repository.base.NamedItemRepository;
 
-@Component(PREFIX + "ItemLookup")
-public class ItemLookup {
+import lombok.RequiredArgsConstructor;
 
-    public <E extends NamedItem> E find(String name, NamedItemRepository<E> repository) {
-        return Optional.ofNullable(name)
-                       .flatMap(m -> repository.findByName(name))
-                       .orElse(null);
+@RequiredArgsConstructor
+public abstract class ItemLookup<E extends NamedItem, M extends NamedItemModel> implements Lookup<E,M> {
+
+    private final NamedItemRepository<E> repository;
+
+    public Optional<E> find(String name) {
+        return repository.findByName(name);
+    }
+
+    @Override
+    public Optional<E> find(M model) {
+        if (model != null && model.getName() != null) {
+            return find(model.getName());
+        }
+
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<E> find(E item) {
+        if (item != null && item.getName() != null) {
+            return find(item.getName());
+        }
+
+        return Optional.empty();
     }
 }

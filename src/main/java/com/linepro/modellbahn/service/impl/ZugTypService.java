@@ -16,13 +16,14 @@ import com.linepro.modellbahn.converter.request.ZugTypRequestMapper;
 import com.linepro.modellbahn.entity.ZugTyp;
 import com.linepro.modellbahn.model.ZugTypModel;
 import com.linepro.modellbahn.repository.ZugTypRepository;
+import com.linepro.modellbahn.repository.lookup.ZugTypLookup;
 import com.linepro.modellbahn.request.ZugTypRequest;
 
 @Service(PREFIX + "ZugTypService")
 public class ZugTypService extends NamedItemServiceImpl<ZugTypModel, ZugTypRequest, ZugTyp> {
 
     @Autowired
-    public ZugTypService(ZugTypRepository repository, ZugTypRequestMapper requestMapper, ZugTypMapper entityMapper) {
-        super(repository, requestMapper, entityMapper);
+    public ZugTypService(ZugTypRepository repository, ZugTypRequestMapper requestMapper, ZugTypMapper entityMapper, ZugTypLookup lookup) {
+        super(repository, requestMapper, entityMapper, lookup);
     }
 }

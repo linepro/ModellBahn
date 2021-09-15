@@ -24,6 +24,7 @@ import com.linepro.modellbahn.model.ZugModel;
 import com.linepro.modellbahn.repository.ArtikelRepository;
 import com.linepro.modellbahn.repository.ZugConsistRepository;
 import com.linepro.modellbahn.repository.ZugRepository;
+import com.linepro.modellbahn.repository.lookup.ZugLookup;
 import com.linepro.modellbahn.request.ZugRequest;
 
 @Service(PREFIX + "ZugService")
@@ -38,8 +39,9 @@ public class ZugService extends NamedItemServiceImpl<ZugModel, ZugRequest, Zug> 
     private final ZugConsistMapper consistMapper;
 
     @Autowired
-    public ZugService(ZugRepository repository, ZugRequestMapper requestMapper, ZugMapper entityMapper, ArtikelRepository artikelRepository, ZugConsistRepository consistRepository, ZugConsistMapper consistMapper) {
-        super(repository, requestMapper, entityMapper);
+    public ZugService(ZugRepository repository, ZugRequestMapper requestMapper, ZugMapper entityMapper, ArtikelRepository artikelRepository,
+                      ZugConsistRepository consistRepository, ZugConsistMapper consistMapper, ZugLookup lookup) {
+        super(repository, requestMapper, entityMapper, lookup);
 
         this.repository = repository;
         this.artikelRepository = artikelRepository;
@@ -62,7 +64,7 @@ public class ZugService extends NamedItemServiceImpl<ZugModel, ZugRequest, Zug> 
                              Zug zug = requestMapper.apply(request,e);
                              e.setDeleted(deleted);
                              return repository.saveAndFlush(zug);
-                         })
+                             })
                          .flatMap(e -> get(name)); // Fetch again to populate entity graphs
     }
 
@@ -77,7 +79,7 @@ public class ZugService extends NamedItemServiceImpl<ZugModel, ZugRequest, Zug> 
                              consistRepository.saveAndFlush(fahrzeug);
 
                              return consistMapper.convert(fahrzeug);
-                         });
+                             });
     }
 
     @Transactional
@@ -87,7 +89,7 @@ public class ZugService extends NamedItemServiceImpl<ZugModel, ZugRequest, Zug> 
                                     c.setArtikel(artikelRepository.findByArtikelId(artikelId).orElse(null));
 
                                     return consistMapper.convert(consistRepository.saveAndFlush(c));
-                                });
+                                    });
     }
 
     @Transactional

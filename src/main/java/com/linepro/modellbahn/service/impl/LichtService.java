@@ -24,6 +24,7 @@ import com.linepro.modellbahn.entity.Licht;
 import com.linepro.modellbahn.io.FileService;
 import com.linepro.modellbahn.model.LichtModel;
 import com.linepro.modellbahn.repository.LichtRepository;
+import com.linepro.modellbahn.repository.lookup.LichtLookup;
 import com.linepro.modellbahn.request.LichtRequest;
 
 @Service(PREFIX + "LichtService")
@@ -34,8 +35,8 @@ public class LichtService extends NamedItemServiceImpl<LichtModel, LichtRequest,
     private final FileService fileService;
 
     @Autowired
-    public LichtService(LichtRepository repository, LichtRequestMapper requestMapper, LichtMapper entityMapper, FileService fileService) {
-        super(repository, requestMapper, entityMapper);
+    public LichtService(LichtRepository repository, LichtRequestMapper requestMapper, LichtMapper entityMapper, FileService fileService, LichtLookup lookup) {
+        super(repository, requestMapper, entityMapper, lookup);
 
         this.repository = repository;
         this.fileService = fileService;
@@ -47,7 +48,7 @@ public class LichtService extends NamedItemServiceImpl<LichtModel, LichtRequest,
                         .map(a -> {
                             a.setAbbildung(fileService.updateFile(AcceptableMediaTypes.IMAGE_TYPES, multipart, ApiNames.LICHT, ApiNames.ABBILDUNG, name));
                             return repository.saveAndFlush(a);
-                        })
+                            })
                         .flatMap(e -> this.get(name));
     }
 
@@ -57,7 +58,7 @@ public class LichtService extends NamedItemServiceImpl<LichtModel, LichtRequest,
                         .map(a -> {
                             a.setAbbildung(fileService.deleteFile(a.getAbbildung()));
                             return repository.saveAndFlush(a);
-                        })
+                            })
                         .flatMap(e -> this.get(name));
     }
 }
