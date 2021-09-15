@@ -5,10 +5,12 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.when;
 
-import java.io.CharArrayWriter;
+import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,6 +22,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.mock.web.DelegatingServletOutputStream;
 
 import com.linepro.modellbahn.converter.Mapper;
 import com.linepro.modellbahn.entity.Decoder;
@@ -88,7 +91,7 @@ public class ExporterImplTest {
 
     private final JpaRepository<Decoder,Long> repository;
 
-    private final CharArrayWriter writer;
+    private ByteArrayOutputStream os;
 
     private final Mapper<Decoder,DecoderModel> Mapper;  
 
@@ -96,11 +99,13 @@ public class ExporterImplTest {
 
     private Exporter exporter;
 
+    @Mock
+    private HttpServletResponse response;
+
     public ExporterImplTest(@Mock JpaRepository<Decoder,Long> repository, @Mock Mapper<Decoder,DecoderModel> Mapper) { 
         this.repository = repository;
         this.Mapper = Mapper;
         this.generator = new CsvSchemaGenerator();
-        this.writer = new CharArrayWriter();
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
@@ -116,13 +121,19 @@ public class ExporterImplTest {
         when(Mapper.convert(any())).thenReturn(MODEL);
         when(Mapper.get()).thenReturn(MODEL);
 
+        os = new ByteArrayOutputStream();
+
+        when(response.getOutputStream()).thenReturn(new DelegatingServletOutputStream(os));
+
         exporter = new ExporterImpl(repository, Mapper, generator, DecoderModel.class);
     }
 
     @Test
     public void testWrite() throws Exception {
-        exporter.write(writer);
+        exporter.write(response);
 
-        assertEquals(CSV, writer.toString());
+        String written = os.toString("UTF-8");
+
+        assertEquals(CSV, written);
     }
 }

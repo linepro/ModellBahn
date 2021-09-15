@@ -50,7 +50,7 @@ public class DataServiceImpl implements DataService {
 
             Exporter exporter = exporterFactory.getExporter(dataType);
 
-            exporter.write(response.getWriter());
+            exporter.write(response);
         } catch (ModellBahnException e) {
             throw e;
         } catch (Exception e) {
