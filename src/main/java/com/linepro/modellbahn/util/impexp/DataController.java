@@ -35,7 +35,7 @@ import lombok.RequiredArgsConstructor;
 public class DataController {
 
     protected static final String EXPORT_CHARSET = "UTF-8";
-    protected static final String IMPORT_CHARSET = "ISO-8859-1";
+    protected static final String IMPORT_CHARSET = "UTF-8";
 
     protected static final String FILE_FIELD = "data";
 
