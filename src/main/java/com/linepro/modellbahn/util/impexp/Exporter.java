@@ -1,8 +1,8 @@
 package com.linepro.modellbahn.util.impexp;
 
-import java.io.Writer;
+import javax.servlet.http.HttpServletResponse;
 
 public interface Exporter {
 
-    void write(Writer out);
+    void write(HttpServletResponse out);
 }

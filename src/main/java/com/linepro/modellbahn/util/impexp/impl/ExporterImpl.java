@@ -3,11 +3,14 @@ package com.linepro.modellbahn.util.impexp.impl;
 import static com.linepro.modellbahn.util.exceptions.Result.attempt;
 import static com.linepro.modellbahn.util.exceptions.ResultCollector.success;
 
-import java.io.Writer;
+import java.io.CharArrayWriter;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SequenceWriter;
@@ -51,7 +54,9 @@ public class ExporterImpl<M extends ItemModel,E extends Item> implements Exporte
     }
 
     @Override
-    public void write(Writer out) {
+    @Transactional
+    public void write(HttpServletResponse response) {
+        CharArrayWriter out = new CharArrayWriter();
         try (SequenceWriter writer = MAPPER.writerFor(modelClass)
                                            .with(schema)
                                            .writeValues(out)) {
@@ -73,6 +78,11 @@ public class ExporterImpl<M extends ItemModel,E extends Item> implements Exporte
                     break;
                 }
             }
+
+            // Use output stream so error handlers can have a go; hopefully all exceptions are thrown before this..
+            writer.flush();
+
+            response.getOutputStream().print(out.toString());
         } catch (ModellBahnException e) {
             throw e;
         } catch (Exception e) {
