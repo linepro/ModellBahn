@@ -5,7 +5,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.when;
 
-import java.io.ByteArrayOutputStream;
+import java.io.CharArrayWriter;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
@@ -22,7 +23,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.mock.web.DelegatingServletOutputStream;
 
 import com.linepro.modellbahn.converter.Mapper;
 import com.linepro.modellbahn.entity.Decoder;
@@ -91,7 +91,7 @@ public class ExporterImplTest {
 
     private final JpaRepository<Decoder,Long> repository;
 
-    private ByteArrayOutputStream os;
+    private CharArrayWriter writer;
 
     private final Mapper<Decoder,DecoderModel> Mapper;  
 
@@ -121,9 +121,9 @@ public class ExporterImplTest {
         when(Mapper.convert(any())).thenReturn(MODEL);
         when(Mapper.get()).thenReturn(MODEL);
 
-        os = new ByteArrayOutputStream();
+        writer = new CharArrayWriter();
 
-        when(response.getOutputStream()).thenReturn(new DelegatingServletOutputStream(os));
+        when(response.getWriter()).thenReturn(new PrintWriter(writer));
 
         exporter = new ExporterImpl(repository, Mapper, generator, DecoderModel.class);
     }
@@ -132,7 +132,7 @@ public class ExporterImplTest {
     public void testWrite() throws Exception {
         exporter.write(response);
 
-        String written = os.toString("UTF-8");
+        String written = new String(writer.toCharArray());
 
         assertEquals(CSV, written);
     }
