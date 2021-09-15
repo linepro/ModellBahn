@@ -1,6 +1,6 @@
 package com.linepro.modellbahn.util.impexp;
 
-import static org.springframework.http.HttpHeaders.ACCEPT_ENCODING;
+import static org.springframework.http.HttpHeaders.ACCEPT_CHARSET;
 import static org.springframework.http.HttpHeaders.CONTENT_ENCODING;
 
 import javax.servlet.http.HttpServletResponse;
@@ -51,7 +51,7 @@ public class DataController {
         @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public void exportCSV(@PathVariable(ApiNames.DATA_TYPE) String type, HttpServletResponse response, @RequestHeader(name=ACCEPT_ENCODING, required=false, defaultValue = EXPORT_CHARSET) String charset) {
+    public void exportCSV(@PathVariable(ApiNames.DATA_TYPE) String type, HttpServletResponse response, @RequestHeader(name=ACCEPT_CHARSET, required=false, defaultValue = EXPORT_CHARSET) String charset) {
         service.exportCSV(type, response, charset);
     }
 
