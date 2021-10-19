@@ -15,7 +15,6 @@ public class DecoderTypFunktionTranscriber implements Transcriber<DecoderTypFunk
         if (isAvailable(source) && isAvailable(destination)) {
             destination.setHersteller(source.getDecoderTyp().getHersteller().getName());
             destination.setBestellNr(source.getDecoderTyp().getBestellNr());
-            destination.setReihe(source.getReihe());
             destination.setFunktion(source.getFunktion());
             destination.setBezeichnung(source.getBezeichnung());
             destination.setProgrammable(source.getProgrammable());

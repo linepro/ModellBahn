@@ -11,11 +11,9 @@ import com.linepro.modellbahn.converter.entity.AntriebMapper;
 import com.linepro.modellbahn.converter.entity.ArtikelMapper;
 import com.linepro.modellbahn.converter.entity.AufbauMapper;
 import com.linepro.modellbahn.converter.entity.BahnverwaltungMapper;
-import com.linepro.modellbahn.converter.entity.DecoderAdressMapper;
 import com.linepro.modellbahn.converter.entity.DecoderCvMapper;
 import com.linepro.modellbahn.converter.entity.DecoderFunktionMapper;
 import com.linepro.modellbahn.converter.entity.DecoderMapper;
-import com.linepro.modellbahn.converter.entity.DecoderTypAdressMapper;
 import com.linepro.modellbahn.converter.entity.DecoderTypCvMapper;
 import com.linepro.modellbahn.converter.entity.DecoderTypFunktionMapper;
 import com.linepro.modellbahn.converter.entity.DecoderTypMapper;
@@ -46,11 +44,9 @@ import com.linepro.modellbahn.converter.entity.ZugTypMapper;
     ArtikelMapper.class, 
     AufbauMapper.class, 
     BahnverwaltungMapper.class, 
-    DecoderAdressMapper.class, 
     DecoderCvMapper.class, 
     DecoderFunktionMapper.class, 
     DecoderMapper.class, 
-    DecoderTypAdressMapper.class, 
     DecoderTypCvMapper.class, 
     DecoderTypFunktionMapper.class, 
     DecoderTypMapper.class, 

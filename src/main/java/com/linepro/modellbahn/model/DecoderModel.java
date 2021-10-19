@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.hateoas.Hateoas.PagedSchema;
+import com.linepro.modellbahn.model.enums.AdressTyp;
 import com.linepro.modellbahn.model.enums.DecoderStatus;
 import com.linepro.modellbahn.model.enums.Konfiguration;
 import com.linepro.modellbahn.model.enums.Stecker;
@@ -48,9 +49,9 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(SnakeCaseStrategy.class)
-@JsonPropertyOrder({ApiNames.DECODER_ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.I_MAX,
-    ApiNames.PROTOKOLL, ApiNames.FAHRSTUFE, ApiNames.GERAUSCH, ApiNames.KONFIGURATION, ApiNames.STECKER, ApiNames.STATUS,
-    ApiNames.ANLEITUNGEN, ApiNames.ADRESSEN, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.DELETED, ApiNames.LINKS })
+@JsonPropertyOrder({ApiNames.DECODER_ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.ARTIKEL_ID, ApiNames.BEZEICHNUNG,
+    ApiNames.I_MAX, ApiNames.PROTOKOLL, ApiNames.FAHRSTUFE, ApiNames.ADRESS, ApiNames.GERAUSCH, ApiNames.KONFIGURATION,
+    ApiNames.STECKER, ApiNames.STATUS, ApiNames.ANLEITUNGEN, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.DECODER)
 @Schema(name = ApiNames.DECODER, description = "Decoder - installed or spare.")
 public class DecoderModel extends SpringdocModel<DecoderModel> implements ItemModel, Comparable<DecoderModel> {
@@ -84,6 +85,18 @@ public class DecoderModel extends SpringdocModel<DecoderModel> implements ItemMo
     @JsonProperty(ApiNames.PROTOKOLL)
     @Schema(description = "Decoder protocol", example = "MFX", required = true)
     private String protokoll;
+
+    @JsonProperty(ApiNames.ADRESS_TYP)
+    @Schema(description = "Address type", accessMode = AccessMode.READ_ONLY)
+    private AdressTyp adressTyp;
+
+    @JsonProperty(ApiNames.ADRESS)
+    @Schema(description = "Digital address", example = "80", required = true)
+    private Integer adress;
+
+    @JsonProperty(ApiNames.SPAN)
+    @Schema(description = "Number of addresses consumed (1-16)", example = "1", accessMode = AccessMode.READ_ONLY)
+    private Integer span;
 
     @JsonProperty(ApiNames.FAHRSTUFE)
     @Schema(description = "Decoder speed steps", example = "27", required = true)
@@ -125,11 +138,6 @@ public class DecoderModel extends SpringdocModel<DecoderModel> implements ItemMo
     @JsonProperty(ApiNames.ANLEITUNGEN)
     @Schema(description = "Instructions URL", example = "http://localhost/Modelbahn/decoderTyp/ESU/62400/anleitungen.pdf", accessMode = AccessMode.READ_ONLY)
     private String anleitungen;
-
-    @SuppressExport
-    @JsonProperty(ApiNames.ADRESSEN)
-    @Schema(implementation = DecoderAdressModel.class, description = "Decoder addresses", accessMode = AccessMode.READ_ONLY)
-    private List<DecoderAdressModel> adressen;
 
     @SuppressExport
     @JsonProperty(ApiNames.CVS)

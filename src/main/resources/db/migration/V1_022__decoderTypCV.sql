@@ -46,7 +46,6 @@ INSERT INTO decoder_typ_cv (deleted, bezeichnung, cv, decoder_typ_id, maximal, m
 INSERT INTO decoder_typ_cv (deleted, bezeichnung, cv, decoder_typ_id, maximal, minimal, werkseinstellung, id) VALUES (FALSE, 'Geräuschlautstärke', 63, 742, 63, 1, 63, 757);
 INSERT INTO decoder_typ_cv (deleted, bezeichnung, cv, decoder_typ_id, maximal, minimal, werkseinstellung, id) VALUES (FALSE, 'Bremssoundschwelle', 64, 742, 63, 1, 7, 758);
 INSERT INTO decoder_typ_cv (deleted, bezeichnung, cv, decoder_typ_id, maximal, minimal, werkseinstellung, id) VALUES (FALSE, 'Speicheroptionen', 73, 742, 7, 0, 3, 759);
-INSERT INTO decoder_typ_cv (deleted, bezeichnung, cv, decoder_typ_id, maximal, minimal, werkseinstellung, id) VALUES (FALSE, 'Märklin Addresse 2', 74, 742, 63, 1, NULL, 760);
 INSERT INTO decoder_typ_cv (deleted, bezeichnung, cv, decoder_typ_id, maximal, minimal, werkseinstellung, id) VALUES (FALSE, 'Märklin Addresse 2', 75, 742, 80, 1, 4, 761);
 INSERT INTO decoder_typ_cv (deleted, bezeichnung, cv, decoder_typ_id, maximal, minimal, werkseinstellung, id) VALUES (FALSE, 'Anfahrspannung Analog AC', 78, 742, 63, 1, 25, 762);
 INSERT INTO decoder_typ_cv (deleted, bezeichnung, cv, decoder_typ_id, maximal, minimal, werkseinstellung, id) VALUES (FALSE, 'Höchstgeschwindigkeit Analog AC', 79, 742, 63, 1, 63, 763);
@@ -67,7 +66,6 @@ INSERT INTO decoder_typ_cv (deleted, bezeichnung, cv, decoder_typ_id, maximal, m
 INSERT INTO decoder_typ_cv (deleted, bezeichnung, cv, decoder_typ_id, maximal, minimal, werkseinstellung, id) VALUES (FALSE, 'Geräuschlautstärke', 63, 782, 63, 1, 63, 797);
 INSERT INTO decoder_typ_cv (deleted, bezeichnung, cv, decoder_typ_id, maximal, minimal, werkseinstellung, id) VALUES (FALSE, 'Bremssoundschwelle', 64, 782, 63, 1, 7, 798);
 INSERT INTO decoder_typ_cv (deleted, bezeichnung, cv, decoder_typ_id, maximal, minimal, werkseinstellung, id) VALUES (FALSE, 'Speicheroptionen', 73, 782, 7, 0, 3, 799);
-INSERT INTO decoder_typ_cv (deleted, bezeichnung, cv, decoder_typ_id, maximal, minimal, werkseinstellung, id) VALUES (FALSE, 'Märklin Addresse 2', 74, 782, 63, 1, NULL, 800);
 INSERT INTO decoder_typ_cv (deleted, bezeichnung, cv, decoder_typ_id, maximal, minimal, werkseinstellung, id) VALUES (FALSE, 'Märklin Addresse 2', 75, 782, 80, 1, 4, 801);
 INSERT INTO decoder_typ_cv (deleted, bezeichnung, cv, decoder_typ_id, maximal, minimal, werkseinstellung, id) VALUES (FALSE, 'Anfahrspannung Analog AC', 78, 782, 63, 1, 25, 802);
 INSERT INTO decoder_typ_cv (deleted, bezeichnung, cv, decoder_typ_id, maximal, minimal, werkseinstellung, id) VALUES (FALSE, 'Höchstgeschwindigkeit Analog AC', 79, 782, 63, 1, 63, 803);

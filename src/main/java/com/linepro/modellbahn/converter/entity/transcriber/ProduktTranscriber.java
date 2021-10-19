@@ -65,15 +65,17 @@ public class ProduktTranscriber implements Transcriber<Produkt, ProduktModel> {
             destination.setGrossansicht(PathMapper.convert(source.getGrossansicht()));
             destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
 
-            if (isAvailable(source.getTeilen())) {
-                destination.setTeilen(source.getTeilen()
-                                            .stream()
-                                            .sorted()
-                                            .map(t -> attempt(() -> teilMapper.convert(t)))
-                                            .collect(success())
-                                            .getValue()
-                                            .orElse(KEIN_TEILEN));
-            }
+            destination.setTeilen(
+                            isAvailable(source.getTeilen()) ?
+                                source.getTeilen()
+                                      .stream()
+                                      .sorted()
+                                      .map(t -> attempt(() -> teilMapper.convert(t)))
+                                      .collect(success())
+                                      .getValue()
+                                      .orElse(KEIN_TEILEN) :
+                                KEIN_TEILEN
+                                );
         }
 
         return destination;

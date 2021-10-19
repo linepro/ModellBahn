@@ -28,7 +28,7 @@ public class DecoderFunktionRequestTranscriber implements Transcriber<DecoderFun
             }
 
             if (destination.getDecoder() != null && destination.getFunktion() == null) {
-                funktionLookup.find(destination.getDecoder().getDecoderTyp(), source.getReihe(), source.getFunktion())
+                funktionLookup.find(destination.getDecoder().getDecoderTyp(), source.getFunktion())
                               .ifPresent(f -> destination.setFunktion(f));
             }
 

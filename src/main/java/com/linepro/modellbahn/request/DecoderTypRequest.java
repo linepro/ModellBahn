@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.model.enums.AdressTyp;
 import com.linepro.modellbahn.model.enums.Konfiguration;
 import com.linepro.modellbahn.model.enums.Stecker;
 
@@ -42,8 +43,8 @@ import lombok.ToString;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(SnakeCaseStrategy.class)
 @JsonPropertyOrder({ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.I_MAX, ApiNames.PROTOKOLL,
-        ApiNames.FAHRSTUFE, ApiNames.GERAUSCH, ApiNames.KONFIGURATION, ApiNames.STECKER, ApiNames.ANLEITUNGEN, ApiNames.ADRESSEN,
-        ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.DELETED, ApiNames.LINKS })
+        ApiNames.FAHRSTUFE, ApiNames.ADRESS_TYP, ApiNames.ADRESS, ApiNames.SPAN, ApiNames.GERAUSCH, ApiNames.KONFIGURATION,
+        ApiNames.STECKER, ApiNames.ANLEITUNGEN, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.DECODER_TYP)
 @Schema(name = ApiNames.DECODER_TYP, description = "Decoder type - template for Decoder.")
 public class DecoderTypRequest implements ItemRequest {
@@ -76,6 +77,18 @@ public class DecoderTypRequest implements ItemRequest {
     @JsonProperty(ApiNames.FAHRSTUFE)
     @Schema(description = "Default speed steps", example = "127", required = true)
     private Integer fahrstufe;
+
+    @JsonProperty(ApiNames.ADRESS_TYP)
+    @Schema(description = "Address type", required = true)
+    private AdressTyp adressTyp;
+
+    @JsonProperty(ApiNames.ADRESS)
+    @Schema(description = "Default digital address", example = "80", required = true)
+    private Integer adress;
+
+    @JsonProperty(ApiNames.SPAN)
+    @Schema(description = "Number of addresses consumed (1-16)", example = "1", required = true)
+    private Integer span;
 
     @JsonProperty(ApiNames.GERAUSCH)
     @Schema(description = "True if decoder supports sound", example = "true", required = true)

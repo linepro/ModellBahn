@@ -1,0 +1,2156 @@
+{
+	"info": {
+		"_postman_id": "c60dc902-c902-441c-a116-cdf87a091b8b",
+		"name": "ModellBahn-manual",
+		"description": "ModellBahn tests that crash newman (out of memory) or don't reliably work except in Runner.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Management (Open)",
+			"item": [
+				{
+					"name": "Conditions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Conditions\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/conditions",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"conditions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Heap Dump",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Heap Dump\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(2000));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/heapdump",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"heapdump"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{basePassword}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{baseUser}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Management (Admin)",
+			"item": [
+				{
+					"name": "Conditions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Conditions\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/conditions",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"conditions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Heap Dump",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Heap Dump\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/heapdump",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"heapdump"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{authPassword}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{authUser}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Import",
+			"item": [
+				{
+					"name": "Achsfolg",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Achsfolg\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "{{csvEncoding}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"contentType": "text/csv",
+									"type": "file",
+									"src": "{{achsfolgCsv}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/data/achsfolg",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"achsfolg"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Antrieb",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Antrieb\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "{{csvEncoding}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"contentType": "text/csv",
+									"type": "file",
+									"src": "{{antriebCsv}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/data/antrieb",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"antrieb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Aufbau",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Aufbau\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "{{csvEncoding}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"contentType": "text/csv",
+									"type": "file",
+									"src": "{{aufbauCsv}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/data/aufbau",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"aufbau"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Bahnverwaltung",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Bahnverwaltung\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "{{csvEncoding}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"contentType": "text/csv",
+									"type": "file",
+									"src": "{{bahnverwaltungCsv}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/data/bahnverwaltung",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"bahnverwaltung"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Epoch",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Epoch\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "{{csvEncoding}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"contentType": "text/csv",
+									"type": "file",
+									"src": "{{epochCsv}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/data/epoch",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"epoch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Gattung",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Gattung\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "{{csvEncoding}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"contentType": "text/csv",
+									"type": "file",
+									"src": "{{gattungCsv}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/data/gattung",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"gattung"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Hersteller",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Hersteller\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "{{csvEncoding}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"contentType": "text/csv",
+									"type": "file",
+									"src": "{{herstellerCsv}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/data/hersteller",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"hersteller"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Kupplung",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Kupplung\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "{{csvEncoding}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"contentType": "text/csv",
+									"type": "file",
+									"src": "{{kupplungCsv}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/data/kupplung",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"kupplung"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Licht",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Licht\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "{{csvEncoding}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"contentType": "text/csv",
+									"type": "file",
+									"src": "{{lichtCsv}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/data/licht",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"licht"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Kategorie",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Kategorie\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "{{csvEncoding}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"contentType": "text/csv",
+									"type": "file",
+									"src": "{{kategorieCsv}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/data/kategorie",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"kategorie"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Massstab",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Kategorie\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "{{csvEncoding}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"contentType": "text/csv",
+									"type": "file",
+									"src": "{{massstabCsv}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/data/massstab",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"massstab"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Motor Typ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Motor Typ\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "{{csvEncoding}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"contentType": "text/csv",
+									"type": "file",
+									"src": "{{motorTypCsv}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/data/motorTyp",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"motorTyp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Protokoll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Protokoll\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "{{csvEncoding}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"contentType": "text/csv",
+									"type": "file",
+									"src": "{{protokollCsv}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/data/protokoll",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"protokoll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sondermodell",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Sondermodell\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "{{csvEncoding}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"contentType": "text/csv",
+									"type": "file",
+									"src": "{{sondermodellCsv}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/data/sondermodell",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"sondermodell"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Spurweite",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Spurweite\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "{{csvEncoding}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"contentType": "text/csv",
+									"type": "file",
+									"src": "{{spurweiteCsv}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/data/spurweite",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"spurweite"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Steuerung",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Steuerung\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "{{csvEncoding}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"contentType": "text/csv",
+									"type": "file",
+									"src": "{{steuerungCsv}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/data/steuerung",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"steuerung"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Zug Typ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Zug Typ\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "{{csvEncoding}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"contentType": "text/csv",
+									"type": "file",
+									"src": "{{zugTypCsv}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/data/zugTyp",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"zugTyp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unter Kategorie",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Unter Kategorie\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "{{csvEncoding}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"contentType": "text/csv",
+									"type": "file",
+									"src": "{{unterKategorieCsv}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/data/unterKategorie",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"unterKategorie"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Vorbild",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Vorbild\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "{{csvEncoding}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"contentType": "text/csv",
+									"type": "file",
+									"src": "{{vorbildCsv}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/data/vorbild",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"vorbild"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Decoder Typ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Decoder Typ\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "{{csvEncoding}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"contentType": "text/csv",
+									"type": "file",
+									"src": "{{decoderTypCsv}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/data/decoderTyp",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"decoderTyp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Decoder Typ Adress",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Decoder Typ Adress\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "{{csvEncoding}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"contentType": "text/csv",
+									"type": "file",
+									"src": "{{decoderTypAdressCsv}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/data/decoderTypAdress",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"decoderTypAdress"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Decoder Typ Cv",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Decoder Typ Cv\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "{{csvEncoding}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"contentType": "text/csv",
+									"type": "file",
+									"src": "{{decoderTypCvCsv}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/data/decoderTypCv",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"decoderTypCv"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Decoder Typ Funktion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Decoder Typ Funktion\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "{{csvEncoding}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"contentType": "text/csv",
+									"type": "file",
+									"src": "{{decoderTypFunktionCsv}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/data/decoderTypFunktion",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"decoderTypFunktion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Produkt",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Produkt\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "{{csvEncoding}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"contentType": "text/csv",
+									"type": "file",
+									"src": "{{produktCsv}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/data/produkt",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"produkt"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Produkt Teil",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Produkt Teil\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "{{csvEncoding}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"contentType": "text/csv",
+									"type": "file",
+									"src": "{{teilCsv}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/data/teil",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"teil"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Decoder",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Decoder\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "{{csvEncoding}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"contentType": "text/csv",
+									"type": "file",
+									"src": "{{decoderCsv}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/data/decoder",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"decoder"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Decoder Adress",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Decoder Adress\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "{{csvEncoding}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"contentType": "text/csv",
+									"type": "file",
+									"src": "{{decoderAdressCsv}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/data/decoderAdress",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"decoderAdress"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Decoder Cv",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Decoder Cv\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "{{csvEncoding}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"contentType": "text/csv",
+									"type": "file",
+									"src": "{{decoderCvCsv}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/data/decoderCv",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"decoderCv"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Decoder Funktion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Decoder Funktion\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "{{csvEncoding}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"contentType": "text/csv",
+									"type": "file",
+									"src": "{{decoderFunktionCsv}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/data/decoderFunktion",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"decoderFunktion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Artikel",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Artikel\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "{{csvEncoding}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"contentType": "text/csv",
+									"type": "file",
+									"src": "{{artikelCsv}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/data/artikel",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"artikel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Anderung",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Anderung\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "{{csvEncoding}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"contentType": "text/csv",
+									"type": "file",
+									"src": "{{anderungCsv}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/data/anderung",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"anderung"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Zug",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Zug\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "{{csvEncoding}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"contentType": "text/csv",
+									"type": "file",
+									"src": "{{zugCsv}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/data/zug",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"zug"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Zug Consist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Zug Consist\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "{{csvEncoding}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"contentType": "text/csv",
+									"type": "file",
+									"src": "{{consistCsv}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/data/consist",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"data",
+								"consist"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "{{basePassword}}",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "{{baseUser}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "proto",
+			"value": "https://"
+		},
+		{
+			"key": "host",
+			"value": "127.0.0.1"
+		},
+		{
+			"key": "port",
+			"value": ":8086"
+		},
+		{
+			"key": "server",
+			"value": "{{proto}}{{host}}{{port}}"
+		},
+		{
+			"key": "root",
+			"value": "{{server}}"
+		},
+		{
+			"key": "api",
+			"value": "{{root}}/api"
+		},
+		{
+			"key": "mgmtPort",
+			"value": ":8087"
+		},
+		{
+			"key": "management",
+			"value": "{{proto}}{{host}}{{mgmtPort}}/management"
+		},
+		{
+			"key": "startRetries",
+			"value": "10"
+		},
+		{
+			"key": "startDelay",
+			"value": "5000"
+		},
+		{
+			"key": "accept",
+			"value": "application/json, application/hal+json"
+		},
+		{
+			"key": "language",
+			"value": "de"
+		},
+		{
+			"key": "maxResponse",
+			"value": 500
+		},
+		{
+			"key": "importFiles",
+			"value": "/D:/Users/JohnG/Development/JohnG/ModellBahn/"
+		},
+		{
+			"key": "csvEncoding",
+			"value": "WINDOWS-1252"
+		},
+		{
+			"key": "achsfolgCsv",
+			"value": "{{importFiles}}achsfolgen.csv"
+		},
+		{
+			"key": "anderungCsv",
+			"value": "{{importFiles}}anderungen.csv"
+		},
+		{
+			"key": "antriebCsv",
+			"value": "{{importFiles}}antrieben.csv"
+		},
+		{
+			"key": "artikelCsv",
+			"value": "{{importFiles}}artikeln.csv"
+		},
+		{
+			"key": "aufbauCsv",
+			"value": "{{importFiles}}aufbauten.csv"
+		},
+		{
+			"key": "bahnverwaltungCsv",
+			"value": "{{importFiles}}bahnverwaltungen.csv"
+		},
+		{
+			"key": "consistCsv",
+			"value": "{{importFiles}}consist.csv"
+		},
+		{
+			"key": "decoderCsv",
+			"value": "{{importFiles}}decoder.csv"
+		},
+		{
+			"key": "decoderAdressCsv",
+			"value": "{{importFiles}}decoderadress.csv"
+		},
+		{
+			"key": "decoderCvCsv",
+			"value": "{{importFiles}}decodercv.csv"
+		},
+		{
+			"key": "decoderFunktionCsv",
+			"value": "{{importFiles}}decoderfunktion.csv"
+		},
+		{
+			"key": "decoderTypCsv",
+			"value": "{{importFiles}}decodertyp.csv"
+		},
+		{
+			"key": "decoderTypAdressCsv",
+			"value": "{{importFiles}}decodertypadress.csv"
+		},
+		{
+			"key": "decoderTypCvCsv",
+			"value": "{{importFiles}}decodertypcv.csv"
+		},
+		{
+			"key": "decoderTypFunktionCsv",
+			"value": "{{importFiles}}decodertypfunktion.csv"
+		},
+		{
+			"key": "epochCsv",
+			"value": "{{importFiles}}epochen.csv"
+		},
+		{
+			"key": "gattungCsv",
+			"value": "{{importFiles}}gattungen.csv"
+		},
+		{
+			"key": "herstellerCsv",
+			"value": "{{importFiles}}herstellern.csv"
+		},
+		{
+			"key": "kategorieCsv",
+			"value": "{{importFiles}}kategorie.csv"
+		},
+		{
+			"key": "kupplungCsv",
+			"value": "{{importFiles}}kupplungen.csv"
+		},
+		{
+			"key": "lichtCsv",
+			"value": "{{importFiles}}lichten.csv"
+		},
+		{
+			"key": "massstabCsv",
+			"value": "{{importFiles}}massstaben.csv"
+		},
+		{
+			"key": "motorTypCsv",
+			"value": "{{importFiles}}motortypen.csv"
+		},
+		{
+			"key": "produktCsv",
+			"value": "{{importFiles}}produkten.csv"
+		},
+		{
+			"key": "protokollCsv",
+			"value": "{{importFiles}}protokollen.csv"
+		},
+		{
+			"key": "sondermodellCsv",
+			"value": "{{importFiles}}sondermodelln.csv"
+		},
+		{
+			"key": "spurweiteCsv",
+			"value": "{{importFiles}}spurweiten.csv"
+		},
+		{
+			"key": "steuerungCsv",
+			"value": "{{importFiles}}steuerungen.csv"
+		},
+		{
+			"key": "teilCsv",
+			"value": "{{importFiles}}produktteilen.csv"
+		},
+		{
+			"key": "unterKategorieCsv",
+			"value": "{{importFiles}}unterkategorien.csv"
+		},
+		{
+			"key": "vorbildCsv",
+			"value": "{{importFiles}}vorbilder.csv"
+		},
+		{
+			"key": "zugCsv",
+			"value": "{{importFiles}}zugen.csv"
+		},
+		{
+			"key": "zugTypCsv",
+			"value": "{{importFiles}}zugtypen.csv"
+		}
+	]
+}

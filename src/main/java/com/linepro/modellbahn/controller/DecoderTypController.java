@@ -19,13 +19,11 @@ import com.linepro.modellbahn.configuration.UserMessage;
 import com.linepro.modellbahn.controller.impl.AbstractItemController;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.controller.impl.ApiPaths;
-import com.linepro.modellbahn.model.DecoderTypAdressModel;
 import com.linepro.modellbahn.model.DecoderTypCvModel;
 import com.linepro.modellbahn.model.DecoderTypFunktionModel;
 import com.linepro.modellbahn.model.DecoderTypModel;
 import com.linepro.modellbahn.model.DecoderTypModel.PagedDecoderTypModel;
 import com.linepro.modellbahn.model.ProduktModel;
-import com.linepro.modellbahn.request.DecoderTypAdressRequest;
 import com.linepro.modellbahn.request.DecoderTypCvRequest;
 import com.linepro.modellbahn.request.DecoderTypFunktionRequest;
 import com.linepro.modellbahn.request.DecoderTypRequest;
@@ -126,52 +124,6 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
         return deleted(service.delete(herstellerStr, bestellNr));
     }
 
-    @PostMapping(path = ApiPaths.ADD_DECODER_TYP_ADRESS, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
-    @Operation(summary = "Adds an Adress to a DecoderTyp", description = "", operationId = "add", tags = { ApiNames.DECODER_TYP }, responses = {
-        @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypAdressModel.class)) }),
-        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
-                })
-
-    public ResponseEntity<?> addAdress(@PathVariable(ApiNames.HERSTELLER) String herstellerStr,
-                    @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @RequestBody DecoderTypAdressRequest request) {
-            return added(service.addAdress(herstellerStr, bestellNr, request));
-    }
-
-    @PutMapping(path = ApiPaths.UPDATE_DECODER_TYP_ADRESS, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
-    @Operation(summary = "Update an Adress of a DecoderTyp", description = "", operationId = "update", tags = { ApiNames.DECODER_TYP }, responses = {
-        @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypAdressModel.class)) }),
-        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
-                })
-    public ResponseEntity<?> updateAdress(@PathVariable(ApiNames.HERSTELLER) String herstellerStr,
-                    @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @PathVariable(ApiNames.INDEX) Integer index,
-                    @RequestBody DecoderTypAdressRequest request) {
-        return updated(service.updateAdress(herstellerStr, bestellNr, index, request));
-   }
-
-    @DeleteMapping(path = ApiPaths.DELETE_DECODER_TYP_ADRESS)
-    @Operation(summary = "Removes an Adress from a DecoderTyp", description = "", operationId = "delete", tags = { ApiNames.DECODER_TYP }, responses = {
-        @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
-        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
-                })
-    public ResponseEntity<?> deleteAdress(@PathVariable(ApiNames.HERSTELLER) String herstellerStr,
-                    @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @PathVariable(ApiNames.INDEX) Integer index) {
-        return deleted(service.deleteAdress(herstellerStr, bestellNr, index));
-    }
-
     @PostMapping(path = ApiPaths.ADD_DECODER_TYP_CV, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Adds a CV to a DecoderTyp", description = "", operationId = "add", tags = { ApiNames.DECODER_TYP }, responses = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypCvModel.class)) }),
@@ -236,8 +188,7 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
 
     @PutMapping(path = ApiPaths.UPDATE_DECODER_TYP_FUNKTION, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Update a Funktion of a DecoderTyp", description = "", operationId = "update", tags = { ApiNames.DECODER_TYP }, responses = {
-        @ApiResponse(responseCode = "202", description = "Successful operation", content = {
-                                    @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypFunktionModel.class)) }),
+        @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderTypFunktionModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -245,10 +196,8 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
                 })
-    public ResponseEntity<?> updateFunktion(@PathVariable(ApiNames.HERSTELLER) String herstellerStr,
-                    @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @PathVariable(ApiNames.REIHE) Integer reihe,
-                    @PathVariable(ApiNames.FUNKTION) String funktion, @RequestBody DecoderTypFunktionRequest request) {
-        return updated(service.updateFunktion(herstellerStr, bestellNr, reihe, funktion, request));
+    public ResponseEntity<?> updateFunktion(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @PathVariable(ApiNames.FUNKTION) String funktion, @RequestBody DecoderTypFunktionRequest request) {
+        return updated(service.updateFunktion(herstellerStr, bestellNr, funktion, request));
     }
 
     @DeleteMapping(path = ApiPaths.DELETE_DECODER_TYP_FUNKTION)
@@ -260,10 +209,8 @@ public class DecoderTypController extends AbstractItemController<DecoderTypModel
         @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
                 })
-    public ResponseEntity<?> deleteFunktion(@PathVariable(ApiNames.HERSTELLER) String herstellerStr,
-                    @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @PathVariable(ApiNames.REIHE) Integer reihe,
-                    @PathVariable(ApiNames.FUNKTION) String funktion) {
-        return deleted(service.deleteFunktion(herstellerStr, bestellNr, reihe, funktion));
+    public ResponseEntity<?> deleteFunktion(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @PathVariable(ApiNames.FUNKTION) String funktion) {
+        return deleted(service.deleteFunktion(herstellerStr, bestellNr, funktion));
     }
 
     @PutMapping(path = ApiPaths.ADD_DECODER_TYP_ANLEITUNGEN, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })

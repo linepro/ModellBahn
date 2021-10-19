@@ -20,7 +20,6 @@ import javax.persistence.NamedEntityGraph;
 import javax.persistence.NamedEntityGraphs;
 import javax.persistence.NamedSubgraph;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -122,7 +121,6 @@ import lombok.experimental.SuperBuilder;
             @NamedAttributeNode(value = "decoderTyp", subgraph = "decoder.decoderTyp"),
             @NamedAttributeNode(value = "artikel", subgraph = "decoder.artikel"),
             @NamedAttributeNode(value = "protokoll", subgraph = "decoder.protokoll"),
-            @NamedAttributeNode(value = "adressen", subgraph = "decoder.adressen"),
             @NamedAttributeNode(value = "cvs", subgraph = "decoder.cvs"),
             @NamedAttributeNode(value = "funktionen", subgraph = "decoder.funktionen")
         },
@@ -149,13 +147,6 @@ import lombok.experimental.SuperBuilder;
                 attributeNodes = {
                     @NamedAttributeNode(value = "name")
             }),
-            @NamedSubgraph(name = "decoder.adressen",
-                attributeNodes = {
-                    @NamedAttributeNode("id"),
-                    @NamedAttributeNode(value = "typ", subgraph = "decoder.adressTyp"),
-                    @NamedAttributeNode(value = "adress"),
-                    @NamedAttributeNode("deleted")
-                }),
             @NamedSubgraph(name = "decoder.cvs",
                 attributeNodes = {
                     @NamedAttributeNode("id"),
@@ -188,7 +179,6 @@ import lombok.experimental.SuperBuilder;
                 }),
             @NamedSubgraph(name = "decoder.funktion",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "reihe"),
                     @NamedAttributeNode(value = "funktion"),
                     @NamedAttributeNode(value = "bezeichnung"),
                     @NamedAttributeNode(value = "programmable")
@@ -206,7 +196,7 @@ public class Decoder extends ItemImpl implements Comparable<Decoder> {
     @Pattern(regexp = "^" + DBNames.ID_PATTERN + "$", message = "{com.linepro.modellbahn.validator.constraints.decoderId.invalid}")
     private String decoderId;
 
-    @OneToOne(fetch = FetchType.LAZY, targetEntity = Artikel.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Artikel.class, optional = true)
     @JoinColumn(name = DBNames.ARTIKEL_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER + "_fk3"))
     private Artikel artikel;
 
@@ -217,8 +207,7 @@ public class Decoder extends ItemImpl implements Comparable<Decoder> {
 
     /** The typ. */
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class, optional = false)
-    @JoinColumn(name = DBNames.DECODER_TYP_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER
-                    + "_fk1"))
+    @JoinColumn(name = DBNames.DECODER_TYP_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.DECODER + "_fk1"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.decoderTyp.notnull}")
     private DecoderTyp decoderTyp;
 
@@ -228,6 +217,10 @@ public class Decoder extends ItemImpl implements Comparable<Decoder> {
                     + "_fk2"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.protokoll.notnull}")
     private Protokoll protokoll;
+
+    /** The adress. */
+    @Column(name = DBNames.ADRESS, nullable = false)
+    private Integer adress;
 
     /** The fahrstufe. */
     @Column(name = DBNames.FAHRSTUFE)
@@ -258,11 +251,6 @@ public class Decoder extends ItemImpl implements Comparable<Decoder> {
     @Column(name = DBNames.STATUS, nullable = false, length = 11)
     private DecoderStatus status;
 
-    /** The adressen. */
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.DECODER, targetEntity = DecoderAdress.class, orphanRemoval = true)
-    @Builder.Default
-    private Set<DecoderAdress> adressen = new HashSet<>();
-
     /** The cvs. */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.DECODER, targetEntity = DecoderCv.class, orphanRemoval = true)
     @Builder.Default
@@ -285,18 +273,6 @@ public class Decoder extends ItemImpl implements Comparable<Decoder> {
                 status = DecoderStatus.INSTALIERT;
             }
         }
-    }
-
-    public void addAdress(DecoderAdress adress) {
-        if (adressen == null) {
-            adressen = new HashSet<>();
-        }
-        adress.setDecoder(this);
-        adressen.add(adress);
-    }
-
-    public void removeAdress(DecoderAdress adress) {
-        adressen.remove(adress);
     }
 
     public void addCv(DecoderCv cv) {
@@ -359,7 +335,6 @@ public class Decoder extends ItemImpl implements Comparable<Decoder> {
                         .append("protokoll", protokoll)
                         .append("fahrstufe", fahrstufe)
                         .append("status", status)
-                        .append("adressen", adressen)
                         .append("cvs", cvs)
                         .append("funktionen", funktionen)
                         .toString();

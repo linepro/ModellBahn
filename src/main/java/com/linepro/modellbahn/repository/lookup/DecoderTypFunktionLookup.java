@@ -20,17 +20,17 @@ public class DecoderTypFunktionLookup implements Lookup<DecoderTypFunktion, Deco
 
     private final DecoderTypFunktionRepository repository;
 
-    public Optional<DecoderTypFunktion> find(String hersteller, String bestellNr, Integer reihe, String funktion) {
-        if (StringUtils.hasText(hersteller) && StringUtils.hasText(bestellNr) && reihe != null && StringUtils.hasText(funktion)) {
-            return repository.findByFunktion(hersteller, bestellNr, reihe, funktion);
+    public Optional<DecoderTypFunktion> find(String hersteller, String bestellNr, String funktion) {
+        if (StringUtils.hasText(hersteller) && StringUtils.hasText(bestellNr) && StringUtils.hasText(funktion)) {
+            return repository.findByFunktion(hersteller, bestellNr, funktion);
         }
 
         return Optional.empty();
     }
 
-    public Optional<DecoderTypFunktion> find(DecoderTyp decoderTyp, Integer reihe, String funktion) {
+    public Optional<DecoderTypFunktion> find(DecoderTyp decoderTyp, String funktion) {
         if (decoderTyp != null && decoderTyp.getHersteller() != null) {
-            return find(decoderTyp.getHersteller().getName(), decoderTyp.getBestellNr(), reihe, funktion);
+            return find(decoderTyp.getHersteller().getName(), decoderTyp.getBestellNr(), funktion);
         }
 
         return Optional.empty();
@@ -39,7 +39,7 @@ public class DecoderTypFunktionLookup implements Lookup<DecoderTypFunktion, Deco
     @Override
     public Optional<DecoderTypFunktion> find(DecoderTypFunktion item) {
         if (item != null && item.getDecoderTyp() != null) {
-            return find(item.getDecoderTyp(), item.getReihe(), item.getFunktion());
+            return find(item.getDecoderTyp(), item.getFunktion());
         }
 
         return Optional.empty();
@@ -48,7 +48,7 @@ public class DecoderTypFunktionLookup implements Lookup<DecoderTypFunktion, Deco
     @Override
     public Optional<DecoderTypFunktion> find(DecoderTypFunktionModel model) {
         if (model != null) {
-            return find(model.getHersteller(), model.getBestellNr(), model.getReihe(), model.getFunktion());
+            return find(model.getHersteller(), model.getBestellNr(), model.getFunktion());
         }
 
         return Optional.empty();

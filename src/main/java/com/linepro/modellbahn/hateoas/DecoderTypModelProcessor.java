@@ -4,7 +4,6 @@ import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 import static com.linepro.modellbahn.controller.impl.ApiNames.BESTELL_NR;
 import static com.linepro.modellbahn.controller.impl.ApiNames.HERSTELLER;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_DECODER_TYP;
-import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_DECODER_TYP_ADRESS;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_DECODER_TYP_ANLEITUNGEN;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_DECODER_TYP_CV;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_DECODER_TYP_FUNKTION;
@@ -13,7 +12,6 @@ import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_DECODER_TYP;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.SEARCH_DECODER_TYP;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.UPDATE_DECODER_TYP;
 import static com.linepro.modellbahn.controller.impl.ApiRels.ADD;
-import static com.linepro.modellbahn.controller.impl.ApiRels.ADRESSEN;
 import static com.linepro.modellbahn.controller.impl.ApiRels.ANLEITUNGEN;
 import static com.linepro.modellbahn.controller.impl.ApiRels.CVS;
 import static com.linepro.modellbahn.controller.impl.ApiRels.DELETE;
@@ -47,26 +45,20 @@ public class DecoderTypModelProcessor extends ModelProcessorImpl<DecoderTypModel
                     { BESTELL_NR, ((DecoderTypModel) m).getBestellNr() },
                     });
 
-    private final DecoderTypAdressModelProcessor adressProcessor;
-
     private final DecoderTypCvModelProcessor cvProcessor;
 
     private final DecoderTypFunktionModelProcessor funktionProcessor;
 
     @Autowired
-    public DecoderTypModelProcessor(DecoderTypAdressModelProcessor adressProcessor, DecoderTypCvModelProcessor cvProcessor,
-                    DecoderTypFunktionModelProcessor funktionProcessor) {
+    public DecoderTypModelProcessor(DecoderTypCvModelProcessor cvProcessor, DecoderTypFunktionModelProcessor funktionProcessor) {
         super(new LinkTemplateImpl(ADD, ADD_DECODER_TYP, EXTRACTOR),
               new LinkTemplateImpl(SELF, GET_DECODER_TYP, EXTRACTOR),
               new LinkTemplateImpl(SEARCH, SEARCH_DECODER_TYP, EXTRACTOR),
               new LinkTemplateImpl(DELETE, DELETE_DECODER_TYP, EXTRACTOR, (m) -> BooleanUtils.isFalse(((SoftDelete) m).getDeleted())),
               new LinkTemplateImpl(UPDATE, UPDATE_DECODER_TYP, EXTRACTOR),
               new LinkTemplateImpl(ANLEITUNGEN, ADD_DECODER_TYP_ANLEITUNGEN, EXTRACTOR),
-              new LinkTemplateImpl(ADRESSEN, ADD_DECODER_TYP_ADRESS, EXTRACTOR),
               new LinkTemplateImpl(CVS, ADD_DECODER_TYP_CV, EXTRACTOR),
               new LinkTemplateImpl(FUNKTIONEN, ADD_DECODER_TYP_FUNKTION, EXTRACTOR));
-
-        this.adressProcessor = adressProcessor;
 
         this.cvProcessor = cvProcessor;
 
@@ -75,10 +67,6 @@ public class DecoderTypModelProcessor extends ModelProcessorImpl<DecoderTypModel
 
     @Override
     public DecoderTypModel process(DecoderTypModel model) {
-        if (!CollectionUtils.isEmpty(model.getAdressen())) {
-            model.getAdressen().forEach(a -> adressProcessor.process(a));
-        }
-
         if (!CollectionUtils.isEmpty(model.getCvs())) {
             model.getCvs().forEach(c -> cvProcessor.process(c));
         }

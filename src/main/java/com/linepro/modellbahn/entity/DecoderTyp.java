@@ -35,6 +35,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.Range;
 
 import com.linepro.modellbahn.entity.impl.ItemImpl;
+import com.linepro.modellbahn.model.enums.AdressTyp;
 import com.linepro.modellbahn.model.enums.Konfiguration;
 import com.linepro.modellbahn.model.enums.Stecker;
 import com.linepro.modellbahn.persistence.DBNames;
@@ -105,7 +106,6 @@ import lombok.experimental.SuperBuilder;
         attributeNodes = {
             @NamedAttributeNode(value = "hersteller", subgraph = "decoderTyp.hersteller"),
             @NamedAttributeNode(value = "protokoll", subgraph = "decoderTyp.protokoll"),
-            @NamedAttributeNode(value = "adressen", subgraph = "decoderTyp.adressen"),
             @NamedAttributeNode(value = "cvs", subgraph = "decoderTyp.cvs"),
             @NamedAttributeNode(value = "funktionen", subgraph = "decoderTyp.funktionen")
         }, subgraphs = {
@@ -116,15 +116,6 @@ import lombok.experimental.SuperBuilder;
              @NamedSubgraph(name = "decoderTyp.protokoll",
                 attributeNodes = {
                     @NamedAttributeNode(value = "name")
-             }),
-             @NamedSubgraph(name = "decoderTyp.adressen",
-                 attributeNodes = {
-                     @NamedAttributeNode(value = "position"),
-                     @NamedAttributeNode(value = "bezeichnung"),
-                     @NamedAttributeNode(value = "adressTyp"),
-                     @NamedAttributeNode(value = "span"),
-                     @NamedAttributeNode(value = "adress"),
-                     @NamedAttributeNode(value = "deleted")
              }),
              @NamedSubgraph(name = "decoderTyp.cvs",
                  attributeNodes = {
@@ -137,7 +128,6 @@ import lombok.experimental.SuperBuilder;
              }),
              @NamedSubgraph(name = "decoderTyp.funktionen",
                  attributeNodes = {
-                     @NamedAttributeNode(value = "reihe"),
                      @NamedAttributeNode(value = "funktion"),
                      @NamedAttributeNode(value = "bezeichnung"),
                      @NamedAttributeNode(value = "programmable"),
@@ -181,6 +171,22 @@ public class DecoderTyp extends ItemImpl implements Comparable<DecoderTyp> {
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.protokoll.notnull}")
     private Protokoll protokoll;
 
+    /** The adressTyp. */
+    @Enumerated(EnumType.STRING)
+    @Column(name = DBNames.ADRESS_TYP, nullable = false, length = 14)
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.decoderTyp.notnull}")
+    private AdressTyp adressTyp;
+
+    /** The span. */
+    @Column(name = DBNames.SPAN)
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.span.notnull}")
+    @Range(min=1, max=32, message = "{com.linepro.modellbahn.validator.constraints.span.range}")
+    private Integer span;
+
+    /** The adress. */
+    @Column(name = DBNames.ADRESS)
+    private Integer adress;
+
     /** The fahrstufe. */
     @Column(name = DBNames.FAHRSTUFE)
     @Fahrstufe
@@ -207,11 +213,6 @@ public class DecoderTyp extends ItemImpl implements Comparable<DecoderTyp> {
     @Convert(converter = PathConverter.class)
     private Path anleitungen;
 
-    /** The adressen. */
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "decoderTyp", targetEntity = DecoderTypAdress.class, orphanRemoval = true)
-    @Builder.Default
-    private Set<DecoderTypAdress> adressen = new HashSet<>();
-
     /** The cvs. */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "decoderTyp", targetEntity = DecoderTypCv.class, orphanRemoval = true)
     @Builder.Default
@@ -221,20 +222,6 @@ public class DecoderTyp extends ItemImpl implements Comparable<DecoderTyp> {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "decoderTyp", targetEntity = DecoderTypFunktion.class, orphanRemoval = true)
     @Builder.Default
     private Set<DecoderTypFunktion> funktionen = new HashSet<>();
-
-    public void addAdress(DecoderTypAdress adress) {
-        if (adressen == null) {
-            adressen = new HashSet<>();
-        }
-        adress.setDecoderTyp(this);
-        adress.setPosition(getAdressen().size() + 1);
-        adress.setDeleted(false);
-        adressen.add(adress);
-    }
-
-    public void removeAdress(DecoderTypAdress adress) {
-        adressen.remove(adress);
-    }
 
     public void addCv(DecoderTypCv cv) {
         if (cvs == null) {
@@ -309,7 +296,6 @@ public class DecoderTyp extends ItemImpl implements Comparable<DecoderTyp> {
             .append("konfiguration",  konfiguration)
             .append("stecker",  stecker)
             .append("anleitungen",  anleitungen)
-            .append("adressen", adressen)
             .append("cvs", cvs)
             .append("funktionen", funktionen)
             .toString();

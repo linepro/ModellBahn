@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import com.linepro.modellbahn.converter.Transcriber;
 import com.linepro.modellbahn.entity.Artikel;
-import com.linepro.modellbahn.repository.lookup.DecoderLookup;
 import com.linepro.modellbahn.repository.lookup.KupplungLookup;
 import com.linepro.modellbahn.repository.lookup.LichtLookup;
 import com.linepro.modellbahn.repository.lookup.MotorTypLookup;
@@ -29,8 +28,6 @@ public class ArtikelRequestTranscriber implements Transcriber<ArtikelRequest, Ar
 
     private final KupplungLookup kupplungLookup;
 
-    private final DecoderLookup decoderLookup;
-
     @Override
     public Artikel apply(ArtikelRequest source, Artikel destination) {
         if (isAvailable(source) && isAvailable(destination)) {
@@ -45,7 +42,6 @@ public class ArtikelRequestTranscriber implements Transcriber<ArtikelRequest, Ar
             destination.setMotorTyp(motorTypLookup.find(source.getMotorTyp()).orElse(null));
             destination.setLicht(lichtLookup.find(source.getLicht()).orElse(null));
             destination.setKupplung(kupplungLookup.find(source.getKupplung()).orElse(null));
-            destination.setDecoder(decoderLookup.find(source.getDecoder()).orElse(null));
             destination.setBezeichnung(source.getBezeichnung());
             destination.setPreis(source.getPreis());
             destination.setMenge(source.getMenge());

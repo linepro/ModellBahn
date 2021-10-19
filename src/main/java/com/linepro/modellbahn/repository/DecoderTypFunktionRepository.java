@@ -24,12 +24,11 @@ public interface DecoderTypFunktionRepository extends ItemRepository<DecoderTypF
                    "FROM   decoderTypFunktion f " +
                    "WHERE  f.decoderTyp.hersteller.name = :" + ApiNames.HERSTELLER + " " + 
                    "AND    f.decoderTyp.bestellNr       = :" + ApiNames.BESTELL_NR + " " +
-                   "AND    f.reihe                      = :" + ApiNames.REIHE + " " +
                    "AND    f.funktion                   = :" + ApiNames.FUNKTION,
            nativeQuery = false)
     //@formatter:on
     @EntityGraph(value = "decoderTypFunktion", type = EntityGraphType.FETCH)
-    Optional<DecoderTypFunktion> findByFunktion(@Param(ApiNames.HERSTELLER) String herstellerStr, @Param(ApiNames.BESTELL_NR) String bestellNr, @Param(ApiNames.REIHE) Integer reihe, @Param(ApiNames.FUNKTION) String funktion);
+    Optional<DecoderTypFunktion> findByFunktion(@Param(ApiNames.HERSTELLER) String herstellerStr, @Param(ApiNames.BESTELL_NR) String bestellNr, @Param(ApiNames.FUNKTION) String funktion);
 
     @EntityGraph(value = "decoderTypFunktion", type = EntityGraphType.FETCH)
     Page<DecoderTypFunktion> findAll(Pageable pageable);

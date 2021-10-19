@@ -15,7 +15,6 @@ INSERT INTO decoder_cv (deleted, cv_id, decoder_id, wert, id) VALUES (FALSE, 756
 INSERT INTO decoder_cv (deleted, cv_id, decoder_id, wert, id) VALUES (FALSE, 757, 1376, 63, 1391);
 INSERT INTO decoder_cv (deleted, cv_id, decoder_id, wert, id) VALUES (FALSE, 758, 1376, 7, 1392);
 INSERT INTO decoder_cv (deleted, cv_id, decoder_id, wert, id) VALUES (FALSE, 759, 1376, 3, 1393);
-INSERT INTO decoder_cv (deleted, cv_id, decoder_id, wert, id) VALUES (FALSE, 760, 1376, NULL, 1394);
 INSERT INTO decoder_cv (deleted, cv_id, decoder_id, wert, id) VALUES (FALSE, 761, 1376, 4, 1395);
 INSERT INTO decoder_cv (deleted, cv_id, decoder_id, wert, id) VALUES (FALSE, 762, 1376, 25, 1396);
 INSERT INTO decoder_cv (deleted, cv_id, decoder_id, wert, id) VALUES (FALSE, 763, 1376, 63, 1397);

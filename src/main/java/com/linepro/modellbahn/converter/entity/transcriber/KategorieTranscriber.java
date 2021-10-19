@@ -26,15 +26,16 @@ public class KategorieTranscriber extends NamedTranscriber<Kategorie, KategorieM
         if (isAvailable(source) && isAvailable(destination)) {
             destination = super.apply(source, destination);
 
-            if (isAvailable(source.getUnterKategorien())) {
-                destination.setUnterKategorien(source.getUnterKategorien()
-                                                     .stream()
-                                                     .sorted()
-                                                     .map(u -> attempt(() -> unterKategorieMapper.convert(u)))
-                                                     .collect(success())
-                                                     .getValue()
-                                                     .orElse(KEIN_UNTER_KATEGORIE));
-            }
+            destination.setUnterKategorien(isAvailable(source.getUnterKategorien()) ?
+                            source.getUnterKategorien()
+                                       .stream()
+                                       .sorted()
+                                       .map(u -> attempt(() -> unterKategorieMapper.convert(u)))
+                                       .collect(success())
+                                       .getValue()
+                                       .orElse(KEIN_UNTER_KATEGORIE) :
+                            KEIN_UNTER_KATEGORIE
+                            );
         }
 
         return destination;

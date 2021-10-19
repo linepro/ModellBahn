@@ -1,2 +1,2 @@
-hersteller,bestellNr,reihe,funktion,bezeichnung,programmable,deleted
-ESU,66666,1,F0,"Funktion 0",false,false
+hersteller,bestellNr,funktion,bezeichnung,programmable,deleted
+ESU,66666,F0,"Funktion 0",false,false

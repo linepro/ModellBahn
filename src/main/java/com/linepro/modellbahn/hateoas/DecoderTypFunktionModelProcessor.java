@@ -4,7 +4,6 @@ import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 import static com.linepro.modellbahn.controller.impl.ApiNames.BESTELL_NR;
 import static com.linepro.modellbahn.controller.impl.ApiNames.FUNKTION;
 import static com.linepro.modellbahn.controller.impl.ApiNames.HERSTELLER;
-import static com.linepro.modellbahn.controller.impl.ApiNames.REIHE;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_DECODER_TYP_FUNKTION;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.DELETE_DECODER_TYP_FUNKTION;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_DECODER_TYP;
@@ -36,7 +35,6 @@ public class DecoderTypFunktionModelProcessor extends ModelProcessorImpl<Decoder
     private static final FieldsExtractor EXTRACTOR =(m) -> MapUtils.putAll(new HashMap<String,Object>(), new String[][] { 
         { HERSTELLER, ((DecoderTypFunktionModel) m).getHersteller() }, 
         { BESTELL_NR, ((DecoderTypFunktionModel) m).getBestellNr() }, 
-        { REIHE, String.valueOf(((DecoderTypFunktionModel) m).getReihe()) }, 
         { FUNKTION, ((DecoderTypFunktionModel) m).getFunktion() } 
         });
 

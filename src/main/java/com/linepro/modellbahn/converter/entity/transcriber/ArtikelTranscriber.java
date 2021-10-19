@@ -12,10 +12,12 @@ import org.springframework.util.StringUtils;
 import com.linepro.modellbahn.converter.PathMapper;
 import com.linepro.modellbahn.converter.Transcriber;
 import com.linepro.modellbahn.converter.entity.AnderungMapper;
+import com.linepro.modellbahn.converter.entity.DecoderMapper;
 import com.linepro.modellbahn.converter.entity.ProduktMapper;
 import com.linepro.modellbahn.entity.Artikel;
 import com.linepro.modellbahn.model.AnderungModel;
 import com.linepro.modellbahn.model.ArtikelModel;
+import com.linepro.modellbahn.model.DecoderModel;
 import com.linepro.modellbahn.model.ProduktModel;
 
 import lombok.RequiredArgsConstructor;
@@ -25,7 +27,11 @@ public class ArtikelTranscriber implements Transcriber<Artikel, ArtikelModel> {
 
     private static final ArrayList<AnderungModel> KEIN_ANDERUNGEN = new ArrayList<>();
 
+    private static final ArrayList<DecoderModel> KEIN_DECODERS = new ArrayList<>();
+
     private final AnderungMapper anderungMapper;
+
+    private final DecoderMapper decoderMapper;
 
     private final ProduktMapper produktMapper;
 
@@ -53,12 +59,13 @@ public class ArtikelTranscriber implements Transcriber<Artikel, ArtikelModel> {
             destination.setAufbau(produkt.getAufbau());
             destination.setAbbildung(source.getAbbildung() != null ? pathMapper.convert(source.getAbbildung()) : produkt.getAbbildung());
             destination.setGrossansicht(source.getGrossansicht() != null ? pathMapper.convert(source.getGrossansicht()) : produkt.getGrossansicht());
+            destination.setAnleitungen(produkt.getAnleitungen());
+            destination.setExplosionszeichnung(produkt.getExplosionszeichnung());
             destination.setStatus(source.getStatus());
             destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
             destination.setLicht(source.getLicht() != null ? getCode(source.getLicht()) : produkt.getLicht());
             destination.setKupplung(source.getKupplung() != null ? getCode(source.getKupplung()) : produkt.getKupplung());
             destination.setSteuerung(source.getSteuerung() != null ? getCode(source.getSteuerung()) : produkt.getSteuerung());
-            destination.setDecoder(Optional.ofNullable(source.getDecoder()).map(d -> d.getDecoderId()).orElse(null));
             destination.setMotorTyp(source.getMotorTyp() != null ? getCode(source.getMotorTyp()) : produkt.getMotorTyp());
             destination.setKaufdatum(source.getKaufdatum());
             destination.setWahrung(source.getWahrung());
@@ -69,15 +76,28 @@ public class ArtikelTranscriber implements Transcriber<Artikel, ArtikelModel> {
             destination.setBeladung(source.getBeladung());
             destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
 
-            if (isAvailable(source.getAnderungen())) {
-               destination.setAnderungen(source.getAnderungen()
-                                                .stream()
-                                                .sorted()
-                                                .map(a -> attempt(() -> anderungMapper.convert(a)))
-                                                .collect(success())
-                                                .getValue()
-                                                .orElse(KEIN_ANDERUNGEN));
-            }
+            destination.setAnderungen(
+                            isAvailable(source.getAnderungen()) ?
+                                source.getAnderungen()
+                                      .stream()
+                                      .sorted()
+                                      .map(a -> attempt(() -> anderungMapper.convert(a)))
+                                      .collect(success())
+                                      .getValue()
+                                      .orElse(KEIN_ANDERUNGEN) :
+                                KEIN_ANDERUNGEN
+                                );
+
+            destination.setDecoders(
+                            isAvailable(source.getDecoders()) ?
+                                source.getDecoders()
+                                      .stream()
+                                      .map(d -> attempt(() -> decoderMapper.convert(d)))
+                                      .collect(success())
+                                      .getValue()
+                                      .orElse(KEIN_DECODERS) :
+                                KEIN_DECODERS
+                                );
         }
 
         return destination;

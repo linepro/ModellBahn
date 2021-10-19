@@ -29,6 +29,16 @@ public interface DecoderCvRepository extends ItemRepository<DecoderCv> {
     @EntityGraph(value = "decoderCv", type = EntityGraphType.FETCH)
     Optional<DecoderCv>findByCv(@Param(ApiNames.DECODER_ID) String decoderId, @Param(ApiNames.CV) Integer cv);
 
+    //@formatter:off
+    @Query(value = "SELECT c " + 
+                   "FROM   decoderCv c " + 
+                   "WHERE  c.decoder.decoderId = :" + ApiNames.DECODER_ID + " " +
+                   "AND    c.cv.bezeichnung    = :" + ApiNames.BEZEICHNUNG,
+           nativeQuery = false) 
+    //@formatter:on
+    @EntityGraph(value = "decoderCv", type = EntityGraphType.FETCH)
+    Optional<DecoderCv>findByBezeichnung(@Param(ApiNames.DECODER_ID) String decoderId, @Param(ApiNames.BEZEICHNUNG) String bezeichnung);
+
     @EntityGraph(value = "decoderCv", type = EntityGraphType.FETCH)
     Page<DecoderCv> findAll(Pageable pageable);
 }
