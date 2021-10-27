@@ -110,7 +110,7 @@
         <guava.version>31.0.1-jre</guava.version>
         <jackson.version>2.12.3</jackson.version>
         <junidecode.version>0.4.1</junidecode.version>
-        <libphonenumber.version>8.12.33</libphonenumber.version>
+        <libphonenumber.version>8.12.36</libphonenumber.version>
         <log4j.version>2.14.1</log4j.version>
         <logstash-logback-encoder.version>6.6</logstash-logback-encoder.version>
         <springdoc-openapi.version>1.5.10</springdoc-openapi.version>
