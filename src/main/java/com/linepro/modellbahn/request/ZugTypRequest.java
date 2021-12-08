@@ -1,7 +1,6 @@
 package com.linepro.modellbahn.request;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -37,8 +36,7 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(SnakeCaseStrategy.class)
-@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.ZUG_TYP)
+@JsonPropertyOrder({ ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED })
 @Schema(name = ApiNames.ZUG_TYP, description = "Type of train.")
 public class ZugTypRequest implements NamedItemRequest {
 

@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -44,8 +43,7 @@ import lombok.ToString;
 @JsonNaming(SnakeCaseStrategy.class)
 @JsonPropertyOrder({ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.I_MAX, ApiNames.PROTOKOLL,
         ApiNames.FAHRSTUFE, ApiNames.ADRESS_TYP, ApiNames.ADRESS, ApiNames.SPAN, ApiNames.GERAUSCH, ApiNames.KONFIGURATION,
-        ApiNames.STECKER, ApiNames.ANLEITUNGEN, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.DECODER_TYP)
+        ApiNames.STECKER, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.DELETED })
 @Schema(name = ApiNames.DECODER_TYP, description = "Decoder type - template for Decoder.")
 public class DecoderTypRequest implements ItemRequest {
 

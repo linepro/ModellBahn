@@ -2,7 +2,6 @@ package com.linepro.modellbahn.request;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -38,8 +37,7 @@ import lombok.ToString;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(SnakeCaseStrategy.class)
 @JsonPropertyOrder({ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.TEIL_HERSTELLER, ApiNames.TEIL_BESTELL_NR, ApiNames.BEZEICHNUNG,
-    ApiNames.KATEGORIE, ApiNames.UNTER_KATEGORIE, ApiNames.MENGE, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.TEILEN)
+    ApiNames.KATEGORIE, ApiNames.UNTER_KATEGORIE, ApiNames.MENGE, ApiNames.DELETED })
 @Schema(name = ApiNames.TEIL, description = "Part of product (spares for rolling stock - contents for set &c).")
 public class ProduktTeilRequest implements ItemRequest {
 

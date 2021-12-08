@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -46,8 +45,7 @@ import lombok.ToString;
     ApiNames.UNTER_KATEGORIE, ApiNames.LANGE, ApiNames.MASSSTAB, ApiNames.SPURWEITE, ApiNames.EPOCH, ApiNames.BAHNVERWALTUNG, ApiNames.GATTUNG,
     ApiNames.BETREIBSNUMMER, ApiNames.ACHSFOLG, ApiNames.SONDERMODELL, ApiNames.AUFBAU, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.STEUERUNG,
     ApiNames.MOTOR_TYP, ApiNames.KAUFDATUM, ApiNames.WAHRUNG, ApiNames.PREIS, ApiNames.MENGE, ApiNames.VERBLEIBENDE, ApiNames.ANMERKUNG,
-    ApiNames.BELADUNG, ApiNames.STATUS, ApiNames.ANDERUNGEN, ApiNames.ABBILDUNG, ApiNames.GROSSANSICHT, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.ARTIKEL)
+    ApiNames.BELADUNG, ApiNames.STATUS, ApiNames.DELETED })
 @Schema(name = ApiNames.ARTIKEL, description = "An article - may differ from product because of modificiations")
 public class ArtikelRequest implements ItemRequest {
 

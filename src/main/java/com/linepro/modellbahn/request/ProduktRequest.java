@@ -2,12 +2,10 @@ package com.linepro.modellbahn.request;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -17,7 +15,6 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
-import com.linepro.modellbahn.util.impexp.impl.SuppressExport;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -46,9 +43,7 @@ import lombok.ToString;
 @JsonPropertyOrder({ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.KATEGORIE, ApiNames.UNTER_KATEGORIE,
     ApiNames.LANGE, ApiNames.MASSSTAB, ApiNames.SPURWEITE, ApiNames.EPOCH, ApiNames.BAHNVERWALTUNG, ApiNames.GATTUNG, ApiNames.BETREIBSNUMMER,
     ApiNames.BAUZEIT, ApiNames.ACHSFOLG, ApiNames.SONDERMODELL, ApiNames.AUFBAU, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.STEUERUNG,
-    ApiNames.DECODER_HERSTELLER, ApiNames.DECODER_BESTELL_NR, ApiNames.MOTOR_TYP, ApiNames.ANMERKUNG, ApiNames.ANLEITUNGEN,
-    ApiNames.EXPLOSIONSZEICHNUNG, ApiNames.TEILEN, ApiNames.ABBILDUNG, ApiNames.GROSSANSICHT, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.PRODUKT)
+    ApiNames.DECODER_HERSTELLER, ApiNames.DECODER_BESTELL_NR, ApiNames.MOTOR_TYP, ApiNames.ANMERKUNG, ApiNames.DELETED })
 @Schema(name = ApiNames.PRODUKT, description = "Product - template for article.")
 public class ProduktRequest implements ItemRequest {
     /**
@@ -148,11 +143,6 @@ public class ProduktRequest implements ItemRequest {
     @JsonProperty(ApiNames.ANMERKUNG)
     @Schema(description = "Remarks", example = "Ex set")
     private String anmerkung;
-
-    @SuppressExport
-    @JsonProperty(ApiNames.TEILEN)
-    @Schema(implementation = ProduktTeilRequest.class, description = "Product components", accessMode = AccessMode.READ_ONLY)
-    private List<ProduktTeilRequest> teilen;
 
     @JsonProperty(ApiNames.DELETED)
     @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)

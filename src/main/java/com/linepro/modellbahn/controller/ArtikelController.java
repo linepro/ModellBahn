@@ -23,6 +23,7 @@ import com.linepro.modellbahn.model.AnderungModel;
 import com.linepro.modellbahn.model.ArtikelModel;
 import com.linepro.modellbahn.model.ArtikelModel.PagedArtikelModel;
 import com.linepro.modellbahn.request.AnderungRequest;
+import com.linepro.modellbahn.request.ArtikelDecoderRequest;
 import com.linepro.modellbahn.request.ArtikelRequest;
 import com.linepro.modellbahn.service.criterion.ArtikelCriterion;
 import com.linepro.modellbahn.service.criterion.PageCriteria;
@@ -151,7 +152,7 @@ public class ArtikelController extends AbstractItemController<ArtikelModel, Arti
         return updated(service.deleteAbbildung(artikelId));
     }
 
-    @PutMapping(path = ApiPaths.ADD_ARTIKEL_DECODER, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
+    @PostMapping(path = ApiPaths.ADD_ARTIKEL_DECODER, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Add an Artikel picture", description = "Adds a decoder to a named Artikel", operationId = "add", tags = { ApiNames.ARTIKEL }, responses = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ArtikelModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -161,8 +162,8 @@ public class ArtikelController extends AbstractItemController<ArtikelModel, Arti
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
-    public ResponseEntity<?> addDecoder(@PathVariable(ApiNames.ARTIKEL_ID) String artikelId, @RequestParam(ApiNames.DECODER_ID) String decoderId) {
-        return updated(service.addDecoder(artikelId, decoderId));
+    public ResponseEntity<?> addDecoder(@PathVariable(ApiNames.ARTIKEL_ID) String artikelId, @RequestBody ArtikelDecoderRequest model) {
+        return updated(service.addDecoder(artikelId, model.getDecoderId()));
     }
 
     @DeleteMapping(path = ApiPaths.DELETE_ARTIKEL_DECODER, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })

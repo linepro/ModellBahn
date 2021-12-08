@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -51,8 +50,7 @@ import lombok.ToString;
         ApiNames.FAHRMOTOREN, ApiNames.MOTORBAUART, ApiNames.LEISTUNGSUBERTRAGUNG, ApiNames.REICHWEITE,
         ApiNames.KAPAZITAT, ApiNames.KLASSE, ApiNames.SITZPLATZEKL1, ApiNames.SITZPLATZEKL2, ApiNames.SITZPLATZEKL3,
         ApiNames.SITZPLATZEKL4, ApiNames.AUFBAU, ApiNames.TRIEBKOPF, ApiNames.MITTELWAGEN, ApiNames.DREHGESTELLBAUART,
-        ApiNames.ABBILDUNG, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.VORBILD)
+        ApiNames.ABBILDUNG, ApiNames.DELETED })
 @Schema(name = ApiNames.VORBILD, description = "A real world prototype.")
 public class VorbildRequest implements NamedItemRequest {
 

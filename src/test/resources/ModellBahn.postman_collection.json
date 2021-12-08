@@ -13541,7 +13541,7 @@
 									"pm.test(\"anderungen\", () => pm.expect(jsonData.anderungen).to.be.empty);\r",
 									"pm.test(\"decoderen.length\", () => pm.expect(jsonData.decoderen.length).to.eql(1));\r",
 									"pm.test(\"decoderen[0].artikelId\", () => pm.expect(jsonData.decoderen[0].artikelId).to.eql(pm.variables.get(\"artikelId\")));\r",
-									"pm.test(\"decoderen[0].decoderId\", () => pm.expect(jsonData.decoderen[0].decoderId).to.eql(pm.variables.get(\"decoderAdd\")));\r",
+									"pm.test(\"decoderen[0].decoderId\", () => pm.expect(jsonData.decoderen[0].decoderId).to.eql(pm.variables.get(\"decoder\")));\r",
 									"pm.test(\"decoderen[0].hersteller\", () => pm.expect(jsonData.decoderen[0].hersteller).to.eql(pm.variables.get(\"decoderHerstellerAdd\")));\r",
 									"pm.test(\"decoderen[0].bestellNr\", () => pm.expect(jsonData.decoderen[0].bestellNr).to.eql(pm.variables.get(\"decoderBestellNrAdd\")));\r",
 									"pm.test(\"decoderen[0].bezeichnung\", () => pm.expect(jsonData.decoderen[0].bezeichnung).to.eql(pm.variables.get(\"decoderBezeichnungAdd\")));\r",
@@ -13567,7 +13567,7 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									""
+									"pm.environment.set(\"decoder\", pm.variables.get(\"decoderAdd\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -13580,10 +13580,19 @@
 						}
 					},
 					"request": {
-						"method": "PUT",
+						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"decoderId\": \"{{decoder}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{api}}/artikel/{{artikelId}}/decoderen?decoderId={{decoderAdd}}",
+							"raw": "{{api}}/artikel/{{artikelId}}/decoderen",
 							"host": [
 								"{{api}}"
 							],
@@ -13591,12 +13600,6 @@
 								"artikel",
 								"{{artikelId}}",
 								"decoderen"
-							],
-							"query": [
-								{
-									"key": "decoderId",
-									"value": "{{decoderAdd}}"
-								}
 							]
 						}
 					},
@@ -13650,7 +13653,7 @@
 									"pm.test(\"anderungen\", () => pm.expect(jsonData.anderungen).to.be.empty);\r",
 									"pm.test(\"decoderen.length\", () => pm.expect(jsonData.decoderen.length).to.eql(1));\r",
 									"pm.test(\"decoderen[0].artikelId\", () => pm.expect(jsonData.decoderen[0].artikelId).to.eql(pm.variables.get(\"artikelId\")));\r",
-									"pm.test(\"decoderen[0].decoderId\", () => pm.expect(jsonData.decoderen[0].decoderId).to.eql(pm.variables.get(\"decoderAdd\")));\r",
+									"pm.test(\"decoderen[0].decoderId\", () => pm.expect(jsonData.decoderen[0].decoderId).to.eql(pm.variables.get(\"decoder\")));\r",
 									"pm.test(\"decoderen[0].hersteller\", () => pm.expect(jsonData.decoderen[0].hersteller).to.eql(pm.variables.get(\"decoderHerstellerAdd\")));\r",
 									"pm.test(\"decoderen[0].bestellNr\", () => pm.expect(jsonData.decoderen[0].bestellNr).to.eql(pm.variables.get(\"decoderBestellNrAdd\")));\r",
 									"pm.test(\"decoderen[0].bezeichnung\", () => pm.expect(jsonData.decoderen[0].bezeichnung).to.eql(pm.variables.get(\"decoderBezeichnungAdd\")));\r",
@@ -13763,7 +13766,7 @@
 									"pm.test(\"anderungen\", () => pm.expect(jsonData.anderungen).to.be.empty);\r",
 									"pm.test(\"decoderen.length\", () => pm.expect(jsonData.decoderen.length).to.eql(1));\r",
 									"pm.test(\"decoderen[0].artikelId\", () => pm.expect(jsonData.decoderen[0].artikelId).to.eql(pm.variables.get(\"artikelId\")));\r",
-									"pm.test(\"decoderen[0].decoderId\", () => pm.expect(jsonData.decoderen[0].decoderId).to.eql(pm.variables.get(\"decoderAdd\")));\r",
+									"pm.test(\"decoderen[0].decoderId\", () => pm.expect(jsonData.decoderen[0].decoderId).to.eql(pm.variables.get(\"decoder\")));\r",
 									"pm.test(\"decoderen[0].hersteller\", () => pm.expect(jsonData.decoderen[0].hersteller).to.eql(pm.variables.get(\"decoderHerstellerAdd\")));\r",
 									"pm.test(\"decoderen[0].bestellNr\", () => pm.expect(jsonData.decoderen[0].bestellNr).to.eql(pm.variables.get(\"decoderBestellNrAdd\")));\r",
 									"pm.test(\"decoderen[0].bezeichnung\", () => pm.expect(jsonData.decoderen[0].bezeichnung).to.eql(pm.variables.get(\"decoderBezeichnungAdd\")));\r",
@@ -14089,7 +14092,7 @@
 									"pm.test(\"anderungen[0]._links.delete\", () => pm.expect(jsonData.anderungen[0]._links.delete[0].href).to.eql(anderungUrl));\r",
 									"pm.test(\"decoderen.length\", () => pm.expect(jsonData.decoderen.length).to.eql(1));\r",
 									"pm.test(\"decoderen[0].artikelId\", () => pm.expect(jsonData.decoderen[0].artikelId).to.eql(pm.variables.get(\"artikelId\")));\r",
-									"pm.test(\"decoderen[0].decoderId\", () => pm.expect(jsonData.decoderen[0].decoderId).to.eql(pm.variables.get(\"decoderAdd\")));\r",
+									"pm.test(\"decoderen[0].decoderId\", () => pm.expect(jsonData.decoderen[0].decoderId).to.eql(pm.variables.get(\"decoder\")));\r",
 									"pm.test(\"decoderen[0].hersteller\", () => pm.expect(jsonData.decoderen[0].hersteller).to.eql(pm.variables.get(\"decoderHerstellerAdd\")));\r",
 									"pm.test(\"decoderen[0].bestellNr\", () => pm.expect(jsonData.decoderen[0].bestellNr).to.eql(pm.variables.get(\"decoderBestellNrAdd\")));\r",
 									"pm.test(\"decoderen[0].bezeichnung\", () => pm.expect(jsonData.decoderen[0].bezeichnung).to.eql(pm.variables.get(\"decoderBezeichnungAdd\")));\r",
@@ -14208,7 +14211,7 @@
 									"pm.test(\"anderungen[0]._links.delete\", () => pm.expect(jsonData.anderungen[0]._links.delete[0].href).to.eql(anderungUrl));\r",
 									"pm.test(\"decoderen.length\", () => pm.expect(jsonData.decoderen.length).to.eql(1));\r",
 									"pm.test(\"decoderen[0].artikelId\", () => pm.expect(jsonData.decoderen[0].artikelId).to.eql(pm.variables.get(\"artikelId\")));\r",
-									"pm.test(\"decoderen[0].decoderId\", () => pm.expect(jsonData.decoderen[0].decoderId).to.eql(pm.variables.get(\"decoderAdd\")));\r",
+									"pm.test(\"decoderen[0].decoderId\", () => pm.expect(jsonData.decoderen[0].decoderId).to.eql(pm.variables.get(\"decoder\")));\r",
 									"pm.test(\"decoderen[0].hersteller\", () => pm.expect(jsonData.decoderen[0].hersteller).to.eql(pm.variables.get(\"decoderHerstellerAdd\")));\r",
 									"pm.test(\"decoderen[0].bestellNr\", () => pm.expect(jsonData.decoderen[0].bestellNr).to.eql(pm.variables.get(\"decoderBestellNrAdd\")));\r",
 									"pm.test(\"decoderen[0].bezeichnung\", () => pm.expect(jsonData.decoderen[0].bezeichnung).to.eql(pm.variables.get(\"decoderBezeichnungAdd\")));\r",

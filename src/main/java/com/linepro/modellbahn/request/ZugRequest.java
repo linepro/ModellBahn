@@ -1,11 +1,7 @@
 package com.linepro.modellbahn.request;
 
-import java.math.BigDecimal;
-import java.util.List;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -15,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
-import com.linepro.modellbahn.util.impexp.impl.SuppressExport;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -41,8 +36,7 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(SnakeCaseStrategy.class)
-@JsonPropertyOrder({ApiNames.ZUG_TYP, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.FAHRZEUGEN, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.ZUG)
+@JsonPropertyOrder({ApiNames.ZUG_TYP, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED })
 @Schema(name = ApiNames.ZUG, description = "A running train configuration.")
 public class ZugRequest implements NamedItemRequest {
 
@@ -62,15 +56,6 @@ public class ZugRequest implements NamedItemRequest {
     @JsonProperty(ApiNames.ZUG_TYP)
     @Schema(description = "Train type", required = true)
     private String zugTyp;
-
-    @JsonProperty(ApiNames.LANGE)
-    @Schema(description = "Length over puffers in cm.", example = "11.00", accessMode = AccessMode.READ_ONLY)
-    private BigDecimal lange;
-
-    @SuppressExport
-    @JsonProperty(ApiNames.FAHRZEUGEN)
-    @Schema(implementation = ZugConsistRequest.class, description = "Train composition", accessMode = AccessMode.READ_ONLY)
-    private List<ZugConsistRequest> consist;
 
     @JsonProperty(ApiNames.DELETED)
     @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)

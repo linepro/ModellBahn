@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -44,10 +43,9 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(SnakeCaseStrategy.class)
-@JsonPropertyOrder({ApiNames.DECODER_ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.I_MAX,
-    ApiNames.PROTOKOLL, ApiNames.FAHRSTUFE, ApiNames.GERAUSCH, ApiNames.KONFIGURATION, ApiNames.STECKER, ApiNames.STATUS,
-    ApiNames.ANLEITUNGEN, ApiNames.ADRESS, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.DECODER)
+@JsonPropertyOrder({ ApiNames.DECODER_ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.ARTIKEL_ID, ApiNames.BEZEICHNUNG, ApiNames.I_MAX,
+                     ApiNames.PROTOKOLL, ApiNames.FAHRSTUFE, ApiNames.GERAUSCH, ApiNames.KONFIGURATION, ApiNames.STECKER, ApiNames.ADRESS,
+                     ApiNames.KAUFDATUM, ApiNames.WAHRUNG, ApiNames.PREIS, ApiNames.ANMERKUNG, ApiNames.STATUS, ApiNames.DELETED })
 @Schema(name = ApiNames.DECODER, description = "Decoder - installed or spare.")
 public class DecoderRequest implements ItemRequest {
 

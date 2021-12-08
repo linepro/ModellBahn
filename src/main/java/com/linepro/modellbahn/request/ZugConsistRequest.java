@@ -2,7 +2,6 @@ package com.linepro.modellbahn.request;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -37,10 +36,7 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(SnakeCaseStrategy.class)
-@JsonPropertyOrder({ ApiNames.ZUG, ApiNames.POSITION, ApiNames.ARTIKEL_ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR,
-    ApiNames.BEZEICHNUNG, ApiNames.LANGE, ApiNames.BAHNVERWALTUNG, ApiNames.GATTUNG, ApiNames.BETREIBSNUMMER,
-    ApiNames.ABBILDUNG, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.FAHRZEUGEN)
+@JsonPropertyOrder({ ApiNames.ZUG, ApiNames.POSITION, ApiNames.ARTIKEL_ID, ApiNames.DELETED })
 @Schema(name = ApiNames.CONSIST, description = "Rolling stock by poisition in a train.")
 public class ZugConsistRequest implements ItemRequest {
 
@@ -86,8 +82,7 @@ public class ZugConsistRequest implements ItemRequest {
         ZugConsistRequest other = (ZugConsistRequest) obj;
 
         return new EqualsBuilder()
-                .append(zug, other.zug)
-                .append(position, other.position)
+                .append(artikelId, other.artikelId)
                 .isEquals();
     }
 }
