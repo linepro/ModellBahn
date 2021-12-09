@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 @Component(PREFIX + "AssetIdGenerator")
 @RequiredArgsConstructor
