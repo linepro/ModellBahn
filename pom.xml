@@ -76,7 +76,7 @@
         <maven.version>3.6.0</maven.version>
 
         <!-- plugins -->
-        <dependency-check-maven.version>6.3.2</dependency-check-maven.version>
+        <dependency-check-maven.version>6.5.0</dependency-check-maven.version>
         <exec-maven-plugin.version>3.0.0</exec-maven-plugin.version>
         <git-commit-id-maven-plugin.version>5.0.0</git-commit-id-maven-plugin.version>
         <maven-changelog-plugin.version>2.3</maven-changelog-plugin.version>
@@ -85,7 +85,7 @@
         <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
         <maven-install-plugin.version>3.0.0-M1</maven-install-plugin.version>
         <maven-javadoc-plugin.version>3.3.1</maven-javadoc-plugin.version>
-        <maven-plugin-plugin.version>3.6.1</maven-plugin-plugin.version>
+        <maven-plugin-plugin.version>3.6.2</maven-plugin-plugin.version>
         <maven-project-info-reports-plugin.version>3.1.2</maven-project-info-reports-plugin.version>
         <maven-release-plugin.version>3.0.0-M4</maven-release-plugin.version>
         <maven-scm-plugin.version>1.12.0</maven-scm-plugin.version>
@@ -110,10 +110,10 @@
         <guava.version>31.0.1-jre</guava.version>
         <jackson.version>2.12.3</jackson.version>
         <junidecode.version>0.4.1</junidecode.version>
-        <libphonenumber.version>8.12.33</libphonenumber.version>
+        <libphonenumber.version>8.12.39</libphonenumber.version>
         <log4j.version>2.14.1</log4j.version>
-        <logstash-logback-encoder.version>6.6</logstash-logback-encoder.version>
-        <springdoc-openapi.version>1.5.10</springdoc-openapi.version>
+        <logstash-logback-encoder.version>7.0.1</logstash-logback-encoder.version>
+        <springdoc-openapi.version>1.5.13</springdoc-openapi.version>
         <spring-cloud.version>2020.0.4</spring-cloud.version>
         <zxcvbn.version>1.5.2</zxcvbn.version>
 
@@ -131,7 +131,7 @@
         <!-- javascript serving -->
         <org.webjars.webjars-locator-core.version>0.48</org.webjars.webjars-locator-core.version>
         <org.webjars.modellbahn-ui.version>1.1.0</org.webjars.modellbahn-ui.version>
-        <org.webjars.swagger-ui.version>3.52.1</org.webjars.swagger-ui.version>
+        <org.webjars.swagger-ui.version>4.1.2</org.webjars.swagger-ui.version>
 
         <!-- most of these can go if we use react as a webjar -->
         <org.webjars.angular-material.version>1.1.21</org.webjars.angular-material.version>
