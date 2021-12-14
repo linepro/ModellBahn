@@ -11,6 +11,7 @@ import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 import java.util.Arrays;
 
 import org.springdoc.core.Constants;
+import org.springdoc.core.SwaggerUiConfigParameters;
 import org.springdoc.core.SwaggerUiConfigProperties;
 import org.springdoc.core.SwaggerUiOAuthProperties;
 import org.springdoc.webmvc.ui.SwaggerIndexPageTransformer;
@@ -51,8 +52,8 @@ public class OpenApiConfiguration {
     protected static final class IndexPageTransformer extends SwaggerIndexPageTransformer {
         private OpenApiConfiguration config;
 
-        protected IndexPageTransformer(SwaggerUiConfigProperties uiConfig, SwaggerUiOAuthProperties oAuthProperties, ObjectMapper objectMapper, OpenApiConfiguration config) {
-            super(uiConfig, oAuthProperties, objectMapper);
+        protected IndexPageTransformer(SwaggerUiConfigProperties uiConfig, SwaggerUiOAuthProperties oAuthProperties, SwaggerUiConfigParameters configParameters, ObjectMapper objectMapper, OpenApiConfiguration config) {
+            super(uiConfig, oAuthProperties, configParameters, objectMapper);
 
             swaggerUiConfig.setDisableSwaggerDefaultUrl(true);
 
@@ -129,7 +130,7 @@ public class OpenApiConfiguration {
         }
 
     @Bean(PREFIX + "SwaggerIndexPageTransformer")
-    public SwaggerIndexPageTransformer getSwaggerIndexPageTransformer(SwaggerUiConfigProperties swaggerUiConfig, SwaggerUiOAuthProperties swaggerUiOAuthProperties, ObjectMapper objectMapper) {
-        return new IndexPageTransformer(swaggerUiConfig, swaggerUiOAuthProperties, objectMapper, this);
+    public SwaggerIndexPageTransformer getSwaggerIndexPageTransformer(SwaggerUiConfigProperties swaggerUiConfig, SwaggerUiOAuthProperties swaggerUiOAuthProperties, SwaggerUiConfigParameters configParameters, ObjectMapper objectMapper) {
+        return new IndexPageTransformer(swaggerUiConfig, swaggerUiOAuthProperties, configParameters, objectMapper, this);
     }
 }
