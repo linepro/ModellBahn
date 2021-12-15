@@ -5,7 +5,6 @@ import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.spi.resourceloading.ResourceBundleLocator;
 import org.slf4j.helpers.MessageFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 @Slf4j
 @Component(PREFIX + "MessageTranslatorImpl")
