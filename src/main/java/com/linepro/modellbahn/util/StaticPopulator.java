@@ -22,7 +22,7 @@ import com.linepro.modellbahn.io.FileUploadHandler;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.logstash.logback.encoder.org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 
 @Slf4j
 @Component(PREFIX + "StaticPopulator")
