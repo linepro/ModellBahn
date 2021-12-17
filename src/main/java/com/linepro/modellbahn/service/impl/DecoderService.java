@@ -14,22 +14,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.linepro.modellbahn.converter.entity.DecoderAdressMapper;
 import com.linepro.modellbahn.converter.entity.DecoderCvMapper;
 import com.linepro.modellbahn.converter.entity.DecoderFunktionMapper;
 import com.linepro.modellbahn.converter.entity.DecoderMapper;
 import com.linepro.modellbahn.converter.request.DecoderRequestMapper;
 import com.linepro.modellbahn.entity.Decoder;
-import com.linepro.modellbahn.entity.DecoderAdress;
 import com.linepro.modellbahn.entity.DecoderCv;
 import com.linepro.modellbahn.entity.DecoderFunktion;
 import com.linepro.modellbahn.entity.DecoderTyp;
-import com.linepro.modellbahn.model.DecoderAdressModel;
 import com.linepro.modellbahn.model.DecoderCvModel;
 import com.linepro.modellbahn.model.DecoderFunktionModel;
 import com.linepro.modellbahn.model.DecoderModel;
 import com.linepro.modellbahn.persistence.util.AssetIdGenerator;
-import com.linepro.modellbahn.repository.DecoderAdressRepository;
 import com.linepro.modellbahn.repository.DecoderCvRepository;
 import com.linepro.modellbahn.repository.DecoderFunktionRepository;
 import com.linepro.modellbahn.repository.DecoderRepository;
@@ -40,13 +36,11 @@ import com.linepro.modellbahn.request.DecoderRequest;
 @Service(PREFIX + "DecoderService")
 public class DecoderService extends ItemServiceImpl<DecoderModel, DecoderRequest,  Decoder> {
 
+    private static final String ADRESSE = "Adresse";
+    
     private final DecoderRepository repository;
 
     private final DecoderTypRepository typRepository;
-
-    private final DecoderAdressRepository adressRepository;
-
-    private final DecoderAdressMapper adressMapper;
 
     private final DecoderCvRepository cvRepository;
 
@@ -60,16 +54,12 @@ public class DecoderService extends ItemServiceImpl<DecoderModel, DecoderRequest
 
     @Autowired
     public DecoderService(DecoderRepository repository, DecoderTypRepository typRepository, DecoderRequestMapper decoderRequestMapper,
-                    DecoderMapper decoderMapper, DecoderAdressRepository adressRepository, DecoderAdressMapper adressMapper,
-                    DecoderCvRepository cvRepository, DecoderCvMapper cvMapper, DecoderFunktionRepository funktionRepository,
+                    DecoderMapper decoderMapper, DecoderCvRepository cvRepository, DecoderCvMapper cvMapper, DecoderFunktionRepository funktionRepository,
                     DecoderFunktionMapper funktionMapper, AssetIdGenerator assetIdGenerator, DecoderLookup decoderLookup) {
         super(repository, decoderRequestMapper, decoderMapper, decoderLookup);
         this.repository = repository;
 
         this.typRepository = typRepository;
-
-        this.adressRepository = adressRepository;
-        this.adressMapper = adressMapper;
 
         this.cvRepository = cvRepository;
         this.cvMapper = cvMapper;
@@ -87,6 +77,8 @@ public class DecoderService extends ItemServiceImpl<DecoderModel, DecoderRequest
         if (found.isPresent()) {
             DecoderTyp decoderTyp = found.get();
 
+            Optional<Integer> adress = Optional.ofNullable(request.getAdress());
+
             Decoder initial = new Decoder();
             request.setDecoderId(null);
             initial.setDecoderId(assetIdGenerator.getNextAssetId());
@@ -96,12 +88,38 @@ public class DecoderService extends ItemServiceImpl<DecoderModel, DecoderRequest
 
             final Decoder decoder = repository.saveAndFlush(initial);
 
-            decoderTyp.getAdressen().forEach(a -> decoder.addAdress(DecoderAdress.builder().typ(a).adress(a.getAdress()).deleted(false).build()));
+            decoderTyp.getCvs()
+                      .forEach(
+                          c -> {
+                              Integer wert = c.getWerkseinstellung();
 
-            decoderTyp.getCvs().forEach(c -> decoder.addCv(DecoderCv.builder().cv(c).wert(c.getWerkseinstellung()).deleted(false).build()));
+                              if (ADRESSE.equals(c.getBezeichnung())) {
+                                  wert = decoder.getAdress() != null ? decoder.getAdress() : c.getWerkseinstellung();
+                                  decoder.setAdress(wert);
+                              }
 
-            decoderTyp.getFunktionen().forEach(
-                            f -> decoder.addFunktion(DecoderFunktion.builder().funktion(f).bezeichnung(f.getBezeichnung()).deleted(false).build()));
+                              decoder.addCv(
+                                          DecoderCv.builder()
+                                                   .cv(c)
+                                                   .wert(wert)
+                                                   .deleted(false)
+                                                   .build()
+                                                   );
+                              }
+                          );
+
+            decoderTyp.getFunktionen()
+                      .forEach(
+                          f -> decoder.addFunktion(
+                                          DecoderFunktion.builder()
+                                                         .funktion(f)
+                                                         .bezeichnung(f.getBezeichnung())
+                                                         .deleted(false)
+                                                         .build()
+                                                         )
+                          );
+
+            decoder.setAdress(adress.orElse(null));
 
             return Optional.of(entityMapper.convert(repository.saveAndFlush(decoder)));
         }
@@ -114,7 +132,16 @@ public class DecoderService extends ItemServiceImpl<DecoderModel, DecoderRequest
     }
 
     public Optional<DecoderModel> update(String decoderId, DecoderRequest request) {
-        return super.update(DecoderModel.builder().decoderId(decoderId).build(), request);
+        return lookup.find(DecoderModel.builder().decoderId(decoderId).build())
+                     .map(d -> {
+                         Boolean deleted = d.getDeleted();
+                         d = requestMapper.apply(request, d);
+                         d.setDeleted(deleted);
+
+                         return repository.saveAndFlush(updateAdressCV(d, d.getAdress()));
+                     })
+                     .flatMap(d -> lookup.find(d)) // Fetch again to populate entity graphs
+                     .map(d -> entityMapper.convert(d));
     }
 
     public boolean delete(String decoderId) {
@@ -122,11 +149,12 @@ public class DecoderService extends ItemServiceImpl<DecoderModel, DecoderRequest
     }
 
     @Transactional
-    public Optional<DecoderAdressModel> updateAdress(String decoderId, Integer index, Integer adress) {
-        return adressRepository.findByIndex(decoderId, index)
-                               .map(a -> {
-                                   a.setAdress(adress);
-                                   return adressMapper.convert(adressRepository.saveAndFlush(a));
+    public Optional<DecoderModel> updateAdress(String decoderId, Integer adress) {
+        return repository.findByDecoderId(decoderId)
+                               .map(d -> {
+                                   d.setAdress(adress);
+
+                                   return entityMapper.convert(repository.saveAndFlush(updateAdressCV(d, adress)));
                                    });
     }
 
@@ -134,15 +162,34 @@ public class DecoderService extends ItemServiceImpl<DecoderModel, DecoderRequest
     public Optional<DecoderCvModel> updateCv(String decoderId, Integer cv, Integer wert) {
         return cvRepository.findByCv(decoderId, cv)
                            .map(c -> {
-                               c.setWert(wert); return cvMapper.convert(cvRepository.saveAndFlush(c));
+                               if (ADRESSE.equals(c.getCv().getBezeichnung())) {
+                                   repository.findByDecoderId(decoderId)
+                                             .map(d -> {
+                                                  d.setAdress(wert);
+                                                  return repository.save(d);
+                                              });
+                               }
+
+                               c.setWert(wert);
+
+                               return cvMapper.convert(cvRepository.saveAndFlush(c));
                                });
     }
 
     @Transactional
-    public Optional<DecoderFunktionModel> updateFunktion(String decoderId, Integer reihe, String funktion, String bezeichnung) {
-        return funktionRepository.findByFunktion(decoderId, reihe, funktion)
+    public Optional<DecoderFunktionModel> updateFunktion(String decoderId, String funktion, String bezeichnung) {
+        return funktionRepository.findByFunktion(decoderId, funktion)
                                  .map(f -> {
                                      f.setBezeichnung(bezeichnung); return funktionMapper.convert(funktionRepository.saveAndFlush(f));
                                      });
+    }
+
+    protected Decoder updateAdressCV(Decoder decoder, Integer adress) {
+        decoder.getCvs()
+               .stream()
+               .filter(c -> ADRESSE.equalsIgnoreCase(c.getCv().getBezeichnung()))
+               .forEach(c -> c.setWert(adress));
+
+        return decoder;
     }
 }

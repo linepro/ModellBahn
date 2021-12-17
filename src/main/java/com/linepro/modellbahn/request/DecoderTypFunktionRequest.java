@@ -2,7 +2,6 @@ package com.linepro.modellbahn.request;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -37,9 +36,7 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(SnakeCaseStrategy.class)
-@JsonPropertyOrder({ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.REIHE, ApiNames.FUNKTION, ApiNames.BEZEICHNUNG,
-    ApiNames.PROGRAMMABLE, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.FUNKTION)
+@JsonPropertyOrder({ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.FUNKTION, ApiNames.BEZEICHNUNG, ApiNames.PROGRAMMABLE, ApiNames.DELETED })
 @Schema(name = ApiNames.FUNKTION, description = "Decoder type function mapping - template for Decoder.")
 public class DecoderTypFunktionRequest implements ItemRequest {
 
@@ -55,10 +52,6 @@ public class DecoderTypFunktionRequest implements ItemRequest {
     @JsonProperty(ApiNames.BESTELL_NR)
     @Schema(description = "Product numer", example = "62499", accessMode = AccessMode.READ_ONLY)
     private String bestellNr;
-
-    @JsonProperty(ApiNames.REIHE)
-    @Schema(description = "Bank number (0-1) always 0 for single panel decoders", example = "0", required = true)
-    private Integer reihe;
 
     @JsonProperty(ApiNames.FUNKTION)
     @Schema(description = "Function Key", example = "F0", required = true)
@@ -81,7 +74,6 @@ public class DecoderTypFunktionRequest implements ItemRequest {
         return new HashCodeBuilder()
             .append(hersteller)
             .append(bestellNr)
-            .append(reihe)
             .append(funktion)
             .hashCode();
     }
@@ -101,7 +93,6 @@ public class DecoderTypFunktionRequest implements ItemRequest {
         return new EqualsBuilder()
                 .append(hersteller, other.hersteller)
                 .append(bestellNr, other.bestellNr)
-                .append(reihe, other.reihe)
                 .append(funktion, other.funktion)
                 .isEquals();
     }

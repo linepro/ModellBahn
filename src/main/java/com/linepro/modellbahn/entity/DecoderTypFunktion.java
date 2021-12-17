@@ -13,7 +13,6 @@ import javax.persistence.NamedEntityGraphs;
 import javax.persistence.NamedSubgraph;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -21,7 +20,6 @@ import javax.validation.constraints.Size;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.hibernate.validator.constraints.Range;
 
 import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
@@ -46,7 +44,7 @@ import lombok.experimental.SuperBuilder;
         @Index(name = DBNames.DECODER_TYP_FUNKTION + "_IX1", columnList = DBNames.DECODER_TYP_ID),
         @Index(name = DBNames.DECODER_TYP_FUNKTION + "_IX2", columnList = DBNames.FUNKTION)
     }, uniqueConstraints = {
-        @UniqueConstraint(name = DBNames.DECODER_TYP_FUNKTION + "_UC1", columnNames = { DBNames.DECODER_TYP_ID, DBNames.REIHE, DBNames.FUNKTION })
+        @UniqueConstraint(name = DBNames.DECODER_TYP_FUNKTION + "_UC1", columnNames = { DBNames.DECODER_TYP_ID, DBNames.FUNKTION })
     })
 @NamedEntityGraphs({
     @NamedEntityGraph(name="decoderTypFunktion",
@@ -79,19 +77,12 @@ public class DecoderTypFunktion extends ItemImpl implements Comparable<DecoderTy
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.decoderTyp.notnull}")
     private DecoderTyp decoderTyp;
 
-    /** The reihe. */
-    @Column(name = DBNames.REIHE, nullable = false)
-    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.reihe.notnull}")
-    @Range(min=1, max=2, message = "{com.linepro.modellbahn.validator.constraints.reihe.range}")
-    private Integer reihe;
-
     @Column(name = DBNames.FUNKTION, length = 4)
     @Pattern(regexp = "^" + DBNames.FUNKTION_PATTERN + "$", message = "{com.linepro.modellbahn.validator.constraints.funktion.invalid}")
     private String funktion;
 
     @Column(name = DBNames.BEZEICHNUNG, length = 100)
     @Size(max = 100, message = "{com.linepro.modellbahn.validator.constraints.maxLength}")
-    @NotEmpty(message = "{com.linepro.modellbahn.validator.constraints.bezeichnung.notempty}")
     private String bezeichnung;
 
     /** The programmable. */
@@ -103,7 +94,6 @@ public class DecoderTypFunktion extends ItemImpl implements Comparable<DecoderTy
     public int compareTo(DecoderTypFunktion other) {
         // if FUNKTION_PATTERN changes change this; shame we can't attach the comparator to it....
         return new CompareToBuilder()
-            .append(getReihe(), other.getReihe())
             .append(getFunktion().substring(0, 1), other.getFunktion().substring(0, 1))
             .append(Integer.valueOf(getFunktion().substring(1)), Integer.valueOf(other.getFunktion().substring(1)))
             .toComparison();
@@ -113,7 +103,6 @@ public class DecoderTypFunktion extends ItemImpl implements Comparable<DecoderTy
     public int hashCode() {
       return new HashCodeBuilder()
           .append(getDecoderTyp().hashCode())
-          .append(getReihe())
           .append(getFunktion())
           .hashCode();
     }
@@ -141,7 +130,6 @@ public class DecoderTypFunktion extends ItemImpl implements Comparable<DecoderTy
         return new ToStringBuilder(this)
             .appendSuper(super.toString())
             .append("decoderTyp", decoderTyp)
-            .append("reihe", reihe)
             .append("funktion", funktion)
             .append("bezeichnung", bezeichnung)
             .append("programmable", programmable)

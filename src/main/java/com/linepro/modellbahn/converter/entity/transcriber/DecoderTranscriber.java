@@ -2,41 +2,31 @@ package com.linepro.modellbahn.converter.entity.transcriber;
 
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 import static com.linepro.modellbahn.util.exceptions.Result.attempt;
+import static com.linepro.modellbahn.util.exceptions.ResultCollector.success;
 
 import java.util.ArrayList;
 import java.util.Optional;
 
 import com.linepro.modellbahn.converter.Transcriber;
-import com.linepro.modellbahn.converter.entity.ArtikelMapper;
-import com.linepro.modellbahn.converter.entity.DecoderAdressMapper;
 import com.linepro.modellbahn.converter.entity.DecoderCvMapper;
 import com.linepro.modellbahn.converter.entity.DecoderFunktionMapper;
 import com.linepro.modellbahn.converter.entity.DecoderTypMapper;
 import com.linepro.modellbahn.entity.Decoder;
-import com.linepro.modellbahn.model.ArtikelModel;
-import com.linepro.modellbahn.model.DecoderAdressModel;
 import com.linepro.modellbahn.model.DecoderCvModel;
 import com.linepro.modellbahn.model.DecoderFunktionModel;
 import com.linepro.modellbahn.model.DecoderModel;
 import com.linepro.modellbahn.model.DecoderTypModel;
-import com.linepro.modellbahn.util.exceptions.ResultCollector;
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class DecoderTranscriber implements Transcriber<Decoder, DecoderModel> {
 
-    private static final ArrayList<DecoderAdressModel> KEIN_ADRESS = new ArrayList<>();
-
     private static final ArrayList<DecoderCvModel> KEIN_CV = new ArrayList<>();
 
     private static final ArrayList<DecoderFunktionModel> KEIN_FUNKTIONEN = new ArrayList<>();
 
-    private final ArtikelMapper artikelMapper;
-
     private final DecoderTypMapper decoderTypMapper;
-
-    private final DecoderAdressMapper adressMapper;
 
     private final DecoderCvMapper cvMapper;
 
@@ -46,13 +36,12 @@ public class DecoderTranscriber implements Transcriber<Decoder, DecoderModel> {
     public DecoderModel apply(Decoder source, DecoderModel destination) {
         if (isAvailable(source) && isAvailable(destination)) {
             final DecoderTypModel decoderTyp = decoderTypMapper.convert(source.getDecoderTyp());
-            final ArtikelModel artikel = artikelMapper.convert(source.getArtikel());
 
             destination.setDecoderId(source.getDecoderId());
             destination.setHersteller(decoderTyp.getHersteller());
             destination.setBestellNr(decoderTyp.getBestellNr());
             destination.setBezeichnung(source.getBezeichnung());
-            destination.setArtikelId(artikel != null ? artikel.getArtikelId() : null);
+            destination.setArtikelId(source.getArtikel() != null ? source.getArtikel().getArtikelId() : null);
             destination.setIMax(decoderTyp.getIMax());
             destination.setSound(decoderTyp.getSound());
             destination.setKonfiguration(decoderTyp.getKonfiguration());
@@ -63,41 +52,36 @@ public class DecoderTranscriber implements Transcriber<Decoder, DecoderModel> {
             destination.setPreis(source.getPreis());
             destination.setAnmerkung(source.getAnmerkung());
             destination.setProtokoll(getCode(source.getProtokoll()));
+            destination.setAdressTyp(decoderTyp.getAdressTyp());
+            destination.setAdress(source.getAdress());
+            destination.setSpan(decoderTyp.getSpan());
             destination.setFahrstufe(source.getFahrstufe());
             destination.setStatus(source.getStatus());
             destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
 
-            if (isAvailable(source.getAdressen())) {
-                destination.setAdressen(source.getAdressen()
-                                              .stream()
-                                              .sorted()
-                                              .map(a -> attempt(() ->adressMapper.convert(a)))
-                                              .collect(new ResultCollector<>())
-                                              .getValue()
-                                              .orElse(KEIN_ADRESS));
-            }
+            destination.setCvs(
+                            isAvailable(source.getCvs()) ?
+                                source.getCvs()
+                                      .stream()
+                                      .sorted()
+                                      .map(c -> attempt(() -> cvMapper.convert(c)))
+                                      .collect(success())
+                                      .getValue()
+                                      .orElse(KEIN_CV) :
+                                KEIN_CV
+                                );
 
-            if (isAvailable(source.getCvs())) {
-                destination.setCvs(source.getCvs()
-                                         .stream()
-                                         .sorted()
-                                         .map(c -> attempt(() ->cvMapper.convert(c)))
-                                         .collect(new ResultCollector<>())
-                                         .getValue()
-                                         .orElse(KEIN_CV));
-            }
-
-            if (isAvailable(source.getFunktionen())) {
-                destination.setFunktionen(source.getFunktionen()
-                                                .stream()
-                                                .sorted()
-                                                .map(f -> attempt(() -> funktionMapper.convert(f)))
-                                                .collect(new ResultCollector<>())
-                                                .getValue()
-                                                .orElse(KEIN_FUNKTIONEN));
-            }
-
-            destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
+            destination.setFunktionen(
+                            isAvailable(source.getFunktionen()) ?
+                                 source.getFunktionen()
+                                       .stream()
+                                       .sorted()
+                                       .map(f -> attempt(() -> funktionMapper.convert(f)))
+                                       .collect(success())
+                                       .getValue()
+                                       .orElse(KEIN_FUNKTIONEN) :
+                                 KEIN_FUNKTIONEN
+                                 );
         }
 
         return destination;

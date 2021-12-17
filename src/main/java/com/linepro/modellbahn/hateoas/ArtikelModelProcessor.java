@@ -3,13 +3,14 @@ package com.linepro.modellbahn.hateoas;
 import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 import static com.linepro.modellbahn.controller.impl.ApiNames.ARTIKEL_ID;
 import static com.linepro.modellbahn.controller.impl.ApiNames.BESTELL_NR;
-import static com.linepro.modellbahn.controller.impl.ApiNames.DECODER_ID;
 import static com.linepro.modellbahn.controller.impl.ApiNames.HERSTELLER;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_ANDERUNG;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_ARTIKEL;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_ARTIKEL_ABBILDUNG;
+import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_ARTIKEL_DECODER;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_ARTIKEL_GROSSANSICHT;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.DELETE_ARTIKEL;
+import static com.linepro.modellbahn.controller.impl.ApiPaths.DELETE_ARTIKEL_DECODER;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_ARTIKEL;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_DECODER;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_PRODUKT;
@@ -18,7 +19,7 @@ import static com.linepro.modellbahn.controller.impl.ApiPaths.UPDATE_ARTIKEL;
 import static com.linepro.modellbahn.controller.impl.ApiRels.ABBILDUNG;
 import static com.linepro.modellbahn.controller.impl.ApiRels.ADD;
 import static com.linepro.modellbahn.controller.impl.ApiRels.ANDERUNGEN;
-import static com.linepro.modellbahn.controller.impl.ApiRels.DECODER;
+import static com.linepro.modellbahn.controller.impl.ApiRels.DECODEREN;
 import static com.linepro.modellbahn.controller.impl.ApiRels.DELETE;
 import static com.linepro.modellbahn.controller.impl.ApiRels.GROSSANSICHT;
 import static com.linepro.modellbahn.controller.impl.ApiRels.PRODUKT;
@@ -34,10 +35,12 @@ import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.RepresentationModelProcessor;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.hateoas.impl.FieldsExtractor;
 import com.linepro.modellbahn.hateoas.impl.LinkTemplateImpl;
 import com.linepro.modellbahn.hateoas.impl.ModelProcessorImpl;
@@ -48,8 +51,6 @@ import com.linepro.modellbahn.model.ArtikelModel;
 public class ArtikelModelProcessor extends ModelProcessorImpl<ArtikelModel> implements RepresentationModelProcessor<ArtikelModel> {
 
     private static final FieldsExtractor EXTRACTOR = (m) -> Collections.singletonMap(ARTIKEL_ID, ((ArtikelModel) m).getArtikelId());
-
-    private static final FieldsExtractor DECODER_EXTRACTOR = (m) -> Collections.singletonMap(DECODER_ID, ((ArtikelModel) m).getDecoder());
 
     private static final FieldsExtractor PRODUKT_EXTRACTOR =  (m) -> MapUtils.putAll(new HashMap<String,Object>(), new String[][] { 
         { HERSTELLER, ((ArtikelModel) m).getHersteller() }, 
@@ -69,7 +70,7 @@ public class ArtikelModelProcessor extends ModelProcessorImpl<ArtikelModel> impl
             new LinkTemplateImpl(ABBILDUNG, ADD_ARTIKEL_ABBILDUNG, EXTRACTOR),
             new LinkTemplateImpl(GROSSANSICHT, ADD_ARTIKEL_GROSSANSICHT, EXTRACTOR),
             new LinkTemplateImpl(ANDERUNGEN, ADD_ANDERUNG, EXTRACTOR),
-            new LinkTemplateImpl(DECODER, GET_DECODER, DECODER_EXTRACTOR, (m) -> StringUtils.hasText(((ArtikelModel) m).getDecoder())),
+            new LinkTemplateImpl(DECODEREN, ADD_ARTIKEL_DECODER, EXTRACTOR),
             new LinkTemplateImpl(PRODUKT, GET_PRODUKT, PRODUKT_EXTRACTOR)
             );
 
@@ -81,6 +82,31 @@ public class ArtikelModelProcessor extends ModelProcessorImpl<ArtikelModel> impl
         if (!CollectionUtils.isEmpty(model.getAnderungen())) {
             model.getAnderungen()
                  .forEach(u -> anderungProcessor.process(u));
+        }
+
+        if (!CollectionUtils.isEmpty(model.getDecoders())) {
+            String artikelId = model.getArtikelId();
+
+            model.getDecoders()
+                 .forEach(d -> {
+                     d.setCvs(null);
+                     d.setFunktionen(null);
+
+                     String self = ServletUriComponentsBuilder.fromCurrentServletMapping()
+                                                              .path(GET_DECODER)
+                                                              .buildAndExpand(new Object[] { d.getDecoderId() })
+                                                              .toString();
+
+                     d.add(Link.of(self, SELF));
+
+                     String path = ServletUriComponentsBuilder.fromCurrentServletMapping()
+                                     .path(DELETE_ARTIKEL_DECODER)
+                                     .queryParam(ApiNames.DECODER_ID, d.getDecoderId())
+                                     .buildAndExpand(new Object[] { artikelId })
+                                     .toString();
+
+                     d.add(Link.of(path, DELETE));
+                 });
         }
 
         return super.process(model);

@@ -23,6 +23,7 @@ import com.linepro.modellbahn.model.AnderungModel;
 import com.linepro.modellbahn.model.ArtikelModel;
 import com.linepro.modellbahn.model.ArtikelModel.PagedArtikelModel;
 import com.linepro.modellbahn.request.AnderungRequest;
+import com.linepro.modellbahn.request.ArtikelDecoderRequest;
 import com.linepro.modellbahn.request.ArtikelRequest;
 import com.linepro.modellbahn.service.criterion.ArtikelCriterion;
 import com.linepro.modellbahn.service.criterion.PageCriteria;
@@ -149,6 +150,33 @@ public class ArtikelController extends AbstractItemController<ArtikelModel, Arti
     })
     public ResponseEntity<?> deleteAbbildung(@PathVariable(ApiNames.ARTIKEL_ID) String artikelId) {
         return updated(service.deleteAbbildung(artikelId));
+    }
+
+    @PostMapping(path = ApiPaths.ADD_ARTIKEL_DECODER, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
+    @Operation(summary = "Add an Artikel picture", description = "Adds a decoder to a named Artikel", operationId = "add", tags = { ApiNames.ARTIKEL }, responses = {
+        @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ArtikelModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
+    })
+    public ResponseEntity<?> addDecoder(@PathVariable(ApiNames.ARTIKEL_ID) String artikelId, @RequestBody ArtikelDecoderRequest model) {
+        return updated(service.addDecoder(artikelId, model.getDecoderId()));
+    }
+
+    @DeleteMapping(path = ApiPaths.DELETE_ARTIKEL_DECODER, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
+    @Operation(summary = "Delete an Artikel picture", description = "Deletes the picture of a named Artikel", operationId = "update", tags = { ApiNames.ARTIKEL }, responses = {
+        @ApiResponse(responseCode = "202", description = "Successful operation", content = @Content),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
+    })
+    public ResponseEntity<?> deleteDecoder(@PathVariable(ApiNames.ARTIKEL_ID) String artikelId, @RequestParam(ApiNames.DECODER_ID) String decoderId) {
+        return updated(service.deleteDecoder(artikelId, decoderId));
     }
 
     @PutMapping(path = ApiPaths.ADD_ARTIKEL_GROSSANSICHT, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })

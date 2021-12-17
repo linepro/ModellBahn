@@ -20,9 +20,9 @@ public class DataBeanProcessor implements BeanDefinitionRegistryPostProcessor {
 
     /** TODO: Replace all this configuration with annotations */
     private static final List<String> EXPORTS = Arrays.asList("Achsfolg", "Anderung", "Antrieb", "Artikel", "Aufbau", "Bahnverwaltung",
-                    "DecoderAdress", "DecoderCv", "DecoderFunktion", "Decoder", "DecoderTypAdress", "DecoderTypCv", "DecoderTypFunktion",
-                    "DecoderTyp", "Epoch", "Gattung", "Hersteller", "Kategorie", "Kupplung", "Licht", "Massstab", "MotorTyp", "Produkt",
-                    "ProduktTeil", "Protokoll", "Sondermodell", "Spurweite", "Steuerung", "UnterKategorie", "Vorbild", "ZugConsist", "Zug", "ZugTyp");
+                    "DecoderCv", "DecoderFunktion", "Decoder", "DecoderTypCv", "DecoderTypFunktion", "DecoderTyp", "Epoch", "Gattung",
+                    "Hersteller", "Kategorie", "Kupplung", "Licht", "Massstab", "MotorTyp", "Produkt", "ProduktTeil", "Protokoll", 
+                    "Sondermodell", "Spurweite", "Steuerung", "UnterKategorie", "Vorbild", "ZugConsist", "Zug", "ZugTyp");
 
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {

@@ -15,8 +15,8 @@ import com.linepro.modellbahn.model.ArtikelModel;
 public class ArtikelMapper extends MapperImpl<Artikel, ArtikelModel> {
 
     @Autowired
-    public ArtikelMapper(AnderungMapper anderungMapper, ProduktMapper produktMapper, PathMapper pathMapper) {
-        super(() -> new ArtikelModel(), new ArtikelTranscriber(anderungMapper, produktMapper, pathMapper));
+    public ArtikelMapper(AnderungMapper anderungMapper, DecoderMapper decoderMapper, ProduktMapper produktMapper, PathMapper pathMapper) {
+        super(() -> new ArtikelModel(), new ArtikelTranscriber(anderungMapper, decoderMapper, produktMapper, pathMapper));
     }
 
 }

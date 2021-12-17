@@ -2,7 +2,6 @@ package com.linepro.modellbahn.request;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -22,42 +21,28 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-/**
- * IDecoderAdress.
- * @author   $Author$
- * @version  $Id$
- */
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
-@JsonRootName(value = ApiNames.ADRESS)
+@JsonRootName(value = ApiNames.DECODER)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(SnakeCaseStrategy.class)
-@JsonPropertyOrder({ ApiNames.DECODER_ID, ApiNames.INDEX,  ApiNames.BEZEICHNUNG,  ApiNames.SPAN, ApiNames.ADRESS_TYP,  ApiNames.WERKSEINSTELLUNG, ApiNames.ADRESS, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.ADRESS)
-@Schema(name = ApiNames.ADRESS, description = "Decoder address setting.")
-public class DecoderAdressRequest implements ItemRequest {
+@JsonPropertyOrder({ ApiNames.DECODER_ID, ApiNames.DELETED })
+@Schema(name = ApiNames.DECODER, description = "Decoder in an article.")
+public class ArtikelDecoderRequest implements ItemRequest {
 
     /**
      * 
      */
-    private static final long serialVersionUID = 2717544297627959260L;
+    private static final long serialVersionUID = -819994633399521641L;
 
-    @JsonProperty(ApiNames.DECODER_ID)
-    @Schema(description = "Decoder's id", example = "00001", accessMode = AccessMode.READ_ONLY)
+    @JsonProperty(ApiNames.DECODER)
+    @Schema(description = "DecoderId", example = "00001")
     private String decoderId;
-
-    @JsonProperty(ApiNames.INDEX)
-    @Schema(description = "0 based address index (always 0 for single address decoders)", example = "0", accessMode = AccessMode.READ_ONLY)
-    private Integer index;
-
-    @JsonProperty(ApiNames.ADRESS)
-    @Schema(description = "Digital address", example = "80", required = true)
-    private Integer adress;
 
     @JsonProperty(ApiNames.DELETED)
     @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)
@@ -67,7 +52,6 @@ public class DecoderAdressRequest implements ItemRequest {
     public int hashCode() {
         return new HashCodeBuilder()
             .append(decoderId)
-            .append(index)
             .hashCode();
     }
 
@@ -77,15 +61,14 @@ public class DecoderAdressRequest implements ItemRequest {
             return true;
         }
 
-        if (!(obj instanceof DecoderAdressRequest)) {
+        if (!(obj instanceof ArtikelDecoderRequest)) {
             return false; 
         }
 
-        DecoderAdressRequest other = (DecoderAdressRequest) obj;
+        ArtikelDecoderRequest other = (ArtikelDecoderRequest) obj;
 
         return new EqualsBuilder()
                 .append(decoderId, other.decoderId)
-                .append(index, other.index)
                 .isEquals();
     }
 }

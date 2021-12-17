@@ -37,7 +37,6 @@ public interface ApiNames {
     String ANDERUNGEN = "anderungen";
     String ANDERUNG_ID = "anderungId";
     String ADRESS = "adress";
-    String ADRESSEN = "adressen";
     String ADRESS_TYP = "adressTyp";
     String ANFAHRZUGKRAFT = "anfahrzugkraft";
     String ANLEITUNGEN = "anleitungen";
@@ -56,6 +55,7 @@ public interface ApiNames {
     String DECODER_BESTELL_NR = "decoderBestellNr";
     String DECODER_HERSTELLER = "decoderHersteller";
     String DECODER_STATUS = "decoderStatus";
+    String DECODEREN = "decoderen";
     String DELETED = "deleted";
     String DIENSTGEWICHT = "dienstgewicht";
     String DMLAUFRADHINTEN = "dmLaufradHinten";
@@ -100,7 +100,6 @@ public interface ApiNames {
     String PREIS = "preis";
     String PRODUKT_ID = "produktId";
     String PROGRAMMABLE = "programmable";
-    String REIHE = "reihe";
     String REICHWEITE = "reichweite";
     String REL = "rel";
     String ROSTFLACHE = "rostflache";

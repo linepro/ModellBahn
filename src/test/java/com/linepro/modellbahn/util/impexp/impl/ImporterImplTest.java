@@ -62,24 +62,24 @@ public class ImporterImplTest {
                                                  .build();
 
     private static final DecoderRequest MODEL = DecoderRequest.builder()
-                                                          .decoderId(DECODER_ID)
-                                                          .hersteller(HERSTELLER)
-                                                          .bestellNr(BESTELL_NR)
-                                                          .artikelId(ARTIKEL_ID)
-                                                          .bezeichnung(BEZEICHNUNG)
-                                                          .iMax(I_MAX)
-                                                          .protokoll(PROTOKOLL)
-                                                          .fahrstufe(FAHRSTUFE)
-                                                          .sound(GERAUSCH)
-                                                          .konfiguration(KONFIGURATION)
-                                                          .stecker(STECKER)
-                                                          .kaufdatum(KAUFDATUM)
-                                                          .wahrung(WAHRUNG)
-                                                          .preis(PREIS)
-                                                          .anmerkung(ANMERKUNG)
-                                                          .status(STATUS)
-                                                          .deleted(DELETED)
-                                                          .build();
+                                                              .decoderId(DECODER_ID)
+                                                              .hersteller(HERSTELLER)
+                                                              .bestellNr(BESTELL_NR)
+                                                              .artikelId(ARTIKEL_ID)
+                                                              .bezeichnung(BEZEICHNUNG)
+                                                              .iMax(I_MAX)
+                                                              .protokoll(PROTOKOLL)
+                                                              .fahrstufe(FAHRSTUFE)
+                                                              .sound(GERAUSCH)
+                                                              .konfiguration(KONFIGURATION)
+                                                              .stecker(STECKER)
+                                                              .kaufdatum(KAUFDATUM)
+                                                              .wahrung(WAHRUNG)
+                                                              .preis(PREIS)
+                                                              .anmerkung(ANMERKUNG)
+                                                              .status(STATUS)
+                                                              .deleted(DELETED)
+                                                              .build();
 
     private static final String CSV = "decoderId,hersteller,bestellNr,bezeichnung,iMax,protokoll,fahrstufe,gerausch,konfiguration,stecker,kaufdatum,wahrung,preis,anmerkung,status,anleitungen,deleted\n" +
                                       DECODER_ID + "," + HERSTELLER + "," + BESTELL_NR + ",\"" + BEZEICHNUNG + "\"," + I_MAX + "," + PROTOKOLL + "," + FAHRSTUFE + "," + GERAUSCH + "," + KONFIGURATION + "," + STECKER + "," + KAUFDATUM + "," + WAHRUNG + "," + PREIS + "," + ANMERKUNG + "," + STATUS + "," + ANLEITUNGEN + "," + DELETED +"\n";

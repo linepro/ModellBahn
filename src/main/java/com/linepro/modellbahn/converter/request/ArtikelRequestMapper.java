@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import com.linepro.modellbahn.converter.impl.MapperImpl;
 import com.linepro.modellbahn.converter.request.transcriber.ArtikelRequestTranscriber;
 import com.linepro.modellbahn.entity.Artikel;
-import com.linepro.modellbahn.repository.lookup.DecoderLookup;
 import com.linepro.modellbahn.repository.lookup.KupplungLookup;
 import com.linepro.modellbahn.repository.lookup.LichtLookup;
 import com.linepro.modellbahn.repository.lookup.MotorTypLookup;
@@ -21,9 +20,8 @@ public class ArtikelRequestMapper extends MapperImpl<ArtikelRequest, Artikel> {
 
     @Autowired
     public ArtikelRequestMapper(ProduktLookup produktLookup, SteuerungLookup steuerungLookup, MotorTypLookup motorTypLookup,
-                    LichtLookup lichtLookup, KupplungLookup kupplungLookup, DecoderLookup decoderLookup) {
-        super(() -> new Artikel(), new ArtikelRequestTranscriber(produktLookup, steuerungLookup, motorTypLookup, lichtLookup,
-                        kupplungLookup, decoderLookup));
+                    LichtLookup lichtLookup, KupplungLookup kupplungLookup) {
+        super(() -> new Artikel(), new ArtikelRequestTranscriber(produktLookup, steuerungLookup, motorTypLookup, lichtLookup, kupplungLookup));
     }
 
 }

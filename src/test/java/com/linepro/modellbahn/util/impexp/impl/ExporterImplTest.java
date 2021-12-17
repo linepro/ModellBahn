@@ -27,6 +27,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.linepro.modellbahn.converter.Mapper;
 import com.linepro.modellbahn.entity.Decoder;
 import com.linepro.modellbahn.model.DecoderModel;
+import com.linepro.modellbahn.model.enums.AdressTyp;
 import com.linepro.modellbahn.model.enums.DecoderStatus;
 import com.linepro.modellbahn.model.enums.Konfiguration;
 import com.linepro.modellbahn.model.enums.Stecker;
@@ -53,6 +54,9 @@ public class ExporterImplTest {
     private static final String ANLEITUNGEN = "instrutions.pdf";
     private static final Boolean DELETED = true;
     private static final String ARTIKEL_ID = "00010";
+    private static final AdressTyp ADRESS_TYP = AdressTyp.DIGITAL;
+    private static final Integer ADRESS = 3;
+    private static final Integer SPAN = 1;
 
     private static final Long ID = 1L;
 
@@ -74,6 +78,9 @@ public class ExporterImplTest {
                                                           .iMax(I_MAX)
                                                           .protokoll(PROTOKOLL)
                                                           .fahrstufe(FAHRSTUFE)
+                                                          .adressTyp(ADRESS_TYP)
+                                                          .adress(ADRESS)
+                                                          .span(SPAN)
                                                           .sound(GERAUSCH)
                                                           .konfiguration(KONFIGURATION)
                                                           .stecker(STECKER)
@@ -86,8 +93,8 @@ public class ExporterImplTest {
                                                           .deleted(DELETED)
                                                           .build();
 
-    private static final String CSV = "decoderId,hersteller,bestellNr,artikelId,bezeichnung,iMax,protokoll,fahrstufe,gerausch,konfiguration,stecker,kaufdatum,wahrung,preis,anmerkung,status,anleitungen,deleted\n" +
-                                      DECODER_ID + "," + HERSTELLER + "," + BESTELL_NR + "," + ARTIKEL_ID + ",\"" + BEZEICHNUNG + "\"," + I_MAX + "," + PROTOKOLL + "," + FAHRSTUFE + "," + GERAUSCH + "," + KONFIGURATION + "," + STECKER + "," + KAUFDATUM + "," + WAHRUNG + "," + PREIS + "," + ANMERKUNG + "," + STATUS + "," + ANLEITUNGEN + "," + DELETED +"\n";
+    private static final String CSV = "decoderId,hersteller,bestellNr,artikelId,bezeichnung,iMax,protokoll,adressTyp,adress,span,fahrstufe,gerausch,konfiguration,stecker,kaufdatum,wahrung,preis,anmerkung,status,anleitungen,deleted\n" +
+                                      DECODER_ID + "," + HERSTELLER + "," + BESTELL_NR + "," + ARTIKEL_ID + ",\"" + BEZEICHNUNG + "\"," + I_MAX + "," + PROTOKOLL + "," + ADRESS_TYP + "," + ADRESS + "," + SPAN + "," + FAHRSTUFE + "," + GERAUSCH + "," + KONFIGURATION + "," + STECKER + "," + KAUFDATUM + "," + WAHRUNG + "," + PREIS + "," + ANMERKUNG + "," + STATUS + "," + ANLEITUNGEN + "," + DELETED +"\n";
 
     private final JpaRepository<Decoder,Long> repository;
 

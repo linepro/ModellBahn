@@ -25,9 +25,9 @@ public interface ApiRels {
     String DECODER_TYP = ApiNames.DECODER_TYP;
     String PRODUKT = ApiNames.PRODUKT;
 
-    String ADRESSEN = ApiNames.ADRESSEN;
     String ANDERUNGEN = ApiNames.ANDERUNGEN;
     String CVS = ApiNames.CVS;
+    String DECODEREN = ApiNames.DECODEREN;
     String FAHRZEUGEN = ApiNames.FAHRZEUGEN;
     String FUNKTIONEN = ApiNames.FUNKTIONEN;
     String TEILEN = ApiNames.TEILEN;

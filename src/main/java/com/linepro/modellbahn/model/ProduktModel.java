@@ -68,11 +68,11 @@ public class ProduktModel extends SpringdocModel<ProduktModel> implements ItemMo
     private String bezeichnung;
 
     @JsonProperty(ApiNames.KATEGORIE)
-    @Schema(description = "Category and subcategory", required = true)
+    @Schema(description = "Category", required = true)
     private String kategorie;
 
     @JsonProperty(ApiNames.UNTER_KATEGORIE)
-    @Schema(description = "Category and subcategory", required = true)
+    @Schema(description = "Subcategory", required = true)
     private String unterKategorie;
 
     @JsonProperty(ApiNames.LANGE)
@@ -80,23 +80,23 @@ public class ProduktModel extends SpringdocModel<ProduktModel> implements ItemMo
     private BigDecimal lange;
 
     @JsonProperty(ApiNames.MASSSTAB)
-    @Schema(description = "Scale")
+    @Schema(description = "Scale", example = "H0")
     private String massstab;
 
     @JsonProperty(ApiNames.SPURWEITE)
-    @Schema(description = "Track gauge")
+    @Schema(description = "Track gauge", example = "H0")
     private String spurweite;
 
     @JsonProperty(ApiNames.EPOCH)
-    @Schema(description = "ERA")
+    @Schema(description = "ERA", example = "IV")
     private String epoch;
 
     @JsonProperty(ApiNames.BAHNVERWALTUNG)
-    @Schema(description = "Railway company")
+    @Schema(description = "Railway company", example = "DB")
     private String bahnverwaltung;
 
     @JsonProperty(ApiNames.GATTUNG)
-    @Schema(description = "Vehicle class")
+    @Schema(description = "Vehicle class", example = "BR89.0")
     private String gattung;
 
     @JsonProperty(ApiNames.BETREIBSNUMMER)
@@ -109,39 +109,39 @@ public class ProduktModel extends SpringdocModel<ProduktModel> implements ItemMo
     private LocalDate bauzeit;
 
     @JsonProperty(ApiNames.ACHSFOLG)
-    @Schema(description = "Axle configuration")
+    @Schema(description = "Axle configuration", example = "CH2T")
     private String achsfolg;
 
     @JsonProperty(ApiNames.SONDERMODELL)
-    @Schema(description = "Special model indicator")
+    @Schema(description = "Special model indicator", example = "MHI")
     private String sondermodell;
 
     @JsonProperty(ApiNames.AUFBAU)
-    @Schema(description = "Construction")
+    @Schema(description = "Construction", example = "LK")
     private String aufbau;
 
     @JsonProperty(ApiNames.LICHT)
-    @Schema(description = "Light configuration")
+    @Schema(description = "Light Configuration", example = "L1V")
     private String licht;
 
     @JsonProperty(ApiNames.KUPPLUNG)
-    @Schema(description = "Coupling configuration")
+    @Schema(description = "Coupling configuration", example = "RELEX")
     private String kupplung;
 
     @JsonProperty(ApiNames.STEUERUNG)
-    @Schema(description = "Control method")
+    @Schema(description = "Control method", example = "Digital")
     private String steuerung;
 
     @JsonProperty(ApiNames.DECODER_HERSTELLER)
-    @Schema(description = "Decoder type")
+    @Schema(description = "Decoder Manufacturer", example = "ESU")
     private String decoderTypHersteller;
 
     @JsonProperty(ApiNames.DECODER_BESTELL_NR)
-    @Schema(description = "Decoder type")
+    @Schema(description = "Decoder Part Number", example = "62400")
     private String decoderTypBestellNr;
 
     @JsonProperty(ApiNames.MOTOR_TYP)
-    @Schema(description = "Motor type")
+    @Schema(description = "Motor type", example = "5*")
     private String motorTyp;
 
     @JsonProperty(ApiNames.ANMERKUNG)

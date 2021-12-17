@@ -32,6 +32,9 @@ public class DecoderTypRequestTranscriber implements Transcriber<DecoderTypReque
             destination.setIMax(source.getIMax());
             protokollLookup.find(source.getProtokoll()).ifPresent(p -> destination.setProtokoll(p));
             destination.setFahrstufe(source.getFahrstufe());
+            destination.setAdressTyp(source.getAdressTyp());
+            destination.setAdress(source.getAdress());
+            destination.setSpan(source.getSpan());
             destination.setSound(source.getSound());
             destination.setKonfiguration(source.getKonfiguration());
             destination.setStecker(source.getStecker());

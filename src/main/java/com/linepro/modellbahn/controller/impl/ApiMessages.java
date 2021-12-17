@@ -10,7 +10,7 @@ public interface ApiMessages {
     String INVALID_FILE = "{com.linepro.modellbahn.io.INVALID_FILE}";
     String MAIL_ERROR = "{com.linepro.modellbahn.io.MAIL_ERROR}";
     String NOT_SUPPORTED = "{com.linepro.modellbahn.io.NOT_SUPPORTED}";
-    
+
     String FORGOT_EMAIL_BODY = "{com.linepro.modellbahn.user.forgot.BODY}";
     String FORGOT_EMAIL_SENT = "{com.linepro.modellbahn.user.forgot.SENT}";
     String FORGOT_EMAIL_SUBJECT = "{com.linepro.modellbahn.user.forgot.SUBJECT}";
@@ -24,4 +24,7 @@ public interface ApiMessages {
     String USER_EXISTS = "{com.linepro.modellbahn.user.EXISTS}";
     String TOKEN_EXPIRED = "{com.linepro.modellbahn.user.TOKEN_EXPIRED}";
     String USER_UPDATED = "{com.linepro.modellbahn.user.USER_UPDATED}";
+    
+    String DECODER_IN_USE = "{com.linepro.modellbahn.decoder.IN_USE}";
+    String DECODER_NOT_FOUND = "{com.linepro.modellbahn.decoder.NOT_FOUND}";
 }

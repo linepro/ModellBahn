@@ -2,7 +2,6 @@ package com.linepro.modellbahn.request;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -37,8 +36,7 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(SnakeCaseStrategy.class)
-@JsonPropertyOrder({ ApiNames.DECODER_ID, ApiNames.REIHE, ApiNames.FUNKTION, ApiNames.BEZEICHNUNG, ApiNames.PROGRAMMABLE, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.FUNKTION)
+@JsonPropertyOrder({ ApiNames.DECODER_ID, ApiNames.FUNKTION, ApiNames.BEZEICHNUNG, ApiNames.PROGRAMMABLE, ApiNames.DELETED })
 @Schema(name = ApiNames.FUNKTION, description = "Decoder function mapping.")
 public class DecoderFunktionRequest implements ItemRequest {
 
@@ -50,10 +48,6 @@ public class DecoderFunktionRequest implements ItemRequest {
     @JsonProperty(ApiNames.DECODER_ID)
     @Schema(description = "Decoder's id", example = "00001", accessMode = AccessMode.READ_ONLY)
     private String decoderId;
-
-    @JsonProperty(ApiNames.REIHE)
-    @Schema(description = "Bank number (0-1) always 0 for single panel decoders", example = "0", accessMode = AccessMode.READ_ONLY)
-    private Integer reihe;
 
     @JsonProperty(ApiNames.FUNKTION)
     @Schema(description = "Function Key", example = "F0", accessMode = AccessMode.READ_ONLY)
@@ -71,7 +65,6 @@ public class DecoderFunktionRequest implements ItemRequest {
     public int hashCode() {
         return new HashCodeBuilder()
             .append(decoderId)
-            .append(reihe)
             .append(funktion)
             .hashCode();
     }
@@ -90,7 +83,6 @@ public class DecoderFunktionRequest implements ItemRequest {
 
         return new EqualsBuilder()
                 .append(decoderId, other.decoderId)
-                .append(reihe, other.reihe)
                 .append(funktion, other.funktion)
                 .isEquals();
     }

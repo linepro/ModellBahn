@@ -9,11 +9,9 @@ import java.util.Optional;
 
 import com.linepro.modellbahn.converter.PathMapper;
 import com.linepro.modellbahn.converter.Transcriber;
-import com.linepro.modellbahn.converter.entity.DecoderTypAdressMapper;
 import com.linepro.modellbahn.converter.entity.DecoderTypCvMapper;
 import com.linepro.modellbahn.converter.entity.DecoderTypFunktionMapper;
 import com.linepro.modellbahn.entity.DecoderTyp;
-import com.linepro.modellbahn.model.DecoderTypAdressModel;
 import com.linepro.modellbahn.model.DecoderTypCvModel;
 import com.linepro.modellbahn.model.DecoderTypFunktionModel;
 import com.linepro.modellbahn.model.DecoderTypModel;
@@ -23,13 +21,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class DecoderTypTranscriber implements Transcriber<DecoderTyp, DecoderTypModel> {
 
-    private static final ArrayList<DecoderTypAdressModel> KEIN_ADRESS = new ArrayList<>();
-
     private static final ArrayList<DecoderTypCvModel> KEIN_CV = new ArrayList<>();
 
     private static final ArrayList<DecoderTypFunktionModel> KEIN_FUNKTIONEN = new ArrayList<>();
-
-    private final DecoderTypAdressMapper adressMapper;
 
     private final DecoderTypCvMapper cvMapper;
 
@@ -50,37 +44,34 @@ public class DecoderTypTranscriber implements Transcriber<DecoderTyp, DecoderTyp
             destination.setStecker(source.getStecker());
             destination.setAnleitungen(PathMapper.convert(source.getAnleitungen()));
             destination.setProtokoll(getCode(source.getProtokoll()));
+            destination.setAdressTyp(source.getAdressTyp());
+            destination.setAdress(source.getAdress());
+            destination.setSpan(source.getSpan());
             destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
 
-            if (isAvailable(source.getAdressen())) {
-                destination.setAdressen(source.getAdressen()
-                                              .stream()
-                                              .sorted()
-                                              .map(a -> attempt(() -> adressMapper.convert(a)))
-                                              .collect(success())
-                                              .getValue()
-                                              .orElse(KEIN_ADRESS));
-            }
+            destination.setCvs(
+                            isAvailable(source.getCvs()) ?
+                                source.getCvs()
+                                      .stream()
+                                      .sorted()
+                                      .map(c -> attempt(() -> cvMapper.convert(c)))
+                                      .collect(success())
+                                      .getValue()
+                                      .orElse(KEIN_CV) :
+                                KEIN_CV
+                                );
 
-            if (isAvailable(source.getCvs())) {
-                destination.setCvs(source.getCvs()
-                                         .stream()
-                                         .sorted()
-                                         .map(c -> attempt(() -> cvMapper.convert(c)))
-                                         .collect(success())
-                                         .getValue()
-                                         .orElse(KEIN_CV));
-            }
-
-            if (isAvailable(source.getFunktionen())) {
-                destination.setFunktionen(source.getFunktionen()
-                                                .stream()
-                                                .sorted()
-                                                .map(f -> attempt(() -> funktionMapper.convert(f)))
-                                                .collect(success())
-                                                .getValue()
-                                                .orElse(KEIN_FUNKTIONEN));
-            }
+            destination.setFunktionen(
+                            isAvailable(source.getFunktionen()) ?
+                                 source.getFunktionen()
+                                       .stream()
+                                       .sorted()
+                                       .map(f -> attempt(() -> funktionMapper.convert(f)))
+                                       .collect(success())
+                                       .getValue()
+                                       .orElse(KEIN_FUNKTIONEN) :
+                                 KEIN_FUNKTIONEN
+                                 );
         }
 
         return destination;

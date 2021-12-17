@@ -22,7 +22,6 @@ import javax.persistence.NamedEntityGraph;
 import javax.persistence.NamedEntityGraphs;
 import javax.persistence.NamedSubgraph;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Min;
@@ -106,7 +105,6 @@ import lombok.experimental.SuperBuilder;
             @NamedAttributeNode(value = "motorTyp", subgraph = "artikel.motorTyp"),
             @NamedAttributeNode(value = "licht", subgraph = "artikel.licht"),
             @NamedAttributeNode(value = "kupplung", subgraph = "artikel.kupplung"),
-            @NamedAttributeNode(value = "decoder", subgraph = "artikel.decoder"),
             @NamedAttributeNode(value = "bezeichnung"),
             @NamedAttributeNode(value = "preis"),
             @NamedAttributeNode(value = "menge"),
@@ -153,15 +151,6 @@ import lombok.experimental.SuperBuilder;
                 attributeNodes = {
                     @NamedAttributeNode(value = "name")
                 }),
-            @NamedSubgraph(name = "artikel.decoder",
-                attributeNodes = {
-                    @NamedAttributeNode(value = "decoderId"),
-                    @NamedAttributeNode(value = "bezeichnung"),
-                    @NamedAttributeNode(value = "decoderTyp", subgraph = "artikel.decoderTyp"),
-                    @NamedAttributeNode(value = "protokoll", subgraph = "artikel.protokoll"),
-                    @NamedAttributeNode(value = "fahrstufe"),
-                    @NamedAttributeNode(value = "status")
-                }),
             @NamedSubgraph(name = "artikel.hersteller",
                 attributeNodes = {
                     @NamedAttributeNode(value = "name")
@@ -206,21 +195,7 @@ import lombok.experimental.SuperBuilder;
             @NamedSubgraph(name = "artikel.aufbau",
                 attributeNodes = {
                     @NamedAttributeNode(value = "name")
-                }),
-            @NamedSubgraph(name = "artikel.decoderTyp",
-                attributeNodes = {
-                    @NamedAttributeNode(value = "hersteller", subgraph = "artikel.decoderHersteller"),
-                    @NamedAttributeNode(value = "bestellNr"),
-                    @NamedAttributeNode(value = "bezeichnung")
-                }),
-            @NamedSubgraph(name = "artikel.protokoll",
-                attributeNodes = {
-                    @NamedAttributeNode(value = "name")
-                }),
-            @NamedSubgraph(name = "artikel.decoderHersteller",
-                attributeNodes = {
-                    @NamedAttributeNode(value = "name")
-            })
+                })
         }),
     // Used for detail page
     @NamedEntityGraph(name="artikel.withChildren",
@@ -231,7 +206,7 @@ import lombok.experimental.SuperBuilder;
             @NamedAttributeNode(value = "motorTyp", subgraph = "artikel.motorTyp"),
             @NamedAttributeNode(value = "licht", subgraph = "artikel.licht"),
             @NamedAttributeNode(value = "kupplung", subgraph = "artikel.kupplung"),
-            @NamedAttributeNode(value = "decoder", subgraph = "artikel.decoder"),
+            @NamedAttributeNode(value = "decoders", subgraph = "artikel.decoders"),
             @NamedAttributeNode(value = "anderungen", subgraph = "artikel.anderungen")
         },
         subgraphs = {
@@ -269,7 +244,7 @@ import lombok.experimental.SuperBuilder;
                 attributeNodes = {
                     @NamedAttributeNode(value = "name")
                 }),
-            @NamedSubgraph(name = "artikel.decoder",
+            @NamedSubgraph(name = "artikel.decoders",
                 attributeNodes = {
                     @NamedAttributeNode(value = "decoderId"),
                     @NamedAttributeNode(value = "bezeichnung"),
@@ -397,10 +372,6 @@ public class Artikel extends ItemImpl implements Comparable<Artikel> {
     @JoinColumn(name = DBNames.KUPPLUNG_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ARTIKEL + "_fk6"))
     private Kupplung kupplung;
 
-    /** The decoder. */
-    @OneToOne(mappedBy = "artikel", fetch = FetchType.LAZY, targetEntity = Decoder.class, optional = true)
-    private Decoder decoder;
-
     /** The bezeichnung. */
     @Column(name = DBNames.BEZEICHNUNG, length = 100)
     @Size(max = 100, message = "{com.linepro.modellbahn.validator.constraints.maxLength}")
@@ -475,6 +446,26 @@ public class Artikel extends ItemImpl implements Comparable<Artikel> {
         anderungen.remove(anderung);
     }
 
+    /** The decoders. */
+    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.ARTIKEL, targetEntity=Decoder.class, orphanRemoval = false)
+    @Builder.Default
+    private Set<Decoder> decoders = new HashSet<>();
+
+    public void addDecoder(Decoder decoder) {
+        if (decoders == null) {
+            decoders = new HashSet<>();
+        }
+
+        decoder.setArtikel(this);
+        decoder.setDeleted(false);
+        decoders.add(decoder);
+    }
+
+    public void removeDecoder(Decoder decoder) {
+        decoders.remove(decoder);
+        decoder.setArtikel(null);
+    }
+
     @Override
     public int compareTo(Artikel other) {
         return new CompareToBuilder()
@@ -518,7 +509,6 @@ public class Artikel extends ItemImpl implements Comparable<Artikel> {
             .append("motorTyp", motorTyp)
             .append("licht", licht)
             .append("kupplung", kupplung)
-            .append("decoder", decoder)
             .append("bezeichnung", bezeichnung)
             .append("preis", preis)
             .append("menge", menge)
@@ -528,6 +518,7 @@ public class Artikel extends ItemImpl implements Comparable<Artikel> {
             .append("abbildung", abbildung)
             .append("status", status)
             .append("anderungen", anderungen)
+            .append("decoders", decoders)
             .toString();
     }
 }

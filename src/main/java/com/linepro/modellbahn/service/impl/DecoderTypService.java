@@ -16,29 +16,23 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.linepro.modellbahn.controller.impl.AcceptableMediaTypes;
 import com.linepro.modellbahn.controller.impl.ApiNames;
-import com.linepro.modellbahn.converter.entity.DecoderTypAdressMapper;
 import com.linepro.modellbahn.converter.entity.DecoderTypCvMapper;
 import com.linepro.modellbahn.converter.entity.DecoderTypFunktionMapper;
 import com.linepro.modellbahn.converter.entity.DecoderTypMapper;
-import com.linepro.modellbahn.converter.request.DecoderTypAdressRequestMapper;
 import com.linepro.modellbahn.converter.request.DecoderTypCvRequestMapper;
 import com.linepro.modellbahn.converter.request.DecoderTypFunktionRequestMapper;
 import com.linepro.modellbahn.converter.request.DecoderTypRequestMapper;
 import com.linepro.modellbahn.entity.DecoderTyp;
-import com.linepro.modellbahn.entity.DecoderTypAdress;
 import com.linepro.modellbahn.entity.DecoderTypCv;
 import com.linepro.modellbahn.entity.DecoderTypFunktion;
 import com.linepro.modellbahn.io.FileService;
-import com.linepro.modellbahn.model.DecoderTypAdressModel;
 import com.linepro.modellbahn.model.DecoderTypCvModel;
 import com.linepro.modellbahn.model.DecoderTypFunktionModel;
 import com.linepro.modellbahn.model.DecoderTypModel;
-import com.linepro.modellbahn.repository.DecoderTypAdressRepository;
 import com.linepro.modellbahn.repository.DecoderTypCvRepository;
 import com.linepro.modellbahn.repository.DecoderTypFunktionRepository;
 import com.linepro.modellbahn.repository.DecoderTypRepository;
 import com.linepro.modellbahn.repository.lookup.DecoderTypLookup;
-import com.linepro.modellbahn.request.DecoderTypAdressRequest;
 import com.linepro.modellbahn.request.DecoderTypCvRequest;
 import com.linepro.modellbahn.request.DecoderTypFunktionRequest;
 import com.linepro.modellbahn.request.DecoderTypRequest;
@@ -51,10 +45,6 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel, DecoderT
 
     private final FileService fileService;
 
-    private final DecoderTypAdressRepository adressRepository;
-    private final DecoderTypAdressRequestMapper adressRequestMapper;
-    private final DecoderTypAdressMapper adressMapper;
-
     private final DecoderTypCvRepository cvRepository;
     private final DecoderTypCvRequestMapper cvRequestMapper;
     private final DecoderTypCvMapper cvMapper;
@@ -65,18 +55,13 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel, DecoderT
 
     @Autowired
     public DecoderTypService(DecoderTypRepository repository, FileService fileService, DecoderTypRequestMapper decoderTypRequestMapper, 
-                    DecoderTypMapper decoderTypMapper, DecoderTypAdressRepository adressRepository, DecoderTypAdressRequestMapper adressRequestMapper, 
-                    DecoderTypAdressMapper adressMapper, DecoderTypCvRepository cvRepository, DecoderTypCvRequestMapper cvRequestMapper, DecoderTypCvMapper cvMapper,
-                    DecoderTypFunktionRepository funktionRepository,  DecoderTypFunktionRequestMapper funktionRequestMapper, DecoderTypFunktionMapper funktionMapper,
-                    DecoderTypLookup lookup) {
+                    DecoderTypMapper decoderTypMapper, DecoderTypCvRepository cvRepository, DecoderTypCvRequestMapper cvRequestMapper,
+                    DecoderTypCvMapper cvMapper, DecoderTypFunktionRepository funktionRepository, DecoderTypFunktionRequestMapper funktionRequestMapper,
+                    DecoderTypFunktionMapper funktionMapper, DecoderTypLookup lookup) {
         super(repository, decoderTypRequestMapper, decoderTypMapper, lookup);
         this.repository = repository;
 
         this.fileService = fileService;
-
-        this.adressRepository = adressRepository;
-        this.adressRequestMapper = adressRequestMapper;
-        this.adressMapper = adressMapper;
 
         this.cvRepository = cvRepository;
         this.cvRequestMapper = cvRequestMapper;
@@ -97,44 +82,6 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel, DecoderT
 
     public boolean delete(String hersteller, String bestellNr) {
         return super.delete(DecoderTypModel.builder().hersteller(hersteller).bestellNr(bestellNr).build());
-    }
-
-    @Transactional(readOnly = true)
-    public Optional<DecoderTypAdressModel> getAdress(String hersteller, String bestellNr, Integer index) {
-        return adressRepository.findByIndex(hersteller, bestellNr, index)
-                               .map(a -> adressMapper.convert(a));
-    }
-
-    @Transactional
-    public Optional<DecoderTypAdressModel> addAdress(String hersteller, String bestellNr, DecoderTypAdressRequest request) {
-        return repository.findByBestellNr(hersteller, bestellNr)
-                         .map(d -> {
-                             DecoderTypAdress adress = adressRequestMapper.convert(request);
-                             d.addAdress(adress);
-                             repository.saveAndFlush(d);
-                             return adressMapper.convert(adress);
-                         });
-    }
-
-    @Transactional
-    public Optional<DecoderTypAdressModel> updateAdress(String hersteller, String bestellNr, Integer index, DecoderTypAdressRequest request) {
-        return adressRepository.findByIndex(hersteller, bestellNr, index)
-                               .map(a -> {
-                                   Boolean deleted = a.getDeleted();
-                                   DecoderTypAdress adress = adressRequestMapper.apply(request, a);
-                                   adress.setDeleted(deleted);
-                                   return adressMapper.convert(adressRepository.saveAndFlush(adress));
-                               });
-    }
-
-    @Transactional
-    public boolean deleteAdress(String hersteller, String bestellNr, Integer index) {
-       return adressRepository.findByIndex(hersteller, bestellNr, index)
-                               .map(a -> {
-                                   adressRepository.delete(a);
-                                   return true;
-                               })
-                               .orElse(false);
     }
 
     @Transactional(readOnly = true)
@@ -176,8 +123,8 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel, DecoderT
     }
 
     @Transactional(readOnly = true)
-    public Optional<DecoderTypFunktionModel> getFunktion(String hersteller, String bestellNr, Integer reihe, String funktion) {
-        return funktionRepository.findByFunktion(hersteller, bestellNr, reihe, funktion)
+    public Optional<DecoderTypFunktionModel> getFunktion(String hersteller, String bestellNr, String funktion) {
+        return funktionRepository.findByFunktion(hersteller, bestellNr, funktion)
                                  .map(f -> funktionMapper.convert(f));
     }
 
@@ -193,8 +140,8 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel, DecoderT
     }
 
     @Transactional
-    public Optional<DecoderTypFunktionModel> updateFunktion(String hersteller, String bestellNr, Integer reihe, String funktion, DecoderTypFunktionRequest request) {
-        return funktionRepository.findByFunktion(hersteller, bestellNr, reihe, funktion)
+    public Optional<DecoderTypFunktionModel> updateFunktion(String hersteller, String bestellNr, String funktion, DecoderTypFunktionRequest request) {
+        return funktionRepository.findByFunktion(hersteller, bestellNr, funktion)
                                  .map(f -> {
                                      Boolean deleted = f.getDeleted();
                                      DecoderTypFunktion fn = funktionRequestMapper.apply(request, f);
@@ -204,8 +151,8 @@ public class DecoderTypService extends ItemServiceImpl<DecoderTypModel, DecoderT
     }
 
     @Transactional
-    public boolean deleteFunktion(String hersteller, String bestellNr, Integer reihe, String funktion) {
-        return funktionRepository.findByFunktion(hersteller, bestellNr, reihe, funktion)
+    public boolean deleteFunktion(String hersteller, String bestellNr, String funktion) {
+        return funktionRepository.findByFunktion(hersteller, bestellNr, funktion)
                                  .map(f -> {
                                      funktionRepository.delete(f);
                                      return true;

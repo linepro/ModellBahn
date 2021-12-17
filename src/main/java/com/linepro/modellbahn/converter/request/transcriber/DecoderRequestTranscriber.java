@@ -31,6 +31,7 @@ public class DecoderRequestTranscriber implements Transcriber<DecoderRequest, De
             destination.setBezeichnung(source.getBezeichnung());
             protokollLookup.find(source.getProtokoll()).ifPresent(p -> destination.setProtokoll(p));
             destination.setFahrstufe(source.getFahrstufe());
+            destination.setAdress(source.getAdress());
             destination.setKaufdatum(source.getKaufdatum());
             destination.setWahrung(source.getWahrung());
             destination.setPreis(source.getPreis());

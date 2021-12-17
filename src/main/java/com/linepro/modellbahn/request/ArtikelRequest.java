@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -45,9 +44,8 @@ import lombok.ToString;
 @JsonPropertyOrder({ApiNames.ARTIKEL_ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.KATEGORIE, ApiNames.KAUFDATUM, 
     ApiNames.UNTER_KATEGORIE, ApiNames.LANGE, ApiNames.MASSSTAB, ApiNames.SPURWEITE, ApiNames.EPOCH, ApiNames.BAHNVERWALTUNG, ApiNames.GATTUNG,
     ApiNames.BETREIBSNUMMER, ApiNames.ACHSFOLG, ApiNames.SONDERMODELL, ApiNames.AUFBAU, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.STEUERUNG,
-    ApiNames.DECODER, ApiNames.MOTOR_TYP, ApiNames.KAUFDATUM, ApiNames.WAHRUNG, ApiNames.PREIS, ApiNames.MENGE, ApiNames.VERBLEIBENDE, ApiNames.ANMERKUNG,
-    ApiNames.BELADUNG, ApiNames.STATUS, ApiNames.ANDERUNGEN, ApiNames.ABBILDUNG, ApiNames.GROSSANSICHT, ApiNames.DELETED, ApiNames.LINKS })
-@Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.ARTIKEL)
+    ApiNames.MOTOR_TYP, ApiNames.KAUFDATUM, ApiNames.WAHRUNG, ApiNames.PREIS, ApiNames.MENGE, ApiNames.VERBLEIBENDE, ApiNames.ANMERKUNG,
+    ApiNames.BELADUNG, ApiNames.STATUS, ApiNames.DELETED })
 @Schema(name = ApiNames.ARTIKEL, description = "An article - may differ from product because of modificiations")
 public class ArtikelRequest implements ItemRequest {
 
@@ -131,10 +129,6 @@ public class ArtikelRequest implements ItemRequest {
     @JsonProperty(ApiNames.STEUERUNG)
     @Schema(description = "Control method", example = "Digital")
     private String steuerung;
-
-    @JsonProperty(ApiNames.DECODER_ID)
-    @Schema(description = "Decoder", example = "00001")
-    private String decoder;
 
     @JsonProperty(ApiNames.MOTOR_TYP)
     @Schema(description = "Motor type", example = "5*")

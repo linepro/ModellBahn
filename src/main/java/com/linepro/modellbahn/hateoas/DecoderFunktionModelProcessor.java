@@ -3,7 +3,6 @@ package com.linepro.modellbahn.hateoas;
 import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 import static com.linepro.modellbahn.controller.impl.ApiNames.DECODER_ID;
 import static com.linepro.modellbahn.controller.impl.ApiNames.FUNKTION;
-import static com.linepro.modellbahn.controller.impl.ApiNames.REIHE;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_DECODER;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.UPDATE_DECODER_FUNKTION;
 import static com.linepro.modellbahn.controller.impl.ApiRels.PARENT;
@@ -28,7 +27,6 @@ public class DecoderFunktionModelProcessor extends ModelProcessorImpl<DecoderFun
 
     private static FieldsExtractor EXTRACTOR = (m) -> MapUtils.putAll(new HashMap<String,Object>(), new String[][] { 
         { DECODER_ID, ((DecoderFunktionModel) m).getDecoderId() }, 
-        { REIHE, String.valueOf(((DecoderFunktionModel) m).getReihe()) }, 
         { FUNKTION, String.valueOf(((DecoderFunktionModel) m).getFunktion()) } 
         });
 

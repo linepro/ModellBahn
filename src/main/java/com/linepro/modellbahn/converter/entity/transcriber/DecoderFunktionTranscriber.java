@@ -14,7 +14,6 @@ public class DecoderFunktionTranscriber implements Transcriber<DecoderFunktion,D
     public DecoderFunktionModel apply(DecoderFunktion source, DecoderFunktionModel destination) {
         if (isAvailable(source) && isAvailable(destination)) {
             destination.setDecoderId(source.getDecoder().getDecoderId());
-            destination.setReihe(source.getFunktion().getReihe());
             destination.setFunktion(source.getFunktion().getFunktion());
             destination.setBezeichnung(source.getBezeichnung());
             destination.setProgrammable(source.getFunktion().getProgrammable());

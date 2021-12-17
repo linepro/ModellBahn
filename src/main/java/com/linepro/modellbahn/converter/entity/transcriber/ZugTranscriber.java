@@ -27,15 +27,19 @@ public class ZugTranscriber extends NamedTranscriber<Zug, ZugModel> {
         if (isAvailable(source) && isAvailable(destination)) {
             destination.setZugTyp(getCode(source.getZugTyp()));
 
+            destination.setConsist(
+                            isAvailable(source.getConsist()) ?
+                                source.getConsist()
+                                      .stream()
+                                      .sorted()
+                                      .map(c -> attempt(() -> consistMapper.convert(c)))
+                                      .collect(success())
+                                      .getValue()
+                                      .orElse(KEIN_CONSISTEN) :
+                                KEIN_CONSISTEN
+                                );
+
             if (isAvailable(source.getConsist())) {
-                destination.setConsist(source.getConsist()
-                                             .stream()
-                                             .sorted()
-                                             .map(c -> attempt(() -> consistMapper.convert(c)))
-                                             .collect(success())
-                                             .getValue()
-                                             .orElse(KEIN_CONSISTEN));
-                
                 destination.setLange(destination.getConsist()
                                                 .stream()
                                                 .map(c -> c.getLange())

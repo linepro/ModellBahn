@@ -82,7 +82,6 @@ public class UniqueValidator implements ConstraintValidator<Unique, Item>, Appli
             } else if (item instanceof DecoderTypFunktion) {
                 criteriaQuery = criteriaQuery.where(new Predicate[] { 
                                 criteriaBuilder.equal(root.get(ApiNames.DECODER_TYP), ((DecoderTypFunktion) item).getDecoderTyp()),
-                                criteriaBuilder.equal(root.get(ApiNames.REIHE), ((DecoderTypFunktion) item).getReihe()),
                                 criteriaBuilder.equal(root.get(ApiNames.FUNKTION), ((DecoderTypFunktion) item).getFunktion())
                                 });
             } else if (item instanceof Produkt) {

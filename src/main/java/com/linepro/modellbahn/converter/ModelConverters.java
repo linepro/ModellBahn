@@ -11,11 +11,9 @@ import com.linepro.modellbahn.converter.request.AntriebRequestMapper;
 import com.linepro.modellbahn.converter.request.ArtikelRequestMapper;
 import com.linepro.modellbahn.converter.request.AufbauRequestMapper;
 import com.linepro.modellbahn.converter.request.BahnverwaltungRequestMapper;
-import com.linepro.modellbahn.converter.request.DecoderAdressRequestMapper;
 import com.linepro.modellbahn.converter.request.DecoderCvRequestMapper;
 import com.linepro.modellbahn.converter.request.DecoderFunktionRequestMapper;
 import com.linepro.modellbahn.converter.request.DecoderRequestMapper;
-import com.linepro.modellbahn.converter.request.DecoderTypAdressRequestMapper;
 import com.linepro.modellbahn.converter.request.DecoderTypCvRequestMapper;
 import com.linepro.modellbahn.converter.request.DecoderTypFunktionRequestMapper;
 import com.linepro.modellbahn.converter.request.DecoderTypRequestMapper;
@@ -47,11 +45,9 @@ import com.linepro.modellbahn.converter.request.ZugTypRequestMapper;
     AufbauRequestMapper.class, 
     BahnverwaltungRequestMapper.class, 
     DecoderRequestMapper.class, 
-    DecoderAdressRequestMapper.class, 
     DecoderCvRequestMapper.class, 
     DecoderFunktionRequestMapper.class, 
     DecoderTypRequestMapper.class, 
-    DecoderTypAdressRequestMapper.class, 
     DecoderTypCvRequestMapper.class, 
     DecoderTypFunktionRequestMapper.class, 
     EpochRequestMapper.class, 

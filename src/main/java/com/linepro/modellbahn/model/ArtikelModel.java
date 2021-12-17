@@ -50,7 +50,7 @@ import lombok.ToString;
     ApiNames.UNTER_KATEGORIE, ApiNames.LANGE, ApiNames.MASSSTAB, ApiNames.SPURWEITE, ApiNames.EPOCH, ApiNames.BAHNVERWALTUNG, ApiNames.GATTUNG,
     ApiNames.BETREIBSNUMMER, ApiNames.ACHSFOLG, ApiNames.SONDERMODELL, ApiNames.AUFBAU, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.STEUERUNG,
     ApiNames.DECODER, ApiNames.MOTOR_TYP, ApiNames.KAUFDATUM, ApiNames.WAHRUNG, ApiNames.PREIS, ApiNames.MENGE, ApiNames.VERBLEIBENDE, ApiNames.ANMERKUNG,
-    ApiNames.BELADUNG, ApiNames.STATUS, ApiNames.ANDERUNGEN, ApiNames.ABBILDUNG, ApiNames.GROSSANSICHT, ApiNames.DELETED, ApiNames.LINKS })
+    ApiNames.BELADUNG, ApiNames.STATUS, ApiNames.ABBILDUNG, ApiNames.GROSSANSICHT, ApiNames.DELETED, ApiNames.ANDERUNGEN, ApiNames.DECODEREN, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.ARTIKEL)
 @Schema(name = ApiNames.ARTIKEL, description = "An article - may differ from product because of modificiations")
 public class ArtikelModel extends SpringdocModel<ArtikelModel> implements ItemModel, Comparable<ArtikelModel> {
@@ -118,7 +118,7 @@ public class ArtikelModel extends SpringdocModel<ArtikelModel> implements ItemMo
     private String sondermodell;
 
     @JsonProperty(ApiNames.AUFBAU)
-    @Schema(description = "Construction", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Construction", example = "LK", accessMode = AccessMode.READ_ONLY)
     private String aufbau;
 
     @JsonProperty(ApiNames.LICHT)
@@ -132,10 +132,6 @@ public class ArtikelModel extends SpringdocModel<ArtikelModel> implements ItemMo
     @JsonProperty(ApiNames.STEUERUNG)
     @Schema(description = "Control method", example = "Digital")
     private String steuerung;
-
-    @JsonProperty(ApiNames.DECODER_ID)
-    @Schema(description = "Decoder", example = "00001")
-    private String decoder;
 
     @JsonProperty(ApiNames.MOTOR_TYP)
     @Schema(description = "Motor type", example = "5*")
@@ -174,6 +170,14 @@ public class ArtikelModel extends SpringdocModel<ArtikelModel> implements ItemMo
     @Schema(description = "Status", example = "GEKAUFT", required = true)
     private Status status;
 
+    @JsonProperty(ApiNames.ANLEITUNGEN)
+    @Schema(description = "Instructions URL", example = "http://localhost/Modelbahn/produkt/MARKLIN/3000/anleitungen.pdf", accessMode = AccessMode.READ_ONLY)
+    private String anleitungen;
+
+    @JsonProperty(ApiNames.EXPLOSIONSZEICHNUNG)
+    @Schema(description = "Parts diagram URL", example = "http://localhost/Modelbahn/produkt/MARKLIN/3000/explosionszeichnung.pdf", accessMode = AccessMode.READ_ONLY)
+    private String explosionszeichnung;
+
     @JsonProperty(ApiNames.ABBILDUNG)
     @Schema(description = "Image URL", example = "http://localhost:8086/ModellBahn/artikel/00001/abbildung.jpg", accessMode = AccessMode.READ_ONLY)
     private String abbildung;
@@ -186,6 +190,10 @@ public class ArtikelModel extends SpringdocModel<ArtikelModel> implements ItemMo
     @JsonProperty(ApiNames.ANDERUNGEN)
     @Schema(implementation = AnderungModel.class, description = "Modifications", accessMode = AccessMode.READ_ONLY)
     private List<AnderungModel> anderungen;
+
+    @JsonProperty(ApiNames.DECODEREN)
+    @Schema(implementation = DecoderModel.class, description = "Decoders", accessMode = AccessMode.READ_ONLY)
+    private List<DecoderModel> decoders;
 
     @JsonProperty(ApiNames.DELETED)
     @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)

@@ -57,7 +57,7 @@ public class ToStringBuilder extends org.apache.commons.lang3.builder.ToStringBu
     }
 
     public ToStringBuilder append(String fieldName, DecoderTypFunktion value) {
-        super.append(fieldName, isAvailable(value) ? new Object[] { value.getReihe(), value.getFunktion(), value.getBezeichnung() } : null);
+        super.append(fieldName, isAvailable(value) ? new Object[] { value.getFunktion(), value.getBezeichnung() } : null);
         return this;
     }
 

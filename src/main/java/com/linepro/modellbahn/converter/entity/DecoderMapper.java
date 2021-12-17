@@ -14,7 +14,7 @@ import com.linepro.modellbahn.model.DecoderModel;
 public class DecoderMapper extends MapperImpl<Decoder, DecoderModel> {
 
     @Autowired
-    public DecoderMapper(ArtikelMapper artikelMapper, DecoderTypMapper decoderTypMapper, DecoderAdressMapper adressMapper, DecoderCvMapper cvMapper, DecoderFunktionMapper funktionMapper) {
-        super(() -> new DecoderModel(), new DecoderTranscriber(artikelMapper, decoderTypMapper, adressMapper, cvMapper, funktionMapper));
+    public DecoderMapper(DecoderTypMapper decoderTypMapper, DecoderCvMapper cvMapper, DecoderFunktionMapper funktionMapper) {
+        super(() -> new DecoderModel(), new DecoderTranscriber(decoderTypMapper, cvMapper, funktionMapper));
     }
 }

@@ -38,8 +38,7 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(SnakeCaseStrategy.class)
-@JsonPropertyOrder({ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.REIHE, ApiNames.FUNKTION, ApiNames.BEZEICHNUNG,
-    ApiNames.PROGRAMMABLE, ApiNames.DELETED, ApiNames.LINKS })
+@JsonPropertyOrder({ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.FUNKTION, ApiNames.BEZEICHNUNG, ApiNames.PROGRAMMABLE, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.FUNKTION)
 @Schema(name = ApiNames.FUNKTION, description = "Decoder type function mapping - template for Decoder.")
 public class DecoderTypFunktionModel extends SpringdocModel<DecoderTypFunktionModel> implements ItemModel, Comparable<DecoderTypFunktionModel> {
@@ -53,10 +52,6 @@ public class DecoderTypFunktionModel extends SpringdocModel<DecoderTypFunktionMo
     @JsonProperty(ApiNames.BESTELL_NR)
     @Schema(description = "Product numer", example = "62499", accessMode = AccessMode.READ_ONLY)
     private String bestellNr;
-
-    @JsonProperty(ApiNames.REIHE)
-    @Schema(description = "Bank number (0-1) always 0 for single panel decoders", example = "0", required = true)
-    private Integer reihe;
 
     @JsonProperty(ApiNames.FUNKTION)
     @Schema(description = "Function Key", example = "F0", required = true)
@@ -79,7 +74,6 @@ public class DecoderTypFunktionModel extends SpringdocModel<DecoderTypFunktionMo
         return new CompareToBuilder()
             .append(hersteller, other.hersteller)
             .append(bestellNr, other.bestellNr)
-            .append(reihe, other.reihe)
             .append(funktion, other.funktion)
             .toComparison();
     }
@@ -89,7 +83,6 @@ public class DecoderTypFunktionModel extends SpringdocModel<DecoderTypFunktionMo
         return new HashCodeBuilder()
             .append(hersteller)
             .append(bestellNr)
-            .append(reihe)
             .append(funktion)
             .hashCode();
     }
@@ -109,7 +102,6 @@ public class DecoderTypFunktionModel extends SpringdocModel<DecoderTypFunktionMo
         return new EqualsBuilder()
                 .append(hersteller, other.hersteller)
                 .append(bestellNr, other.bestellNr)
-                .append(reihe, other.reihe)
                 .append(funktion, other.funktion)
                 .isEquals();
     }

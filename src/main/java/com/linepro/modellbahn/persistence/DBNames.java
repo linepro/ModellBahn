@@ -115,7 +115,6 @@ public interface DBNames {
     String PROGRAMMABLE = "programmable";
     String PROTOKOLL_ID = "protokollId";
     String REICHWEITE = "reichweite";
-    String REIHE = "reihe";
     String ROSTFLACHE = "rostflache";
     String SITZPLATZEKL1 = "sitzplatzeKl1";
     String SITZPLATZEKL2 = "sitzplatzeKl2";

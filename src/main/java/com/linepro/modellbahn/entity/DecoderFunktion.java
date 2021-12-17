@@ -52,7 +52,6 @@ import lombok.experimental.SuperBuilder;
             }),
             @NamedSubgraph(name = "decoderFunktion.funktion",
             attributeNodes = {
-                @NamedAttributeNode(value = "reihe"),
                 @NamedAttributeNode(value = "funktion"),
                 @NamedAttributeNode(value = "bezeichnung"),
                 @NamedAttributeNode(value = "programmable")
@@ -80,7 +79,6 @@ public class DecoderFunktion extends ItemImpl implements Comparable<DecoderFunkt
 
 	/** The wert. */
     @Column(name=DBNames.BEZEICHNUNG, length=100)
-    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.wert.notnull}")
 	private String bezeichnung;
 
     @Override

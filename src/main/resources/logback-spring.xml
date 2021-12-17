@@ -100,19 +100,19 @@
         <appender-ref ref="console"/>
         <appender-ref ref="logfile"/>
     </logger>
-    <logger additivity="false" level="DEBUG" name="org.springframework.security">
+    <logger additivity="false" level="WARN" name="org.springframework.security">
         <appender-ref ref="console"/>
         <appender-ref ref="logfile"/>
     </logger>
-    <logger additivity="false" level="DEBUG" name="org.springframework.security.web.FilterChainProxy">
+    <logger additivity="false" level="WARN" name="org.springframework.security.web.FilterChainProxy">
         <appender-ref ref="console"/>
         <appender-ref ref="logfile"/>
     </logger>
-    <logger additivity="false" level="DEBUG" name="org.springframework.web">
+    <logger additivity="false" level="INFO" name="org.springframework.web">
         <appender-ref ref="console"/>
         <appender-ref ref="logfile"/>
     </logger>
-    <logger additivity="false" level="DEBUG" name="com.linepro.modellbahn">
+    <logger additivity="false" level="INFO" name="com.linepro.modellbahn">
         <appender-ref ref="console"/>
         <appender-ref ref="logfile"/>
     </logger>

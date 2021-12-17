@@ -19,9 +19,9 @@ public class DecoderFunktionLookup implements Lookup<DecoderFunktion, DecoderFun
 
     private final DecoderFunktionRepository repository;
 
-    public Optional<DecoderFunktion> find(String decoderId, Integer reihe, String funktion) {
-        if (StringUtils.hasText(decoderId) && reihe != null && StringUtils.hasText(funktion)) {
-            return repository.findByFunktion(decoderId, reihe, funktion);
+    public Optional<DecoderFunktion> find(String decoderId, String funktion) {
+        if (StringUtils.hasText(decoderId) && StringUtils.hasText(funktion)) {
+            return repository.findByFunktion(decoderId, funktion);
         }
 
         return Optional.empty();
@@ -30,7 +30,7 @@ public class DecoderFunktionLookup implements Lookup<DecoderFunktion, DecoderFun
     @Override
     public Optional<DecoderFunktion> find(DecoderFunktion item) {
         if (item != null && item.getDecoder() != null && item.getFunktion() != null) {
-            return find(item.getDecoder().getDecoderId(), item.getFunktion().getReihe(), item.getFunktion().getFunktion());
+            return find(item.getDecoder().getDecoderId(), item.getFunktion().getFunktion());
         }
 
         return Optional.empty();
@@ -39,7 +39,7 @@ public class DecoderFunktionLookup implements Lookup<DecoderFunktion, DecoderFun
     @Override
     public Optional<DecoderFunktion> find(DecoderFunktionModel model) {
         if (model != null) {
-            return find(model.getDecoderId(), model.getReihe(), model.getFunktion());
+            return find(model.getDecoderId(), model.getFunktion());
         }
 
         return Optional.empty();

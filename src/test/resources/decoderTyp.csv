@@ -1,2 +1,2 @@
-hersteller,bestellNr,bezeichnung,iMax,protokoll,fahrstufe,gerausch,konfiguration,stecker,anleitungen,deleted
-ESU,66666,"LokPilot Test",1.10,MFX,28,false,CV,NEM652,,false
+hersteller,bestellNr,bezeichnung,iMax,protokoll,fahrstufe,adressTyp,adress,span,gerausch,konfiguration,stecker,anleitungen,deleted
+ESU,66666,"LokPilot Test",1.10,MFX,28,DIGITAL,80,1,false,CV,NEM652,,false

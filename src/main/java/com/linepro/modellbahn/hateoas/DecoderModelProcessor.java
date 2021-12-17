@@ -45,15 +45,12 @@ public class DecoderModelProcessor extends ModelProcessorImpl<DecoderModel> impl
         { BESTELL_NR, ((DecoderModel) m).getBestellNr() }, 
         });
 
-    private final DecoderAdressModelProcessor adressProcessor;
-
     private final DecoderCvModelProcessor cvProcessor;
 
     private final DecoderFunktionModelProcessor funktionProcessor;
 
     @Autowired
-    public DecoderModelProcessor(DecoderAdressModelProcessor adressProcessor, DecoderCvModelProcessor cvProcessor,
-                    DecoderFunktionModelProcessor funktionProcessor) {
+    public DecoderModelProcessor(DecoderCvModelProcessor cvProcessor, DecoderFunktionModelProcessor funktionProcessor) {
         super(
             new LinkTemplateImpl(ADD, ADD_DECODER, DECODER_TYP_EXTRACTOR),
             new LinkTemplateImpl(SELF, GET_DECODER, EXTRACTOR),
@@ -63,8 +60,6 @@ public class DecoderModelProcessor extends ModelProcessorImpl<DecoderModel> impl
             new LinkTemplateImpl(DECODER_TYP, GET_DECODER_TYP, DECODER_TYP_EXTRACTOR)
             );
 
-        this.adressProcessor = adressProcessor;
-
         this.cvProcessor = cvProcessor;
 
         this.funktionProcessor = funktionProcessor;
@@ -72,11 +67,6 @@ public class DecoderModelProcessor extends ModelProcessorImpl<DecoderModel> impl
 
     @Override
     public DecoderModel process(DecoderModel model) {
-        if (!CollectionUtils.isEmpty(model.getAdressen())) {
-            model.getAdressen()
-                 .forEach(a -> adressProcessor.process(a));
-        }
-
         if (!CollectionUtils.isEmpty(model.getCvs())) {
             model.getCvs()
                  .forEach(c -> cvProcessor.process(c));
