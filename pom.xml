@@ -110,7 +110,7 @@
         <jackson.version>2.12.3</jackson.version>
         <junidecode.version>0.4.1</junidecode.version>
         <libphonenumber.version>8.12.39</libphonenumber.version>
-        <log4j.version>2.16.0</log4j.version>
+        <log4j.version>2.17.0</log4j.version>
         <logstash-logback-encoder.version>7.0.1</logstash-logback-encoder.version>
         <springdoc-openapi.version>1.6.1</springdoc-openapi.version>
         <spring-cloud.version>2020.0.4</spring-cloud.version>
