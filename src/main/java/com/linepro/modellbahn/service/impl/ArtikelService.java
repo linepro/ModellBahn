@@ -8,9 +8,7 @@ package com.linepro.modellbahn.service.impl;
 
 import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,14 +20,15 @@ import com.linepro.modellbahn.controller.impl.ApiMessages;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.converter.entity.AnderungMapper;
 import com.linepro.modellbahn.converter.entity.ArtikelMapper;
+import com.linepro.modellbahn.converter.entity.DecoderMapper;
 import com.linepro.modellbahn.converter.request.AnderungRequestMapper;
 import com.linepro.modellbahn.converter.request.ArtikelRequestMapper;
 import com.linepro.modellbahn.entity.Anderung;
 import com.linepro.modellbahn.entity.Artikel;
-import com.linepro.modellbahn.entity.Decoder;
 import com.linepro.modellbahn.io.FileService;
 import com.linepro.modellbahn.model.AnderungModel;
 import com.linepro.modellbahn.model.ArtikelModel;
+import com.linepro.modellbahn.model.DecoderModel;
 import com.linepro.modellbahn.persistence.util.AssetIdGenerator;
 import com.linepro.modellbahn.repository.AnderungRepository;
 import com.linepro.modellbahn.repository.ArtikelRepository;
@@ -46,6 +45,8 @@ public class ArtikelService extends ItemServiceImpl<ArtikelModel, ArtikelRequest
 
     private final DecoderRepository decoderRepository;
 
+    private final DecoderMapper decoderMapper;
+
     private final FileService fileService;
 
     private final AnderungRepository anderungRepository;
@@ -57,21 +58,23 @@ public class ArtikelService extends ItemServiceImpl<ArtikelModel, ArtikelRequest
     private final AssetIdGenerator assetIdGenerator;
 
     @Autowired
-    public ArtikelService(ArtikelRepository repository, DecoderRepository decoderRepository, ArtikelRequestMapper requestMapper, 
-                    ArtikelMapper entityMapper, FileService fileService, AnderungRepository anderungRepository, 
-                    AnderungMapper anderungMapper, AnderungRequestMapper anderungRequestMapper, AssetIdGenerator assetIdGenerator,
-                    ArtikelLookup lookup) {
+    public ArtikelService(ArtikelRepository repository, ArtikelRequestMapper requestMapper, ArtikelMapper entityMapper,
+                    ArtikelLookup lookup, AssetIdGenerator assetIdGenerator, FileService fileService, AnderungRepository anderungRepository, 
+                    AnderungMapper anderungMapper, AnderungRequestMapper anderungRequestMapper, DecoderRepository decoderRepository,
+                    DecoderMapper decoderMapper) {
         super(repository, requestMapper, entityMapper, lookup);
 
         this.repository = repository;
-        this.decoderRepository = decoderRepository;
+
+        this.assetIdGenerator = assetIdGenerator;
         this.fileService = fileService;
 
         this.anderungRepository = anderungRepository;
         this.anderungMapper = anderungMapper;
         this.anderungRequestMapper = anderungRequestMapper;
 
-        this.assetIdGenerator = assetIdGenerator;
+        this.decoderRepository = decoderRepository;
+        this.decoderMapper = decoderMapper;
     }
 
     public Optional<ArtikelModel> get(String artikelId) {
@@ -105,10 +108,7 @@ public class ArtikelService extends ItemServiceImpl<ArtikelModel, ArtikelRequest
     }
 
     public boolean delete(String artikelId) {
-        return lookup.find(ArtikelModel.builder().artikelId(artikelId).build())
-                     .map(this::removeDecoders)
-                     .map(a -> true)
-                     .orElse(false);
+        return super.delete(ArtikelModel.builder().artikelId(artikelId).build());
     }
 
     @Transactional
@@ -167,7 +167,7 @@ public class ArtikelService extends ItemServiceImpl<ArtikelModel, ArtikelRequest
                                       anderung.setDeleted(deleted);
                                       anderung.setDeleted(false);
                                       return anderungMapper.convert(anderungRepository.saveAndFlush(anderung));
-                                      });
+                                 });
     }
 
     @Transactional
@@ -176,61 +176,46 @@ public class ArtikelService extends ItemServiceImpl<ArtikelModel, ArtikelRequest
                                  .map(a -> {
                                       anderungRepository.delete(a);
                                       return true;
-                                      })
+                                 })
                                  .orElse(false);
     }
 
     @Transactional
-    public Optional<ArtikelModel> addDecoder(String artikelId, String decoderId) {
-        return repository.findByArtikelId(artikelId)
-                         .map(a -> addDecoder(a, decoderId))
-                         .map(repository::save)
-                         .map(entityMapper::convert);
+    public Optional<DecoderModel> addDecoder(String artikelId, String decoderId) {
+        return decoderRepository.findByDecoderId(decoderId)
+                                .filter(d -> {
+                                    if (d.getArtikel() != null) {
+                                        throw new ModellBahnException(ApiMessages.DECODER_IN_USE);
+                                    }
+                                    return true;
+                                })
+                                .map(d -> repository.findByArtikelId(artikelId)
+                                                    .map(a -> {
+                                                        a.addDecoder(d);
+                                                        return a;
+                                                    })
+                                                    .map(repository::save)
+                                                    .map(a -> decoderMapper.convert(d))
+                                )
+                                .orElse(Optional.empty());
     }
 
     @Transactional
-    public Optional<ArtikelModel> deleteDecoder(String artikelId, String decoderId) {
-        return repository.findByArtikelId(artikelId)
-                         .map(a -> removeDecoder(a, decoderId))
-                         .map(repository::save)
-                         .map(entityMapper::convert);
-    }
-
-    protected Artikel addDecoder(Artikel artikel, String decoderId) {
+    public boolean deleteDecoder(String artikelId, String decoderId) {
         return decoderRepository.findByDecoderId(decoderId)
-                                .filter(d -> isFree(artikel, d))
+                                .filter(d -> {
+                                    if (d.getArtikel() == null || !artikelId.equals(d.getArtikel().getArtikelId())) {
+                                        throw new ModellBahnException(ApiMessages.DECODER_IN_USE);
+                                    }
+                                    return true;
+                                })
                                 .map(d -> {
-                                    artikel.addDecoder(d);
-                                    return artikel;
-                                    })
-                                .orElseThrow(() -> new ModellBahnException(ApiMessages.DECODER_IN_USE));
-    }
-
-    protected boolean isFree(Artikel artikel, Decoder decoder) {
-        return decoder.getArtikel() == null || artikel.getArtikelId().equals(decoder.getArtikel().getArtikelId());
-    }
-
-    protected Artikel removeDecoder(Artikel artikel, String decoderId) {
-        for (Decoder decoder : artikel.getDecoders()) {
-            if (decoder.getDecoderId().equals(decoderId)) {
-                artikel.removeDecoder(decoder);
-                return artikel;
-            }
-        }
-
-        throw new ModellBahnException(ApiMessages.DECODER_NOT_FOUND);
-    }
-
-    protected Artikel removeDecoders(Artikel artikel) {
-        List<String> decoderIds = artikel.getDecoders()
-                                         .stream()
-                                         .map(Decoder::getDecoderId)
-                                         .collect(Collectors.toList());
-        
-        for (String decoderId : decoderIds) {
-            removeDecoder(artikel, decoderId);
-        }
-
-        return artikel;
+                                    Artikel a = d.getArtikel();
+                                    a.removeDecoder(d);
+                                    return a;
+                                })
+                                .map(repository::save)
+                                .map(a -> true)
+                                .orElse(false);
     }
 }
