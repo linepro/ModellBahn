@@ -40,9 +40,17 @@ public class ArtikelDecoderRequest implements ItemRequest {
      */
     private static final long serialVersionUID = -819994633399521641L;
 
-    @JsonProperty(ApiNames.DECODER)
+    @JsonProperty(ApiNames.DECODER_ID)
     @Schema(description = "DecoderId", example = "00001")
     private String decoderId;
+
+    @JsonProperty(ApiNames.ADRESS)
+    @Schema(description = "Decoder address", example = "28", required = true)
+    private Integer adress;
+
+    @JsonProperty(ApiNames.ANMERKUNG)
+    @Schema(description = "Remarks", example = "ESU Project nnnn")
+    private String anmerkung;
 
     @JsonProperty(ApiNames.DELETED)
     @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)

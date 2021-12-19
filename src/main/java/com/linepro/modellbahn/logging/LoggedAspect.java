@@ -10,7 +10,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.logging.log4j.core.pattern.NameAbbreviator;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -26,6 +25,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import ch.qos.logback.classic.pattern.Abbreviator;
+import ch.qos.logback.classic.pattern.TargetLengthBasedClassNameAbbreviator;
 
 /**
  * Aspect that automagically wraps:
@@ -56,7 +58,7 @@ public class LoggedAspect {
 
     protected static final Logged NO_LOGGING_POLICY = createPolicy(BusinessEvent.GENERIC, Level.INFO, false, false, true);
 
-    protected static final NameAbbreviator abbreviator = NameAbbreviator.getAbbreviator("2");
+    protected static final Abbreviator abbreviator = new TargetLengthBasedClassNameAbbreviator(30);
 
     /**
      * Pointcut that matches any class or interface tagged by @Logged, any @Service or @Controller.
@@ -143,9 +145,7 @@ public class LoggedAspect {
     }
 
     String getCallee(Signature signature) {
-        StringBuilder callee = new StringBuilder();
-        abbreviator.abbreviate(String.join(".", signature.getDeclaringTypeName(), signature.getName()), callee);
-        return callee.toString();
+        return abbreviator.abbreviate(String.join(".", signature.getDeclaringTypeName(), signature.getName()));
     }
 
     Class<?> getClass(JoinPoint joinPoint) {

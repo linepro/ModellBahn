@@ -198,12 +198,16 @@ public class ArtikelService extends ItemServiceImpl<ArtikelModel, ArtikelRequest
 
     protected Artikel addDecoder(Artikel artikel, String decoderId) {
         return decoderRepository.findByDecoderId(decoderId)
-                                .filter(d -> d.getArtikel() == null || artikel.getArtikelId().equals(d.getArtikel().getArtikelId()))
+                                .filter(d -> isFree(artikel, d))
                                 .map(d -> {
                                     artikel.addDecoder(d);
                                     return artikel;
                                     })
                                 .orElseThrow(() -> new ModellBahnException(ApiMessages.DECODER_IN_USE));
+    }
+
+    protected boolean isFree(Artikel artikel, Decoder decoder) {
+        return decoder.getArtikel() == null || artikel.getArtikelId().equals(decoder.getArtikel().getArtikelId());
     }
 
     protected Artikel removeDecoder(Artikel artikel, String decoderId) {
