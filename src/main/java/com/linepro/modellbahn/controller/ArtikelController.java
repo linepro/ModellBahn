@@ -167,8 +167,8 @@ public class ArtikelController extends AbstractItemController<ArtikelModel, Arti
     }
 
     @DeleteMapping(path = ApiPaths.DELETE_ARTIKEL_DECODER, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
-    @Operation(summary = "Delete an Artikel picture", description = "Deletes the picture of a named Artikel", operationId = "update", tags = { ApiNames.ARTIKEL }, responses = {
-        @ApiResponse(responseCode = "202", description = "Successful operation", content = @Content),
+    @Operation(summary = "Delete an Artikel decoder", description = "Remove a decoder from a named Artikel", operationId = "update", tags = { ApiNames.ARTIKEL }, responses = {
+        @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -176,7 +176,7 @@ public class ArtikelController extends AbstractItemController<ArtikelModel, Arti
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
     public ResponseEntity<?> deleteDecoder(@PathVariable(ApiNames.ARTIKEL_ID) String artikelId, @RequestParam(ApiNames.DECODER_ID) String decoderId) {
-        return updated(service.deleteDecoder(artikelId, decoderId));
+        return deleted(service.deleteDecoder(artikelId, decoderId));
     }
 
     @PutMapping(path = ApiPaths.ADD_ARTIKEL_GROSSANSICHT, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
