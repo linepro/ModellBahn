@@ -44,6 +44,9 @@ public class ExporterImplTest {
     private static final String PROTOKOLL = "MFX";
     private static final Integer FAHRSTUFE = 127;
     private static final Boolean GERAUSCH = true;
+    private static final Boolean MOTOR = true;
+    private static final Integer OUTPUTS = 4;
+    private static final Integer SERVOS = 0;
     private static final Konfiguration KONFIGURATION = Konfiguration.CV;
     private static final Stecker STECKER = Stecker.MTC21;
     private static final LocalDate KAUFDATUM = LocalDate.now();
@@ -82,6 +85,9 @@ public class ExporterImplTest {
                                                           .adress(ADRESS)
                                                           .span(SPAN)
                                                           .sound(GERAUSCH)
+                                                          .motor(MOTOR)
+                                                          .outputs(OUTPUTS)
+                                                          .servos(SERVOS)
                                                           .konfiguration(KONFIGURATION)
                                                           .stecker(STECKER)
                                                           .kaufdatum(KAUFDATUM)
@@ -93,8 +99,8 @@ public class ExporterImplTest {
                                                           .deleted(DELETED)
                                                           .build();
 
-    private static final String CSV = "decoderId,hersteller,bestellNr,artikelId,bezeichnung,iMax,protokoll,adressTyp,adress,span,fahrstufe,gerausch,konfiguration,stecker,kaufdatum,wahrung,preis,anmerkung,status,anleitungen,deleted\n" +
-                                      DECODER_ID + "," + HERSTELLER + "," + BESTELL_NR + "," + ARTIKEL_ID + ",\"" + BEZEICHNUNG + "\"," + I_MAX + "," + PROTOKOLL + "," + ADRESS_TYP + "," + ADRESS + "," + SPAN + "," + FAHRSTUFE + "," + GERAUSCH + "," + KONFIGURATION + "," + STECKER + "," + KAUFDATUM + "," + WAHRUNG + "," + PREIS + "," + ANMERKUNG + "," + STATUS + "," + ANLEITUNGEN + "," + DELETED +"\n";
+    private static final String CSV = "decoderId,hersteller,bestellNr,artikelId,bezeichnung,iMax,protokoll,adressTyp,adress,span,fahrstufe,gerausch,motor,outputs,servos,konfiguration,stecker,kaufdatum,wahrung,preis,anmerkung,status,anleitungen,deleted\n" +
+                                      DECODER_ID + "," + HERSTELLER + "," + BESTELL_NR + "," + ARTIKEL_ID + ",\"" + BEZEICHNUNG + "\"," + I_MAX + "," + PROTOKOLL + "," + ADRESS_TYP + "," + ADRESS + "," + SPAN + "," + FAHRSTUFE + "," + GERAUSCH + "," + MOTOR + "," + OUTPUTS + "," + SERVOS + "," + KONFIGURATION + "," + STECKER + "," + KAUFDATUM + "," + WAHRUNG + "," + PREIS + "," + ANMERKUNG + "," + STATUS + "," + ANLEITUNGEN + "," + DELETED +"\n";
 
     private final JpaRepository<Decoder,Long> repository;
 

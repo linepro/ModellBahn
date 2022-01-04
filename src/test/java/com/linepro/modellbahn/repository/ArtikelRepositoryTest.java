@@ -65,7 +65,7 @@ public class ArtikelRepositoryTest {
         Page<Artikel> page = artikelRepository.findAll(Pageable.unpaged());
 
         List<Artikel> artikeln = page.getContent();
-        assertEquals(4, artikeln.size());
+        assertEquals(10, artikeln.size());
         assertTrue(isAvailable(artikeln.get(0).getProdukt()));
     }
 
@@ -75,7 +75,7 @@ public class ArtikelRepositoryTest {
         Page<Artikel> page = artikelRepository.findAll(criterion, Pageable.unpaged());
 
         List<Artikel> artikeln = page.getContent();
-        assertEquals(4, artikeln.size());
+        assertEquals(10, artikeln.size());
         assertTrue(isAvailable(artikeln.get(0).getProdukt()));
     }
 }

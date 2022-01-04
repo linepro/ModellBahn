@@ -65,7 +65,7 @@ public class VorbildRepositoryTest {
         Page<Vorbild> page = vorbildRepository.findAll(Pageable.unpaged());
 
         List<Vorbild> vorbild = page.getContent();
-        assertEquals(1, vorbild.size());
+        assertEquals(7, vorbild.size());
         assertTrue(isAvailable(vorbild.get(0).getUnterKategorie()));
         assertTrue(isAvailable(vorbild.get(0).getBahnverwaltung()));
         assertTrue(isAvailable(vorbild.get(0).getGattung()));
