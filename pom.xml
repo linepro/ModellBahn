@@ -75,7 +75,7 @@
         <maven.version>3.6.0</maven.version>
 
         <!-- plugins -->
-        <dependency-check-maven.version>6.5.0</dependency-check-maven.version>
+        <dependency-check-maven.version>6.5.2</dependency-check-maven.version>
         <exec-maven-plugin.version>3.0.0</exec-maven-plugin.version>
         <git-commit-id-maven-plugin.version>5.0.0</git-commit-id-maven-plugin.version>
         <maven-changelog-plugin.version>2.3</maven-changelog-plugin.version>
@@ -107,12 +107,11 @@
         <commons-math3.version>3.6.1</commons-math3.version>
         <commons-text.version>1.9</commons-text.version>
         <guava.version>31.0.1-jre</guava.version>
-        <jackson.version>2.12.3</jackson.version>
+        <jackson.version>2.13.1</jackson.version>
         <junidecode.version>0.4.1</junidecode.version>
         <libphonenumber.version>8.12.39</libphonenumber.version>
-        <log4j.version>2.16.0</log4j.version>
         <logstash-logback-encoder.version>7.0.1</logstash-logback-encoder.version>
-        <springdoc-openapi.version>1.6.1</springdoc-openapi.version>
+        <springdoc-openapi.version>1.6.2</springdoc-openapi.version>
         <spring-cloud.version>2020.0.4</spring-cloud.version>
         <zxcvbn.version>1.5.2</zxcvbn.version>
 
@@ -316,6 +315,7 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
+            <version>${com.h2database.h2.version}</version><!--$NO-MVN-MAN-VER$ -->
             <scope>runtime</scope>
         </dependency>
 
