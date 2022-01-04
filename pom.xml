@@ -107,19 +107,18 @@
         <commons-math3.version>3.6.1</commons-math3.version>
         <commons-text.version>1.9</commons-text.version>
         <guava.version>31.0.1-jre</guava.version>
-        <jackson.version>2.12.3</jackson.version>
+        <jackson.version>2.13.1</jackson.version>
         <junidecode.version>0.4.1</junidecode.version>
         <libphonenumber.version>8.12.39</libphonenumber.version>
-        <log4j.version>2.16.0</log4j.version>
         <logstash-logback-encoder.version>7.0.1</logstash-logback-encoder.version>
-        <springdoc-openapi.version>1.6.1</springdoc-openapi.version>
+        <springdoc-openapi.version>1.6.2</springdoc-openapi.version>
         <spring-cloud.version>2020.0.4</spring-cloud.version>
         <zxcvbn.version>1.5.2</zxcvbn.version>
 
         <!-- database -->
         <org.flywaydb.flyway-core.version>7.15.0</org.flywaydb.flyway-core.version>
         <org.hsqldb.hsqldb.version>2.5.1</org.hsqldb.hsqldb.version>
-        <com.h2database.h2.version>1.4.200</com.h2database.h2.version>
+        <com.h2database.h2.version>2.0.204</com.h2database.h2.version>
         <org.mariadb.jdbc.mariadb-java-client.version>2.6.2</org.mariadb.jdbc.mariadb-java-client.version>
         <mysql.mysql-connector-java.version>8.0.25</mysql.mysql-connector-java.version>
 
@@ -316,6 +315,7 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
+            <version>${com.h2database.h2.version}</version><!--$NO-MVN-MAN-VER$ -->
             <scope>runtime</scope>
         </dependency>
 
