@@ -64,7 +64,6 @@ public interface ApiPaths {
     String SEARCH_DECODER          = DECODER_ROOT;
     String DELETE_DECODER          = DECODER_ROOT + "/{" + ApiNames.DECODER_ID + ":" + DBNames.ID_PATTERN + "}";
     String UPDATE_DECODER          = DECODER_ROOT + "/{" + ApiNames.DECODER_ID + ":" + DBNames.ID_PATTERN + "}";
-    String UPDATE_DECODER_ADRESS   = DECODER_ROOT + "/{" + ApiNames.DECODER_ID + ":" + DBNames.ID_PATTERN + "}/" + ApiNames.ADRESS;
     String UPDATE_DECODER_CV       = DECODER_ROOT + "/{" + ApiNames.DECODER_ID + ":" + DBNames.ID_PATTERN + "}/" + ApiNames.CVS + "/{" + ApiNames.CV + "}";
     String UPDATE_DECODER_FUNKTION = DECODER_ROOT + "/{" + ApiNames.DECODER_ID + ":" + DBNames.ID_PATTERN + "}/" + ApiNames.FUNKTIONEN + "/{" + ApiNames.FUNKTION + "}";
 

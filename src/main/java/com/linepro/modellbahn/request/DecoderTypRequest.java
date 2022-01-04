@@ -92,6 +92,18 @@ public class DecoderTypRequest implements ItemRequest {
     @Schema(description = "True if decoder supports sound", example = "true", required = true)
     private Boolean sound;
 
+    @JsonProperty(ApiNames.MOTOR)
+    @Schema(description = "True if decoder controls motor speed", example = "true", required = true)
+    private Boolean motor;
+
+    @JsonProperty(ApiNames.OUTPUTS)
+    @Schema(description = "Number of function outputs", example = "2", required = true)
+    private Integer outputs;
+
+    @JsonProperty(ApiNames.SERVOS)
+    @Schema(description = "Number of servo outputs", example = "2", required = true)
+    private Integer servos;
+
     @JsonProperty(ApiNames.KONFIGURATION)
     @Schema(description = "Configuration method", example = "CV", required = true)
     private Konfiguration konfiguration;

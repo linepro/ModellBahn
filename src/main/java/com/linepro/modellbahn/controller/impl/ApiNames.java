@@ -94,8 +94,10 @@ public interface ApiNames {
     String METHOD = "method";
     String MINIMAL = "minimal";
     String MITTELWAGEN = "mittelwagen";
+    String MOTOR = "motor";
     String MOTORBAUART = "motorbauart";
     String NAMEN = "name";
+    String OUTPUTS = "outputs";
     String POSITION = "position";
     String PREIS = "preis";
     String PRODUKT_ID = "produktId";
@@ -103,6 +105,7 @@ public interface ApiNames {
     String REICHWEITE = "reichweite";
     String REL = "rel";
     String ROSTFLACHE = "rostflache";
+    String SERVOS = "servos";
     String SITZPLATZEKL1 = "sitzplatzeKL1";
     String SITZPLATZEKL2 = "sitzplatzeKL2";
     String SITZPLATZEKL3 = "sitzplatzeKL3";

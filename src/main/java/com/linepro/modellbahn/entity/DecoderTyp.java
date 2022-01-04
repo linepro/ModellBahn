@@ -197,6 +197,21 @@ public class DecoderTyp extends ItemImpl implements Comparable<DecoderTyp> {
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.sound.notnull}")
     private Boolean sound;
 
+    /** The sound. */
+    @Column(name = DBNames.MOTOR, nullable = false)
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.motor.notnull}")
+    private Boolean motor;
+
+    /** The sound. */
+    @Column(name = DBNames.OUTPUTS, nullable = false)
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.output.notnull}")
+    private Integer outputs;
+
+    /** The sound. */
+    @Column(name = DBNames.SERVOS, nullable = false)
+    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.servo.notnull}")
+    private Integer servos;
+
     /** The konfiguration. */
     @Enumerated(EnumType.STRING)
     @Column(name = DBNames.KONFIGURATION, nullable = false, length = 15)

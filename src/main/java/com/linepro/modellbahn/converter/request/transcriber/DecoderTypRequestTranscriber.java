@@ -36,6 +36,9 @@ public class DecoderTypRequestTranscriber implements Transcriber<DecoderTypReque
             destination.setAdress(source.getAdress());
             destination.setSpan(source.getSpan());
             destination.setSound(source.getSound());
+            destination.setMotor(source.getMotor());
+            destination.setOutputs(source.getOutputs());
+            destination.setServos(source.getServos());
             destination.setKonfiguration(source.getKonfiguration());
             destination.setStecker(source.getStecker());
             destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));

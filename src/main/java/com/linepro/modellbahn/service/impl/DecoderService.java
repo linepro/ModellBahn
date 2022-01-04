@@ -36,8 +36,6 @@ import com.linepro.modellbahn.request.DecoderRequest;
 @Service(PREFIX + "DecoderService")
 public class DecoderService extends ItemServiceImpl<DecoderModel, DecoderRequest,  Decoder> {
 
-    private static final String ADRESSE = "Adresse";
-    
     private final DecoderRepository repository;
 
     private final DecoderTypRepository typRepository;
@@ -93,7 +91,7 @@ public class DecoderService extends ItemServiceImpl<DecoderModel, DecoderRequest
                           c -> {
                               Integer wert = c.getWerkseinstellung();
 
-                              if (ADRESSE.equals(c.getBezeichnung())) {
+                              if (DecoderCvRepository.ADRESSE.equals(c.getBezeichnung())) {
                                   wert = decoder.getAdress() != null ? decoder.getAdress() : c.getWerkseinstellung();
                                   decoder.setAdress(wert);
                               }
@@ -131,14 +129,24 @@ public class DecoderService extends ItemServiceImpl<DecoderModel, DecoderRequest
         return super.get(DecoderModel.builder().decoderId(decoderId).build());
     }
 
+    @Transactional
     public Optional<DecoderModel> update(String decoderId, DecoderRequest request) {
         return lookup.find(DecoderModel.builder().decoderId(decoderId).build())
                      .map(d -> {
                          Boolean deleted = d.getDeleted();
+                         Integer adress = d.getAdress();
                          d = requestMapper.apply(request, d);
                          d.setDeleted(deleted);
 
-                         return repository.saveAndFlush(updateAdressCV(d, d.getAdress()));
+                         if (adress != d.getAdress()) {
+                             cvRepository.findByBezeichnung(decoderId, DecoderCvRepository.ADRESSE)
+                                         .map(c -> {
+                                             c.setWert(request.getAdress());
+                                             return cvRepository.save(c);
+                                             });
+                         }
+
+                         return repository.saveAndFlush(d);
                      })
                      .flatMap(d -> lookup.find(d)) // Fetch again to populate entity graphs
                      .map(d -> entityMapper.convert(d));
@@ -149,20 +157,10 @@ public class DecoderService extends ItemServiceImpl<DecoderModel, DecoderRequest
     }
 
     @Transactional
-    public Optional<DecoderModel> updateAdress(String decoderId, Integer adress) {
-        return repository.findByDecoderId(decoderId)
-                               .map(d -> {
-                                   d.setAdress(adress);
-
-                                   return entityMapper.convert(repository.saveAndFlush(updateAdressCV(d, adress)));
-                                   });
-    }
-
-    @Transactional
     public Optional<DecoderCvModel> updateCv(String decoderId, Integer cv, Integer wert) {
         return cvRepository.findByCv(decoderId, cv)
                            .map(c -> {
-                               if (ADRESSE.equals(c.getCv().getBezeichnung())) {
+                               if (DecoderCvRepository.ADRESSE.equals(c.getCv().getBezeichnung())) {
                                    repository.findByDecoderId(decoderId)
                                              .map(d -> {
                                                   d.setAdress(wert);
@@ -182,14 +180,5 @@ public class DecoderService extends ItemServiceImpl<DecoderModel, DecoderRequest
                                  .map(f -> {
                                      f.setBezeichnung(bezeichnung); return funktionMapper.convert(funktionRepository.saveAndFlush(f));
                                      });
-    }
-
-    protected Decoder updateAdressCV(Decoder decoder, Integer adress) {
-        decoder.getCvs()
-               .stream()
-               .filter(c -> ADRESSE.equalsIgnoreCase(c.getCv().getBezeichnung()))
-               .forEach(c -> c.setWert(adress));
-
-        return decoder;
     }
 }

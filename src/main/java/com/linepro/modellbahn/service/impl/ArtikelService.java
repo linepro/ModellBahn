@@ -11,6 +11,7 @@ import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,9 +33,11 @@ import com.linepro.modellbahn.model.DecoderModel;
 import com.linepro.modellbahn.persistence.util.AssetIdGenerator;
 import com.linepro.modellbahn.repository.AnderungRepository;
 import com.linepro.modellbahn.repository.ArtikelRepository;
+import com.linepro.modellbahn.repository.DecoderCvRepository;
 import com.linepro.modellbahn.repository.DecoderRepository;
 import com.linepro.modellbahn.repository.lookup.ArtikelLookup;
 import com.linepro.modellbahn.request.AnderungRequest;
+import com.linepro.modellbahn.request.ArtikelDecoderRequest;
 import com.linepro.modellbahn.request.ArtikelRequest;
 import com.linepro.modellbahn.util.exceptions.ModellBahnException;
 
@@ -47,6 +50,8 @@ public class ArtikelService extends ItemServiceImpl<ArtikelModel, ArtikelRequest
 
     private final DecoderMapper decoderMapper;
 
+    private final DecoderCvRepository decoderCvRepository;
+    
     private final FileService fileService;
 
     private final AnderungRepository anderungRepository;
@@ -61,7 +66,7 @@ public class ArtikelService extends ItemServiceImpl<ArtikelModel, ArtikelRequest
     public ArtikelService(ArtikelRepository repository, ArtikelRequestMapper requestMapper, ArtikelMapper entityMapper,
                     ArtikelLookup lookup, AssetIdGenerator assetIdGenerator, FileService fileService, AnderungRepository anderungRepository, 
                     AnderungMapper anderungMapper, AnderungRequestMapper anderungRequestMapper, DecoderRepository decoderRepository,
-                    DecoderMapper decoderMapper) {
+                    DecoderMapper decoderMapper, DecoderCvRepository decoderCvRepository) {
         super(repository, requestMapper, entityMapper, lookup);
 
         this.repository = repository;
@@ -75,6 +80,8 @@ public class ArtikelService extends ItemServiceImpl<ArtikelModel, ArtikelRequest
 
         this.decoderRepository = decoderRepository;
         this.decoderMapper = decoderMapper;
+
+        this.decoderCvRepository = decoderCvRepository;
     }
 
     public Optional<ArtikelModel> get(String artikelId) {
@@ -181,16 +188,29 @@ public class ArtikelService extends ItemServiceImpl<ArtikelModel, ArtikelRequest
     }
 
     @Transactional
-    public Optional<DecoderModel> addDecoder(String artikelId, String decoderId) {
-        return decoderRepository.findByDecoderId(decoderId)
+    public Optional<DecoderModel> addDecoder(String artikelId, ArtikelDecoderRequest request) {
+        return decoderRepository.findByDecoderId(request.getDecoderId())
                                 .filter(d -> {
-                                    if (d.getArtikel() != null) {
-                                        throw new ModellBahnException(ApiMessages.DECODER_IN_USE);
+                                    if (d.getArtikel() != null && !artikelId.equals(d.getArtikel().getArtikelId())) {
+                                        ModellBahnException exception = new ModellBahnException(ApiMessages.DECODER_IN_USE);
+                                        exception.setStatus(HttpStatus.BAD_REQUEST);
+                                        throw exception;
                                     }
                                     return true;
                                 })
                                 .map(d -> repository.findByArtikelId(artikelId)
                                                     .map(a -> {
+                                                        if (request.getAdress() != null) {
+                                                            d.setAdress(request.getAdress());
+
+                                                            decoderCvRepository.findByBezeichnung(d.getDecoderId(), DecoderCvRepository.ADRESSE)
+                                                                               .map(c -> {
+                                                                                   c.setWert(request.getAdress());
+                                                                                   return decoderCvRepository.save(c);
+                                                                                   });
+;
+                                                        }
+                                                        d.setAnmerkung(request.getAnmerkung());
                                                         a.addDecoder(d);
                                                         return a;
                                                     })
@@ -205,7 +225,9 @@ public class ArtikelService extends ItemServiceImpl<ArtikelModel, ArtikelRequest
         return decoderRepository.findByDecoderId(decoderId)
                                 .filter(d -> {
                                     if (d.getArtikel() == null || !artikelId.equals(d.getArtikel().getArtikelId())) {
-                                        throw new ModellBahnException(ApiMessages.DECODER_IN_USE);
+                                        ModellBahnException exception = new ModellBahnException(ApiMessages.DECODER_IN_USE);
+                                        exception.setStatus(HttpStatus.BAD_REQUEST);
+                                        throw exception;
                                     }
                                     return true;
                                 })

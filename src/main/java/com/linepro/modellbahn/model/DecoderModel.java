@@ -106,6 +106,18 @@ public class DecoderModel extends SpringdocModel<DecoderModel> implements ItemMo
     @Schema(description = "True if decoder supports sound", example = "true", accessMode = AccessMode.READ_ONLY)
     private Boolean sound;
 
+    @JsonProperty(ApiNames.MOTOR)
+    @Schema(description = "True if decoder controls motor speed", example = "true", accessMode = AccessMode.READ_ONLY)
+    private Boolean motor;
+
+    @JsonProperty(ApiNames.OUTPUTS)
+    @Schema(description = "Number of function outputs", example = "2", accessMode = AccessMode.READ_ONLY)
+    private Integer outputs;
+
+    @JsonProperty(ApiNames.SERVOS)
+    @Schema(description = "Number of servo outputs", example = "2", accessMode = AccessMode.READ_ONLY)
+    private Integer servos;
+
     @JsonProperty(ApiNames.KONFIGURATION)
     @Schema(description = "Configuration method", example = "CV", accessMode = AccessMode.READ_ONLY)
     private Konfiguration konfiguration;

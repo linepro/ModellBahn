@@ -19,6 +19,8 @@ import com.linepro.modellbahn.repository.base.ItemRepository;
 @Repository(PREFIX + "DecoderCvRepository")
 public interface DecoderCvRepository extends ItemRepository<DecoderCv> {
 
+    public String ADRESSE = "Adresse";
+
     //@formatter:off
     @Query(value = "SELECT c " + 
                    "FROM   decoderCv c " + 
@@ -27,7 +29,7 @@ public interface DecoderCvRepository extends ItemRepository<DecoderCv> {
            nativeQuery = false) 
     //@formatter:on
     @EntityGraph(value = "decoderCv", type = EntityGraphType.FETCH)
-    Optional<DecoderCv>findByCv(@Param(ApiNames.DECODER_ID) String decoderId, @Param(ApiNames.CV) Integer cv);
+    Optional<DecoderCv> findByCv(@Param(ApiNames.DECODER_ID) String decoderId, @Param(ApiNames.CV) Integer cv);
 
     //@formatter:off
     @Query(value = "SELECT c " + 
@@ -37,7 +39,7 @@ public interface DecoderCvRepository extends ItemRepository<DecoderCv> {
            nativeQuery = false) 
     //@formatter:on
     @EntityGraph(value = "decoderCv", type = EntityGraphType.FETCH)
-    Optional<DecoderCv>findByBezeichnung(@Param(ApiNames.DECODER_ID) String decoderId, @Param(ApiNames.BEZEICHNUNG) String bezeichnung);
+    Optional<DecoderCv> findByBezeichnung(@Param(ApiNames.DECODER_ID) String decoderId, @Param(ApiNames.BEZEICHNUNG) String bezeichnung);
 
     @EntityGraph(value = "decoderCv", type = EntityGraphType.FETCH)
     Page<DecoderCv> findAll(Pageable pageable);

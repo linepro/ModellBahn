@@ -106,9 +106,11 @@ public interface DBNames {
     String MENGE = "menge";
     String MINIMAL = "minimal";
     String MITTELWAGEN = "mittelwagen";
+    String MOTOR = "motor";
     String MOTOR_TYP_ID = "motorTypId";
     String MOTORBAUART = "motorbauart";
     String NAME = "name";
+    String OUTPUTS = "outputs";
     String POSITION = "position";
     String PREIS = "preis";
     String PRODUKT_ID = "produktId";
@@ -116,6 +118,7 @@ public interface DBNames {
     String PROTOKOLL_ID = "protokollId";
     String REICHWEITE = "reichweite";
     String ROSTFLACHE = "rostflache";
+    String SERVOS = "servos";
     String SITZPLATZEKL1 = "sitzplatzeKl1";
     String SITZPLATZEKL2 = "sitzplatzeKl2";
     String SITZPLATZEKL3 = "sitzplatzeKl3";
@@ -167,5 +170,6 @@ public interface DBNames {
     String USERNAME_PATTERN = "[A-Za-z0-9_\\-\\.]+";
     // Latin Basic + Extended-A + Extended-B + Greek + Cyrillic + Superscripts and Subscripts + Number Forms + Enclosed Alphanumerics
     String BEZEICHNUNG_PATTERN = "[\\u0020-\\u007e\\u00a1-\\u00ac\\u00ae-\\u024f\\u0370-\\u04ff\\u2070-\\u2071\\u2074-\\u209c\\u2150-\\u217f\\u2460-\\u24ff]+";
+
 }
 

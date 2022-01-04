@@ -117,20 +117,6 @@ public class DecoderController extends AbstractItemController<DecoderModel, Deco
         return deleted(service.delete(decoderId));
     }
 
-    @PutMapping(path = ApiPaths.UPDATE_DECODER_ADRESS, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
-    @Operation(summary = "Updates a decoder address", description = "", operationId = "update", tags = { ApiNames.DECODER }, responses = {
-        @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderModel.class)) }),
-        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
-        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
-        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
-                })
-    public ResponseEntity<?> updateAdress(@PathVariable(ApiNames.DECODER_ID) String decoderId, @RequestParam(ApiNames.ADRESS) Integer adress) {
-        return updated(service.updateAdress(decoderId, adress));
-    }
-
     @PutMapping(path = ApiPaths.UPDATE_DECODER_CV, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Updates a decoder cv", description = "", operationId = "update", tags = { ApiNames.DECODER }, responses = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DecoderCvModel.class)) }),

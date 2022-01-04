@@ -154,7 +154,7 @@ public class ArtikelController extends AbstractItemController<ArtikelModel, Arti
 
     @PostMapping(path = ApiPaths.ADD_ARTIKEL_DECODER, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Add an Artikel picture", description = "Adds a decoder to a named Artikel", operationId = "add", tags = { ApiNames.ARTIKEL }, responses = {
-        @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ArtikelModel.class)) }),
+        @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ArtikelModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -163,7 +163,7 @@ public class ArtikelController extends AbstractItemController<ArtikelModel, Arti
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
     })
     public ResponseEntity<?> addDecoder(@PathVariable(ApiNames.ARTIKEL_ID) String artikelId, @RequestBody ArtikelDecoderRequest model) {
-        return updated(service.addDecoder(artikelId, model.getDecoderId()));
+        return updated(service.addDecoder(artikelId, model));
     }
 
     @DeleteMapping(path = ApiPaths.DELETE_ARTIKEL_DECODER, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })

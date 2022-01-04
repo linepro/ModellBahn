@@ -44,6 +44,9 @@ public class DecoderTranscriber implements Transcriber<Decoder, DecoderModel> {
             destination.setArtikelId(source.getArtikel() != null ? source.getArtikel().getArtikelId() : null);
             destination.setIMax(decoderTyp.getIMax());
             destination.setSound(decoderTyp.getSound());
+            destination.setMotor(decoderTyp.getMotor());
+            destination.setOutputs(decoderTyp.getOutputs());
+            destination.setServos(decoderTyp.getServos());
             destination.setKonfiguration(decoderTyp.getKonfiguration());
             destination.setStecker(decoderTyp.getStecker());
             destination.setAnleitungen(decoderTyp.getAnleitungen());
@@ -55,7 +58,7 @@ public class DecoderTranscriber implements Transcriber<Decoder, DecoderModel> {
             destination.setAdressTyp(decoderTyp.getAdressTyp());
             destination.setAdress(source.getAdress());
             destination.setSpan(decoderTyp.getSpan());
-            destination.setFahrstufe(source.getFahrstufe());
+            destination.setFahrstufe(source.getFahrstufe() != null ? source.getFahrstufe() : decoderTyp.getFahrstufe());
             destination.setStatus(source.getStatus());
             destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
 

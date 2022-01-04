@@ -40,6 +40,9 @@ public class DecoderTypTranscriber implements Transcriber<DecoderTyp, DecoderTyp
             destination.setIMax(source.getIMax());
             destination.setFahrstufe(source.getFahrstufe());
             destination.setSound(source.getSound());
+            destination.setMotor(source.getMotor());
+            destination.setOutputs(source.getOutputs());
+            destination.setServos(source.getServos());
             destination.setKonfiguration(source.getKonfiguration());
             destination.setStecker(source.getStecker());
             destination.setAnleitungen(PathMapper.convert(source.getAnleitungen()));
