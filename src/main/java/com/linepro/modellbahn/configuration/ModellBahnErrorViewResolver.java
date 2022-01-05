@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.boot.autoconfigure.web.WebProperties.Resources;
+import org.springframework.boot.autoconfigure.web.WebProperties;
 import org.springframework.boot.autoconfigure.web.servlet.error.DefaultErrorViewResolver;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
@@ -28,8 +28,8 @@ public class ModellBahnErrorViewResolver extends DefaultErrorViewResolver {
                     )
                     .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
 
-    public ModellBahnErrorViewResolver(ApplicationContext applicationContext, Resources resources) {
-        super(applicationContext, resources);
+    public ModellBahnErrorViewResolver(ApplicationContext applicationContext, WebProperties resources) {
+        super(applicationContext, resources.getResources());
     }
 
     @Override
