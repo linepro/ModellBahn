@@ -111,7 +111,7 @@
         <junidecode.version>0.4.1</junidecode.version>
         <libphonenumber.version>8.12.40</libphonenumber.version>
         <logstash-logback-encoder.version>7.0.1</logstash-logback-encoder.version>
-        <springdoc-openapi.version>1.6.2</springdoc-openapi.version>
+        <springdoc-openapi.version>1.6.3</springdoc-openapi.version>
         <spring-cloud.version>2021.0.0</spring-cloud.version>
         <zxcvbn.version>1.5.2</zxcvbn.version>
 
