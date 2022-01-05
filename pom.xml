@@ -92,7 +92,7 @@
         <maven-surefire-report-plugin.version>3.0.0-M5</maven-surefire-report-plugin.version>
         <springdoc-openapi-maven-plugin.version>1.3</springdoc-openapi-maven-plugin.version>
         <versions-maven-plugin.version>2.8.1</versions-maven-plugin.version>
-        <wagon-ssh.version>3.4.3</wagon-ssh.version>
+        <wagon-ssh.version>3.5.1</wagon-ssh.version>
 
         <!-- build tools -->
         <org.projectlombok.lombok.version>1.18.12</org.projectlombok.lombok.version>
