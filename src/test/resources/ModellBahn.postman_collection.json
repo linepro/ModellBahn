@@ -15200,7 +15200,6 @@
 									"pm.test(\"decoder delete\", () => pm.expect(jsonData.paths[\"/api/decoder/{decoderId}\"].hasOwnProperty(\"delete\")).to.be.true);\r",
 									"pm.test(\"decoder get\", () => pm.expect(jsonData.paths[\"/api/decoder/{decoderId}\"].hasOwnProperty(\"get\")).to.be.true);\r",
 									"pm.test(\"decoder update\", () => pm.expect(jsonData.paths[\"/api/decoder/{decoderId}\"].hasOwnProperty(\"put\")).to.be.true);\r",
-									"pm.test(\"decoder update adress\", () => pm.expect(jsonData.paths[\"/api/decoder/{decoderId}/adress\"].hasOwnProperty(\"put\")).to.be.true);\r",
 									"pm.test(\"decoder update cv\", () => pm.expect(jsonData.paths[\"/api/decoder/{decoderId}/cvs/{cv}\"].hasOwnProperty(\"put\")).to.be.true);\r",
 									"pm.test(\"decoder update funktion\", () => pm.expect(jsonData.paths[\"/api/decoder/{decoderId}/funktionen/{funktion}\"].hasOwnProperty(\"put\")).to.be.true);\r",
 									"\r",
@@ -16381,7 +16380,7 @@
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
 									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"decoderId,hersteller,bestellNr,artikelId,bezeichnung,iMax,protokoll,adressTyp,adress,span,fahrstufe,gerausch,motor,outputs,servos,konfiguration,stecker,kaufdatum,wahrung,preis,anmerkung,status,anleitungen,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
-									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){20}(true|false)$/).length).to.eql(3)));"
+									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){23}(true|false)$/).length).to.eql(3)));"
 								],
 								"type": "text/javascript"
 							}

@@ -83,11 +83,11 @@ Demonstrates use of maven archiver and manifest in anycase.
 
 * git
 
-* Java 1.8
+* Java 11
   Probably not an issue to go higher.
   
 * Maven
-  3.6.0 as it happens, but no great dependencies
+  3.8.1 as it happens, but no great dependencies
   
 * node (for newman)
 
