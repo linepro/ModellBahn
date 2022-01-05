@@ -118,7 +118,7 @@
         <!-- database -->
         <org.flywaydb.flyway-core.version>7.15.0</org.flywaydb.flyway-core.version>
         <org.hsqldb.hsqldb.version>2.5.1</org.hsqldb.hsqldb.version>
-        <com.h2database.h2.version>1.4.200</com.h2database.h2.version>
+        <com.h2database.h2.version>2.0.206</com.h2database.h2.version>
         <org.mariadb.jdbc.mariadb-java-client.version>2.6.2</org.mariadb.jdbc.mariadb-java-client.version>
         <mysql.mysql-connector-java.version>8.0.25</mysql.mysql-connector-java.version>
 
