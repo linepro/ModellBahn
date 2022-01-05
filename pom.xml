@@ -532,7 +532,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>${maven-enforcer-plugin.version}</version>
+                <version>${maven-enforcer-plugin.version}</version><!--$NO-MVN-MAN-VER$-->
                 <executions>
                     <execution>
                         <id>enforce-maven</id>
@@ -579,7 +579,7 @@
             </plugin>
             <plugin>
                  <artifactId>maven-compiler-plugin</artifactId>
-                 <version>${maven-compiler-plugin.version}</version>
+                 <version>${maven-compiler-plugin.version}</version><!--$NO-MVN-MAN-VER$-->
                  <configuration>
                       <release>${maven.compiler.release}</release>
                  </configuration>
