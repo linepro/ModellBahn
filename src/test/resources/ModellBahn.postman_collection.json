@@ -19654,10 +19654,6 @@
 			"value": "{{testFiles}}decoderTyp.csv"
 		},
 		{
-			"key": "decoderTypAdressCsv",
-			"value": "{{testFiles}}decoderTypAdress.csv"
-		},
-		{
 			"key": "decoderTypCvCsv",
 			"value": "{{testFiles}}decoderTypCv.csv"
 		},

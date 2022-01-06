@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.entity.DecoderTyp;
-import com.linepro.modellbahn.entity.DecoderTypAdress;
 import com.linepro.modellbahn.entity.DecoderTypCv;
 import com.linepro.modellbahn.entity.DecoderTypFunktion;
 import com.linepro.modellbahn.entity.Item;
@@ -68,11 +67,6 @@ public class UniqueValidator implements ConstraintValidator<Unique, Item>, Appli
                 criteriaQuery = criteriaQuery.where(new Predicate[] { 
                                 criteriaBuilder.equal(root.get(ApiNames.HERSTELLER), ((DecoderTyp) item).getHersteller()),
                                 criteriaBuilder.equal(root.get(ApiNames.BESTELL_NR), ((DecoderTyp) item).getBestellNr()) 
-                                });
-            } else if (item instanceof DecoderTypAdress) {
-                criteriaQuery = criteriaQuery.where(new Predicate[] { 
-                                criteriaBuilder.equal(root.get(ApiNames.DECODER_TYP), ((DecoderTypAdress) item).getDecoderTyp()),
-                                criteriaBuilder.equal(root.get(ApiNames.POSITION), ((DecoderTypAdress) item).getPosition())
                                 });
             } else if (item instanceof DecoderTypCv) {
                 criteriaQuery = criteriaQuery.where(new Predicate[] { 

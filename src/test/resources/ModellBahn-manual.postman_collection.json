@@ -1246,58 +1246,6 @@
 					"response": []
 				},
 				{
-					"name": "Decoder Typ Adress",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Decoder Typ Adress\", () => pm.response.to.have.status(200));"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"protocolProfileBehavior": {
-						"disableCookies": true,
-						"disabledSystemHeaders": {
-							"accept": true
-						}
-					},
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Transfer-Encoding",
-								"value": "{{csvEncoding}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "data",
-									"contentType": "text/csv",
-									"type": "file",
-									"src": "{{decoderTypAdressCsv}}"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{api}}/data/decoderTypAdress",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"data",
-								"decoderTypAdress"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Decoder Typ Cv",
 					"event": [
 						{
@@ -2067,10 +2015,6 @@
 		{
 			"key": "decoderTypCsv",
 			"value": "{{importFiles}}decodertyp.csv"
-		},
-		{
-			"key": "decoderTypAdressCsv",
-			"value": "{{importFiles}}decodertypadress.csv"
 		},
 		{
 			"key": "decoderTypCvCsv",

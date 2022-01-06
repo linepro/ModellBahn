@@ -33,7 +33,6 @@ import com.linepro.modellbahn.model.DecoderModel;
 import com.linepro.modellbahn.persistence.util.AssetIdGenerator;
 import com.linepro.modellbahn.repository.AnderungRepository;
 import com.linepro.modellbahn.repository.ArtikelRepository;
-import com.linepro.modellbahn.repository.DecoderCvRepository;
 import com.linepro.modellbahn.repository.DecoderRepository;
 import com.linepro.modellbahn.repository.lookup.ArtikelLookup;
 import com.linepro.modellbahn.request.AnderungRequest;

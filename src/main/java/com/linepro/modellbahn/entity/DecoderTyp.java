@@ -35,12 +35,14 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.Range;
 
 import com.linepro.modellbahn.entity.impl.ItemImpl;
+import com.linepro.modellbahn.model.WithAdress;
 import com.linepro.modellbahn.model.enums.AdressTyp;
 import com.linepro.modellbahn.model.enums.Konfiguration;
 import com.linepro.modellbahn.model.enums.Stecker;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.persistence.util.PathConverter;
 import com.linepro.modellbahn.util.ToStringBuilder;
+import com.linepro.modellbahn.validation.Adress;
 import com.linepro.modellbahn.validation.Fahrstufe;
 import com.linepro.modellbahn.validation.Unique;
 
@@ -136,13 +138,14 @@ import lombok.experimental.SuperBuilder;
         })
     })
 //@formatter:on
+@Adress
 @SuperBuilder
 @NoArgsConstructor
 @Getter
 @Setter
 @Cacheable
 @Unique(message = "{com.linepro.modellbahn.validator.constraints.decodertyp.notunique}")
-public class DecoderTyp extends ItemImpl implements Comparable<DecoderTyp> {
+public class DecoderTyp extends ItemImpl implements Comparable<DecoderTyp>, WithAdress {
 
     /** The hersteller. */
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Hersteller.class, optional = false)

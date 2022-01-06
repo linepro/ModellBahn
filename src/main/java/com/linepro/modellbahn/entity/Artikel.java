@@ -251,6 +251,7 @@ import lombok.experimental.SuperBuilder;
                     @NamedAttributeNode(value = "decoderTyp", subgraph = "artikel.decoderTyp"),
                     @NamedAttributeNode(value = "protokoll", subgraph = "artikel.protokoll"),
                     @NamedAttributeNode(value = "fahrstufe"),
+                    @NamedAttributeNode(value = "adress"),
                     @NamedAttributeNode(value = "status")
                 }),
             @NamedSubgraph(name = "artikel.hersteller",
@@ -302,7 +303,10 @@ import lombok.experimental.SuperBuilder;
                 attributeNodes = {
                     @NamedAttributeNode(value = "hersteller", subgraph = "artikel.decoderHersteller"),
                     @NamedAttributeNode(value = "bestellNr"),
-                    @NamedAttributeNode(value = "bezeichnung")
+                    @NamedAttributeNode(value = "bezeichnung"),
+                    @NamedAttributeNode(value = "adressTyp"),
+                    @NamedAttributeNode(value = "konfiguration"),
+                    @NamedAttributeNode(value = "anleitungen")
                 }),
             @NamedSubgraph(name = "artikel.protokoll",
                 attributeNodes = {

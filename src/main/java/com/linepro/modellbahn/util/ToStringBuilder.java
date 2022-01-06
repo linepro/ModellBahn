@@ -9,7 +9,6 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.linepro.modellbahn.entity.Artikel;
 import com.linepro.modellbahn.entity.Decoder;
 import com.linepro.modellbahn.entity.DecoderTyp;
-import com.linepro.modellbahn.entity.DecoderTypAdress;
 import com.linepro.modellbahn.entity.DecoderTypCv;
 import com.linepro.modellbahn.entity.DecoderTypFunktion;
 import com.linepro.modellbahn.entity.Item;
@@ -43,11 +42,6 @@ public class ToStringBuilder extends org.apache.commons.lang3.builder.ToStringBu
 
     public ToStringBuilder append(String fieldName, DecoderTyp value) {
         super.append(fieldName, isAvailable(value) ? new Object[] { value.getHersteller().getName(), value.getBestellNr(), value.getBezeichnung() } : null);
-        return this;
-    }
-
-    public ToStringBuilder append(String fieldName, DecoderTypAdress value) {
-        super.append(fieldName, isAvailable(value) ? new Object[] { value.getAdressTyp(), value.getAdress(), value.getBezeichnung() } : null);
         return this;
     }
 

@@ -12,11 +12,9 @@ public interface DBNames {
     String BAHNVERWALTUNG = "bahnverwaltung";
     String STECKER = "stecker";
     String DECODER = "decoder";
-    String DECODER_ADRESS = "decoderAdress";
     String DECODER_CV = "decoderCv";
     String DECODER_FUNKTION = "decoderFunktion";
     String DECODER_TYP = "decoderTyp";
-    String DECODER_TYP_ADRESS = "decoderTypAdress";
     String DECODER_TYP_CV = "decoderTypCv";
     String DECODER_TYP_FUNKTION = "decoderTypFunktion";
     String EPOCH = "epoch";
