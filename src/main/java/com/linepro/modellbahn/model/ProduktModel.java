@@ -46,7 +46,7 @@ import lombok.ToString;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(SnakeCaseStrategy.class)
 @JsonPropertyOrder({ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.KATEGORIE, ApiNames.UNTER_KATEGORIE,
-    ApiNames.LANGE, ApiNames.MASSSTAB, ApiNames.SPURWEITE, ApiNames.EPOCH, ApiNames.BAHNVERWALTUNG, ApiNames.GATTUNG, ApiNames.BETREIBSNUMMER,
+    ApiNames.LANGE, ApiNames.MASSSTAB, ApiNames.SPURWEITE, ApiNames.EPOCH, ApiNames.BAHNVERWALTUNG, ApiNames.VORBILD, ApiNames.GATTUNG, ApiNames.BETREIBSNUMMER,
     ApiNames.BAUZEIT, ApiNames.ACHSFOLG, ApiNames.SONDERMODELL, ApiNames.AUFBAU, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.STEUERUNG,
     ApiNames.DECODER_HERSTELLER, ApiNames.DECODER_BESTELL_NR, ApiNames.MOTOR_TYP, ApiNames.ANMERKUNG, ApiNames.ANLEITUNGEN,
     ApiNames.EXPLOSIONSZEICHNUNG, ApiNames.TEILEN, ApiNames.ABBILDUNG, ApiNames.GROSSANSICHT, ApiNames.DELETED, ApiNames.LINKS })
@@ -94,6 +94,10 @@ public class ProduktModel extends SpringdocModel<ProduktModel> implements ItemMo
     @JsonProperty(ApiNames.BAHNVERWALTUNG)
     @Schema(description = "Railway company", example = "DB")
     private String bahnverwaltung;
+
+    @JsonProperty(ApiNames.VORBILD)
+    @Schema(description = "Prototype", example = "BR89.0")
+    private String vorbild;
 
     @JsonProperty(ApiNames.GATTUNG)
     @Schema(description = "Vehicle class", example = "BR89.0")

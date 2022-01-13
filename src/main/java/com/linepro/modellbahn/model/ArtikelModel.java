@@ -47,10 +47,11 @@ import lombok.ToString;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(SnakeCaseStrategy.class)
 @JsonPropertyOrder({ApiNames.ARTIKEL_ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.KATEGORIE, ApiNames.KAUFDATUM, 
-    ApiNames.UNTER_KATEGORIE, ApiNames.LANGE, ApiNames.MASSSTAB, ApiNames.SPURWEITE, ApiNames.EPOCH, ApiNames.BAHNVERWALTUNG, ApiNames.GATTUNG,
-    ApiNames.BETREIBSNUMMER, ApiNames.ACHSFOLG, ApiNames.SONDERMODELL, ApiNames.AUFBAU, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.STEUERUNG,
-    ApiNames.DECODER, ApiNames.MOTOR_TYP, ApiNames.KAUFDATUM, ApiNames.WAHRUNG, ApiNames.PREIS, ApiNames.MENGE, ApiNames.VERBLEIBENDE, ApiNames.ANMERKUNG,
-    ApiNames.BELADUNG, ApiNames.STATUS, ApiNames.ABBILDUNG, ApiNames.GROSSANSICHT, ApiNames.DELETED, ApiNames.ANDERUNGEN, ApiNames.DECODEREN, ApiNames.LINKS })
+    ApiNames.UNTER_KATEGORIE, ApiNames.LANGE, ApiNames.MASSSTAB, ApiNames.SPURWEITE, ApiNames.EPOCH, ApiNames.BAHNVERWALTUNG, ApiNames.VORBILD, 
+    ApiNames.GATTUNG, ApiNames.BETREIBSNUMMER, ApiNames.ACHSFOLG, ApiNames.SONDERMODELL, ApiNames.AUFBAU, ApiNames.LICHT, ApiNames.KUPPLUNG,
+    ApiNames.STEUERUNG, ApiNames.DECODER, ApiNames.MOTOR_TYP, ApiNames.KAUFDATUM, ApiNames.WAHRUNG, ApiNames.PREIS, ApiNames.MENGE,
+    ApiNames.VERBLEIBENDE, ApiNames.ANMERKUNG, ApiNames.BELADUNG, ApiNames.STATUS, ApiNames.ABBILDUNG, ApiNames.GROSSANSICHT, ApiNames.DELETED,
+    ApiNames.ANDERUNGEN, ApiNames.DECODEREN, ApiNames.FUNKTIONEN, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.ARTIKEL)
 @Schema(name = ApiNames.ARTIKEL, description = "An article - may differ from product because of modificiations")
 public class ArtikelModel extends SpringdocModel<ArtikelModel> implements ItemModel, Comparable<ArtikelModel> {
@@ -100,6 +101,10 @@ public class ArtikelModel extends SpringdocModel<ArtikelModel> implements ItemMo
     @JsonProperty(ApiNames.BAHNVERWALTUNG)
     @Schema(description = "Railway company", example = "DB", accessMode = AccessMode.READ_ONLY)
     private String bahnverwaltung;
+
+    @JsonProperty(ApiNames.VORBILD)
+    @Schema(description = "Prototype", example = "BR89.0")
+    private String vorbild;
 
     @JsonProperty(ApiNames.GATTUNG)
     @Schema(description = "Vehicle class", example = "BR89.0", accessMode = AccessMode.READ_ONLY)
@@ -191,9 +196,15 @@ public class ArtikelModel extends SpringdocModel<ArtikelModel> implements ItemMo
     @Schema(implementation = AnderungModel.class, description = "Modifications", accessMode = AccessMode.READ_ONLY)
     private List<AnderungModel> anderungen;
 
+    @SuppressExport
     @JsonProperty(ApiNames.DECODEREN)
     @Schema(implementation = DecoderModel.class, description = "Decoders", accessMode = AccessMode.READ_ONLY)
     private List<DecoderModel> decoders;
+
+    @SuppressExport
+    @JsonProperty(ApiNames.FUNKTIONEN)
+    @Schema(implementation = DecoderFunktionModel.class, description = "functions", accessMode = AccessMode.READ_ONLY)
+    private List<DecoderFunktionModel> funktionen;
 
     @JsonProperty(ApiNames.DELETED)
     @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)

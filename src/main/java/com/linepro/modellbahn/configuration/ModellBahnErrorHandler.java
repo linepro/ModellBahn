@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
+import javax.persistence.RollbackException;
 import javax.validation.ConstraintViolationException;
 
 import org.springframework.dao.DataIntegrityViolationException;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.HttpMediaTypeException;
 import org.springframework.web.HttpSessionRequiredException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -36,6 +38,36 @@ public class ModellBahnErrorHandler extends ResponseEntityExceptionHandler {
 
     private final StackTraceFilter stackTraceFilter;
 
+    @ExceptionHandler(TransactionSystemException.class)
+    public ResponseEntity<Object> transaction(Exception ex, WebRequest request) throws Exception {
+        Throwable cause = ex.getCause();
+
+        if (cause instanceof RollbackException) {
+            return rollback((RollbackException) cause, request);
+        } else if (cause instanceof Exception) {
+            return others((Exception) cause, request);
+        }
+
+        return others(ex, request);
+    }
+
+    @ExceptionHandler({RollbackException.class})
+    public ResponseEntity<Object> rollback(Exception ex, WebRequest request) throws Exception {
+        Throwable cause = ex.getCause();
+
+        if (cause instanceof ConstraintViolationException || cause instanceof DataIntegrityViolationException) {
+            return badRequest((ConstraintViolationException) cause, request);
+        } else if (cause instanceof EntityExistsException) {
+            return conflict((EntityExistsException) cause, request);
+        } else if (cause instanceof EntityNotFoundException) {
+            return notFound((EntityNotFoundException) cause, request);
+        } else if (cause instanceof Exception) {
+            return others((Exception) cause, request);
+        }
+
+        return others(ex, request);
+    }
+    
     @ExceptionHandler({ 
         ConstraintViolationException.class,
         DataIntegrityViolationException.class, 

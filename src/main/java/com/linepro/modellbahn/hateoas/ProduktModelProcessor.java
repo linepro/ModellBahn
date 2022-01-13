@@ -3,6 +3,7 @@ package com.linepro.modellbahn.hateoas;
 import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 import static com.linepro.modellbahn.controller.impl.ApiNames.BESTELL_NR;
 import static com.linepro.modellbahn.controller.impl.ApiNames.HERSTELLER;
+import static com.linepro.modellbahn.controller.impl.ApiNames.NAMEN;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_PRODUKT;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_PRODUKT_ABBILDUNG;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_PRODUKT_ANLEITUNGEN;
@@ -11,6 +12,7 @@ import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_PRODUKT_GROSSA
 import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_PRODUKT_TEIL;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.DELETE_PRODUKT;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_PRODUKT;
+import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_VORBILD;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.SEARCH_PRODUKT;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.UPDATE_PRODUKT;
 import static com.linepro.modellbahn.controller.impl.ApiRels.ABBILDUNG;
@@ -23,6 +25,7 @@ import static com.linepro.modellbahn.controller.impl.ApiRels.SEARCH;
 import static com.linepro.modellbahn.controller.impl.ApiRels.SELF;
 import static com.linepro.modellbahn.controller.impl.ApiRels.TEILEN;
 import static com.linepro.modellbahn.controller.impl.ApiRels.UPDATE;
+import static com.linepro.modellbahn.controller.impl.ApiRels.VORBILD;
 
 import java.util.HashMap;
 
@@ -43,6 +46,10 @@ import com.linepro.modellbahn.model.ProduktModel;
 @Component(PREFIX + "ProduktModelProcessor")
 public class ProduktModelProcessor extends ModelProcessorImpl<ProduktModel> implements RepresentationModelProcessor<ProduktModel> {
 
+    private static final FieldsExtractor VORBILD_EXTRACTOR = (m) -> MapUtils.putAll(new HashMap<String,Object>(), new String[][] { 
+        { NAMEN, ((ProduktModel) m).getVorbild() } 
+        });
+
     private static final FieldsExtractor EXTRACTOR = (m) -> MapUtils.putAll(new HashMap<String,Object>(), new String[][] { 
         { HERSTELLER, ((ProduktModel) m).getHersteller() }, 
         { BESTELL_NR, ((ProduktModel) m).getBestellNr() }, 
@@ -62,7 +69,8 @@ public class ProduktModelProcessor extends ModelProcessorImpl<ProduktModel> impl
             new LinkTemplateImpl(ANLEITUNGEN, ADD_PRODUKT_ANLEITUNGEN, EXTRACTOR),
             new LinkTemplateImpl(EXPLOSIONSZEICHNUNG, ADD_PRODUKT_EXPLOSIONSZEICHNUNG, EXTRACTOR),
             new LinkTemplateImpl(GROSSANSICHT, ADD_PRODUKT_GROSSANSICHT, EXTRACTOR),
-            new LinkTemplateImpl(TEILEN, ADD_PRODUKT_TEIL, EXTRACTOR)
+            new LinkTemplateImpl(TEILEN, ADD_PRODUKT_TEIL, EXTRACTOR),
+            new LinkTemplateImpl(VORBILD, GET_VORBILD, VORBILD_EXTRACTOR)
             );
 
         this.teilProcessor = teilProcessor;

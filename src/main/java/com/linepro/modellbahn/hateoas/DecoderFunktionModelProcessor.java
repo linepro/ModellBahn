@@ -13,8 +13,10 @@ import java.util.HashMap;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.RepresentationModelProcessor;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.linepro.modellbahn.hateoas.impl.FieldsExtractor;
 import com.linepro.modellbahn.hateoas.impl.LinkTemplateImpl;
@@ -30,11 +32,29 @@ public class DecoderFunktionModelProcessor extends ModelProcessorImpl<DecoderFun
         { FUNKTION, String.valueOf(((DecoderFunktionModel) m).getFunktion()) } 
         });
 
-   @Autowired
+    @Autowired
     public DecoderFunktionModelProcessor() {
         super(
-            new LinkTemplateImpl(PARENT, GET_DECODER, EXTRACTOR ),
-            new LinkTemplateImpl(UPDATE, UPDATE_DECODER_FUNKTION, EXTRACTOR )
+            new LinkTemplateImpl(PARENT, GET_DECODER, EXTRACTOR )
             );
+    }
+
+    @Override
+    public DecoderFunktionModel process(DecoderFunktionModel model) {
+        super.process(model);
+
+        if (model.getProgrammable()) {
+            String update = ServletUriComponentsBuilder.fromCurrentServletMapping()
+                                                       .path(UPDATE_DECODER_FUNKTION)
+                            .buildAndExpand(MapUtils.putAll(new HashMap<String,Object>(), new String[][] { 
+                                { DECODER_ID, model.getDecoderId() }, 
+                                { FUNKTION, model.getFunktion() }, 
+                                }))
+                            .toString();
+
+            model.add(Link.of(update, UPDATE));
+        }
+
+        return model;
     }
 }

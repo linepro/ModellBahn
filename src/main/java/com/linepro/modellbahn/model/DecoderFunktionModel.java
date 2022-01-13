@@ -49,6 +49,10 @@ public class DecoderFunktionModel extends SpringdocModel<DecoderFunktionModel> i
     @Schema(description = "Decoder's id", example = "00001", accessMode = AccessMode.READ_ONLY)
     private String decoderId;
 
+    @JsonProperty(ApiNames.ADRESS)
+    @Schema(description = "Digital address", example = "80", required = true)
+    private Integer adress;
+
     @JsonProperty(ApiNames.FUNKTION)
     @Schema(description = "Function Key", example = "F0", accessMode = AccessMode.READ_ONLY)
     private String funktion;

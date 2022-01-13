@@ -1,7 +1,7 @@
 INSERT INTO decoder (id, decoder_id, decoder_typ_id, artikel_id, bezeichnung, protokoll_id, fahrstufe, adress, status, deleted)
 VALUES (1377, '000010', 822, NULL, 'LokPilot Fx', 481, 2, 6, 'FREI', FALSE);
 INSERT INTO decoder (id, decoder_id, decoder_typ_id, artikel_id, bezeichnung, protokoll_id, fahrstufe, adress, status, deleted)
-VALUES (1378, '000011', 687, NULL, 'Drehscheibe Decoder', 485, 0, 225, 'FREI', FALSE);
+VALUES (1378, '000011', 687, NULL, 'Drehscheibe Decoder', 485, 2, 225, 'FREI', FALSE);
 INSERT INTO decoder (id, decoder_id, decoder_typ_id, artikel_id, bezeichnung, protokoll_id, fahrstufe, adress, status, deleted)
 VALUES (1379, '00001A', 1318, NULL, 'Weiche Decoder', 485, 2, 182, 'FREI', FALSE);
 INSERT INTO decoder (id, decoder_id, decoder_typ_id, artikel_id, bezeichnung, protokoll_id, fahrstufe, adress, status, deleted)
@@ -9,7 +9,7 @@ VALUES (1380, '00002D', 842, NULL, 'SwitchPilot', 485, 2, 202, 'FREI', FALSE);
 INSERT INTO decoder (id, decoder_id, decoder_typ_id, artikel_id, bezeichnung, protokoll_id, fahrstufe, adress, status, deleted)
 VALUES (1381, '00002E', 896, NULL, 'SwitchPilot Servo', 485, 2, 204, 'FREI', FALSE);
 INSERT INTO decoder (id, decoder_id, decoder_typ_id, artikel_id, bezeichnung, protokoll_id, fahrstufe, adress, status, deleted)
-VALUES (1382, '00002N', 832, NULL, 'LokPilot Fx MTC 1100', 481, 6, 128, 'FREI', FALSE);
+VALUES (1382, '00002N', 832, NULL, 'LokPilot Fx MTC 1100', 481, 128, 6, 'FREI', FALSE);
 INSERT INTO decoder (id, decoder_id, decoder_typ_id, artikel_id, bezeichnung, protokoll_id, fahrstufe, adress, status, deleted)
 VALUES (1383, '00000H', 958, NULL, 'Delta Decoder', 480, 14, 1, 'FREI', FALSE);
 INSERT INTO decoder (id, decoder_id, decoder_typ_id, artikel_id, bezeichnung, protokoll_id, fahrstufe, adress, status, deleted)

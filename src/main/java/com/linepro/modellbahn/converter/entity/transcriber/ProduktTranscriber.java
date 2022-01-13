@@ -45,6 +45,7 @@ public class ProduktTranscriber implements Transcriber<Produkt, ProduktModel> {
             destination.setSpurweite(getCode(source.getSpurweite()));
             destination.setBetreibsnummer(source.getBetreibsnummer());
             destination.setEpoch(getCode(source.getEpoch()));
+            destination.setVorbild(getCode(source.getVorbild()));
             destination.setGattung(getCode(source.getGattung()));
             destination.setAchsfolg(getCode(source.getAchsfolg()));
             destination.setSondermodell(getCode(source.getSondermodell()));

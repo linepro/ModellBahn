@@ -61,7 +61,7 @@ public class VorbildModel extends SpringdocModel<VorbildModel> implements NamedW
     private static final long serialVersionUID = 4657238952018125793L;
 
     @JsonProperty(ApiNames.NAMEN)
-    @Schema(description = "Unique name, use gattung, bauhreihe or betreibsnummer as appropriate", example = "BR 89.0", required = true)
+    @Schema(description = "Unique name, use gattung, bauhreihe or betreibsnummer as appropriate; potentially more than one per gattung...", example = "BR 89.0", required = true)
     private String name;
 
     @JsonProperty(ApiNames.GATTUNG)

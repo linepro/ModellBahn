@@ -153,6 +153,10 @@ import lombok.experimental.SuperBuilder;
                 attributeNodes = {
                     @NamedAttributeNode(value = "name")
                 }),
+            @NamedSubgraph(name = "produkt.vorbild",
+                attributeNodes = {
+                    @NamedAttributeNode(value = "name")
+                }),
             @NamedSubgraph(name = "produkt.gattung",
                 attributeNodes = {
                     @NamedAttributeNode(value = "name")
@@ -180,10 +184,6 @@ import lombok.experimental.SuperBuilder;
             @NamedSubgraph(name = "produkt.kupplung",
                 attributeNodes = {
                     @NamedAttributeNode(value = "name")
-                }),
-            @NamedSubgraph(name = "produkt.vorbild",
-                attributeNodes = {
-                    @NamedAttributeNode(value = "gattung")
                 }),
             @NamedSubgraph(name = "produkt.steuerung",
                 attributeNodes = {

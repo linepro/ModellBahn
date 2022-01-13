@@ -211,11 +211,11 @@ public class ArtikelService extends ItemServiceImpl<ArtikelModel, ArtikelRequest
 ;
                                                         }
                                                         d.setAnmerkung(request.getAnmerkung());
-                                                        a.addDecoder(d);
-                                                        return a;
+                                                        d.setArtikel(a);
+                                                        return d;
                                                     })
-                                                    .map(repository::save)
-                                                    .map(a -> decoderMapper.convert(d))
+                                                    .map(decoderRepository::save)
+                                                    .map(decoderMapper::convert)
                                 )
                                 .orElse(Optional.empty());
     }
@@ -232,12 +232,11 @@ public class ArtikelService extends ItemServiceImpl<ArtikelModel, ArtikelRequest
                                     return true;
                                 })
                                 .map(d -> {
-                                    Artikel a = d.getArtikel();
-                                    a.removeDecoder(d);
-                                    return a;
+                                    d.setArtikel(null);
+                                    return d;
                                 })
-                                .map(repository::save)
-                                .map(a -> true)
+                                .map(decoderRepository::save)
+                                .map(d -> true)
                                 .orElse(false);
     }
 }

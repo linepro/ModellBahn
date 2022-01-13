@@ -5,7 +5,9 @@ import static com.linepro.modellbahn.util.exceptions.Result.attempt;
 import static com.linepro.modellbahn.util.exceptions.ResultCollector.success;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.util.StringUtils;
 
@@ -52,6 +54,7 @@ public class ArtikelTranscriber implements Transcriber<Artikel, ArtikelModel> {
             destination.setMassstab(produkt.getMassstab());
             destination.setSpurweite(produkt.getSpurweite());
             destination.setEpoch(produkt.getEpoch());
+            destination.setVorbild(produkt.getVorbild());
             destination.setGattung(produkt.getGattung());
             destination.setBetreibsnummer(produkt.getBetreibsnummer());
             destination.setAchsfolg(produkt.getAchsfolg());
@@ -98,6 +101,17 @@ public class ArtikelTranscriber implements Transcriber<Artikel, ArtikelModel> {
                                       .orElse(KEIN_DECODERS) :
                                 KEIN_DECODERS
                                 );
+
+            destination.setFunktionen(
+                            destination.getDecoders()
+                                       .stream()
+                                       .map(DecoderModel::getFunktionen)
+                                       .flatMap(List::stream)
+                                       .collect(Collectors.toList())
+                                       );
+
+            destination.getDecoders()
+                       .forEach(d -> d.setFunktionen(null));
         }
 
         return destination;

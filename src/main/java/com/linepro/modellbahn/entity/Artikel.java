@@ -220,6 +220,7 @@ import lombok.experimental.SuperBuilder;
                 @NamedAttributeNode(value = "massstab", subgraph = "artikel.massstab"),
                 @NamedAttributeNode(value = "spurweite", subgraph = "artikel.spurweite"),
                 @NamedAttributeNode(value = "epoch", subgraph = "artikel.epoch"),
+                @NamedAttributeNode(value = "vorbild", subgraph = "artikel.vorbild"),
                 @NamedAttributeNode(value = "gattung", subgraph = "artikel.gattung"),
                 @NamedAttributeNode(value = "betreibsnummer"),
                 @NamedAttributeNode(value = "achsfolg", subgraph = "artikel.achsfolg"),
@@ -252,8 +253,22 @@ import lombok.experimental.SuperBuilder;
                     @NamedAttributeNode(value = "protokoll", subgraph = "artikel.protokoll"),
                     @NamedAttributeNode(value = "fahrstufe"),
                     @NamedAttributeNode(value = "adress"),
-                    @NamedAttributeNode(value = "status")
+                    @NamedAttributeNode(value = "status"),
+                    @NamedAttributeNode(value = "funktionen", subgraph = "artikel.funktionen")
                 }),
+            @NamedSubgraph(name = "artikel.funktionen",
+            attributeNodes = {
+                @NamedAttributeNode("id"),
+                @NamedAttributeNode(value = "funktion", subgraph = "artikel.funktion"),
+                @NamedAttributeNode(value = "bezeichnung"),
+                @NamedAttributeNode("deleted")
+            }),
+            @NamedSubgraph(name = "artikel.funktion",
+            attributeNodes = {
+                @NamedAttributeNode(value = "funktion"),
+                @NamedAttributeNode(value = "bezeichnung"),
+                @NamedAttributeNode(value = "programmable")
+            }),
             @NamedSubgraph(name = "artikel.hersteller",
             attributeNodes = {
                 @NamedAttributeNode(value = "name")
@@ -280,6 +295,10 @@ import lombok.experimental.SuperBuilder;
                 @NamedAttributeNode(value = "name")
             }),
             @NamedSubgraph(name = "artikel.epoch",
+            attributeNodes = {
+                @NamedAttributeNode(value = "name")
+            }),
+            @NamedSubgraph(name = "artikel.vorbild",
             attributeNodes = {
                 @NamedAttributeNode(value = "name")
             }),
