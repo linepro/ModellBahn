@@ -6462,6 +6462,7 @@
 									"    pm.test(\"_links.update\", () => pm.expect(a._links.update[0].href).to.eql(self));\r",
 									"    pm.test(\"_links.delete\", () => pm.expect(a._links.delete[0].href).to.eql(self));\r",
 									"    pm.test(\"_links.search\", () => pm.expect(a._links.search[0].href).to.eql(root));\r",
+									"    pm.test(\"_links.abbildung\", () => pm.expect(a._links.abbildung[0].href).to.eql(self+\"/abbildung\"));\r",
 									"});\r",
 									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(root));\r",
 									"pm.test(\"page.size\", () => pm.expect(jsonData.page.size).to.eql(jsonData._embedded.data.length));\r",
@@ -6519,12 +6520,14 @@
 									"var self = pm.variables.replaceIn(\"{{api}}/sondermodell/{{name}}\");\r",
 									"pm.test(\"name: \" + jsonData.name, () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\")));\r",
 									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
+									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.be.undefined);\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
 									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
 									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
 									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
-									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));"
+									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
+									"pm.test(\"_links.abbildung\", () => pm.expect(jsonData._links.abbildung[0].href).to.eql(self+\"/abbildung\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -6566,6 +6569,67 @@
 					"response": []
 				},
 				{
+					"name": "Add Abbildung",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));\r",
+									"var jsonData = pm.response.json();\r",
+									"var root = pm.variables.replaceIn(\"{{api}}/sondermodell\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/sondermodell/{{name}}\");\r",
+									"var abbildung = pm.variables.replaceIn(\"{{server}}/data/sondermodell/{{name}}/abbildung.jpg\");\r",
+									"pm.test(\"name: \" + jsonData.name, () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\")));\r",
+									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
+									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(abbildung));\r",
+									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
+									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
+									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
+									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
+									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
+									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
+									"pm.test(\"_links.abbildung\", () => pm.expect(jsonData._links.abbildung[0].href).to.eql(self+\"/abbildung\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "abbildung",
+									"type": "file",
+									"src": "{{imageFile}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/sondermodell/{{name}}/abbildung",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"sondermodell",
+								"{{name}}",
+								"abbildung"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Update",
 					"event": [
 						{
@@ -6586,14 +6650,17 @@
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/sondermodell\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/sondermodell/{{name}}\");\r",
+									"var abbildung = pm.variables.replaceIn(\"{{server}}/data/sondermodell/{{name}}/abbildung.jpg\");\r",
 									"pm.test(\"name: \" + jsonData.name, () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\")));\r",
 									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
+									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(abbildung));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
 									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
 									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
 									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
-									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));"
+									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
+									"pm.test(\"_links.abbildung\", () => pm.expect(jsonData._links.abbildung[0].href).to.eql(self+\"/abbildung\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -6647,14 +6714,17 @@
 									"var jsonData = pm.response.json();\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/sondermodell\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/sondermodell/{{name}}\");\r",
+									"var abbildung = pm.variables.replaceIn(\"{{server}}/data/sondermodell/{{name}}/abbildung.jpg\");\r",
 									"pm.test(\"name: \" + jsonData.name, () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\")));\r",
 									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
+									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(abbildung));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
 									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
 									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
 									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
-									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));"
+									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
+									"pm.test(\"_links.abbildung\", () => pm.expect(jsonData._links.abbildung[0].href).to.eql(self+\"/abbildung\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -6677,6 +6747,56 @@
 							"path": [
 								"sondermodell",
 								"{{name}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Abbildung",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));\r",
+									"var jsonData = pm.response.json();\r",
+									"var root = pm.variables.replaceIn(\"{{api}}/sondermodell\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/sondermodell/{{name}}\");\r",
+									"pm.test(\"name: \" + jsonData.name, () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"name\")));\r",
+									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
+									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.be.undefined);\r",
+									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
+									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
+									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
+									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
+									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
+									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
+									"pm.test(\"_links.abbildung\", () => pm.expect(jsonData._links.abbildung[0].href).to.eql(self+\"/abbildung\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/sondermodell/{{name}}/abbildung",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"sondermodell",
+								"{{name}}",
+								"abbildung"
 							]
 						}
 					},
@@ -15938,9 +16058,9 @@
 									"pm.test(\"Sondermodell\", () => pm.response.to.have.status(200));\r",
 									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
-									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,deleted\"));\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"name,bezeichnung,abbildung,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
-									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){2}(true|false)$/).length).to.eql(3)));"
+									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){3}(true|false)$/).length).to.eql(3)));"
 								],
 								"type": "text/javascript"
 							}
@@ -19652,6 +19772,10 @@
 		{
 			"key": "decoderTypCsv",
 			"value": "{{testFiles}}decoderTyp.csv"
+		},
+		{
+			"key": "decoderTypAdressCsv",
+			"value": "{{testFiles}}decoderTypAdress.csv"
 		},
 		{
 			"key": "decoderTypCvCsv",

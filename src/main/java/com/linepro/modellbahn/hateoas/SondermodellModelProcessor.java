@@ -2,16 +2,19 @@ package com.linepro.modellbahn.hateoas;
 
 import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_SONDERMODELL;
+import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_SONDERMODELL_ABBILDUNG;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.DELETE_SONDERMODELL;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_SONDERMODELL;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.SEARCH_SONDERMODELL;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.UPDATE_SONDERMODELL;
+import static com.linepro.modellbahn.controller.impl.ApiRels.ABBILDUNG;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.hateoas.server.RepresentationModelProcessor;
 import org.springframework.stereotype.Component;
 
+import com.linepro.modellbahn.hateoas.impl.LinkTemplateImpl;
 import com.linepro.modellbahn.hateoas.impl.NamedModelProcessor;
 import com.linepro.modellbahn.model.SondermodellModel;
 
@@ -26,7 +29,8 @@ public class SondermodellModelProcessor extends NamedModelProcessor<Sondermodell
             GET_SONDERMODELL, 
             UPDATE_SONDERMODELL, 
             DELETE_SONDERMODELL, 
-            SEARCH_SONDERMODELL
+            SEARCH_SONDERMODELL,
+            new LinkTemplateImpl(ABBILDUNG, ADD_SONDERMODELL_ABBILDUNG, EXTRACTOR)
             );
     }
 }

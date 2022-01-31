@@ -53,12 +53,8 @@ public class CsvSchemaGenerator {
     }
 
     protected CandidateColumn mapColumn(Map<String, CandidateColumn> classColumns, String headerName) {
-        return new CandidateColumn(
-                         headerName, 
-                         Optional.ofNullable(classColumns.get(headerName))
-                                 .map(CandidateColumn::getType)
-                                 .orElse(ColumnType.STRING)
-                                 );
+        return Optional.ofNullable(classColumns.get(headerName))
+                       .orElse(new CandidateColumn(headerName, ColumnType.STRING));
     }
 
     protected CsvSchema getSchema(List<CandidateColumn> candidates) {

@@ -9,13 +9,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class NamedAbbildungTranscriber<E extends NamedWithAbbildungItem, M extends NamedWithAbbildungModel> extends NamedTranscriber<E, M> {
 
-    private final PathMapper PathMapper;
+    private final PathMapper pathMapper;
 
     @Override
     public M apply(E source, M destination) {
 
         if (source != null && destination != null) {
-            destination.setAbbildung(PathMapper.convert(source.getAbbildung()));
+            destination.setAbbildung(pathMapper.convert(source.getAbbildung()));
         }
 
         return super.apply(source, destination);
