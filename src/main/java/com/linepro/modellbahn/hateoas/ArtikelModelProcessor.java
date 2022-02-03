@@ -53,6 +53,7 @@ import com.linepro.modellbahn.hateoas.impl.LinkTemplateImpl;
 import com.linepro.modellbahn.hateoas.impl.ModelProcessorImpl;
 import com.linepro.modellbahn.model.ArtikelModel;
 import com.linepro.modellbahn.model.DecoderFunktionModel;
+import com.linepro.modellbahn.model.DecoderModel;
 
 @Lazy
 @Component(PREFIX + "ArtikelModelProcessor")
@@ -68,6 +69,18 @@ public class ArtikelModelProcessor extends ModelProcessorImpl<ArtikelModel> impl
         { HERSTELLER, ((ArtikelModel) m).getHersteller() }, 
         { BESTELL_NR, ((ArtikelModel) m).getBestellNr() }, 
         });
+
+    private static final FieldsExtractor DECODER_EXTRACTOR =  (d) -> Collections.singletonMap(DECODER_ID, ((DecoderModel) d).getDecoderId());
+
+    private static final LinkTemplateImpl DECODER_GET = new LinkTemplateImpl(SELF, GET_DECODER, DECODER_EXTRACTOR);
+    private static final LinkTemplateImpl DECODER_UPDATE = new LinkTemplateImpl(UPDATE, UPDATE_DECODER, DECODER_EXTRACTOR);
+
+    private static final FieldsExtractor FUNKTION_EXTRACTOR =  (f) -> MapUtils.putAll(new HashMap<String,Object>(), new String[][] { 
+        { DECODER_ID, ((DecoderFunktionModel) f).getDecoderId() },
+        { FUNKTION, ((DecoderFunktionModel) f).getFunktion() },
+        });
+
+    private static final LinkTemplateImpl UPDATE_FUNKITION = new LinkTemplateImpl(UPDATE, UPDATE_DECODER_FUNKTION, FUNKTION_EXTRACTOR);
 
     private final AnderungModelProcessor anderungProcessor;
 
@@ -101,17 +114,7 @@ public class ArtikelModelProcessor extends ModelProcessorImpl<ArtikelModel> impl
             model.getFunktionen()
                  .stream()
                  .filter(DecoderFunktionModel::getProgrammable)
-                 .forEach(f -> {
-                     String update = ServletUriComponentsBuilder.fromCurrentServletMapping()
-                                                                .path(UPDATE_DECODER_FUNKTION)
-                                                                .buildAndExpand(MapUtils.putAll(new HashMap<String,Object>(), new String[][] {
-                                                                    { DECODER_ID, f.getDecoderId() },
-                                                                    { FUNKTION, f.getFunktion() },
-                                                                    }))
-                                                                .toString();
-
-                     f.add(Link.of(update, UPDATE));
-                 });
+                 .forEach(UPDATE_FUNKITION::apply);
         }
 
         if (!CollectionUtils.isEmpty(model.getDecoders())) {
@@ -122,19 +125,8 @@ public class ArtikelModelProcessor extends ModelProcessorImpl<ArtikelModel> impl
                      d.setCvs(null);
                      d.setFunktionen(null);
 
-                     String self = ServletUriComponentsBuilder.fromCurrentServletMapping()
-                                                              .path(GET_DECODER)
-                                                              .buildAndExpand(Collections.singletonMap(DECODER_ID, d.getDecoderId()))
-                                                              .toString();
-
-                     d.add(Link.of(self, SELF));
-
-                     String update = ServletUriComponentsBuilder.fromCurrentServletMapping()
-                                                                .path(UPDATE_DECODER)
-                                                                .buildAndExpand(Collections.singletonMap(DECODER_ID, d.getDecoderId()))
-                                                                .toString();
-
-                     d.add(Link.of(update, UPDATE));
+                     DECODER_GET.apply(d);
+                     DECODER_UPDATE.apply(d);
 
                      String delete = ServletUriComponentsBuilder.fromCurrentServletMapping()
                                                                 .path(DELETE_ARTIKEL_DECODER)

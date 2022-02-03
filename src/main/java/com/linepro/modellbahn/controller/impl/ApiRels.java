@@ -16,6 +16,9 @@ public interface ApiRels {
     String PREVIOUS = "previous";
     String NEXT = "next";
 
+    String UP = "aufsteigen";
+    String DOWN = "absteigen";
+
     String FORGOT = "forgot";
     String REGISTER = "register";
     String PASSWORD = "password";

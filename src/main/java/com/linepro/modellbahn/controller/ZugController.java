@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.linepro.modellbahn.configuration.UserMessage;
@@ -134,8 +133,8 @@ public class ZugController extends NamedItemController<ZugModel, ZugRequest> {
         return added(service.addConsist(zugStr, model.getArtikelId()));
     }
 
-    @PutMapping(path = ApiPaths.UPDATE_CONSIST, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
-    @Operation(summary = "Updates a vehicle in a train", description = "", operationId = "updates", tags = { ApiNames.ZUG }, responses = {
+    @PutMapping(path = ApiPaths.MOVE_CONSIST_UP, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
+    @Operation(summary = "Moves a vehicle in a train", description = "", operationId = "move", tags = { ApiNames.ZUG }, responses = {
         @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ZugModel.class)) }),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -144,13 +143,27 @@ public class ZugController extends NamedItemController<ZugModel, ZugRequest> {
         @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
                 })
-    public ResponseEntity<?> updateConsist(@PathVariable(ApiNames.NAMEN) String zugStr, @PathVariable(ApiNames.POSITION) Integer position, @RequestParam(ApiNames.ARTIKEL_ID) String artikelId) {
-        return updated(service.updateConsist(zugStr, position, artikelId));
+    public ResponseEntity<?> moveConsistUp(@PathVariable(ApiNames.NAMEN) String zugStr, @PathVariable(ApiNames.POSITION) Integer position) {
+        return updated(service.moveConsist(zugStr, position, true));
+    }
+
+    @PutMapping(path = ApiPaths.MOVE_CONSIST_DOWN, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
+    @Operation(summary = "Moves a vehicle in a train", description = "", operationId = "move", tags = { ApiNames.ZUG }, responses = {
+        @ApiResponse(responseCode = "202", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ZugModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
+                })
+    public ResponseEntity<?> moveConsistDown(@PathVariable(ApiNames.NAMEN) String zugStr, @PathVariable(ApiNames.POSITION) Integer position) {
+        return updated(service.moveConsist(zugStr, position, false));
     }
 
     @DeleteMapping(path = ApiPaths.DELETE_CONSIST)
     @Operation(summary = "Removes a vehicle from a train", description = "", operationId = "delete", tags = { ApiNames.ZUG }, responses = {
-        @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
+        @ApiResponse(responseCode = "201", description = "Successful operation", content = @Content),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
         @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
@@ -158,6 +171,6 @@ public class ZugController extends NamedItemController<ZugModel, ZugRequest> {
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
                 })
     public ResponseEntity<?> deleteConsist(@PathVariable(ApiNames.NAMEN) String zugStr, @PathVariable(ApiNames.POSITION) Integer position) {
-        return deleted(service.deleteConsist(zugStr, position));
+        return updated(service.deleteConsist(zugStr, position));
     }
 }

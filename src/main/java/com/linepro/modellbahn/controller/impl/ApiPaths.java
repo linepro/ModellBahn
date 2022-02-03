@@ -225,15 +225,16 @@ public interface ApiPaths {
     String ADD_VORBILD_ABBILDUNG    = VORBILD_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}/" + ApiNames.ABBILDUNG;
     String DELETE_VORBILD_ABBILDUNG = VORBILD_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}/" + ApiNames.ABBILDUNG;
 
-    String ZUG_ROOT       = API_ROOT + ApiNames.ZUG;
-    String ADD_ZUG        = ZUG_ROOT;
-    String GET_ZUG        = ZUG_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
-    String SEARCH_ZUG     = ZUG_ROOT;
-    String DELETE_ZUG     = ZUG_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
-    String UPDATE_ZUG     = ZUG_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
-    String ADD_CONSIST    = ZUG_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}/" + ApiNames.FAHRZEUGEN;
-    String DELETE_CONSIST = ZUG_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}/" + ApiNames.FAHRZEUGEN + "/{" + ApiNames.POSITION + "}";
-    String UPDATE_CONSIST = ZUG_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}/" + ApiNames.FAHRZEUGEN + "/{" + ApiNames.POSITION + "}";
+    String ZUG_ROOT          = API_ROOT + ApiNames.ZUG;
+    String ADD_ZUG           = ZUG_ROOT;
+    String GET_ZUG           = ZUG_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
+    String SEARCH_ZUG        = ZUG_ROOT;
+    String DELETE_ZUG        = ZUG_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
+    String UPDATE_ZUG        = ZUG_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}";
+    String ADD_CONSIST       = ZUG_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}/" + ApiNames.FAHRZEUGEN;
+    String DELETE_CONSIST    = ZUG_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}/" + ApiNames.FAHRZEUGEN + "/{" + ApiNames.POSITION + "}";
+    String MOVE_CONSIST_UP   = ZUG_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}/" + ApiNames.FAHRZEUGEN + "/{" + ApiNames.POSITION + "}/" + ApiNames.AUFSTEIGEN;
+    String MOVE_CONSIST_DOWN = ZUG_ROOT + "/{" + ApiNames.NAMEN + ":" + DBNames.NAME_PATTERN + "}/" + ApiNames.FAHRZEUGEN + "/{" + ApiNames.POSITION + "}/" + ApiNames.ABSTEIGEN;
 
     String ZUG_TYP_ROOT   = API_ROOT + ApiNames.ZUG_TYP;
     String ADD_ZUG_TYP    = ZUG_TYP_ROOT;

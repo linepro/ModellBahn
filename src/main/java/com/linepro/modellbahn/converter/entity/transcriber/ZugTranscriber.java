@@ -7,6 +7,8 @@ import static com.linepro.modellbahn.util.exceptions.ResultCollector.success;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+import org.apache.commons.collections.CollectionUtils;
+
 import com.linepro.modellbahn.converter.entity.ZugConsistMapper;
 import com.linepro.modellbahn.converter.impl.NamedTranscriber;
 import com.linepro.modellbahn.entity.Zug;
@@ -39,11 +41,17 @@ public class ZugTranscriber extends NamedTranscriber<Zug, ZugModel> {
                                 KEIN_CONSISTEN
                                 );
 
-            if (isAvailable(source.getConsist())) {
+            if (CollectionUtils.isNotEmpty(destination.getConsist())) {
+                destination.getConsist()
+                           .get(destination.getConsist().size() - 1)
+                           .setLast(true);
+
                 destination.setLange(destination.getConsist()
                                                 .stream()
                                                 .map(c -> c.getLange())
                                                 .reduce(BigDecimal.ZERO, BigDecimal::add));
+            } else {
+                destination.setLange(BigDecimal.ZERO);
             }
         }
 

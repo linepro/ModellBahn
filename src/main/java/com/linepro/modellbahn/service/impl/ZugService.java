@@ -7,19 +7,20 @@ package com.linepro.modellbahn.service.impl;
  */
 import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.linepro.modellbahn.converter.entity.ZugConsistMapper;
 import com.linepro.modellbahn.converter.entity.ZugMapper;
 import com.linepro.modellbahn.converter.request.ZugRequestMapper;
+import com.linepro.modellbahn.entity.Artikel;
 import com.linepro.modellbahn.entity.Zug;
 import com.linepro.modellbahn.entity.ZugConsist;
-import com.linepro.modellbahn.model.ZugConsistModel;
 import com.linepro.modellbahn.model.ZugModel;
 import com.linepro.modellbahn.repository.ArtikelRepository;
 import com.linepro.modellbahn.repository.ZugConsistRepository;
@@ -36,17 +37,14 @@ public class ZugService extends NamedItemServiceImpl<ZugModel, ZugRequest, Zug> 
 
     private final ZugConsistRepository consistRepository;
 
-    private final ZugConsistMapper consistMapper;
-
     @Autowired
     public ZugService(ZugRepository repository, ZugRequestMapper requestMapper, ZugMapper entityMapper, ArtikelRepository artikelRepository,
-                      ZugConsistRepository consistRepository, ZugConsistMapper consistMapper, ZugLookup lookup) {
+                      ZugConsistRepository consistRepository, ZugLookup lookup) {
         super(repository, requestMapper, entityMapper, lookup);
 
         this.repository = repository;
         this.artikelRepository = artikelRepository;
         this.consistRepository = consistRepository;
-        this.consistMapper = consistMapper;
     }
 
     @Override
@@ -69,8 +67,8 @@ public class ZugService extends NamedItemServiceImpl<ZugModel, ZugRequest, Zug> 
     }
 
     @Transactional
-    public Optional<ZugConsistModel> addConsist(String name, String artikelId) {
-        return repository.findZug(name)
+    public Optional<ZugModel> addConsist(String zugStr, String artikelId) {
+        return repository.findZug(zugStr)
                          .map(z -> {
                              ZugConsist fahrzeug = new ZugConsist();
                              fahrzeug.setArtikel(artikelRepository.findByArtikelId(artikelId).orElse(null));
@@ -78,49 +76,65 @@ public class ZugService extends NamedItemServiceImpl<ZugModel, ZugRequest, Zug> 
 
                              consistRepository.saveAndFlush(fahrzeug);
 
-                             return consistMapper.convert(fahrzeug);
-                             });
+                             return z;
+                             })
+                         .flatMap(z -> get(zugStr));
     }
 
     @Transactional
-    public Optional<ZugConsistModel> updateConsist(String zugStr, Integer position, String artikelId) {
-        return consistRepository.findByPosition(zugStr, position)
-                                .map(c -> {
-                                    c.setArtikel(artikelRepository.findByArtikelId(artikelId).orElse(null));
+    public Optional<ZugModel> moveConsist(String zugStr, Integer position, boolean up) {
+        return repository.findByName(zugStr)
+                         .map(z -> {
+                             Set<ZugConsist> consists = z.getConsist();
 
-                                    return consistMapper.convert(consistRepository.saveAndFlush(c));
-                                    });
+                             Optional<ZugConsist> optFrom = consists.stream()
+                                                                    .filter(c -> c.getPosition().equals(position))
+                                                                    .findFirst();
+
+                             Optional<ZugConsist> optTo = consists.stream()
+                                                                  .filter(c -> c.getPosition().equals(up ? position + 1 : position - 1))
+                                                                  .findFirst();
+
+                             if (optFrom.isPresent() && optTo.isPresent()) {
+                                 ZugConsist from = optFrom.get();
+                                 ZugConsist to = optTo.get();
+
+                                 Artikel artikel = to.getArtikel();
+                                 to.setArtikel(from.getArtikel());
+                                 from.setArtikel(artikel);
+
+                                 z = repository.save(z);
+                             }
+
+                             return z;
+                         })
+                         .flatMap(z -> get(zugStr));
     }
 
     @Transactional
-    public boolean deleteConsist(String zugStr, Integer position) {
-        return consistRepository.findByPosition(zugStr, position)
-                                .map(c -> {
-                                    AtomicInteger index = new AtomicInteger(1);
+    public Optional<ZugModel> deleteConsist(String zugStr, Integer position) {
+        return repository.findByName(zugStr)
+                         .map(z -> {
+                             List<ZugConsist> consists = new ArrayList<>(z.getConsist());
 
-                                    Zug zug = c.getZug();
+                             for (int i = 0; i < consists.size(); i++) {
+                                 ZugConsist consist = consists.get(i);
 
-                                    zug.getConsist().remove(c);
+                                 if (consist.getPosition() >= position) {
+                                     if (consist.getPosition() >= consists.size()) {
+                                         z.getConsist().remove(consist);
+                                     } else {
+                                         ZugConsist next = consists.get(i + 1);
 
-                                    // Remove
-                                    zug = repository.saveAndFlush(zug);
+                                         consist.setArtikel(next.getArtikel());
 
-                                    // Renumber remaining
-                                    zug.getConsist()
-                                       .stream()
-                                       .sorted()
-                                       .forEach(p -> {
-                                           int pos = index.getAndIncrement();
+                                         consistRepository.saveAndFlush(consist);
+                                     }
+                                 }
+                             }
 
-                                           if (p.getPosition() >= position) {
-                                               p.setPosition(pos);
-
-                                               consistRepository.saveAndFlush(p);
-                                           }
-                                       });
-
-                                    return true;
-                                })
-                                .orElse(false);
+                             return z;
+                         })
+                         .flatMap(z -> get(zugStr));
     }
 }

@@ -32,6 +32,7 @@ public interface ApiNames {
 
     // Field names
     String ABBILDUNG = "abbildung";
+    String ABSTEIGEN = "absteigen";
     String ANDERUNGSDATUM = "anderungsDatum";
     String ANDERUNGS_TYP = "anderungsTyp";
     String ANDERUNGEN = "anderungen";
@@ -42,6 +43,7 @@ public interface ApiNames {
     String ANLEITUNGEN = "anleitungen";
     String ANMERKUNG = "anmerkung";
     String ARTIKEL_ID = "artikelId";
+    String AUFSTEIGEN = "aufsteigen";
     String AUSSERDIENST = "ausserdienst";
     String BAUZEIT = "bauzeit";
     String BELADUNG = "beladung";

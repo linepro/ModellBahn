@@ -14689,8 +14689,11 @@
 									"var jsonData = pm.response.json();\r",
 									"jsonData._embedded.data.forEach((a) => { \r",
 									"    var self = root + \"/\" + a.name;\r",
+									"    pm.test(\"zugTyp\", () => pm.expect(a.zugTyp).to.exist);\r",
 									"    pm.test(\"name: \" + a.name, () => pm.expect(a.name).to.exist);\r",
 									"    pm.test(\"bezeichnung\", () => pm.expect(a.bezeichnung).to.exist);\r",
+									"    pm.test(\"lange\", () => pm.expect(a.lange).to.exist);\r",
+									"    pm.test(\"fahrzeugen\", () => pm.expect(a.fahrzeugen).to.exist);\r",
 									"    pm.test(\"deleted\", () => pm.expect(a.deleted).to.be.false);\r",
 									"    pm.test(\"_links.add\", () => pm.expect(a._links.add[0].href).to.eql(root));\r",
 									"    pm.test(\"_links.self\", () => pm.expect(a._links.self[0].href).to.eql(self));\r",
@@ -14745,7 +14748,8 @@
 								"exec": [
 									"pm.environment.set(\"zug\", pm.variables.replaceIn(\"{{$randomAbbreviation}}\"));\r",
 									"pm.environment.set(\"zugTyp\", pm.variables.get(\"zugTypAdd\"));\r",
-									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));"
+									"pm.environment.set(\"bezeichnung\", pm.variables.replaceIn(\"{{$randomProductName}}\"));\r",
+									"pm.environment.set(\"lange\", new Number(0));"
 								],
 								"type": "text/javascript"
 							}
@@ -14763,6 +14767,8 @@
 									"pm.test(\"name: \" + jsonData.name, () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"zug\")));\r",
 									"pm.test(\"zugTyp\", () => pm.expect(jsonData.zugTyp).to.eql(pm.variables.get(\"zugTyp\")));\r",
 									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
+									"pm.test(\"lange\", () => pm.expect(jsonData.lange).to.eql(pm.variables.get(\"lange\")));\r",
+									"pm.test(\"fahrzeugen.length\", () => pm.expect(jsonData.fahrzeugen.length).to.eql(0));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
 									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
@@ -14811,25 +14817,26 @@
 					"response": []
 				},
 				{
-					"name": "Add Consist",
+					"name": "Add Lok",
 					"event": [
 						{
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"pm.environment.set(\"cnArtikelId\", \"00001\");\r",
-									"pm.environment.set(\"cnPosition\", 1);\r",
-									"pm.environment.set(\"cnHersteller\", \"MARKLIN\");\r",
-									"pm.environment.set(\"cnBestellNr\", \"3000\");\r",
-									"pm.environment.set(\"cnBezeichnung\", \"BR 89.0\");\r",
-									"pm.environment.set(\"cnKategorie\", \"LOKOMOTIV\");\r",
-									"pm.environment.set(\"cnUnterKategorie\", \"DAMPF\");\r",
-									"pm.environment.set(\"cnLange\", new Number(\"11.00\"));\r",
-									"pm.environment.set(\"cnBahnverwaltung\", \"DB\");\r",
-									"pm.environment.set(\"cnGattung\", \"BR89.0\");\r",
-									"pm.environment.set(\"cnBetreibsnummer\", \"89 028\");\r",
-									"pm.environment.set(\"cnKupplung\", \"RELEX\");\r",
-									"pm.environment.set(\"abbildung\", pm.variables.replaceIn(\"{{server}}/data/produkt/{{cnHersteller}}/{{cnBestellNr}}/abbildung.jpg\"));"
+									"pm.environment.set(\"lange\", new Number(\"11.00\"));\r",
+									"pm.environment.set(\"cnLokId\", \"00001\");\r",
+									"pm.environment.set(\"cnLokPosition\", 1);\r",
+									"pm.environment.set(\"cnLokHersteller\", \"MARKLIN\");\r",
+									"pm.environment.set(\"cnLokBestellNr\", \"3000\");\r",
+									"pm.environment.set(\"cnLokBezeichnung\", \"BR 89.0\");\r",
+									"pm.environment.set(\"cnLokKategorie\", \"LOKOMOTIV\");\r",
+									"pm.environment.set(\"cnLokUnterKategorie\", \"DAMPF\");\r",
+									"pm.environment.set(\"cnLokLange\", new Number(\"11.00\"));\r",
+									"pm.environment.set(\"cnLokBahnverwaltung\", \"DB\");\r",
+									"pm.environment.set(\"cnLokGattung\", \"BR89.0\");\r",
+									"pm.environment.set(\"cnLokBetreibsnummer\", \"89 028\");\r",
+									"pm.environment.set(\"cnLokKupplung\", \"RELEX\");\r",
+									"pm.environment.set(\"cnLokAbbildung\", pm.variables.replaceIn(\"{{server}}/data/produkt/{{cnLokHersteller}}/{{cnLokBestellNr}}/abbildung.jpg\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -14841,24 +14848,38 @@
 									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
 									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));\r",
 									"var jsonData = pm.response.json();\r",
-									"pm.environment.set(\"cnPosition\", jsonData.position);\r",
-									"var parent = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}\");\r",
-									"var self = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}/fahrzeugen/{{cnPosition}}\");\r",
-									"pm.test(\"zug\", () => pm.expect(jsonData.zug).to.eql(pm.variables.get(\"zug\")));\r",
-									"pm.test(\"position\", () => pm.expect(jsonData.position).to.eql(pm.variables.get(\"cnPosition\")));\r",
-									"pm.test(\"artikelId\", () => pm.expect(jsonData.artikelId).to.eql(pm.variables.get(\"cnArtikelId\")));\r",
-									"pm.test(\"hersteller\", () => pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"cnHersteller\")));\r",
-									"pm.test(\"bestellNr\", () => pm.expect(jsonData.bestellNr).to.eql(pm.variables.get(\"cnBestellNr\")));\r",
-									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"cnBezeichnung\")));\r",
-									"pm.test(\"lange\", () => pm.expect(jsonData.lange).to.eql(pm.variables.get(\"cnLange\")));\r",
-									"pm.test(\"bahnverwaltung\", () => pm.expect(jsonData.bahnverwaltung).to.eql(pm.variables.get(\"cnBahnverwaltung\")));\r",
-									"pm.test(\"gattung\", () => pm.expect(jsonData.gattung).to.eql(pm.variables.get(\"cnGattung\")));\r",
-									"pm.test(\"betreibsnummer\", () => pm.expect(jsonData.betreibsnummer).to.eql(pm.variables.get(\"cnBetreibsnummer\")));\r",
-									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(pm.variables.get(\"abbildung\")));\r",
+									"var zug = pm.variables.get(\"zug\");\r",
+									"var root = pm.variables.replaceIn(\"{{api}}/zug\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}\");\r",
+									"var lokUrl = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}/fahrzeugen/1\");\r",
+									"pm.test(\"name: \" + jsonData.name, () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"zug\")));\r",
+									"pm.test(\"zugTyp\", () => pm.expect(jsonData.zugTyp).to.eql(pm.variables.get(\"zugTyp\")));\r",
+									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
+									"pm.test(\"lange\", () => pm.expect(jsonData.lange).to.eql(pm.variables.get(\"lange\")));\r",
+									"pm.test(\"fahrzeugen.length\", () => pm.expect(jsonData.fahrzeugen.length).to.eql(1));\r",
+									"pm.test(\"fahrzeugen[0].zug\", () => pm.expect(jsonData.fahrzeugen[0].zug).to.eql(pm.variables.get(\"zug\")));\r",
+									"pm.test(\"fahrzeugen[0].position\", () => pm.expect(jsonData.fahrzeugen[0].position).to.eql(1));\r",
+									"pm.test(\"fahrzeugen[0].artikelId\", () => pm.expect(jsonData.fahrzeugen[0].artikelId).to.eql(pm.variables.get(\"cnLokId\")));\r",
+									"pm.test(\"fahrzeugen[0].hersteller\", () => pm.expect(jsonData.fahrzeugen[0].hersteller).to.eql(pm.variables.get(\"cnLokHersteller\")));\r",
+									"pm.test(\"fahrzeugen[0].bestellNr\", () => pm.expect(jsonData.fahrzeugen[0].bestellNr).to.eql(pm.variables.get(\"cnLokBestellNr\")));\r",
+									"pm.test(\"fahrzeugen[0].bezeichnung\", () => pm.expect(jsonData.fahrzeugen[0].bezeichnung).to.eql(pm.variables.get(\"cnLokBezeichnung\")));\r",
+									"pm.test(\"fahrzeugen[0].lange\", () => pm.expect(jsonData.fahrzeugen[0].lange).to.eql(pm.variables.get(\"cnLokLange\")));\r",
+									"pm.test(\"fahrzeugen[0].bahnverwaltung\", () => pm.expect(jsonData.fahrzeugen[0].bahnverwaltung).to.eql(pm.variables.get(\"cnLokBahnverwaltung\")));\r",
+									"pm.test(\"fahrzeugen[0].gattung\", () => pm.expect(jsonData.fahrzeugen[0].gattung).to.eql(pm.variables.get(\"cnLokGattung\")));\r",
+									"pm.test(\"fahrzeugen[0].betreibsnummer\", () => pm.expect(jsonData.fahrzeugen[0].betreibsnummer).to.eql(pm.variables.get(\"cnLokBetreibsnummer\")));\r",
+									"pm.test(\"fahrzeugen[0].abbildung\", () => pm.expect(jsonData.fahrzeugen[0].abbildung).to.eql(pm.variables.get(\"cnLokAbbildung\")));\r",
+									"pm.test(\"fahrzeugen[0].deleted\", () => pm.expect(jsonData.fahrzeugen[0].deleted).to.be.false);\r",
+									"pm.test(\"fahrzeugen[0]._links.parent\", () => pm.expect(jsonData.fahrzeugen[0]._links.parent[0].href).to.eql(self));\r",
+									"pm.test(\"fahrzeugen[0]._links.aufsteigen\", () => pm.expect(jsonData.fahrzeugen[0]._links.aufsteigen).not.to.exist);\r",
+									"pm.test(\"fahrzeugen[0]._links.absteigen\", () => pm.expect(jsonData.fahrzeugen[0]._links.absteigen).not.to.exist);\r",
+									"pm.test(\"fahrzeugen[0]._links.delete\", () => pm.expect(jsonData.fahrzeugen[0]._links.delete[0].href).to.eql(lokUrl));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
-									"pm.test(\"_links.parent\", () => pm.expect(jsonData._links.parent[0].href).to.eql(parent));\r",
+									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
+									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
 									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
-									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));"
+									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
+									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
+									"pm.test(\"_links.fahrzeugen\", () => pm.expect(jsonData._links.fahrzeugen[0].href).to.eql(self+\"/fahrzeugen\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -14880,7 +14901,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"artikelId\": \"{{cnArtikelId}}\"\r\n}",
+							"raw": "{\r\n    \"artikelId\": \"{{cnLokId}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -14902,22 +14923,136 @@
 					"response": []
 				},
 				{
-					"name": "Update Consist",
+					"name": "Add Wagen",
 					"event": [
 						{
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"pm.environment.set(\"cnArtikelId\", \"00002\");\r",
-									"pm.environment.set(\"cnHersteller\", \"MARKLIN\");\r",
-									"pm.environment.set(\"cnBestellNr\", \"4007\");\r",
-									"pm.environment.set(\"cnBezeichnung\", \"BI\");\r",
-									"pm.environment.set(\"cnLange\", new Number(\"11.00\"));\r",
-									"pm.environment.set(\"cnBahnverwaltung\", \"DB\");\r",
-									"pm.environment.set(\"cnGattung\", \"BI\");\r",
-									"pm.environment.set(\"cnBetreibsnummer\", \"29 758 Stg\");\r",
-									"pm.environment.set(\"cnKupplung\", \"RELEX\");\r",
-									"pm.environment.set(\"abbildung\", pm.variables.replaceIn(\"{{server}}/data/produkt/{{cnHersteller}}/{{cnBestellNr}}/abbildung.jpg\"));"
+									"pm.environment.set(\"lange\", new Number(\"22.00\"));\r",
+									"pm.environment.set(\"cnWagenId\", \"00002\");\r",
+									"pm.environment.set(\"cnWagenPosition\", 2);\r",
+									"pm.environment.set(\"cnWagenHersteller\", \"MARKLIN\");\r",
+									"pm.environment.set(\"cnWagenBestellNr\", \"4007\");\r",
+									"pm.environment.set(\"cnWagenBezeichnung\", \"BI\");\r",
+									"pm.environment.set(\"cnWagenKategorie\", \"PERSONENWAGEN\");\r",
+									"pm.environment.set(\"cnWagenUnterKategorie\", \"NAHVERKEHRSWAGEN\");\r",
+									"pm.environment.set(\"cnWagenLange\", new Number(\"11.00\"));\r",
+									"pm.environment.set(\"cnWagenBahnverwaltung\", \"DB\");\r",
+									"pm.environment.set(\"cnWagenGattung\", \"BI\");\r",
+									"pm.environment.set(\"cnWagenBetreibsnummer\", \"29 758 Stg\");\r",
+									"pm.environment.set(\"cnWagenKupplung\", \"RELEX\");\r",
+									"pm.environment.set(\"cnWagenAbbildung\", pm.variables.replaceIn(\"{{server}}/data/produkt/{{cnWagenHersteller}}/{{cnWagenBestellNr}}/abbildung.jpg\"));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"response\", () => pm.response.to.have.status(201));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));\r",
+									"var jsonData = pm.response.json();\r",
+									"var zug = pm.variables.get(\"zug\");\r",
+									"var root = pm.variables.replaceIn(\"{{api}}/zug\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}\");\r",
+									"var lokUrl = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}/fahrzeugen/1\");\r",
+									"var wagenUrl = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}/fahrzeugen/2\");\r",
+									"pm.test(\"name: \" + jsonData.name, () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"zug\")));\r",
+									"pm.test(\"zugTyp\", () => pm.expect(jsonData.zugTyp).to.eql(pm.variables.get(\"zugTyp\")));\r",
+									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
+									"pm.test(\"lange\", () => pm.expect(jsonData.lange).to.eql(pm.variables.get(\"lange\")));\r",
+									"pm.test(\"fahrzeugen.length\", () => pm.expect(jsonData.fahrzeugen.length).to.eql(2));\r",
+									"pm.test(\"fahrzeugen[0].zug\", () => pm.expect(jsonData.fahrzeugen[0].zug).to.eql(pm.variables.get(\"zug\")));\r",
+									"pm.test(\"fahrzeugen[0].position\", () => pm.expect(jsonData.fahrzeugen[0].position).to.eql(1));\r",
+									"pm.test(\"fahrzeugen[0].artikelId\", () => pm.expect(jsonData.fahrzeugen[0].artikelId).to.eql(pm.variables.get(\"cnLokId\")));\r",
+									"pm.test(\"fahrzeugen[0].hersteller\", () => pm.expect(jsonData.fahrzeugen[0].hersteller).to.eql(pm.variables.get(\"cnLokHersteller\")));\r",
+									"pm.test(\"fahrzeugen[0].bestellNr\", () => pm.expect(jsonData.fahrzeugen[0].bestellNr).to.eql(pm.variables.get(\"cnLokBestellNr\")));\r",
+									"pm.test(\"fahrzeugen[0].bezeichnung\", () => pm.expect(jsonData.fahrzeugen[0].bezeichnung).to.eql(pm.variables.get(\"cnLokBezeichnung\")));\r",
+									"pm.test(\"fahrzeugen[0].lange\", () => pm.expect(jsonData.fahrzeugen[0].lange).to.eql(pm.variables.get(\"cnLokLange\")));\r",
+									"pm.test(\"fahrzeugen[0].bahnverwaltung\", () => pm.expect(jsonData.fahrzeugen[0].bahnverwaltung).to.eql(pm.variables.get(\"cnLokBahnverwaltung\")));\r",
+									"pm.test(\"fahrzeugen[0].gattung\", () => pm.expect(jsonData.fahrzeugen[0].gattung).to.eql(pm.variables.get(\"cnLokGattung\")));\r",
+									"pm.test(\"fahrzeugen[0].betreibsnummer\", () => pm.expect(jsonData.fahrzeugen[0].betreibsnummer).to.eql(pm.variables.get(\"cnLokBetreibsnummer\")));\r",
+									"pm.test(\"fahrzeugen[0].abbildung\", () => pm.expect(jsonData.fahrzeugen[0].abbildung).to.eql(pm.variables.get(\"cnLokAbbildung\")));\r",
+									"pm.test(\"fahrzeugen[0].deleted\", () => pm.expect(jsonData.fahrzeugen[0].deleted).to.be.false);\r",
+									"pm.test(\"fahrzeugen[0]._links.parent\", () => pm.expect(jsonData.fahrzeugen[0]._links.parent[0].href).to.eql(self));\r",
+									"pm.test(\"fahrzeugen[0]._links.aufsteigen\", () => pm.expect(jsonData.fahrzeugen[0]._links.aufsteigen[0].href).to.eql(lokUrl+\"/aufsteigen\"));\r",
+									"pm.test(\"fahrzeugen[0]._links.absteigen\", () => pm.expect(jsonData.fahrzeugen[0]._links.absteigen).not.to.exist);\r",
+									"pm.test(\"fahrzeugen[0]._links.delete\", () => pm.expect(jsonData.fahrzeugen[0]._links.delete[0].href).to.eql(lokUrl));\r",
+									"pm.test(\"fahrzeugen[1].zug\", () => pm.expect(jsonData.fahrzeugen[1].zug).to.eql(pm.variables.get(\"zug\")));\r",
+									"pm.test(\"fahrzeugen[1].position\", () => pm.expect(jsonData.fahrzeugen[1].position).to.eql(2));\r",
+									"pm.test(\"fahrzeugen[1].artikelId\", () => pm.expect(jsonData.fahrzeugen[1].artikelId).to.eql(pm.variables.get(\"cnWagenId\")));\r",
+									"pm.test(\"fahrzeugen[1].hersteller\", () => pm.expect(jsonData.fahrzeugen[1].hersteller).to.eql(pm.variables.get(\"cnWagenHersteller\")));\r",
+									"pm.test(\"fahrzeugen[1].bestellNr\", () => pm.expect(jsonData.fahrzeugen[1].bestellNr).to.eql(pm.variables.get(\"cnWagenBestellNr\")));\r",
+									"pm.test(\"fahrzeugen[1].bezeichnung\", () => pm.expect(jsonData.fahrzeugen[1].bezeichnung).to.eql(pm.variables.get(\"cnWagenBezeichnung\")));\r",
+									"pm.test(\"fahrzeugen[1].lange\", () => pm.expect(jsonData.fahrzeugen[1].lange).to.eql(pm.variables.get(\"cnWagenLange\")));\r",
+									"pm.test(\"fahrzeugen[1].bahnverwaltung\", () => pm.expect(jsonData.fahrzeugen[1].bahnverwaltung).to.eql(pm.variables.get(\"cnWagenBahnverwaltung\")));\r",
+									"pm.test(\"fahrzeugen[1].gattung\", () => pm.expect(jsonData.fahrzeugen[1].gattung).to.eql(pm.variables.get(\"cnWagenGattung\")));\r",
+									"pm.test(\"fahrzeugen[1].betreibsnummer\", () => pm.expect(jsonData.fahrzeugen[1].betreibsnummer).to.eql(pm.variables.get(\"cnWagenBetreibsnummer\")));\r",
+									"pm.test(\"fahrzeugen[1].abbildung\", () => pm.expect(jsonData.fahrzeugen[1].abbildung).to.eql(pm.variables.get(\"cnWagenAbbildung\")));\r",
+									"pm.test(\"fahrzeugen[1].deleted\", () => pm.expect(jsonData.fahrzeugen[1].deleted).to.be.false);\r",
+									"pm.test(\"fahrzeugen[1]._links.parent\", () => pm.expect(jsonData.fahrzeugen[1]._links.parent[0].href).to.eql(self));\r",
+									"pm.test(\"fahrzeugen[1]._links.aufsteigen\", () => pm.expect(jsonData.fahrzeugen[1]._links.aufsteigen).not.to.exist);\r",
+									"pm.test(\"fahrzeugen[1]._links.absteigen\", () => pm.expect(jsonData.fahrzeugen[1]._links.absteigen[0].href).to.eql(wagenUrl+\"/absteigen\"));\r",
+									"pm.test(\"fahrzeugen[1]._links.delete\", () => pm.expect(jsonData.fahrzeugen[1]._links.delete[0].href).to.eql(wagenUrl));\r",
+									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
+									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
+									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
+									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
+									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
+									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
+									"pm.test(\"_links.fahrzeugen\", () => pm.expect(jsonData._links.fahrzeugen[0].href).to.eql(self+\"/fahrzeugen\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"artikelId\": \"{{cnWagenId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/zug/{{zug}}/fahrzeugen",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"zug",
+								"{{zug}}",
+								"fahrzeugen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Move Up",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -14929,23 +15064,55 @@
 									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
 									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));\r",
 									"var jsonData = pm.response.json();\r",
-									"var parent = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}\");\r",
-									"var self = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}/fahrzeugen/{{cnPosition}}\");\r",
-									"pm.test(\"zug\", () => pm.expect(jsonData.zug).to.eql(pm.variables.get(\"zug\")));\r",
-									"pm.test(\"position\", () => pm.expect(jsonData.position).to.eql(pm.variables.get(\"cnPosition\")));\r",
-									"pm.test(\"artikelId\", () => pm.expect(jsonData.artikelId).to.eql(pm.variables.get(\"cnArtikelId\")));\r",
-									"pm.test(\"hersteller\", () => pm.expect(jsonData.hersteller).to.eql(pm.variables.get(\"cnHersteller\")));\r",
-									"pm.test(\"bestellNr\", () => pm.expect(jsonData.bestellNr).to.eql(pm.variables.get(\"cnBestellNr\")));\r",
-									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"cnBezeichnung\")));\r",
-									"pm.test(\"lange\", () => pm.expect(jsonData.lange).to.eql(pm.variables.get(\"cnLange\")));\r",
-									"pm.test(\"bahnverwaltung\", () => pm.expect(jsonData.bahnverwaltung).to.eql(pm.variables.get(\"cnBahnverwaltung\")));\r",
-									"pm.test(\"gattung\", () => pm.expect(jsonData.gattung).to.eql(pm.variables.get(\"cnGattung\")));\r",
-									"pm.test(\"betreibsnummer\", () => pm.expect(jsonData.betreibsnummer).to.eql(pm.variables.get(\"cnBetreibsnummer\")));\r",
-									"pm.test(\"abbildung\", () => pm.expect(jsonData.abbildung).to.eql(pm.variables.get(\"abbildung\")));\r",
+									"var zug = pm.variables.get(\"zug\");\r",
+									"var root = pm.variables.replaceIn(\"{{api}}/zug\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}\");\r",
+									"var lokUrl = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}/fahrzeugen/2\");\r",
+									"var wagenUrl = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}/fahrzeugen/1\");\r",
+									"pm.test(\"name: \" + jsonData.name, () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"zug\")));\r",
+									"pm.test(\"zugTyp\", () => pm.expect(jsonData.zugTyp).to.eql(pm.variables.get(\"zugTyp\")));\r",
+									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
+									"pm.test(\"lange\", () => pm.expect(jsonData.lange).to.eql(pm.variables.get(\"lange\")));\r",
+									"pm.test(\"fahrzeugen.length\", () => pm.expect(jsonData.fahrzeugen.length).to.eql(2));\r",
+									"pm.test(\"fahrzeugen[0].zug\", () => pm.expect(jsonData.fahrzeugen[0].zug).to.eql(pm.variables.get(\"zug\")));\r",
+									"pm.test(\"fahrzeugen[0].position\", () => pm.expect(jsonData.fahrzeugen[0].position).to.eql(1));\r",
+									"pm.test(\"fahrzeugen[0].artikelId\", () => pm.expect(jsonData.fahrzeugen[0].artikelId).to.eql(pm.variables.get(\"cnWagenId\")));\r",
+									"pm.test(\"fahrzeugen[0].hersteller\", () => pm.expect(jsonData.fahrzeugen[0].hersteller).to.eql(pm.variables.get(\"cnWagenHersteller\")));\r",
+									"pm.test(\"fahrzeugen[0].bestellNr\", () => pm.expect(jsonData.fahrzeugen[0].bestellNr).to.eql(pm.variables.get(\"cnWagenBestellNr\")));\r",
+									"pm.test(\"fahrzeugen[0].bezeichnung\", () => pm.expect(jsonData.fahrzeugen[0].bezeichnung).to.eql(pm.variables.get(\"cnWagenBezeichnung\")));\r",
+									"pm.test(\"fahrzeugen[0].lange\", () => pm.expect(jsonData.fahrzeugen[0].lange).to.eql(pm.variables.get(\"cnWagenLange\")));\r",
+									"pm.test(\"fahrzeugen[0].bahnverwaltung\", () => pm.expect(jsonData.fahrzeugen[0].bahnverwaltung).to.eql(pm.variables.get(\"cnWagenBahnverwaltung\")));\r",
+									"pm.test(\"fahrzeugen[0].gattung\", () => pm.expect(jsonData.fahrzeugen[0].gattung).to.eql(pm.variables.get(\"cnWagenGattung\")));\r",
+									"pm.test(\"fahrzeugen[0].betreibsnummer\", () => pm.expect(jsonData.fahrzeugen[0].betreibsnummer).to.eql(pm.variables.get(\"cnWagenBetreibsnummer\")));\r",
+									"pm.test(\"fahrzeugen[0].abbildung\", () => pm.expect(jsonData.fahrzeugen[0].abbildung).to.eql(pm.variables.get(\"cnWagenAbbildung\")));\r",
+									"pm.test(\"fahrzeugen[0].deleted\", () => pm.expect(jsonData.fahrzeugen[0].deleted).to.be.false);\r",
+									"pm.test(\"fahrzeugen[0]._links.parent\", () => pm.expect(jsonData.fahrzeugen[0]._links.parent[0].href).to.eql(self));\r",
+									"pm.test(\"fahrzeugen[0]._links.aufsteigen\", () => pm.expect(jsonData.fahrzeugen[0]._links.aufsteigen[0].href).to.eql(wagenUrl+\"/aufsteigen\"));\r",
+									"pm.test(\"fahrzeugen[0]._links.absteigen\", () => pm.expect(jsonData.fahrzeugen[0]._links.absteigen).not.to.exist);\r",
+									"pm.test(\"fahrzeugen[0]._links.delete\", () => pm.expect(jsonData.fahrzeugen[0]._links.delete[0].href).to.eql(wagenUrl));\r",
+									"pm.test(\"fahrzeugen[1].zug\", () => pm.expect(jsonData.fahrzeugen[1].zug).to.eql(pm.variables.get(\"zug\")));\r",
+									"pm.test(\"fahrzeugen[1].position\", () => pm.expect(jsonData.fahrzeugen[1].position).to.eql(2));\r",
+									"pm.test(\"fahrzeugen[1].artikelId\", () => pm.expect(jsonData.fahrzeugen[1].artikelId).to.eql(pm.variables.get(\"cnLokId\")));\r",
+									"pm.test(\"fahrzeugen[1].hersteller\", () => pm.expect(jsonData.fahrzeugen[1].hersteller).to.eql(pm.variables.get(\"cnLokHersteller\")));\r",
+									"pm.test(\"fahrzeugen[1].bestellNr\", () => pm.expect(jsonData.fahrzeugen[1].bestellNr).to.eql(pm.variables.get(\"cnLokBestellNr\")));\r",
+									"pm.test(\"fahrzeugen[1].bezeichnung\", () => pm.expect(jsonData.fahrzeugen[1].bezeichnung).to.eql(pm.variables.get(\"cnLokBezeichnung\")));\r",
+									"pm.test(\"fahrzeugen[1].lange\", () => pm.expect(jsonData.fahrzeugen[1].lange).to.eql(pm.variables.get(\"cnLokLange\")));\r",
+									"pm.test(\"fahrzeugen[1].bahnverwaltung\", () => pm.expect(jsonData.fahrzeugen[1].bahnverwaltung).to.eql(pm.variables.get(\"cnLokBahnverwaltung\")));\r",
+									"pm.test(\"fahrzeugen[1].gattung\", () => pm.expect(jsonData.fahrzeugen[1].gattung).to.eql(pm.variables.get(\"cnLokGattung\")));\r",
+									"pm.test(\"fahrzeugen[1].betreibsnummer\", () => pm.expect(jsonData.fahrzeugen[1].betreibsnummer).to.eql(pm.variables.get(\"cnLokBetreibsnummer\")));\r",
+									"pm.test(\"fahrzeugen[1].abbildung\", () => pm.expect(jsonData.fahrzeugen[1].abbildung).to.eql(pm.variables.get(\"cnLokAbbildung\")));\r",
+									"pm.test(\"fahrzeugen[1].deleted\", () => pm.expect(jsonData.fahrzeugen[1].deleted).to.be.false);\r",
+									"pm.test(\"fahrzeugen[1]._links.parent\", () => pm.expect(jsonData.fahrzeugen[1]._links.parent[0].href).to.eql(self));\r",
+									"pm.test(\"fahrzeugen[1]._links.aufsteigen\", () => pm.expect(jsonData.fahrzeugen[1]._links.aufsteigen).not.to.exist);\r",
+									"pm.test(\"fahrzeugen[1]._links.absteigen\", () => pm.expect(jsonData.fahrzeugen[1]._links.absteigen[0].href).to.eql(lokUrl+\"/absteigen\"));\r",
+									"pm.test(\"fahrzeugen[1]._links.delete\", () => pm.expect(jsonData.fahrzeugen[1]._links.delete[0].href).to.eql(lokUrl));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
-									"pm.test(\"_links.parent\", () => pm.expect(jsonData._links.parent[0].href).to.eql(parent));\r",
+									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
+									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
 									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
-									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));"
+									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
+									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
+									"pm.test(\"_links.fahrzeugen\", () => pm.expect(jsonData._links.fahrzeugen[0].href).to.eql(self+\"/fahrzeugen\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -14966,7 +15133,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{api}}/zug/{{zug}}/fahrzeugen/{{cnPosition}}?artikelId={{cnArtikelId}}",
+							"raw": "{{api}}/zug/{{zug}}/fahrzeugen/1/aufsteigen",
 							"host": [
 								"{{api}}"
 							],
@@ -14974,13 +15141,111 @@
 								"zug",
 								"{{zug}}",
 								"fahrzeugen",
-								"{{cnPosition}}"
+								"1",
+								"aufsteigen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Move Down",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));\r",
+									"var jsonData = pm.response.json();\r",
+									"var zug = pm.variables.get(\"zug\");\r",
+									"var root = pm.variables.replaceIn(\"{{api}}/zug\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}\");\r",
+									"var lokUrl = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}/fahrzeugen/1\");\r",
+									"var wagenUrl = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}/fahrzeugen/2\");\r",
+									"pm.test(\"name: \" + jsonData.name, () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"zug\")));\r",
+									"pm.test(\"zugTyp\", () => pm.expect(jsonData.zugTyp).to.eql(pm.variables.get(\"zugTyp\")));\r",
+									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
+									"pm.test(\"lange\", () => pm.expect(jsonData.lange).to.eql(pm.variables.get(\"lange\")));\r",
+									"pm.test(\"fahrzeugen.length\", () => pm.expect(jsonData.fahrzeugen.length).to.eql(2));\r",
+									"pm.test(\"fahrzeugen[0].zug\", () => pm.expect(jsonData.fahrzeugen[0].zug).to.eql(pm.variables.get(\"zug\")));\r",
+									"pm.test(\"fahrzeugen[0].position\", () => pm.expect(jsonData.fahrzeugen[0].position).to.eql(1));\r",
+									"pm.test(\"fahrzeugen[0].artikelId\", () => pm.expect(jsonData.fahrzeugen[0].artikelId).to.eql(pm.variables.get(\"cnLokId\")));\r",
+									"pm.test(\"fahrzeugen[0].hersteller\", () => pm.expect(jsonData.fahrzeugen[0].hersteller).to.eql(pm.variables.get(\"cnLokHersteller\")));\r",
+									"pm.test(\"fahrzeugen[0].bestellNr\", () => pm.expect(jsonData.fahrzeugen[0].bestellNr).to.eql(pm.variables.get(\"cnLokBestellNr\")));\r",
+									"pm.test(\"fahrzeugen[0].bezeichnung\", () => pm.expect(jsonData.fahrzeugen[0].bezeichnung).to.eql(pm.variables.get(\"cnLokBezeichnung\")));\r",
+									"pm.test(\"fahrzeugen[0].lange\", () => pm.expect(jsonData.fahrzeugen[0].lange).to.eql(pm.variables.get(\"cnLokLange\")));\r",
+									"pm.test(\"fahrzeugen[0].bahnverwaltung\", () => pm.expect(jsonData.fahrzeugen[0].bahnverwaltung).to.eql(pm.variables.get(\"cnLokBahnverwaltung\")));\r",
+									"pm.test(\"fahrzeugen[0].gattung\", () => pm.expect(jsonData.fahrzeugen[0].gattung).to.eql(pm.variables.get(\"cnLokGattung\")));\r",
+									"pm.test(\"fahrzeugen[0].betreibsnummer\", () => pm.expect(jsonData.fahrzeugen[0].betreibsnummer).to.eql(pm.variables.get(\"cnLokBetreibsnummer\")));\r",
+									"pm.test(\"fahrzeugen[0].abbildung\", () => pm.expect(jsonData.fahrzeugen[0].abbildung).to.eql(pm.variables.get(\"cnLokAbbildung\")));\r",
+									"pm.test(\"fahrzeugen[0].deleted\", () => pm.expect(jsonData.fahrzeugen[0].deleted).to.be.false);\r",
+									"pm.test(\"fahrzeugen[0]._links.parent\", () => pm.expect(jsonData.fahrzeugen[0]._links.parent[0].href).to.eql(self));\r",
+									"pm.test(\"fahrzeugen[0]._links.aufsteigen\", () => pm.expect(jsonData.fahrzeugen[0]._links.aufsteigen[0].href).to.eql(lokUrl+\"/aufsteigen\"));\r",
+									"pm.test(\"fahrzeugen[0]._links.absteigen\", () => pm.expect(jsonData.fahrzeugen[0]._links.absteigen).not.to.exist);\r",
+									"pm.test(\"fahrzeugen[0]._links.delete\", () => pm.expect(jsonData.fahrzeugen[0]._links.delete[0].href).to.eql(lokUrl));\r",
+									"pm.test(\"fahrzeugen[1].zug\", () => pm.expect(jsonData.fahrzeugen[1].zug).to.eql(pm.variables.get(\"zug\")));\r",
+									"pm.test(\"fahrzeugen[1].position\", () => pm.expect(jsonData.fahrzeugen[1].position).to.eql(2));\r",
+									"pm.test(\"fahrzeugen[1].artikelId\", () => pm.expect(jsonData.fahrzeugen[1].artikelId).to.eql(pm.variables.get(\"cnWagenId\")));\r",
+									"pm.test(\"fahrzeugen[1].hersteller\", () => pm.expect(jsonData.fahrzeugen[1].hersteller).to.eql(pm.variables.get(\"cnWagenHersteller\")));\r",
+									"pm.test(\"fahrzeugen[1].bestellNr\", () => pm.expect(jsonData.fahrzeugen[1].bestellNr).to.eql(pm.variables.get(\"cnWagenBestellNr\")));\r",
+									"pm.test(\"fahrzeugen[1].bezeichnung\", () => pm.expect(jsonData.fahrzeugen[1].bezeichnung).to.eql(pm.variables.get(\"cnWagenBezeichnung\")));\r",
+									"pm.test(\"fahrzeugen[1].lange\", () => pm.expect(jsonData.fahrzeugen[1].lange).to.eql(pm.variables.get(\"cnWagenLange\")));\r",
+									"pm.test(\"fahrzeugen[1].bahnverwaltung\", () => pm.expect(jsonData.fahrzeugen[1].bahnverwaltung).to.eql(pm.variables.get(\"cnWagenBahnverwaltung\")));\r",
+									"pm.test(\"fahrzeugen[1].gattung\", () => pm.expect(jsonData.fahrzeugen[1].gattung).to.eql(pm.variables.get(\"cnWagenGattung\")));\r",
+									"pm.test(\"fahrzeugen[1].betreibsnummer\", () => pm.expect(jsonData.fahrzeugen[1].betreibsnummer).to.eql(pm.variables.get(\"cnWagenBetreibsnummer\")));\r",
+									"pm.test(\"fahrzeugen[1].abbildung\", () => pm.expect(jsonData.fahrzeugen[1].abbildung).to.eql(pm.variables.get(\"cnWagenAbbildung\")));\r",
+									"pm.test(\"fahrzeugen[1].deleted\", () => pm.expect(jsonData.fahrzeugen[1].deleted).to.be.false);\r",
+									"pm.test(\"fahrzeugen[1]._links.parent\", () => pm.expect(jsonData.fahrzeugen[1]._links.parent[0].href).to.eql(self));\r",
+									"pm.test(\"fahrzeugen[1]._links.aufsteigen\", () => pm.expect(jsonData.fahrzeugen[1]._links.aufsteigen).not.to.exist);\r",
+									"pm.test(\"fahrzeugen[1]._links.absteigen\", () => pm.expect(jsonData.fahrzeugen[1]._links.absteigen[0].href).to.eql(wagenUrl+\"/absteigen\"));\r",
+									"pm.test(\"fahrzeugen[1]._links.delete\", () => pm.expect(jsonData.fahrzeugen[1]._links.delete[0].href).to.eql(wagenUrl));\r",
+									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
+									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
+									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
+									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
+									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
+									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
+									"pm.test(\"_links.fahrzeugen\", () => pm.expect(jsonData._links.fahrzeugen[0].href).to.eql(self+\"/fahrzeugen\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/html, application/xhtml+xml, application/xml"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/zug/{{zug}}/fahrzeugen/2/absteigen",
+							"host": [
+								"{{api}}"
 							],
-							"query": [
-								{
-									"key": "artikelId",
-									"value": "{{cnArtikelId}}"
-								}
+							"path": [
+								"zug",
+								"{{zug}}",
+								"fahrzeugen",
+								"2",
+								"absteigen"
 							]
 						}
 					},
@@ -15009,25 +15274,45 @@
 									"var zug = pm.variables.get(\"zug\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/zug\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}\");\r",
-									"var consistUrl = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}/fahrzeugen/{{cnPosition}}\");\r",
+									"var lokUrl = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}/fahrzeugen/1\");\r",
+									"var wagenUrl = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}/fahrzeugen/2\");\r",
 									"pm.test(\"name: \" + jsonData.name, () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"zug\")));\r",
 									"pm.test(\"zugTyp\", () => pm.expect(jsonData.zugTyp).to.eql(pm.variables.get(\"zugTyp\")));\r",
 									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
+									"pm.test(\"lange\", () => pm.expect(jsonData.lange).to.eql(pm.variables.get(\"lange\")));\r",
+									"pm.test(\"fahrzeugen.length\", () => pm.expect(jsonData.fahrzeugen.length).to.eql(2));\r",
 									"pm.test(\"fahrzeugen[0].zug\", () => pm.expect(jsonData.fahrzeugen[0].zug).to.eql(pm.variables.get(\"zug\")));\r",
-									"pm.test(\"fahrzeugen[0].position\", () => pm.expect(jsonData.fahrzeugen[0].position).to.eql(pm.variables.get(\"cnPosition\")));\r",
-									"pm.test(\"fahrzeugen[0].artikelId\", () => pm.expect(jsonData.fahrzeugen[0].artikelId).to.eql(pm.variables.get(\"cnArtikelId\")));\r",
-									"pm.test(\"fahrzeugen[0].hersteller\", () => pm.expect(jsonData.fahrzeugen[0].hersteller).to.eql(pm.variables.get(\"cnHersteller\")));\r",
-									"pm.test(\"fahrzeugen[0].bestellNr\", () => pm.expect(jsonData.fahrzeugen[0].bestellNr).to.eql(pm.variables.get(\"cnBestellNr\")));\r",
-									"pm.test(\"fahrzeugen[0].bezeichnung\", () => pm.expect(jsonData.fahrzeugen[0].bezeichnung).to.eql(pm.variables.get(\"cnBezeichnung\")));\r",
-									"pm.test(\"fahrzeugen[0].lange\", () => pm.expect(jsonData.fahrzeugen[0].lange).to.eql(pm.variables.get(\"cnLange\")));\r",
-									"pm.test(\"fahrzeugen[0].bahnverwaltung\", () => pm.expect(jsonData.fahrzeugen[0].bahnverwaltung).to.eql(pm.variables.get(\"cnBahnverwaltung\")));\r",
-									"pm.test(\"fahrzeugen[0].gattung\", () => pm.expect(jsonData.fahrzeugen[0].gattung).to.eql(pm.variables.get(\"cnGattung\")));\r",
-									"pm.test(\"fahrzeugen[0].betreibsnummer\", () => pm.expect(jsonData.fahrzeugen[0].betreibsnummer).to.eql(pm.variables.get(\"cnBetreibsnummer\")));\r",
-									"pm.test(\"fahrzeugen[0].abbildung\", () => pm.expect(jsonData.fahrzeugen[0].abbildung).to.eql(pm.variables.get(\"abbildung\")));\r",
+									"pm.test(\"fahrzeugen[0].position\", () => pm.expect(jsonData.fahrzeugen[0].position).to.eql(1));\r",
+									"pm.test(\"fahrzeugen[0].artikelId\", () => pm.expect(jsonData.fahrzeugen[0].artikelId).to.eql(pm.variables.get(\"cnLokId\")));\r",
+									"pm.test(\"fahrzeugen[0].hersteller\", () => pm.expect(jsonData.fahrzeugen[0].hersteller).to.eql(pm.variables.get(\"cnLokHersteller\")));\r",
+									"pm.test(\"fahrzeugen[0].bestellNr\", () => pm.expect(jsonData.fahrzeugen[0].bestellNr).to.eql(pm.variables.get(\"cnLokBestellNr\")));\r",
+									"pm.test(\"fahrzeugen[0].bezeichnung\", () => pm.expect(jsonData.fahrzeugen[0].bezeichnung).to.eql(pm.variables.get(\"cnLokBezeichnung\")));\r",
+									"pm.test(\"fahrzeugen[0].lange\", () => pm.expect(jsonData.fahrzeugen[0].lange).to.eql(pm.variables.get(\"cnLokLange\")));\r",
+									"pm.test(\"fahrzeugen[0].bahnverwaltung\", () => pm.expect(jsonData.fahrzeugen[0].bahnverwaltung).to.eql(pm.variables.get(\"cnLokBahnverwaltung\")));\r",
+									"pm.test(\"fahrzeugen[0].gattung\", () => pm.expect(jsonData.fahrzeugen[0].gattung).to.eql(pm.variables.get(\"cnLokGattung\")));\r",
+									"pm.test(\"fahrzeugen[0].betreibsnummer\", () => pm.expect(jsonData.fahrzeugen[0].betreibsnummer).to.eql(pm.variables.get(\"cnLokBetreibsnummer\")));\r",
+									"pm.test(\"fahrzeugen[0].abbildung\", () => pm.expect(jsonData.fahrzeugen[0].abbildung).to.eql(pm.variables.get(\"cnLokAbbildung\")));\r",
 									"pm.test(\"fahrzeugen[0].deleted\", () => pm.expect(jsonData.fahrzeugen[0].deleted).to.be.false);\r",
 									"pm.test(\"fahrzeugen[0]._links.parent\", () => pm.expect(jsonData.fahrzeugen[0]._links.parent[0].href).to.eql(self));\r",
-									"pm.test(\"fahrzeugen[0]._links.update\", () => pm.expect(jsonData.fahrzeugen[0]._links.update[0].href).to.eql(consistUrl));\r",
-									"pm.test(\"fahrzeugen[0]._links.delete\", () => pm.expect(jsonData.fahrzeugen[0]._links.delete[0].href).to.eql(consistUrl));\r",
+									"pm.test(\"fahrzeugen[0]._links.aufsteigen\", () => pm.expect(jsonData.fahrzeugen[0]._links.aufsteigen[0].href).to.eql(lokUrl+\"/aufsteigen\"));\r",
+									"pm.test(\"fahrzeugen[0]._links.absteigen\", () => pm.expect(jsonData.fahrzeugen[0]._links.absteigen).not.to.exist);\r",
+									"pm.test(\"fahrzeugen[0]._links.delete\", () => pm.expect(jsonData.fahrzeugen[0]._links.delete[0].href).to.eql(lokUrl));\r",
+									"pm.test(\"fahrzeugen[1].zug\", () => pm.expect(jsonData.fahrzeugen[1].zug).to.eql(pm.variables.get(\"zug\")));\r",
+									"pm.test(\"fahrzeugen[1].position\", () => pm.expect(jsonData.fahrzeugen[1].position).to.eql(2));\r",
+									"pm.test(\"fahrzeugen[1].artikelId\", () => pm.expect(jsonData.fahrzeugen[1].artikelId).to.eql(pm.variables.get(\"cnWagenId\")));\r",
+									"pm.test(\"fahrzeugen[1].hersteller\", () => pm.expect(jsonData.fahrzeugen[1].hersteller).to.eql(pm.variables.get(\"cnWagenHersteller\")));\r",
+									"pm.test(\"fahrzeugen[1].bestellNr\", () => pm.expect(jsonData.fahrzeugen[1].bestellNr).to.eql(pm.variables.get(\"cnWagenBestellNr\")));\r",
+									"pm.test(\"fahrzeugen[1].bezeichnung\", () => pm.expect(jsonData.fahrzeugen[1].bezeichnung).to.eql(pm.variables.get(\"cnWagenBezeichnung\")));\r",
+									"pm.test(\"fahrzeugen[1].lange\", () => pm.expect(jsonData.fahrzeugen[1].lange).to.eql(pm.variables.get(\"cnWagenLange\")));\r",
+									"pm.test(\"fahrzeugen[1].bahnverwaltung\", () => pm.expect(jsonData.fahrzeugen[1].bahnverwaltung).to.eql(pm.variables.get(\"cnWagenBahnverwaltung\")));\r",
+									"pm.test(\"fahrzeugen[1].gattung\", () => pm.expect(jsonData.fahrzeugen[1].gattung).to.eql(pm.variables.get(\"cnWagenGattung\")));\r",
+									"pm.test(\"fahrzeugen[1].betreibsnummer\", () => pm.expect(jsonData.fahrzeugen[1].betreibsnummer).to.eql(pm.variables.get(\"cnWagenBetreibsnummer\")));\r",
+									"pm.test(\"fahrzeugen[1].abbildung\", () => pm.expect(jsonData.fahrzeugen[1].abbildung).to.eql(pm.variables.get(\"cnWagenAbbildung\")));\r",
+									"pm.test(\"fahrzeugen[1].deleted\", () => pm.expect(jsonData.fahrzeugen[1].deleted).to.be.false);\r",
+									"pm.test(\"fahrzeugen[1]._links.parent\", () => pm.expect(jsonData.fahrzeugen[1]._links.parent[0].href).to.eql(self));\r",
+									"pm.test(\"fahrzeugen[1]._links.aufsteigen\", () => pm.expect(jsonData.fahrzeugen[1]._links.aufsteigen).not.to.exist);\r",
+									"pm.test(\"fahrzeugen[1]._links.absteigen\", () => pm.expect(jsonData.fahrzeugen[1]._links.absteigen[0].href).to.eql(wagenUrl+\"/absteigen\"));\r",
+									"pm.test(\"fahrzeugen[1]._links.delete\", () => pm.expect(jsonData.fahrzeugen[1]._links.delete[0].href).to.eql(wagenUrl));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
 									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
@@ -15089,25 +15374,45 @@
 									"var zug = pm.variables.get(\"zug\");\r",
 									"var root = pm.variables.replaceIn(\"{{api}}/zug\");\r",
 									"var self = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}\");\r",
-									"var consistUrl = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}/fahrzeugen/{{cnPosition}}\");\r",
+									"var lokUrl = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}/fahrzeugen/1\");\r",
+									"var wagenUrl = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}/fahrzeugen/2\");\r",
 									"pm.test(\"name: \" + jsonData.name, () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"zug\")));\r",
 									"pm.test(\"zugTyp\", () => pm.expect(jsonData.zugTyp).to.eql(pm.variables.get(\"zugTyp\")));\r",
 									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
+									"pm.test(\"lange\", () => pm.expect(jsonData.lange).to.eql(pm.variables.get(\"lange\")));\r",
+									"pm.test(\"fahrzeugen.length\", () => pm.expect(jsonData.fahrzeugen.length).to.eql(2));\r",
 									"pm.test(\"fahrzeugen[0].zug\", () => pm.expect(jsonData.fahrzeugen[0].zug).to.eql(pm.variables.get(\"zug\")));\r",
-									"pm.test(\"fahrzeugen[0].position\", () => pm.expect(jsonData.fahrzeugen[0].position).to.eql(pm.variables.get(\"cnPosition\")));\r",
-									"pm.test(\"fahrzeugen[0].artikelId\", () => pm.expect(jsonData.fahrzeugen[0].artikelId).to.eql(pm.variables.get(\"cnArtikelId\")));\r",
-									"pm.test(\"fahrzeugen[0].hersteller\", () => pm.expect(jsonData.fahrzeugen[0].hersteller).to.eql(pm.variables.get(\"cnHersteller\")));\r",
-									"pm.test(\"fahrzeugen[0].bestellNr\", () => pm.expect(jsonData.fahrzeugen[0].bestellNr).to.eql(pm.variables.get(\"cnBestellNr\")));\r",
-									"pm.test(\"fahrzeugen[0].bezeichnung\", () => pm.expect(jsonData.fahrzeugen[0].bezeichnung).to.eql(pm.variables.get(\"cnBezeichnung\")));\r",
-									"pm.test(\"fahrzeugen[0].lange\", () => pm.expect(jsonData.fahrzeugen[0].lange).to.eql(pm.variables.get(\"cnLange\")));\r",
-									"pm.test(\"fahrzeugen[0].bahnverwaltung\", () => pm.expect(jsonData.fahrzeugen[0].bahnverwaltung).to.eql(pm.variables.get(\"cnBahnverwaltung\")));\r",
-									"pm.test(\"fahrzeugen[0].gattung\", () => pm.expect(jsonData.fahrzeugen[0].gattung).to.eql(pm.variables.get(\"cnGattung\")));\r",
-									"pm.test(\"fahrzeugen[0].betreibsnummer\", () => pm.expect(jsonData.fahrzeugen[0].betreibsnummer).to.eql(pm.variables.get(\"cnBetreibsnummer\")));\r",
-									"pm.test(\"fahrzeugen[0].abbildung\", () => pm.expect(jsonData.fahrzeugen[0].abbildung).to.eql(pm.variables.get(\"abbildung\")));\r",
+									"pm.test(\"fahrzeugen[0].position\", () => pm.expect(jsonData.fahrzeugen[0].position).to.eql(1));\r",
+									"pm.test(\"fahrzeugen[0].artikelId\", () => pm.expect(jsonData.fahrzeugen[0].artikelId).to.eql(pm.variables.get(\"cnLokId\")));\r",
+									"pm.test(\"fahrzeugen[0].hersteller\", () => pm.expect(jsonData.fahrzeugen[0].hersteller).to.eql(pm.variables.get(\"cnLokHersteller\")));\r",
+									"pm.test(\"fahrzeugen[0].bestellNr\", () => pm.expect(jsonData.fahrzeugen[0].bestellNr).to.eql(pm.variables.get(\"cnLokBestellNr\")));\r",
+									"pm.test(\"fahrzeugen[0].bezeichnung\", () => pm.expect(jsonData.fahrzeugen[0].bezeichnung).to.eql(pm.variables.get(\"cnLokBezeichnung\")));\r",
+									"pm.test(\"fahrzeugen[0].lange\", () => pm.expect(jsonData.fahrzeugen[0].lange).to.eql(pm.variables.get(\"cnLokLange\")));\r",
+									"pm.test(\"fahrzeugen[0].bahnverwaltung\", () => pm.expect(jsonData.fahrzeugen[0].bahnverwaltung).to.eql(pm.variables.get(\"cnLokBahnverwaltung\")));\r",
+									"pm.test(\"fahrzeugen[0].gattung\", () => pm.expect(jsonData.fahrzeugen[0].gattung).to.eql(pm.variables.get(\"cnLokGattung\")));\r",
+									"pm.test(\"fahrzeugen[0].betreibsnummer\", () => pm.expect(jsonData.fahrzeugen[0].betreibsnummer).to.eql(pm.variables.get(\"cnLokBetreibsnummer\")));\r",
+									"pm.test(\"fahrzeugen[0].abbildung\", () => pm.expect(jsonData.fahrzeugen[0].abbildung).to.eql(pm.variables.get(\"cnLokAbbildung\")));\r",
 									"pm.test(\"fahrzeugen[0].deleted\", () => pm.expect(jsonData.fahrzeugen[0].deleted).to.be.false);\r",
 									"pm.test(\"fahrzeugen[0]._links.parent\", () => pm.expect(jsonData.fahrzeugen[0]._links.parent[0].href).to.eql(self));\r",
-									"pm.test(\"fahrzeugen[0]._links.update\", () => pm.expect(jsonData.fahrzeugen[0]._links.update[0].href).to.eql(consistUrl));\r",
-									"pm.test(\"fahrzeugen[0]._links.delete\", () => pm.expect(jsonData.fahrzeugen[0]._links.delete[0].href).to.eql(consistUrl));\r",
+									"pm.test(\"fahrzeugen[0]._links.aufsteigen\", () => pm.expect(jsonData.fahrzeugen[0]._links.aufsteigen[0].href).to.eql(lokUrl+\"/aufsteigen\"));\r",
+									"pm.test(\"fahrzeugen[0]._links.absteigen\", () => pm.expect(jsonData.fahrzeugen[0]._links.absteigen).not.to.exist);\r",
+									"pm.test(\"fahrzeugen[0]._links.delete\", () => pm.expect(jsonData.fahrzeugen[0]._links.delete[0].href).to.eql(lokUrl));\r",
+									"pm.test(\"fahrzeugen[1].zug\", () => pm.expect(jsonData.fahrzeugen[1].zug).to.eql(pm.variables.get(\"zug\")));\r",
+									"pm.test(\"fahrzeugen[1].position\", () => pm.expect(jsonData.fahrzeugen[1].position).to.eql(2));\r",
+									"pm.test(\"fahrzeugen[1].artikelId\", () => pm.expect(jsonData.fahrzeugen[1].artikelId).to.eql(pm.variables.get(\"cnWagenId\")));\r",
+									"pm.test(\"fahrzeugen[1].hersteller\", () => pm.expect(jsonData.fahrzeugen[1].hersteller).to.eql(pm.variables.get(\"cnWagenHersteller\")));\r",
+									"pm.test(\"fahrzeugen[1].bestellNr\", () => pm.expect(jsonData.fahrzeugen[1].bestellNr).to.eql(pm.variables.get(\"cnWagenBestellNr\")));\r",
+									"pm.test(\"fahrzeugen[1].bezeichnung\", () => pm.expect(jsonData.fahrzeugen[1].bezeichnung).to.eql(pm.variables.get(\"cnWagenBezeichnung\")));\r",
+									"pm.test(\"fahrzeugen[1].lange\", () => pm.expect(jsonData.fahrzeugen[1].lange).to.eql(pm.variables.get(\"cnWagenLange\")));\r",
+									"pm.test(\"fahrzeugen[1].bahnverwaltung\", () => pm.expect(jsonData.fahrzeugen[1].bahnverwaltung).to.eql(pm.variables.get(\"cnWagenBahnverwaltung\")));\r",
+									"pm.test(\"fahrzeugen[1].gattung\", () => pm.expect(jsonData.fahrzeugen[1].gattung).to.eql(pm.variables.get(\"cnWagenGattung\")));\r",
+									"pm.test(\"fahrzeugen[1].betreibsnummer\", () => pm.expect(jsonData.fahrzeugen[1].betreibsnummer).to.eql(pm.variables.get(\"cnWagenBetreibsnummer\")));\r",
+									"pm.test(\"fahrzeugen[1].abbildung\", () => pm.expect(jsonData.fahrzeugen[1].abbildung).to.eql(pm.variables.get(\"cnWagenAbbildung\")));\r",
+									"pm.test(\"fahrzeugen[1].deleted\", () => pm.expect(jsonData.fahrzeugen[1].deleted).to.be.false);\r",
+									"pm.test(\"fahrzeugen[1]._links.parent\", () => pm.expect(jsonData.fahrzeugen[1]._links.parent[0].href).to.eql(self));\r",
+									"pm.test(\"fahrzeugen[1]._links.aufsteigen\", () => pm.expect(jsonData.fahrzeugen[1]._links.aufsteigen).not.to.exist);\r",
+									"pm.test(\"fahrzeugen[1]._links.absteigen\", () => pm.expect(jsonData.fahrzeugen[1]._links.absteigen[0].href).to.eql(wagenUrl+\"/absteigen\"));\r",
+									"pm.test(\"fahrzeugen[1]._links.delete\", () => pm.expect(jsonData.fahrzeugen[1]._links.delete[0].href).to.eql(wagenUrl));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
 									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
@@ -15143,13 +15448,56 @@
 					"response": []
 				},
 				{
-					"name": "Delete Consist",
+					"name": "Delete Lok",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"response\", () => pm.response.to.have.status(204));"
+									"pm.test(\"response\", () => pm.response.to.have.status(202));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));\r",
+									"var jsonData = pm.response.json();\r",
+									"var zug = pm.variables.get(\"zug\");\r",
+									"var root = pm.variables.replaceIn(\"{{api}}/zug\");\r",
+									"var self = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}\");\r",
+									"var wagenUrl = pm.variables.replaceIn(\"{{api}}/zug/{{zug}}/fahrzeugen/1\");\r",
+									"pm.test(\"name: \" + jsonData.name, () => pm.expect(jsonData.name).to.eql(pm.variables.get(\"zug\")));\r",
+									"pm.test(\"zugTyp\", () => pm.expect(jsonData.zugTyp).to.eql(pm.variables.get(\"zugTyp\")));\r",
+									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"bezeichnung\")));\r",
+									"pm.test(\"lange\", () => pm.expect(jsonData.lange).to.eql(pm.variables.get(\"lange\")));\r",
+									"pm.test(\"fahrzeugen.length\", () => pm.expect(jsonData.fahrzeugen.length).to.eql(1));\r",
+									"pm.test(\"fahrzeugen[0].zug\", () => pm.expect(jsonData.fahrzeugen[0].zug).to.eql(pm.variables.get(\"zug\")));\r",
+									"pm.test(\"fahrzeugen[0].position\", () => pm.expect(jsonData.fahrzeugen[0].position).to.eql(1));\r",
+									"pm.test(\"fahrzeugen[0].artikelId\", () => pm.expect(jsonData.fahrzeugen[0].artikelId).to.eql(pm.variables.get(\"cnWagenId\")));\r",
+									"pm.test(\"fahrzeugen[0].hersteller\", () => pm.expect(jsonData.fahrzeugen[0].hersteller).to.eql(pm.variables.get(\"cnWagenHersteller\")));\r",
+									"pm.test(\"fahrzeugen[0].bestellNr\", () => pm.expect(jsonData.fahrzeugen[0].bestellNr).to.eql(pm.variables.get(\"cnWagenBestellNr\")));\r",
+									"pm.test(\"fahrzeugen[0].bezeichnung\", () => pm.expect(jsonData.fahrzeugen[0].bezeichnung).to.eql(pm.variables.get(\"cnWagenBezeichnung\")));\r",
+									"pm.test(\"fahrzeugen[0].lange\", () => pm.expect(jsonData.fahrzeugen[0].lange).to.eql(pm.variables.get(\"cnWagenLange\")));\r",
+									"pm.test(\"fahrzeugen[0].bahnverwaltung\", () => pm.expect(jsonData.fahrzeugen[0].bahnverwaltung).to.eql(pm.variables.get(\"cnWagenBahnverwaltung\")));\r",
+									"pm.test(\"fahrzeugen[0].gattung\", () => pm.expect(jsonData.fahrzeugen[0].gattung).to.eql(pm.variables.get(\"cnWagenGattung\")));\r",
+									"pm.test(\"fahrzeugen[0].betreibsnummer\", () => pm.expect(jsonData.fahrzeugen[0].betreibsnummer).to.eql(pm.variables.get(\"cnWagenBetreibsnummer\")));\r",
+									"pm.test(\"fahrzeugen[0].abbildung\", () => pm.expect(jsonData.fahrzeugen[0].abbildung).to.eql(pm.variables.get(\"cnWagenAbbildung\")));\r",
+									"pm.test(\"fahrzeugen[0].deleted\", () => pm.expect(jsonData.fahrzeugen[0].deleted).to.be.false);\r",
+									"pm.test(\"fahrzeugen[0]._links.parent\", () => pm.expect(jsonData.fahrzeugen[0]._links.parent[0].href).to.eql(self));\r",
+									"pm.test(\"fahrzeugen[0]._links.aufsteigen\", () => pm.expect(jsonData.fahrzeugen[0]._links.aufsteigen).not.to.exist);\r",
+									"pm.test(\"fahrzeugen[0]._links.absteigen\", () => pm.expect(jsonData.fahrzeugen[0]._links.absteigen).not.to.exist);\r",
+									"pm.test(\"fahrzeugen[0]._links.delete\", () => pm.expect(jsonData.fahrzeugen[0]._links.delete[0].href).to.eql(wagenUrl));\r",
+									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
+									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(root));\r",
+									"pm.test(\"_links.self\", () => pm.expect(jsonData._links.self[0].href).to.eql(self));\r",
+									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));\r",
+									"pm.test(\"_links.delete\", () => pm.expect(jsonData._links.delete[0].href).to.eql(self));\r",
+									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
+									"pm.test(\"_links.fahrzeugen\", () => pm.expect(jsonData._links.fahrzeugen[0].href).to.eql(self+\"/fahrzeugen\"));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"lange\", new Number(\"11.00\"));"
 								],
 								"type": "text/javascript"
 							}

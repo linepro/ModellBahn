@@ -6,16 +6,17 @@ import static com.linepro.modellbahn.controller.impl.ApiNames.POSITION;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.ADD_CONSIST;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.DELETE_CONSIST;
 import static com.linepro.modellbahn.controller.impl.ApiPaths.GET_ZUG;
-import static com.linepro.modellbahn.controller.impl.ApiPaths.UPDATE_CONSIST;
+import static com.linepro.modellbahn.controller.impl.ApiPaths.MOVE_CONSIST_DOWN;
+import static com.linepro.modellbahn.controller.impl.ApiPaths.MOVE_CONSIST_UP;
 import static com.linepro.modellbahn.controller.impl.ApiRels.ADD;
 import static com.linepro.modellbahn.controller.impl.ApiRels.DELETE;
+import static com.linepro.modellbahn.controller.impl.ApiRels.DOWN;
 import static com.linepro.modellbahn.controller.impl.ApiRels.PARENT;
-import static com.linepro.modellbahn.controller.impl.ApiRels.UPDATE;
+import static com.linepro.modellbahn.controller.impl.ApiRels.UP;
 
 import java.util.HashMap;
 
 import org.apache.commons.collections4.MapUtils;
-import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.hateoas.server.RepresentationModelProcessor;
@@ -24,7 +25,6 @@ import org.springframework.stereotype.Component;
 import com.linepro.modellbahn.hateoas.impl.FieldsExtractor;
 import com.linepro.modellbahn.hateoas.impl.LinkTemplateImpl;
 import com.linepro.modellbahn.hateoas.impl.ModelProcessorImpl;
-import com.linepro.modellbahn.model.SoftDelete;
 import com.linepro.modellbahn.model.ZugConsistModel;
 
 @Lazy
@@ -36,13 +36,28 @@ public class ZugConsistModelProcessor extends ModelProcessorImpl<ZugConsistModel
         { POSITION, String.valueOf(((ZugConsistModel) m).getPosition()) } 
         });
 
+    LinkTemplateImpl MOVE_UP = new LinkTemplateImpl(UP, MOVE_CONSIST_UP, EXTRACTOR);
+    LinkTemplateImpl MOVE_DOWN = new LinkTemplateImpl(DOWN, MOVE_CONSIST_DOWN, EXTRACTOR);
+
     @Autowired
     public ZugConsistModelProcessor() {
         super(
             new LinkTemplateImpl(PARENT, GET_ZUG, EXTRACTOR),
             new LinkTemplateImpl(ADD, ADD_CONSIST, EXTRACTOR),
-            new LinkTemplateImpl(UPDATE, UPDATE_CONSIST, EXTRACTOR),
-            new LinkTemplateImpl(DELETE, DELETE_CONSIST, EXTRACTOR, (m) -> BooleanUtils.isFalse(((SoftDelete) m).getDeleted()))
+            new LinkTemplateImpl(DELETE, DELETE_CONSIST, EXTRACTOR)
             );
+    }
+
+    @Override
+    public ZugConsistModel process(ZugConsistModel model) {
+        if (model.getPosition() != 1) {
+            MOVE_DOWN.apply(model);
+        }
+
+        if (!model.isLast()) {
+            MOVE_UP.apply(model);
+        }
+
+        return super.process(model);
     }
 }
