@@ -1,8 +1,11 @@
 package com.linepro.modellbahn.converter.request.transcriber;
 
+import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 
 import java.util.Optional;
+
+import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.converter.Transcriber;
 import com.linepro.modellbahn.entity.ProduktTeil;
@@ -12,6 +15,7 @@ import com.linepro.modellbahn.request.ProduktTeilRequest;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
+@Component(PREFIX + "ProduktTeilRequestTranscriber")
 public class ProduktTeilRequestTranscriber implements Transcriber<ProduktTeilRequest, ProduktTeil> {
 
     private final ProduktLookup produktLookup;

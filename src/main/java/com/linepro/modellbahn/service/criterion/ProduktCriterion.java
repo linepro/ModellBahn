@@ -17,7 +17,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.request.ProduktTeilRequest;
-import com.linepro.modellbahn.util.impexp.impl.SuppressExport;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -122,7 +121,6 @@ public class ProduktCriterion extends AbstractCriterion {
     @Schema(description = "Remarks", example = "Ex set")
     private String anmerkung;
 
-    @SuppressExport
     @JsonProperty(ApiNames.TEILEN)
     @Schema(implementation = ProduktTeilRequest.class, description = "Product components", accessMode = AccessMode.READ_ONLY)
     private List<ProduktTeilRequest> teilen;

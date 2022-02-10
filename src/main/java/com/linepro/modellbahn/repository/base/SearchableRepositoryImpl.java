@@ -59,7 +59,7 @@ public class SearchableRepositoryImpl<E> extends SimpleJpaRepository<E, Long> im
 
     protected TypedQuery<E> applyGraph(TypedQuery<E> typedQuery, Criterion criterion) {
         if (StringUtils.hasText(criterion.getGraphName())) {
-            return typedQuery.setHint("javax.persistence.loadgraph", entityManager.createEntityGraph(criterion.getGraphName()));
+            return typedQuery.setHint("javax.persistence.fetchgraph", entityManager.createEntityGraph(criterion.getGraphName()));
         }
 
         return typedQuery;

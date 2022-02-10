@@ -12,7 +12,7 @@ import com.linepro.modellbahn.model.ProduktTeilModel;
 @Component(PREFIX + "ProduktTeilMapper")
 public class ProduktTeilMapper extends MapperImpl<ProduktTeil, ProduktTeilModel> {
 
-    public ProduktTeilMapper() {
-        super(() -> new ProduktTeilModel(), new ProduktTeilTranscriber());
+    public ProduktTeilMapper(ProduktTeilTranscriber transcriber) {
+        super(() -> new ProduktTeilModel(), transcriber);
     }
 }

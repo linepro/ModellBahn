@@ -8,15 +8,13 @@ import org.springframework.stereotype.Component;
 import com.linepro.modellbahn.converter.impl.MapperImpl;
 import com.linepro.modellbahn.converter.request.transcriber.DecoderTypRequestTranscriber;
 import com.linepro.modellbahn.entity.DecoderTyp;
-import com.linepro.modellbahn.repository.lookup.HerstellerLookup;
-import com.linepro.modellbahn.repository.lookup.ProtokollLookup;
 import com.linepro.modellbahn.request.DecoderTypRequest;
 
 @Component(PREFIX + "DecoderTypRequestMapper")
 public class DecoderTypRequestMapper extends MapperImpl<DecoderTypRequest, DecoderTyp> {
 
     @Autowired
-    public DecoderTypRequestMapper(HerstellerLookup herstellerLookup, ProtokollLookup protokollLookup) {
-        super(()-> new DecoderTyp(), new DecoderTypRequestTranscriber(herstellerLookup, protokollLookup));
+    public DecoderTypRequestMapper(DecoderTypRequestTranscriber transcriber) {
+        super(()-> new DecoderTyp(), transcriber);
     }
 }

@@ -1,11 +1,14 @@
 package com.linepro.modellbahn.converter.entity.transcriber;
 
+import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 import static com.linepro.modellbahn.util.exceptions.Result.attempt;
 import static com.linepro.modellbahn.util.exceptions.ResultCollector.success;
 
 import java.util.ArrayList;
 import java.util.Optional;
+
+import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.converter.Transcriber;
 import com.linepro.modellbahn.converter.entity.DecoderCvMapper;
@@ -20,6 +23,7 @@ import com.linepro.modellbahn.model.DecoderTypModel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
+@Component(PREFIX + "DecoderTranscriber")
 public class DecoderTranscriber implements Transcriber<Decoder, DecoderModel> {
 
     private static final ArrayList<DecoderCvModel> KEIN_CV = new ArrayList<>();

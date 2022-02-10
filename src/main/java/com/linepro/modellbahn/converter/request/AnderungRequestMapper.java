@@ -8,14 +8,13 @@ import org.springframework.stereotype.Component;
 import com.linepro.modellbahn.converter.impl.MapperImpl;
 import com.linepro.modellbahn.converter.request.transcriber.AnderungRequestTranscriber;
 import com.linepro.modellbahn.entity.Anderung;
-import com.linepro.modellbahn.repository.lookup.ArtikelLookup;
 import com.linepro.modellbahn.request.AnderungRequest;
 
 @Component(PREFIX + "AnderungRequestMapper")
 public class AnderungRequestMapper extends MapperImpl<AnderungRequest, Anderung> {
 
     @Autowired
-    public AnderungRequestMapper(ArtikelLookup artikelLookup) {
-        super(() -> new Anderung(), new AnderungRequestTranscriber(artikelLookup));
+    public AnderungRequestMapper(AnderungRequestTranscriber transcriber) {
+        super(() -> new Anderung(), transcriber);
     }
 }

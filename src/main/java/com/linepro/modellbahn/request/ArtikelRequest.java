@@ -41,11 +41,9 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(SnakeCaseStrategy.class)
-@JsonPropertyOrder({ApiNames.ARTIKEL_ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.KATEGORIE, ApiNames.KAUFDATUM, 
-    ApiNames.UNTER_KATEGORIE, ApiNames.LANGE, ApiNames.MASSSTAB, ApiNames.SPURWEITE, ApiNames.EPOCH, ApiNames.BAHNVERWALTUNG, ApiNames.GATTUNG,
-    ApiNames.BETREIBSNUMMER, ApiNames.ACHSFOLG, ApiNames.SONDERMODELL, ApiNames.AUFBAU, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.STEUERUNG,
-    ApiNames.MOTOR_TYP, ApiNames.KAUFDATUM, ApiNames.WAHRUNG, ApiNames.PREIS, ApiNames.MENGE, ApiNames.VERBLEIBENDE, ApiNames.ANMERKUNG,
-    ApiNames.BELADUNG, ApiNames.STATUS, ApiNames.DELETED })
+@JsonPropertyOrder({ApiNames.ARTIKEL_ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.KAUFDATUM,
+    ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.STEUERUNG, ApiNames.MOTOR_TYP, ApiNames.KAUFDATUM, ApiNames.WAHRUNG,
+    ApiNames.PREIS, ApiNames.MENGE, ApiNames.VERBLEIBENDE, ApiNames.ANMERKUNG, ApiNames.BELADUNG, ApiNames.STATUS, ApiNames.DELETED })
 @Schema(name = ApiNames.ARTIKEL, description = "An article - may differ from product because of modificiations")
 public class ArtikelRequest implements ItemRequest {
 
@@ -69,54 +67,6 @@ public class ArtikelRequest implements ItemRequest {
     @JsonProperty(ApiNames.BEZEICHNUNG)
     @Schema(description = "Description", example = "Dampftenderlok BR 89.0")
     private String bezeichnung;
-
-    @JsonProperty(ApiNames.KATEGORIE)
-    @Schema(description = "Category", accessMode = AccessMode.READ_ONLY)
-    private String kategorie;
-
-    @JsonProperty(ApiNames.UNTER_KATEGORIE)
-    @Schema(description = "Subcategory", accessMode = AccessMode.READ_ONLY)
-    private String unterKategorie;
-
-    @JsonProperty(ApiNames.LANGE)
-    @Schema(description = "Length over puffers in cm.", example = "11.00", accessMode = AccessMode.READ_ONLY)
-    private BigDecimal lange;
-
-    @JsonProperty(ApiNames.MASSSTAB)
-    @Schema(description = "Scale", example = "H0", accessMode = AccessMode.READ_ONLY)
-    private String massstab;
-
-    @JsonProperty(ApiNames.SPURWEITE)
-    @Schema(description = "Track gauge", example = "H0", accessMode = AccessMode.READ_ONLY)
-    private String spurweite;
-
-    @JsonProperty(ApiNames.EPOCH)
-    @Schema(description = "ERA", example = "IV", accessMode = AccessMode.READ_ONLY)
-    private String epoch;
-
-    @JsonProperty(ApiNames.BAHNVERWALTUNG)
-    @Schema(description = "Railway company", example = "DB", accessMode = AccessMode.READ_ONLY)
-    private String bahnverwaltung;
-
-    @JsonProperty(ApiNames.GATTUNG)
-    @Schema(description = "Vehicle class", example = "BR89.0", accessMode = AccessMode.READ_ONLY)
-    private String gattung;
-
-    @JsonProperty(ApiNames.BETREIBSNUMMER)
-    @Schema(description = "Service number", example = "89 006")
-    private String betreibsnummer;
-
-    @JsonProperty(ApiNames.ACHSFOLG)
-    @Schema(description = "Axle configuration", example = "CH2T", accessMode = AccessMode.READ_ONLY)
-    private String achsfolg;
-
-    @JsonProperty(ApiNames.SONDERMODELL)
-    @Schema(description = "Special model indicator", example = "MHI", accessMode = AccessMode.READ_ONLY)
-    private String sondermodell;
-
-    @JsonProperty(ApiNames.AUFBAU)
-    @Schema(description = "Construction", accessMode = AccessMode.READ_ONLY)
-    private String aufbau;
 
     @JsonProperty(ApiNames.LICHT)
     @Schema(description = "Light Configuration", example = "L1V")

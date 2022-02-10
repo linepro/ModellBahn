@@ -9,7 +9,7 @@ import com.linepro.modellbahn.configuration.Configuration;
 import com.linepro.modellbahn.configuration.OpenApiConfiguration;
 import com.linepro.modellbahn.controller.Controllers;
 import com.linepro.modellbahn.converter.EntityConverters;
-import com.linepro.modellbahn.converter.ModelConverters;
+import com.linepro.modellbahn.converter.RequestConverters;
 import com.linepro.modellbahn.hateoas.Hateoas;
 import com.linepro.modellbahn.i18n.Internationalization;
 import com.linepro.modellbahn.io.FileIo;
@@ -42,7 +42,7 @@ import com.linepro.modellbahn.validation.ValidationConfiguration;
     // Converters
     Lookups.class,
     EntityConverters.class,
-    ModelConverters.class,
+    RequestConverters.class,
 
     // Utils
     FileIo.class,

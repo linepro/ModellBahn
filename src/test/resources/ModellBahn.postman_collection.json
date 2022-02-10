@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "771b0654-1f71-47a8-86ab-39a4f81f9098",
+		"_postman_id": "f1472063-6ec0-4d3a-bc48-9bfac01b084f",
 		"name": "ModellBahn",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -9,7 +9,7 @@
 			"name": "Start Up",
 			"item": [
 				{
-					"name": "Probe",
+					"name": "Start Up - Probe",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -117,7 +117,7 @@
 			"name": "Management (Open)",
 			"item": [
 				{
-					"name": "Actuator",
+					"name": "Open - Actuator",
 					"event": [
 						{
 							"listen": "test",
@@ -152,7 +152,7 @@
 					"response": []
 				},
 				{
-					"name": "Audit Events",
+					"name": "Open - Audit Events",
 					"event": [
 						{
 							"listen": "test",
@@ -187,7 +187,7 @@
 					"response": []
 				},
 				{
-					"name": "Beans",
+					"name": "Open - Beans",
 					"event": [
 						{
 							"listen": "test",
@@ -222,7 +222,7 @@
 					"response": []
 				},
 				{
-					"name": "Caches",
+					"name": "Open - Caches",
 					"event": [
 						{
 							"listen": "test",
@@ -257,7 +257,7 @@
 					"response": []
 				},
 				{
-					"name": "Config Props",
+					"name": "Open - Config Props",
 					"event": [
 						{
 							"listen": "test",
@@ -292,7 +292,7 @@
 					"response": []
 				},
 				{
-					"name": "Env",
+					"name": "Open - Env",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -336,7 +336,7 @@
 					"response": []
 				},
 				{
-					"name": "Flyway",
+					"name": "Open - Flyway",
 					"event": [
 						{
 							"listen": "test",
@@ -371,7 +371,7 @@
 					"response": []
 				},
 				{
-					"name": "Health",
+					"name": "Open - Health",
 					"event": [
 						{
 							"listen": "test",
@@ -406,7 +406,7 @@
 					"response": []
 				},
 				{
-					"name": "HTTP Trace",
+					"name": "Open - HTTP Trace",
 					"event": [
 						{
 							"listen": "test",
@@ -441,7 +441,7 @@
 					"response": []
 				},
 				{
-					"name": "Info",
+					"name": "Open - Info",
 					"event": [
 						{
 							"listen": "test",
@@ -476,7 +476,7 @@
 					"response": []
 				},
 				{
-					"name": "Log File",
+					"name": "Open - Log File",
 					"event": [
 						{
 							"listen": "test",
@@ -511,7 +511,7 @@
 					"response": []
 				},
 				{
-					"name": "Loggers",
+					"name": "Open - Loggers",
 					"event": [
 						{
 							"listen": "test",
@@ -546,7 +546,7 @@
 					"response": []
 				},
 				{
-					"name": "Mappings",
+					"name": "Open - Mappings",
 					"event": [
 						{
 							"listen": "test",
@@ -581,7 +581,7 @@
 					"response": []
 				},
 				{
-					"name": "Metrics",
+					"name": "Open - Metrics",
 					"event": [
 						{
 							"listen": "test",
@@ -616,7 +616,7 @@
 					"response": []
 				},
 				{
-					"name": "Scheduled Tasks",
+					"name": "Open - Scheduled Tasks",
 					"event": [
 						{
 							"listen": "test",
@@ -651,7 +651,7 @@
 					"response": []
 				},
 				{
-					"name": "Thread Dump",
+					"name": "Open - Thread Dump",
 					"event": [
 						{
 							"listen": "test",
@@ -715,7 +715,7 @@
 			"name": "Management (Auth)",
 			"item": [
 				{
-					"name": "Actuator",
+					"name": "Management - Actuator",
 					"event": [
 						{
 							"listen": "test",
@@ -750,7 +750,7 @@
 					"response": []
 				},
 				{
-					"name": "Audit Events",
+					"name": "Management - Audit Events",
 					"event": [
 						{
 							"listen": "test",
@@ -785,7 +785,7 @@
 					"response": []
 				},
 				{
-					"name": "Beans",
+					"name": "Management - Beans",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -829,7 +829,7 @@
 					"response": []
 				},
 				{
-					"name": "Caches",
+					"name": "Management - Caches",
 					"event": [
 						{
 							"listen": "test",
@@ -864,7 +864,7 @@
 					"response": []
 				},
 				{
-					"name": "Config Props",
+					"name": "Management - Config Props",
 					"event": [
 						{
 							"listen": "test",
@@ -899,7 +899,7 @@
 					"response": []
 				},
 				{
-					"name": "Env",
+					"name": "Management - Env",
 					"event": [
 						{
 							"listen": "test",
@@ -934,7 +934,7 @@
 					"response": []
 				},
 				{
-					"name": "Flyway",
+					"name": "Management - Flyway",
 					"event": [
 						{
 							"listen": "test",
@@ -969,7 +969,7 @@
 					"response": []
 				},
 				{
-					"name": "Health",
+					"name": "Management - Health",
 					"event": [
 						{
 							"listen": "test",
@@ -1004,7 +1004,7 @@
 					"response": []
 				},
 				{
-					"name": "HTTP Trace",
+					"name": "Management - HTTP Trace",
 					"event": [
 						{
 							"listen": "test",
@@ -1039,7 +1039,7 @@
 					"response": []
 				},
 				{
-					"name": "Info",
+					"name": "Management - Info",
 					"event": [
 						{
 							"listen": "test",
@@ -1074,7 +1074,7 @@
 					"response": []
 				},
 				{
-					"name": "Log File",
+					"name": "Management - Log File",
 					"event": [
 						{
 							"listen": "test",
@@ -1118,7 +1118,7 @@
 					"response": []
 				},
 				{
-					"name": "Loggers",
+					"name": "Management - Loggers",
 					"event": [
 						{
 							"listen": "test",
@@ -1153,7 +1153,7 @@
 					"response": []
 				},
 				{
-					"name": "Mappings",
+					"name": "Management - Mappings",
 					"event": [
 						{
 							"listen": "test",
@@ -1188,7 +1188,7 @@
 					"response": []
 				},
 				{
-					"name": "Metrics",
+					"name": "Management - Metrics",
 					"event": [
 						{
 							"listen": "test",
@@ -1223,7 +1223,7 @@
 					"response": []
 				},
 				{
-					"name": "Scheduled Tasks",
+					"name": "Management - Scheduled Tasks",
 					"event": [
 						{
 							"listen": "test",
@@ -1258,7 +1258,7 @@
 					"response": []
 				},
 				{
-					"name": "Thread Dump",
+					"name": "Management - Thread Dump",
 					"event": [
 						{
 							"listen": "test",
@@ -1334,7 +1334,7 @@
 			"name": "Enums",
 			"item": [
 				{
-					"name": "Adress Typ",
+					"name": "Enums - Adress Typ",
 					"event": [
 						{
 							"listen": "test",
@@ -1377,7 +1377,7 @@
 					"response": []
 				},
 				{
-					"name": "Anderungs Typ",
+					"name": "Enums - Anderungs Typ",
 					"event": [
 						{
 							"listen": "test",
@@ -1420,7 +1420,7 @@
 					"response": []
 				},
 				{
-					"name": "Decoder Status",
+					"name": "Enums - Decoder Status",
 					"event": [
 						{
 							"listen": "test",
@@ -1463,7 +1463,7 @@
 					"response": []
 				},
 				{
-					"name": "Konfiguration",
+					"name": "Enums - Konfiguration",
 					"event": [
 						{
 							"listen": "test",
@@ -1506,7 +1506,7 @@
 					"response": []
 				},
 				{
-					"name": "Land",
+					"name": "Enums - Land",
 					"event": [
 						{
 							"listen": "test",
@@ -1549,7 +1549,7 @@
 					"response": []
 				},
 				{
-					"name": "Leistungsubertragung",
+					"name": "Enums - Leistungsubertragung",
 					"event": [
 						{
 							"listen": "test",
@@ -1592,7 +1592,7 @@
 					"response": []
 				},
 				{
-					"name": "Status",
+					"name": "Enums - Status",
 					"event": [
 						{
 							"listen": "test",
@@ -1635,7 +1635,7 @@
 					"response": []
 				},
 				{
-					"name": "Stecker",
+					"name": "Enums - Stecker",
 					"event": [
 						{
 							"listen": "test",
@@ -1678,7 +1678,7 @@
 					"response": []
 				},
 				{
-					"name": "Wahrung",
+					"name": "Enums - Wahrung",
 					"event": [
 						{
 							"listen": "test",
@@ -1749,7 +1749,7 @@
 			"name": "Achsfolg",
 			"item": [
 				{
-					"name": "Search",
+					"name": "Achsfolg - Search",
 					"event": [
 						{
 							"listen": "test",
@@ -1802,7 +1802,7 @@
 					"response": []
 				},
 				{
-					"name": "Add",
+					"name": "Achsfolg - Add",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -1872,7 +1872,7 @@
 					"response": []
 				},
 				{
-					"name": "Update",
+					"name": "Achsfolg - Update",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -1937,7 +1937,7 @@
 					"response": []
 				},
 				{
-					"name": "Get",
+					"name": "Achsfolg - Get",
 					"event": [
 						{
 							"listen": "test",
@@ -1984,7 +1984,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete",
+					"name": "Achsfolg - Delete",
 					"event": [
 						{
 							"listen": "test",
@@ -2045,7 +2045,7 @@
 			"name": "Antrieb",
 			"item": [
 				{
-					"name": "Search",
+					"name": "Antrieb - Search",
 					"event": [
 						{
 							"listen": "test",
@@ -2100,7 +2100,7 @@
 					"response": []
 				},
 				{
-					"name": "Add",
+					"name": "Antrieb - Add",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -2172,7 +2172,7 @@
 					"response": []
 				},
 				{
-					"name": "Add Abbildung",
+					"name": "Antrieb - Add Abbildung",
 					"event": [
 						{
 							"listen": "test",
@@ -2233,7 +2233,7 @@
 					"response": []
 				},
 				{
-					"name": "Update",
+					"name": "Antrieb - Update",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -2306,7 +2306,7 @@
 					"response": []
 				},
 				{
-					"name": "Get",
+					"name": "Antrieb - Get",
 					"event": [
 						{
 							"listen": "test",
@@ -2356,7 +2356,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Abbildung",
+					"name": "Antrieb - Delete Abbildung",
 					"event": [
 						{
 							"listen": "test",
@@ -2406,7 +2406,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete",
+					"name": "Antrieb - Delete",
 					"event": [
 						{
 							"listen": "test",
@@ -2467,7 +2467,7 @@
 			"name": "Aufbau",
 			"item": [
 				{
-					"name": "Search",
+					"name": "Aufbau - Search",
 					"event": [
 						{
 							"listen": "test",
@@ -2522,7 +2522,7 @@
 					"response": []
 				},
 				{
-					"name": "Add",
+					"name": "Aufbau - Add",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -2593,7 +2593,7 @@
 					"response": []
 				},
 				{
-					"name": "Add Abbildung",
+					"name": "Aufbau - Add Abbildung",
 					"event": [
 						{
 							"listen": "test",
@@ -2654,7 +2654,7 @@
 					"response": []
 				},
 				{
-					"name": "Update",
+					"name": "Aufbau - Update",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -2727,7 +2727,7 @@
 					"response": []
 				},
 				{
-					"name": "Get",
+					"name": "Aufbau - Get",
 					"event": [
 						{
 							"listen": "test",
@@ -2777,7 +2777,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Abbildung",
+					"name": "Aufbau - Delete Abbildung",
 					"event": [
 						{
 							"listen": "test",
@@ -2827,7 +2827,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete",
+					"name": "Aufbau - Delete",
 					"event": [
 						{
 							"listen": "test",
@@ -2888,7 +2888,7 @@
 			"name": "Bahnverwaltung",
 			"item": [
 				{
-					"name": "Search",
+					"name": "Bahnverwaltung - Search",
 					"event": [
 						{
 							"listen": "test",
@@ -2943,7 +2943,7 @@
 					"response": []
 				},
 				{
-					"name": "Add",
+					"name": "Bahnverwaltung - Add",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -3017,7 +3017,7 @@
 					"response": []
 				},
 				{
-					"name": "Add Abbildung",
+					"name": "Bahnverwaltung - Add Abbildung",
 					"event": [
 						{
 							"listen": "test",
@@ -3079,7 +3079,7 @@
 					"response": []
 				},
 				{
-					"name": "Update",
+					"name": "Bahnverwaltung - Update",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -3154,7 +3154,7 @@
 					"response": []
 				},
 				{
-					"name": "Get",
+					"name": "Bahnverwaltung - Get",
 					"event": [
 						{
 							"listen": "test",
@@ -3205,7 +3205,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Abbildung",
+					"name": "Bahnverwaltung - Delete Abbildung",
 					"event": [
 						{
 							"listen": "test",
@@ -3256,7 +3256,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete",
+					"name": "Bahnverwaltung - Delete",
 					"event": [
 						{
 							"listen": "test",
@@ -3317,7 +3317,7 @@
 			"name": "Epoch",
 			"item": [
 				{
-					"name": "Search",
+					"name": "Epoch - Search",
 					"event": [
 						{
 							"listen": "test",
@@ -3371,7 +3371,7 @@
 					"response": []
 				},
 				{
-					"name": "Add",
+					"name": "Epoch - Add",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -3448,7 +3448,7 @@
 					"response": []
 				},
 				{
-					"name": "Add Abbildung",
+					"name": "Epoch - Add Abbildung",
 					"event": [
 						{
 							"listen": "test",
@@ -3511,7 +3511,7 @@
 					"response": []
 				},
 				{
-					"name": "Update",
+					"name": "Epoch - Update",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -3588,7 +3588,7 @@
 					"response": []
 				},
 				{
-					"name": "Get",
+					"name": "Epoch - Get",
 					"event": [
 						{
 							"listen": "test",
@@ -3640,7 +3640,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Abbildung",
+					"name": "Epoch - Delete Abbildung",
 					"event": [
 						{
 							"listen": "test",
@@ -3692,7 +3692,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete",
+					"name": "Epoch - Delete",
 					"event": [
 						{
 							"listen": "test",
@@ -3753,7 +3753,7 @@
 			"name": "Gattung",
 			"item": [
 				{
-					"name": "Search",
+					"name": "Gattung - Search",
 					"event": [
 						{
 							"listen": "test",
@@ -3807,7 +3807,7 @@
 					"response": []
 				},
 				{
-					"name": "Add",
+					"name": "Gattung - Add",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -3877,7 +3877,7 @@
 					"response": []
 				},
 				{
-					"name": "Update",
+					"name": "Gattung - Update",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -3947,7 +3947,7 @@
 					"response": []
 				},
 				{
-					"name": "Get",
+					"name": "Gattung - Get",
 					"event": [
 						{
 							"listen": "test",
@@ -3994,7 +3994,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete",
+					"name": "Gattung - Delete",
 					"event": [
 						{
 							"listen": "test",
@@ -4034,7 +4034,7 @@
 			"name": "Hersteller",
 			"item": [
 				{
-					"name": "Search",
+					"name": "Hersteller - Search",
 					"event": [
 						{
 							"listen": "test",
@@ -4089,7 +4089,7 @@
 					"response": []
 				},
 				{
-					"name": "Add",
+					"name": "Hersteller - Add",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -4167,7 +4167,7 @@
 					"response": []
 				},
 				{
-					"name": "Add Abbildung",
+					"name": "Hersteller - Add Abbildung",
 					"event": [
 						{
 							"listen": "test",
@@ -4231,7 +4231,7 @@
 					"response": []
 				},
 				{
-					"name": "Update",
+					"name": "Hersteller - Update",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -4309,7 +4309,7 @@
 					"response": []
 				},
 				{
-					"name": "Get",
+					"name": "Hersteller - Get",
 					"event": [
 						{
 							"listen": "test",
@@ -4361,7 +4361,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Abbildung",
+					"name": "Hersteller - Delete Abbildung",
 					"event": [
 						{
 							"listen": "test",
@@ -4414,7 +4414,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete",
+					"name": "Hersteller - Delete",
 					"event": [
 						{
 							"listen": "test",
@@ -4454,7 +4454,7 @@
 			"name": "Kupplung",
 			"item": [
 				{
-					"name": "Search",
+					"name": "Kupplung - Search",
 					"event": [
 						{
 							"listen": "test",
@@ -4509,7 +4509,7 @@
 					"response": []
 				},
 				{
-					"name": "Add",
+					"name": "Kupplung - Add",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -4580,7 +4580,7 @@
 					"response": []
 				},
 				{
-					"name": "Add Abbildung",
+					"name": "Kupplung - Add Abbildung",
 					"event": [
 						{
 							"listen": "test",
@@ -4641,7 +4641,7 @@
 					"response": []
 				},
 				{
-					"name": "Update",
+					"name": "Kupplung - Update",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -4714,7 +4714,7 @@
 					"response": []
 				},
 				{
-					"name": "Get",
+					"name": "Kupplung - Get",
 					"event": [
 						{
 							"listen": "test",
@@ -4764,7 +4764,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Abbildung",
+					"name": "Kupplung - Delete Abbildung",
 					"event": [
 						{
 							"listen": "test",
@@ -4814,7 +4814,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete",
+					"name": "Kupplung - Delete",
 					"event": [
 						{
 							"listen": "test",
@@ -4875,7 +4875,7 @@
 			"name": "Licht",
 			"item": [
 				{
-					"name": "Search",
+					"name": "Licht - Search",
 					"event": [
 						{
 							"listen": "test",
@@ -4930,7 +4930,7 @@
 					"response": []
 				},
 				{
-					"name": "Add",
+					"name": "Licht - Add",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -5001,7 +5001,7 @@
 					"response": []
 				},
 				{
-					"name": "Add Abbildung",
+					"name": "Licht - Add Abbildung",
 					"event": [
 						{
 							"listen": "test",
@@ -5062,7 +5062,7 @@
 					"response": []
 				},
 				{
-					"name": "Update",
+					"name": "Licht - Update",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -5135,7 +5135,7 @@
 					"response": []
 				},
 				{
-					"name": "Get",
+					"name": "Licht - Get",
 					"event": [
 						{
 							"listen": "test",
@@ -5185,7 +5185,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Abbildung",
+					"name": "Licht - Delete Abbildung",
 					"event": [
 						{
 							"listen": "test",
@@ -5235,7 +5235,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete",
+					"name": "Licht - Delete",
 					"event": [
 						{
 							"listen": "test",
@@ -5296,7 +5296,7 @@
 			"name": "Massstab",
 			"item": [
 				{
-					"name": "Search",
+					"name": "Massstab - Search",
 					"event": [
 						{
 							"listen": "test",
@@ -5350,7 +5350,7 @@
 					"response": []
 				},
 				{
-					"name": "Add",
+					"name": "Massstab - Add",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -5420,7 +5420,7 @@
 					"response": []
 				},
 				{
-					"name": "Update",
+					"name": "Massstab - Update",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -5490,7 +5490,7 @@
 					"response": []
 				},
 				{
-					"name": "Get",
+					"name": "Massstab - Get",
 					"event": [
 						{
 							"listen": "test",
@@ -5537,7 +5537,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete",
+					"name": "Massstab - Delete",
 					"event": [
 						{
 							"listen": "test",
@@ -5598,7 +5598,7 @@
 			"name": "Motor Typ",
 			"item": [
 				{
-					"name": "Search",
+					"name": "Motor Typ - Search",
 					"event": [
 						{
 							"listen": "test",
@@ -5653,7 +5653,7 @@
 					"response": []
 				},
 				{
-					"name": "Add",
+					"name": "Motor Typ - Add",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -5725,7 +5725,7 @@
 					"response": []
 				},
 				{
-					"name": "Add Abbildung",
+					"name": "Motor Typ - Add Abbildung",
 					"event": [
 						{
 							"listen": "test",
@@ -5786,7 +5786,7 @@
 					"response": []
 				},
 				{
-					"name": "Update",
+					"name": "Motor Typ - Update",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -5859,7 +5859,7 @@
 					"response": []
 				},
 				{
-					"name": "Get",
+					"name": "Motor Typ - Get",
 					"event": [
 						{
 							"listen": "test",
@@ -5909,7 +5909,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Abbildung",
+					"name": "Motor Typ - Delete Abbildung",
 					"event": [
 						{
 							"listen": "test",
@@ -5959,7 +5959,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete",
+					"name": "Motor Typ - Delete",
 					"event": [
 						{
 							"listen": "test",
@@ -6020,7 +6020,7 @@
 			"name": "Protokoll",
 			"item": [
 				{
-					"name": "Search",
+					"name": "Protokoll - Search",
 					"event": [
 						{
 							"listen": "test",
@@ -6075,7 +6075,7 @@
 					"response": []
 				},
 				{
-					"name": "Add",
+					"name": "Protokoll - Add",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -6147,7 +6147,7 @@
 					"response": []
 				},
 				{
-					"name": "Add Abbildung",
+					"name": "Protokoll - Add Abbildung",
 					"event": [
 						{
 							"listen": "test",
@@ -6208,7 +6208,7 @@
 					"response": []
 				},
 				{
-					"name": "Update",
+					"name": "Protokoll - Update",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -6281,7 +6281,7 @@
 					"response": []
 				},
 				{
-					"name": "Get",
+					"name": "Protokoll - Get",
 					"event": [
 						{
 							"listen": "test",
@@ -6331,7 +6331,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Abbildung",
+					"name": "Protokoll - Delete Abbildung",
 					"event": [
 						{
 							"listen": "test",
@@ -6381,7 +6381,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete",
+					"name": "Protokoll - Delete",
 					"event": [
 						{
 							"listen": "test",
@@ -6442,7 +6442,7 @@
 			"name": "Sondermodell",
 			"item": [
 				{
-					"name": "Search",
+					"name": "Sondermodell - Search",
 					"event": [
 						{
 							"listen": "test",
@@ -6497,7 +6497,7 @@
 					"response": []
 				},
 				{
-					"name": "Add",
+					"name": "Sondermodell - Add",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -6569,7 +6569,7 @@
 					"response": []
 				},
 				{
-					"name": "Add Abbildung",
+					"name": "Sondermodell - Add Abbildung",
 					"event": [
 						{
 							"listen": "test",
@@ -6630,7 +6630,7 @@
 					"response": []
 				},
 				{
-					"name": "Update",
+					"name": "Sondermodell - Update",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -6703,7 +6703,7 @@
 					"response": []
 				},
 				{
-					"name": "Get",
+					"name": "Sondermodell - Get",
 					"event": [
 						{
 							"listen": "test",
@@ -6753,7 +6753,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Abbildung",
+					"name": "Sondermodell - Delete Abbildung",
 					"event": [
 						{
 							"listen": "test",
@@ -6803,7 +6803,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete",
+					"name": "Sondermodell - Delete",
 					"event": [
 						{
 							"listen": "test",
@@ -6864,7 +6864,7 @@
 			"name": "Spurweite",
 			"item": [
 				{
-					"name": "Search",
+					"name": "Spurweite - Search",
 					"event": [
 						{
 							"listen": "test",
@@ -6918,7 +6918,7 @@
 					"response": []
 				},
 				{
-					"name": "Add",
+					"name": "Spurweite - Add",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -6988,7 +6988,7 @@
 					"response": []
 				},
 				{
-					"name": "Update",
+					"name": "Spurweite - Update",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -7058,7 +7058,7 @@
 					"response": []
 				},
 				{
-					"name": "Get",
+					"name": "Spurweite - Get",
 					"event": [
 						{
 							"listen": "test",
@@ -7105,7 +7105,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete",
+					"name": "Spurweite - Delete",
 					"event": [
 						{
 							"listen": "test",
@@ -7166,7 +7166,7 @@
 			"name": "Steuerung",
 			"item": [
 				{
-					"name": "Search",
+					"name": "Steuerung - Search",
 					"event": [
 						{
 							"listen": "test",
@@ -7221,7 +7221,7 @@
 					"response": []
 				},
 				{
-					"name": "Add",
+					"name": "Steuerung - Add",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -7293,7 +7293,7 @@
 					"response": []
 				},
 				{
-					"name": "Add Abbildung",
+					"name": "Steuerung - Add Abbildung",
 					"event": [
 						{
 							"listen": "test",
@@ -7354,7 +7354,7 @@
 					"response": []
 				},
 				{
-					"name": "Update",
+					"name": "Steuerung - Update",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -7427,7 +7427,7 @@
 					"response": []
 				},
 				{
-					"name": "Get",
+					"name": "Steuerung - Get",
 					"event": [
 						{
 							"listen": "test",
@@ -7477,7 +7477,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Abbildung",
+					"name": "Steuerung - Delete Abbildung",
 					"event": [
 						{
 							"listen": "test",
@@ -7527,7 +7527,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete",
+					"name": "Steuerung - Delete",
 					"event": [
 						{
 							"listen": "test",
@@ -7588,7 +7588,7 @@
 			"name": "Zug Typ",
 			"item": [
 				{
-					"name": "Search",
+					"name": "ZugTyp - Search",
 					"event": [
 						{
 							"listen": "test",
@@ -7647,7 +7647,7 @@
 					"response": []
 				},
 				{
-					"name": "Add",
+					"name": "ZugTyp - Add",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -7717,7 +7717,7 @@
 					"response": []
 				},
 				{
-					"name": "Update",
+					"name": "ZugTyp - Update",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -7787,7 +7787,7 @@
 					"response": []
 				},
 				{
-					"name": "Get",
+					"name": "ZugTyp - Get",
 					"event": [
 						{
 							"listen": "test",
@@ -7839,7 +7839,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete",
+					"name": "ZugTyp - Delete",
 					"event": [
 						{
 							"listen": "test",
@@ -7900,7 +7900,7 @@
 			"name": "Kategorie",
 			"item": [
 				{
-					"name": "Search",
+					"name": "Kategorie - Search",
 					"event": [
 						{
 							"listen": "test",
@@ -7956,7 +7956,7 @@
 					"response": []
 				},
 				{
-					"name": "Search Unter Kategorie",
+					"name": "Kategorie - Search Unter Kategorie",
 					"event": [
 						{
 							"listen": "test",
@@ -8026,7 +8026,7 @@
 					"response": []
 				},
 				{
-					"name": "Add",
+					"name": "Kategorie - Add",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -8107,7 +8107,7 @@
 					"response": []
 				},
 				{
-					"name": "Add Unter Kategorie",
+					"name": "Kategorie - Add Unter Kategorie",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -8178,7 +8178,7 @@
 					"response": []
 				},
 				{
-					"name": "Update Unter Kategorie",
+					"name": "Kategorie - Update Unter Kategorie",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -8249,7 +8249,7 @@
 					"response": []
 				},
 				{
-					"name": "Update",
+					"name": "Kategorie - Update",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -8329,7 +8329,7 @@
 					"response": []
 				},
 				{
-					"name": "Get",
+					"name": "Kategorie - Get",
 					"event": [
 						{
 							"listen": "test",
@@ -8386,7 +8386,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Unter Kategorie",
+					"name": "Kategorie - Delete Unter Kategorie",
 					"event": [
 						{
 							"listen": "test",
@@ -8423,7 +8423,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete",
+					"name": "Kategorie - Delete",
 					"event": [
 						{
 							"listen": "test",
@@ -8484,7 +8484,7 @@
 			"name": "Vorbild",
 			"item": [
 				{
-					"name": "Search",
+					"name": "Vorbild - Search",
 					"event": [
 						{
 							"listen": "test",
@@ -8541,7 +8541,7 @@
 					"response": []
 				},
 				{
-					"name": "Add",
+					"name": "Vorbild - Add",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -8691,7 +8691,7 @@
 					"response": []
 				},
 				{
-					"name": "Add Abbildung",
+					"name": "Vorbild - Add Abbildung",
 					"event": [
 						{
 							"listen": "test",
@@ -8789,7 +8789,7 @@
 					"response": []
 				},
 				{
-					"name": "Update",
+					"name": "Vorbild - Update",
 					"event": [
 						{
 							"listen": "test",
@@ -8940,7 +8940,7 @@
 					"response": []
 				},
 				{
-					"name": "Get",
+					"name": "Vorbild - Get",
 					"event": [
 						{
 							"listen": "test",
@@ -9027,7 +9027,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Abbildung",
+					"name": "Vorbild - Delete Abbildung",
 					"event": [
 						{
 							"listen": "test",
@@ -9114,7 +9114,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete",
+					"name": "Vorbild - Delete",
 					"event": [
 						{
 							"listen": "test",
@@ -9175,7 +9175,7 @@
 			"name": "Decoder Typ",
 			"item": [
 				{
-					"name": "Search",
+					"name": "Decoder Typ - Search",
 					"event": [
 						{
 							"listen": "test",
@@ -9243,7 +9243,7 @@
 					"response": []
 				},
 				{
-					"name": "Add",
+					"name": "Decoder Typ - Add",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -9345,7 +9345,7 @@
 					"response": []
 				},
 				{
-					"name": "Add Anleitungen",
+					"name": "Decoder Typ - Add Anleitungen",
 					"event": [
 						{
 							"listen": "test",
@@ -9424,7 +9424,7 @@
 					"response": []
 				},
 				{
-					"name": "Add CV",
+					"name": "Decoder Typ - Add CV",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -9504,7 +9504,7 @@
 					"response": []
 				},
 				{
-					"name": "Update CV",
+					"name": "Decoder Typ - Update CV",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -9584,7 +9584,7 @@
 					"response": []
 				},
 				{
-					"name": "Add Funktion",
+					"name": "Decoder Typ - Add Funktion",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -9660,7 +9660,7 @@
 					"response": []
 				},
 				{
-					"name": "Update Funktion",
+					"name": "Decoder Typ - Update Funktion",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -9737,7 +9737,7 @@
 					"response": []
 				},
 				{
-					"name": "Update",
+					"name": "Decoder Typ - Update",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -9866,7 +9866,7 @@
 					"response": []
 				},
 				{
-					"name": "Get",
+					"name": "Decoder Typ - Get",
 					"event": [
 						{
 							"listen": "test",
@@ -9960,7 +9960,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Anleitungen",
+					"name": "Decoder Typ - Delete Anleitungen",
 					"event": [
 						{
 							"listen": "test",
@@ -10055,7 +10055,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete CV",
+					"name": "Decoder Typ - Delete CV",
 					"event": [
 						{
 							"listen": "test",
@@ -10093,7 +10093,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Funktion",
+					"name": "Decoder Typ - Delete Funktion",
 					"event": [
 						{
 							"listen": "test",
@@ -10131,7 +10131,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete",
+					"name": "Decoder Typ - Delete",
 					"event": [
 						{
 							"listen": "test",
@@ -10193,7 +10193,7 @@
 			"name": "Produkt",
 			"item": [
 				{
-					"name": "Search",
+					"name": "Produkt - Search",
 					"event": [
 						{
 							"listen": "test",
@@ -10255,7 +10255,7 @@
 					"response": []
 				},
 				{
-					"name": "Add",
+					"name": "Produkt - Add",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -10377,7 +10377,7 @@
 					"response": []
 				},
 				{
-					"name": "Add Abbildung",
+					"name": "Produkt - Add Abbildung",
 					"event": [
 						{
 							"listen": "test",
@@ -10467,7 +10467,7 @@
 					"response": []
 				},
 				{
-					"name": "Add Grossansicht",
+					"name": "Produkt - Add Grossansicht",
 					"event": [
 						{
 							"listen": "test",
@@ -10564,7 +10564,7 @@
 					"response": []
 				},
 				{
-					"name": "Add Anleitungen",
+					"name": "Produkt - Add Anleitungen",
 					"event": [
 						{
 							"listen": "test",
@@ -10657,7 +10657,7 @@
 					"response": []
 				},
 				{
-					"name": "Add Explosionszeichnung",
+					"name": "Produkt - Add Explosionszeichnung",
 					"event": [
 						{
 							"listen": "test",
@@ -10751,7 +10751,7 @@
 					"response": []
 				},
 				{
-					"name": "Add Teil",
+					"name": "Produkt - Add Teil",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -10833,7 +10833,7 @@
 					"response": []
 				},
 				{
-					"name": "Update Teil",
+					"name": "Produkt - Update Teil",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -10909,7 +10909,7 @@
 					"response": []
 				},
 				{
-					"name": "Update",
+					"name": "Produkt - Update",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -11049,7 +11049,7 @@
 					"response": []
 				},
 				{
-					"name": "Get",
+					"name": "Produkt - Get",
 					"event": [
 						{
 							"listen": "test",
@@ -11146,7 +11146,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Teil",
+					"name": "Produkt - Delete Teil",
 					"event": [
 						{
 							"listen": "test",
@@ -11187,7 +11187,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Abbildung",
+					"name": "Produkt - Delete Abbildung",
 					"event": [
 						{
 							"listen": "test",
@@ -11270,7 +11270,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Grossansicht",
+					"name": "Produkt - Delete Grossansicht",
 					"event": [
 						{
 							"listen": "test",
@@ -11352,7 +11352,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Anleitungen",
+					"name": "Produkt - Delete Anleitungen",
 					"event": [
 						{
 							"listen": "test",
@@ -11433,7 +11433,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Explosionszeichnung",
+					"name": "Produkt - Delete Explosionszeichnung",
 					"event": [
 						{
 							"listen": "test",
@@ -11513,7 +11513,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete",
+					"name": "Produkt - Delete",
 					"event": [
 						{
 							"listen": "test",
@@ -11575,7 +11575,7 @@
 			"name": "Decoder",
 			"item": [
 				{
-					"name": "Search",
+					"name": "Decoder - Search",
 					"event": [
 						{
 							"listen": "test",
@@ -11641,7 +11641,7 @@
 					"response": []
 				},
 				{
-					"name": "Add",
+					"name": "Decoder - Add",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -12067,7 +12067,7 @@
 					"response": []
 				},
 				{
-					"name": "Update CV",
+					"name": "Decoder - Update CV",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -12139,7 +12139,7 @@
 					"response": []
 				},
 				{
-					"name": "Update Funktion",
+					"name": "Decoder - Update Funktion",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -12208,7 +12208,7 @@
 					"response": []
 				},
 				{
-					"name": "Update",
+					"name": "Decoder - Update",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -12619,7 +12619,7 @@
 					"response": []
 				},
 				{
-					"name": "Get",
+					"name": "Decoder - Get",
 					"event": [
 						{
 							"listen": "test",
@@ -12999,7 +12999,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete",
+					"name": "Decoder - Delete",
 					"event": [
 						{
 							"listen": "test",
@@ -13060,7 +13060,7 @@
 			"name": "Artikel",
 			"item": [
 				{
-					"name": "Search",
+					"name": "Artikel - Search",
 					"event": [
 						{
 							"listen": "test",
@@ -13122,7 +13122,7 @@
 					"response": []
 				},
 				{
-					"name": "Add",
+					"name": "Artikel - Add",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -13139,7 +13139,7 @@
 									"pm.environment.set(\"epoch\", \"III\");\r",
 									"pm.environment.set(\"bahnverwaltung\", \"DB\");\r",
 									"pm.environment.set(\"gattung\", \"BR89.0\");\r",
-									"pm.environment.set(\"betreibsnummer\", \"89 028\");\r",
+									"pm.environment.set(\"betreibsnummer\", \"89 006\");\r",
 									"pm.environment.set(\"achsfolg\", \"CH2T\");\r",
 									"pm.environment.set(\"aufbau\", \"LK\");\r",
 									"pm.environment.set(\"licht\", \"L1V\");\r",
@@ -13259,7 +13259,7 @@
 					"response": []
 				},
 				{
-					"name": "Add Decoder",
+					"name": "Artikel - Add Decoder",
 					"event": [
 						{
 							"listen": "test",
@@ -13495,112 +13495,112 @@
 									"pm.test(\"funktionen[0].programmable\", () => pm.expect(jsonData.funktionen[0].programmable).to.eql(false));\r",
 									"pm.test(\"funktionen[0].deleted\", () => pm.expect(jsonData.funktionen[0].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[0]._links.parent\", () => pm.expect(jsonData.funktionen[0]._links.parent[0].href).to.eql(self));\r",
-									"pm.test(\"funktionen[0]._links.update\", () => pm.expect(jsonData.funktionen[0]._links.update[0].href).to.eql(self + \"/funktionen/F0\"));\r",
+									"//pm.test(\"funktionen[0]._links.update\", () => pm.expect(jsonData.funktionen[0]._links.update[0].href).to.eql(self + \"/funktionen/F0\"));\r",
 									"pm.test(\"funktionen[1].decoderId\", () => pm.expect(jsonData.funktionen[1].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[1].funktion\", () => pm.expect(jsonData.funktionen[1].funktion).to.eql(\"F1\"));\r",
 									"pm.test(\"funktionen[1].bezeichnung\", () => pm.expect(jsonData.funktionen[1].bezeichnung).to.eql(\"Funktion 1\"));\r",
 									"pm.test(\"funktionen[1].programmable\", () => pm.expect(jsonData.funktionen[1].programmable).to.eql(false));\r",
 									"pm.test(\"funktionen[1].deleted\", () => pm.expect(jsonData.funktionen[1].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[1]._links.parent\", () => pm.expect(jsonData.funktionen[1]._links.parent[0].href).to.eql(self));\r",
-									"pm.test(\"funktionen[1]._links.update\", () => pm.expect(jsonData.funktionen[1]._links.update[0].href).to.eql(self + \"/funktionen/F1\"));\r",
+									"//pm.test(\"funktionen[1]._links.update\", () => pm.expect(jsonData.funktionen[1]._links.update[0].href).to.eql(self + \"/funktionen/F1\"));\r",
 									"pm.test(\"funktionen[2].decoderId\", () => pm.expect(jsonData.funktionen[2].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[2].funktion\", () => pm.expect(jsonData.funktionen[2].funktion).to.eql(\"F2\"));\r",
 									"pm.test(\"funktionen[2].bezeichnung\", () => pm.expect(jsonData.funktionen[2].bezeichnung).to.eql(\"Funktion 2\"));\r",
 									"pm.test(\"funktionen[2].programmable\", () => pm.expect(jsonData.funktionen[2].programmable).to.eql(false));\r",
 									"pm.test(\"funktionen[2].deleted\", () => pm.expect(jsonData.funktionen[2].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[2]._links.parent\", () => pm.expect(jsonData.funktionen[2]._links.parent[0].href).to.eql(self));\r",
-									"pm.test(\"funktionen[2]._links.update\", () => pm.expect(jsonData.funktionen[2]._links.update[0].href).to.eql(self + \"/funktionen/F2\"));\r",
+									"//pm.test(\"funktionen[2]._links.update\", () => pm.expect(jsonData.funktionen[2]._links.update[0].href).to.eql(self + \"/funktionen/F2\"));\r",
 									"pm.test(\"funktionen[3].decoderId\", () => pm.expect(jsonData.funktionen[3].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[3].funktion\", () => pm.expect(jsonData.funktionen[3].funktion).to.eql(\"F3\"));\r",
 									"pm.test(\"funktionen[3].bezeichnung\", () => pm.expect(jsonData.funktionen[3].bezeichnung).to.eql(\"Funktion 3\"));\r",
 									"pm.test(\"funktionen[3].programmable\", () => pm.expect(jsonData.funktionen[3].programmable).to.eql(false));\r",
 									"pm.test(\"funktionen[3].deleted\", () => pm.expect(jsonData.funktionen[3].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[3]._links.parent\", () => pm.expect(jsonData.funktionen[3]._links.parent[0].href).to.eql(self));\r",
-									"pm.test(\"funktionen[3]._links.update\", () => pm.expect(jsonData.funktionen[3]._links.update[0].href).to.eql(self + \"/funktionen/F3\"));\r",
+									"//pm.test(\"funktionen[3]._links.update\", () => pm.expect(jsonData.funktionen[3]._links.update[0].href).to.eql(self + \"/funktionen/F3\"));\r",
 									"pm.test(\"funktionen[4].decoderId\", () => pm.expect(jsonData.funktionen[4].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[4].funktion\", () => pm.expect(jsonData.funktionen[4].funktion).to.eql(\"F4\"));\r",
 									"pm.test(\"funktionen[4].bezeichnung\", () => pm.expect(jsonData.funktionen[4].bezeichnung).to.eql(\"Funktion 4\"));\r",
 									"pm.test(\"funktionen[4].programmable\", () => pm.expect(jsonData.funktionen[4].programmable).to.eql(false));\r",
 									"pm.test(\"funktionen[4].deleted\", () => pm.expect(jsonData.funktionen[4].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[4]._links.parent\", () => pm.expect(jsonData.funktionen[4]._links.parent[0].href).to.eql(self));\r",
-									"pm.test(\"funktionen[4]._links.update\", () => pm.expect(jsonData.funktionen[4]._links.update[0].href).to.eql(self + \"/funktionen/F4\"));\r",
+									"//pm.test(\"funktionen[4]._links.update\", () => pm.expect(jsonData.funktionen[4]._links.update[0].href).to.eql(self + \"/funktionen/F4\"));\r",
 									"pm.test(\"funktionen[5].decoderId\", () => pm.expect(jsonData.funktionen[5].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[5].funktion\", () => pm.expect(jsonData.funktionen[5].funktion).to.eql(\"F5\"));\r",
 									"pm.test(\"funktionen[5].bezeichnung\", () => pm.expect(jsonData.funktionen[5].bezeichnung).to.eql(\"Funktion 5\"));\r",
 									"pm.test(\"funktionen[5].programmable\", () => pm.expect(jsonData.funktionen[5].programmable).to.eql(false));\r",
 									"pm.test(\"funktionen[5].deleted\", () => pm.expect(jsonData.funktionen[5].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[5]._links.parent\", () => pm.expect(jsonData.funktionen[5]._links.parent[0].href).to.eql(self));\r",
-									"pm.test(\"funktionen[5]._links.update\", () => pm.expect(jsonData.funktionen[5]._links.update[0].href).to.eql(self + \"/funktionen/F5\"));\r",
+									"//pm.test(\"funktionen[5]._links.update\", () => pm.expect(jsonData.funktionen[5]._links.update[0].href).to.eql(self + \"/funktionen/F5\"));\r",
 									"pm.test(\"funktionen[6].decoderId\", () => pm.expect(jsonData.funktionen[6].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[6].funktion\", () => pm.expect(jsonData.funktionen[6].funktion).to.eql(\"F6\"));\r",
 									"pm.test(\"funktionen[6].bezeichnung\", () => pm.expect(jsonData.funktionen[6].bezeichnung).to.eql(\"Funktion 6\"));\r",
 									"pm.test(\"funktionen[6].programmable\", () => pm.expect(jsonData.funktionen[6].programmable).to.eql(false));\r",
 									"pm.test(\"funktionen[6].deleted\", () => pm.expect(jsonData.funktionen[6].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[6]._links.parent\", () => pm.expect(jsonData.funktionen[6]._links.parent[0].href).to.eql(self));\r",
-									"pm.test(\"funktionen[6]._links.update\", () => pm.expect(jsonData.funktionen[6]._links.update[0].href).to.eql(self + \"/funktionen/F6\"));\r",
+									"//pm.test(\"funktionen[6]._links.update\", () => pm.expect(jsonData.funktionen[6]._links.update[0].href).to.eql(self + \"/funktionen/F6\"));\r",
 									"pm.test(\"funktionen[7].decoderId\", () => pm.expect(jsonData.funktionen[7].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[7].funktion\", () => pm.expect(jsonData.funktionen[7].funktion).to.eql(\"F7\"));\r",
 									"pm.test(\"funktionen[7].bezeichnung\", () => pm.expect(jsonData.funktionen[7].bezeichnung).to.eql(\"Funktion 7\"));\r",
 									"pm.test(\"funktionen[7].programmable\", () => pm.expect(jsonData.funktionen[7].programmable).to.eql(false));\r",
 									"pm.test(\"funktionen[7].deleted\", () => pm.expect(jsonData.funktionen[7].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[7]._links.parent\", () => pm.expect(jsonData.funktionen[7]._links.parent[0].href).to.eql(self));\r",
-									"pm.test(\"funktionen[7]._links.update\", () => pm.expect(jsonData.funktionen[7]._links.update[0].href).to.eql(self + \"/funktionen/F7\"));\r",
+									"//pm.test(\"funktionen[7]._links.update\", () => pm.expect(jsonData.funktionen[7]._links.update[0].href).to.eql(self + \"/funktionen/F7\"));\r",
 									"pm.test(\"funktionen[8].decoderId\", () => pm.expect(jsonData.funktionen[8].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[8].funktion\", () => pm.expect(jsonData.funktionen[8].funktion).to.eql(\"F8\"));\r",
 									"pm.test(\"funktionen[8].bezeichnung\", () => pm.expect(jsonData.funktionen[8].bezeichnung).to.eql(\"Funktion 8\"));\r",
 									"pm.test(\"funktionen[8].programmable\", () => pm.expect(jsonData.funktionen[8].programmable).to.eql(false));\r",
 									"pm.test(\"funktionen[8].deleted\", () => pm.expect(jsonData.funktionen[8].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[8]._links.parent\", () => pm.expect(jsonData.funktionen[8]._links.parent[0].href).to.eql(self));\r",
-									"pm.test(\"funktionen[8]._links.update\", () => pm.expect(jsonData.funktionen[8]._links.update[0].href).to.eql(self + \"/funktionen/F8\"));\r",
+									"//pm.test(\"funktionen[8]._links.update\", () => pm.expect(jsonData.funktionen[8]._links.update[0].href).to.eql(self + \"/funktionen/F8\"));\r",
 									"pm.test(\"funktionen[9].decoderId\", () => pm.expect(jsonData.funktionen[9].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[9].funktion\", () => pm.expect(jsonData.funktionen[9].funktion).to.eql(\"F9\"));\r",
 									"pm.test(\"funktionen[9].bezeichnung\", () => pm.expect(jsonData.funktionen[9].bezeichnung).to.eql(\"Funktion 9\"));\r",
 									"pm.test(\"funktionen[9].programmable\", () => pm.expect(jsonData.funktionen[9].programmable).to.eql(false));\r",
 									"pm.test(\"funktionen[9].deleted\", () => pm.expect(jsonData.funktionen[9].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[9]._links.parent\", () => pm.expect(jsonData.funktionen[9]._links.parent[0].href).to.eql(self));\r",
-									"pm.test(\"funktionen[9]._links.update\", () => pm.expect(jsonData.funktionen[9]._links.update[0].href).to.eql(self + \"/funktionen/F9\"));\r",
+									"//pm.test(\"funktionen[9]._links.update\", () => pm.expect(jsonData.funktionen[9]._links.update[0].href).to.eql(self + \"/funktionen/F9\"));\r",
 									"pm.test(\"funktionen[10].decoderId\", () => pm.expect(jsonData.funktionen[10].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[10].funktion\", () => pm.expect(jsonData.funktionen[10].funktion).to.eql(\"F10\"));\r",
 									"pm.test(\"funktionen[10].bezeichnung\", () => pm.expect(jsonData.funktionen[10].bezeichnung).to.eql(\"Funktion 10\"));\r",
 									"pm.test(\"funktionen[10].programmable\", () => pm.expect(jsonData.funktionen[10].programmable).to.eql(false));\r",
 									"pm.test(\"funktionen[10].deleted\", () => pm.expect(jsonData.funktionen[10].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[10]._links.parent\", () => pm.expect(jsonData.funktionen[10]._links.parent[0].href).to.eql(self));\r",
-									"pm.test(\"funktionen[10]._links.update\", () => pm.expect(jsonData.funktionen[10]._links.update[0].href).to.eql(self + \"/funktionen/F10\"));\r",
+									"//pm.test(\"funktionen[10]._links.update\", () => pm.expect(jsonData.funktionen[10]._links.update[0].href).to.eql(self + \"/funktionen/F10\"));\r",
 									"pm.test(\"funktionen[11].decoderId\", () => pm.expect(jsonData.funktionen[11].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[11].funktion\", () => pm.expect(jsonData.funktionen[11].funktion).to.eql(\"F11\"));\r",
 									"pm.test(\"funktionen[11].bezeichnung\", () => pm.expect(jsonData.funktionen[11].bezeichnung).to.eql(\"Funktion 11\"));\r",
 									"pm.test(\"funktionen[11].programmable\", () => pm.expect(jsonData.funktionen[11].programmable).to.eql(false));\r",
 									"pm.test(\"funktionen[11].deleted\", () => pm.expect(jsonData.funktionen[11].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[11]._links.parent\", () => pm.expect(jsonData.funktionen[11]._links.parent[0].href).to.eql(self));\r",
-									"pm.test(\"funktionen[11]._links.update\", () => pm.expect(jsonData.funktionen[11]._links.update[0].href).to.eql(self + \"/funktionen/F11\"));\r",
+									"//pm.test(\"funktionen[11]._links.update\", () => pm.expect(jsonData.funktionen[11]._links.update[0].href).to.eql(self + \"/funktionen/F11\"));\r",
 									"pm.test(\"funktionen[12].decoderId\", () => pm.expect(jsonData.funktionen[12].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[12].funktion\", () => pm.expect(jsonData.funktionen[12].funktion).to.eql(\"F12\"));\r",
 									"pm.test(\"funktionen[12].bezeichnung\", () => pm.expect(jsonData.funktionen[12].bezeichnung).to.eql(\"Funktion 12\"));\r",
 									"pm.test(\"funktionen[12].programmable\", () => pm.expect(jsonData.funktionen[12].programmable).to.eql(false));\r",
 									"pm.test(\"funktionen[12].deleted\", () => pm.expect(jsonData.funktionen[12].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[12]._links.parent\", () => pm.expect(jsonData.funktionen[12]._links.parent[0].href).to.eql(self));\r",
-									"pm.test(\"funktionen[12]._links.update\", () => pm.expect(jsonData.funktionen[12]._links.update[0].href).to.eql(self + \"/funktionen/F12\"));\r",
+									"//pm.test(\"funktionen[12]._links.update\", () => pm.expect(jsonData.funktionen[12]._links.update[0].href).to.eql(self + \"/funktionen/F12\"));\r",
 									"pm.test(\"funktionen[13].decoderId\", () => pm.expect(jsonData.funktionen[13].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[13].funktion\", () => pm.expect(jsonData.funktionen[13].funktion).to.eql(\"F13\"));\r",
 									"pm.test(\"funktionen[13].bezeichnung\", () => pm.expect(jsonData.funktionen[13].bezeichnung).to.eql(\"Funktion 13\"));\r",
 									"pm.test(\"funktionen[13].programmable\", () => pm.expect(jsonData.funktionen[13].programmable).to.eql(false));\r",
 									"pm.test(\"funktionen[13].deleted\", () => pm.expect(jsonData.funktionen[13].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[13]._links.parent\", () => pm.expect(jsonData.funktionen[13]._links.parent[0].href).to.eql(self));\r",
-									"pm.test(\"funktionen[13]._links.update\", () => pm.expect(jsonData.funktionen[13]._links.update[0].href).to.eql(self + \"/funktionen/F13\"));\r",
+									"//pm.test(\"funktionen[13]._links.update\", () => pm.expect(jsonData.funktionen[13]._links.update[0].href).to.eql(self + \"/funktionen/F13\"));\r",
 									"pm.test(\"funktionen[14].decoderId\", () => pm.expect(jsonData.funktionen[14].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[14].funktion\", () => pm.expect(jsonData.funktionen[14].funktion).to.eql(\"F14\"));\r",
 									"pm.test(\"funktionen[14].bezeichnung\", () => pm.expect(jsonData.funktionen[14].bezeichnung).to.eql(\"Funktion 14\"));\r",
 									"pm.test(\"funktionen[14].programmable\", () => pm.expect(jsonData.funktionen[14].programmable).to.eql(false));\r",
 									"pm.test(\"funktionen[14].deleted\", () => pm.expect(jsonData.funktionen[14].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[14]._links.parent\", () => pm.expect(jsonData.funktionen[14]._links.parent[0].href).to.eql(self));\r",
-									"pm.test(\"funktionen[14]._links.update\", () => pm.expect(jsonData.funktionen[14]._links.update[0].href).to.eql(self + \"/funktionen/F14\"));\r",
+									"//pm.test(\"funktionen[14]._links.update\", () => pm.expect(jsonData.funktionen[14]._links.update[0].href).to.eql(self + \"/funktionen/F14\"));\r",
 									"pm.test(\"funktionen[15].decoderId\", () => pm.expect(jsonData.funktionen[15].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[15].funktion\", () => pm.expect(jsonData.funktionen[15].funktion).to.eql(\"F15\"));\r",
 									"pm.test(\"funktionen[15].bezeichnung\", () => pm.expect(jsonData.funktionen[15].bezeichnung).to.eql(\"Funktion 15\"));\r",
 									"pm.test(\"funktionen[15].programmable\", () => pm.expect(jsonData.funktionen[15].programmable).to.eql(false));\r",
 									"pm.test(\"funktionen[15].deleted\", () => pm.expect(jsonData.funktionen[15].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[15]._links.parent\", () => pm.expect(jsonData.funktionen[15]._links.parent[0].href).to.eql(self));\r",
-									"pm.test(\"funktionen[15]._links.update\", () => pm.expect(jsonData.funktionen[15]._links.update[0].href).to.eql(self + \"/funktionen/F15\"));\r",
+									"//pm.test(\"funktionen[15]._links.update\", () => pm.expect(jsonData.funktionen[15]._links.update[0].href).to.eql(self + \"/funktionen/F15\"));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
 									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(pm.variables.replaceIn(\"{{api}}/decoder/{{decoderHerstellerAdd}}/{{decoderBestellNrAdd}}\")));\r",
@@ -13655,7 +13655,7 @@
 					"response": []
 				},
 				{
-					"name": "Add Abbildung",
+					"name": "Artikel - Add Abbildung",
 					"event": [
 						{
 							"listen": "test",
@@ -13768,7 +13768,7 @@
 					"response": []
 				},
 				{
-					"name": "Add Grossansicht",
+					"name": "Artikel - Add Grossansicht",
 					"event": [
 						{
 							"listen": "test",
@@ -13887,7 +13887,7 @@
 					"response": []
 				},
 				{
-					"name": "Add Anderung",
+					"name": "Artikel - Add Anderung",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -13967,7 +13967,7 @@
 					"response": []
 				},
 				{
-					"name": "Update Anderung",
+					"name": "Artikel - Update Anderung",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -14046,7 +14046,7 @@
 					"response": []
 				},
 				{
-					"name": "Update",
+					"name": "Artikel - Update",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -14201,7 +14201,7 @@
 					"response": []
 				},
 				{
-					"name": "Get",
+					"name": "Artikel - Get",
 					"event": [
 						{
 							"listen": "test",
@@ -14306,7 +14306,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Decoder",
+					"name": "Artikel - Delete Decoder",
 					"event": [
 						{
 							"listen": "test",
@@ -14358,7 +14358,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Abbildung",
+					"name": "Artikel - Delete Abbildung",
 					"event": [
 						{
 							"listen": "test",
@@ -14463,7 +14463,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Grossansicht",
+					"name": "Artikel - Delete Grossansicht",
 					"event": [
 						{
 							"listen": "test",
@@ -14574,7 +14574,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Anderung",
+					"name": "Artikel - Delete Anderung",
 					"event": [
 						{
 							"listen": "test",
@@ -14616,7 +14616,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete",
+					"name": "Artikel - Delete",
 					"event": [
 						{
 							"listen": "test",
@@ -14677,7 +14677,7 @@
 			"name": "Zug",
 			"item": [
 				{
-					"name": "Search",
+					"name": "Zug - Search",
 					"event": [
 						{
 							"listen": "test",
@@ -14740,7 +14740,7 @@
 					"response": []
 				},
 				{
-					"name": "Add",
+					"name": "Zug - Add",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -14817,24 +14817,24 @@
 					"response": []
 				},
 				{
-					"name": "Add Lok",
+					"name": "Zug - Add Lok",
 					"event": [
 						{
 							"listen": "prerequest",
 							"script": {
 								"exec": [
 									"pm.environment.set(\"lange\", new Number(\"11.00\"));\r",
-									"pm.environment.set(\"cnLokId\", \"00001\");\r",
+									"pm.environment.set(\"cnLokId\", \"00000H\");\r",
 									"pm.environment.set(\"cnLokPosition\", 1);\r",
 									"pm.environment.set(\"cnLokHersteller\", \"MARKLIN\");\r",
-									"pm.environment.set(\"cnLokBestellNr\", \"3000\");\r",
+									"pm.environment.set(\"cnLokBestellNr\", \"3000.02\");\r",
 									"pm.environment.set(\"cnLokBezeichnung\", \"BR 89.0\");\r",
 									"pm.environment.set(\"cnLokKategorie\", \"LOKOMOTIV\");\r",
 									"pm.environment.set(\"cnLokUnterKategorie\", \"DAMPF\");\r",
 									"pm.environment.set(\"cnLokLange\", new Number(\"11.00\"));\r",
 									"pm.environment.set(\"cnLokBahnverwaltung\", \"DB\");\r",
 									"pm.environment.set(\"cnLokGattung\", \"BR89.0\");\r",
-									"pm.environment.set(\"cnLokBetreibsnummer\", \"89 028\");\r",
+									"pm.environment.set(\"cnLokBetreibsnummer\", \"89 006\");\r",
 									"pm.environment.set(\"cnLokKupplung\", \"RELEX\");\r",
 									"pm.environment.set(\"cnLokAbbildung\", pm.variables.replaceIn(\"{{server}}/data/produkt/{{cnLokHersteller}}/{{cnLokBestellNr}}/abbildung.jpg\"));"
 								],
@@ -14923,14 +14923,14 @@
 					"response": []
 				},
 				{
-					"name": "Add Wagen",
+					"name": "Zug - Add Wagen",
 					"event": [
 						{
 							"listen": "prerequest",
 							"script": {
 								"exec": [
 									"pm.environment.set(\"lange\", new Number(\"22.00\"));\r",
-									"pm.environment.set(\"cnWagenId\", \"00002\");\r",
+									"pm.environment.set(\"cnWagenId\", \"00002W\");\r",
 									"pm.environment.set(\"cnWagenPosition\", 2);\r",
 									"pm.environment.set(\"cnWagenHersteller\", \"MARKLIN\");\r",
 									"pm.environment.set(\"cnWagenBestellNr\", \"4007\");\r",
@@ -15046,7 +15046,7 @@
 					"response": []
 				},
 				{
-					"name": "Move Up",
+					"name": "Zug - Move Up",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -15149,7 +15149,7 @@
 					"response": []
 				},
 				{
-					"name": "Move Down",
+					"name": "Zug - Move Down",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -15252,7 +15252,7 @@
 					"response": []
 				},
 				{
-					"name": "Update",
+					"name": "Zug - Update",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -15362,7 +15362,7 @@
 					"response": []
 				},
 				{
-					"name": "Get",
+					"name": "Zug - Get",
 					"event": [
 						{
 							"listen": "test",
@@ -15448,7 +15448,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Lok",
+					"name": "Zug - Delete Lok",
 					"event": [
 						{
 							"listen": "test",
@@ -15528,7 +15528,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete",
+					"name": "Zug - Delete",
 					"event": [
 						{
 							"listen": "test",
@@ -15589,7 +15589,7 @@
 			"name": "Open Api",
 			"item": [
 				{
-					"name": "Get Docs",
+					"name": "Open Api - Get Docs",
 					"event": [
 						{
 							"listen": "test",
@@ -15877,7 +15877,7 @@
 			"name": "Export",
 			"item": [
 				{
-					"name": "Achsfolg",
+					"name": "Export - Achsfolg",
 					"event": [
 						{
 							"listen": "test",
@@ -15917,7 +15917,7 @@
 					"response": []
 				},
 				{
-					"name": "Antrieb",
+					"name": "Export - Antrieb",
 					"event": [
 						{
 							"listen": "test",
@@ -15957,7 +15957,7 @@
 					"response": []
 				},
 				{
-					"name": "Aufbau",
+					"name": "Export - Aufbau",
 					"event": [
 						{
 							"listen": "test",
@@ -15997,7 +15997,7 @@
 					"response": []
 				},
 				{
-					"name": "Bahnverwaltung",
+					"name": "Export - Bahnverwaltung",
 					"event": [
 						{
 							"listen": "test",
@@ -16037,7 +16037,7 @@
 					"response": []
 				},
 				{
-					"name": "Epoch",
+					"name": "Export - Epoch",
 					"event": [
 						{
 							"listen": "test",
@@ -16077,7 +16077,7 @@
 					"response": []
 				},
 				{
-					"name": "Gattung",
+					"name": "Export - Gattung",
 					"event": [
 						{
 							"listen": "test",
@@ -16117,7 +16117,7 @@
 					"response": []
 				},
 				{
-					"name": "Hersteller",
+					"name": "Export - Hersteller",
 					"event": [
 						{
 							"listen": "test",
@@ -16157,7 +16157,7 @@
 					"response": []
 				},
 				{
-					"name": "Kategorie",
+					"name": "Export - Kategorie",
 					"event": [
 						{
 							"listen": "test",
@@ -16197,7 +16197,7 @@
 					"response": []
 				},
 				{
-					"name": "Kupplung",
+					"name": "Export - Kupplung",
 					"event": [
 						{
 							"listen": "test",
@@ -16237,7 +16237,7 @@
 					"response": []
 				},
 				{
-					"name": "Licht",
+					"name": "Export - Licht",
 					"event": [
 						{
 							"listen": "test",
@@ -16277,7 +16277,7 @@
 					"response": []
 				},
 				{
-					"name": "Massstab",
+					"name": "Export - Massstab",
 					"event": [
 						{
 							"listen": "test",
@@ -16317,7 +16317,7 @@
 					"response": []
 				},
 				{
-					"name": "Motor Typ",
+					"name": "Export - Motor Typ",
 					"event": [
 						{
 							"listen": "test",
@@ -16357,7 +16357,7 @@
 					"response": []
 				},
 				{
-					"name": "Protokoll",
+					"name": "Export - Protokoll",
 					"event": [
 						{
 							"listen": "test",
@@ -16397,7 +16397,7 @@
 					"response": []
 				},
 				{
-					"name": "Sondermodell",
+					"name": "Export - Sondermodell",
 					"event": [
 						{
 							"listen": "test",
@@ -16437,7 +16437,7 @@
 					"response": []
 				},
 				{
-					"name": "Spurweite",
+					"name": "Export - Spurweite",
 					"event": [
 						{
 							"listen": "test",
@@ -16477,7 +16477,7 @@
 					"response": []
 				},
 				{
-					"name": "Steuerung",
+					"name": "Export - Steuerung",
 					"event": [
 						{
 							"listen": "test",
@@ -16517,7 +16517,7 @@
 					"response": []
 				},
 				{
-					"name": "Zug Typ",
+					"name": "Export - Zug Typ",
 					"event": [
 						{
 							"listen": "test",
@@ -16557,7 +16557,7 @@
 					"response": []
 				},
 				{
-					"name": "Unter Kategorie",
+					"name": "Export - Unter Kategorie",
 					"event": [
 						{
 							"listen": "test",
@@ -16597,7 +16597,7 @@
 					"response": []
 				},
 				{
-					"name": "Vorbild",
+					"name": "Export - Vorbild",
 					"event": [
 						{
 							"listen": "test",
@@ -16637,7 +16637,7 @@
 					"response": []
 				},
 				{
-					"name": "Decoder Typ",
+					"name": "Export - Decoder Typ",
 					"event": [
 						{
 							"listen": "test",
@@ -16677,7 +16677,7 @@
 					"response": []
 				},
 				{
-					"name": "Decoder Typ Cv",
+					"name": "Export - Decoder Typ Cv",
 					"event": [
 						{
 							"listen": "test",
@@ -16717,7 +16717,7 @@
 					"response": []
 				},
 				{
-					"name": "Decoder Typ Funktion",
+					"name": "Export - Decoder Typ Funktion",
 					"event": [
 						{
 							"listen": "test",
@@ -16757,7 +16757,7 @@
 					"response": []
 				},
 				{
-					"name": "Produkt",
+					"name": "Export - Produkt",
 					"event": [
 						{
 							"listen": "test",
@@ -16766,9 +16766,9 @@
 									"pm.test(\"Produkt\", () => pm.response.to.have.status(200));\r",
 									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
-									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"hersteller,bestellNr,bezeichnung,kategorie,unterKategorie,lange,massstab,spurweite,epoch,bahnverwaltung,gattung,betreibsnummer,bauzeit,achsfolg,sondermodell,aufbau,licht,kupplung,steuerung,decoderHersteller,decoderBestellNr,motorTyp,anmerkung,anleitungen,explosionszeichnung,abbildung,grossansicht,deleted\"));\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"hersteller,bestellNr,bezeichnung,kategorie,unterKategorie,lange,massstab,spurweite,epoch,bahnverwaltung,vorbild,gattung,betreibsnummer,bauzeit,achsfolg,sondermodell,aufbau,licht,kupplung,steuerung,decoderHersteller,decoderBestellNr,motorTyp,anmerkung,anleitungen,explosionszeichnung,abbildung,grossansicht,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
-									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){27}(true|false)$/).length).to.eql(3)));"
+									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){28}(true|false)$/).length).to.eql(3)));"
 								],
 								"type": "text/javascript"
 							}
@@ -16797,7 +16797,7 @@
 					"response": []
 				},
 				{
-					"name": "Produkt Teil",
+					"name": "Export - Produkt Teil",
 					"event": [
 						{
 							"listen": "test",
@@ -16837,7 +16837,7 @@
 					"response": []
 				},
 				{
-					"name": "Decoder",
+					"name": "Export - Decoder",
 					"event": [
 						{
 							"listen": "test",
@@ -16877,7 +16877,7 @@
 					"response": []
 				},
 				{
-					"name": "Decoder Cv",
+					"name": "Export - Decoder Cv",
 					"event": [
 						{
 							"listen": "test",
@@ -16917,7 +16917,7 @@
 					"response": []
 				},
 				{
-					"name": "Decoder Funktion",
+					"name": "Export - Decoder Funktion",
 					"event": [
 						{
 							"listen": "test",
@@ -16957,7 +16957,7 @@
 					"response": []
 				},
 				{
-					"name": "Artikel",
+					"name": "Export - Artikel",
 					"event": [
 						{
 							"listen": "test",
@@ -16966,9 +16966,9 @@
 									"pm.test(\"Artikel\", () => pm.response.to.have.status(200));\r",
 									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
-									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"artikelId,hersteller,bestellNr,bezeichnung,kategorie,unterKategorie,lange,massstab,spurweite,epoch,bahnverwaltung,gattung,betreibsnummer,achsfolg,sondermodell,aufbau,licht,kupplung,steuerung,motorTyp,kaufdatum,wahrung,preis,menge,verbleibende,anmerkung,beladung,status,anleitungen,explosionszeichnung,abbildung,grossansicht,deleted\"));\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"artikelId,hersteller,bestellNr,bezeichnung,kategorie,unterKategorie,lange,massstab,spurweite,epoch,bahnverwaltung,vorbild,gattung,betreibsnummer,achsfolg,sondermodell,aufbau,licht,kupplung,steuerung,motorTyp,kaufdatum,wahrung,preis,menge,verbleibende,anmerkung,beladung,status,anleitungen,explosionszeichnung,abbildung,grossansicht,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
-									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){32}(true|false)$/).length).to.eql(3)));"
+									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){33}(true|false)$/).length).to.eql(3)));"
 								],
 								"type": "text/javascript"
 							}
@@ -16997,7 +16997,7 @@
 					"response": []
 				},
 				{
-					"name": "Anderung",
+					"name": "Export - Anderung",
 					"event": [
 						{
 							"listen": "test",
@@ -17037,7 +17037,7 @@
 					"response": []
 				},
 				{
-					"name": "Zug",
+					"name": "Export - Zug",
 					"event": [
 						{
 							"listen": "test",
@@ -17077,7 +17077,7 @@
 					"response": []
 				},
 				{
-					"name": "Zug Consist",
+					"name": "Export - Zug Consist",
 					"event": [
 						{
 							"listen": "test",
@@ -17143,7 +17143,7 @@
 			"name": "Import",
 			"item": [
 				{
-					"name": "Achsfolg",
+					"name": "Import - Achsfolg",
 					"event": [
 						{
 							"listen": "test",
@@ -17195,7 +17195,7 @@
 					"response": []
 				},
 				{
-					"name": "Antrieb",
+					"name": "Import - Antrieb",
 					"event": [
 						{
 							"listen": "test",
@@ -17247,7 +17247,7 @@
 					"response": []
 				},
 				{
-					"name": "Aufbau",
+					"name": "Import - Aufbau",
 					"event": [
 						{
 							"listen": "test",
@@ -17299,7 +17299,7 @@
 					"response": []
 				},
 				{
-					"name": "Bahnverwaltung",
+					"name": "Import - Bahnverwaltung",
 					"event": [
 						{
 							"listen": "test",
@@ -17351,7 +17351,7 @@
 					"response": []
 				},
 				{
-					"name": "Epoch",
+					"name": "Import - Epoch",
 					"event": [
 						{
 							"listen": "test",
@@ -17403,7 +17403,7 @@
 					"response": []
 				},
 				{
-					"name": "Gattung",
+					"name": "Import - Gattung",
 					"event": [
 						{
 							"listen": "test",
@@ -17455,7 +17455,7 @@
 					"response": []
 				},
 				{
-					"name": "Hersteller",
+					"name": "Import - Hersteller",
 					"event": [
 						{
 							"listen": "test",
@@ -17507,7 +17507,7 @@
 					"response": []
 				},
 				{
-					"name": "Kupplung",
+					"name": "Import - Kupplung",
 					"event": [
 						{
 							"listen": "test",
@@ -17559,7 +17559,7 @@
 					"response": []
 				},
 				{
-					"name": "Licht",
+					"name": "Import - Licht",
 					"event": [
 						{
 							"listen": "test",
@@ -17611,7 +17611,7 @@
 					"response": []
 				},
 				{
-					"name": "Kategorie",
+					"name": "Import - Kategorie",
 					"event": [
 						{
 							"listen": "test",
@@ -17663,7 +17663,7 @@
 					"response": []
 				},
 				{
-					"name": "Massstab",
+					"name": "Import - Massstab",
 					"event": [
 						{
 							"listen": "test",
@@ -17715,7 +17715,7 @@
 					"response": []
 				},
 				{
-					"name": "Motor Typ",
+					"name": "Import - Motor Typ",
 					"event": [
 						{
 							"listen": "test",
@@ -17767,7 +17767,7 @@
 					"response": []
 				},
 				{
-					"name": "Protokoll",
+					"name": "Import - Protokoll",
 					"event": [
 						{
 							"listen": "test",
@@ -17819,7 +17819,7 @@
 					"response": []
 				},
 				{
-					"name": "Sondermodell",
+					"name": "Import - Sondermodell",
 					"event": [
 						{
 							"listen": "test",
@@ -17871,7 +17871,7 @@
 					"response": []
 				},
 				{
-					"name": "Spurweite",
+					"name": "Import - Spurweite",
 					"event": [
 						{
 							"listen": "test",
@@ -17923,7 +17923,7 @@
 					"response": []
 				},
 				{
-					"name": "Steuerung",
+					"name": "Import - Steuerung",
 					"event": [
 						{
 							"listen": "test",
@@ -17975,7 +17975,7 @@
 					"response": []
 				},
 				{
-					"name": "Zug Typ",
+					"name": "Import - Zug Typ",
 					"event": [
 						{
 							"listen": "test",
@@ -18027,7 +18027,7 @@
 					"response": []
 				},
 				{
-					"name": "Unter Kategorie",
+					"name": "Import - Unter Kategorie",
 					"event": [
 						{
 							"listen": "test",
@@ -18079,7 +18079,7 @@
 					"response": []
 				},
 				{
-					"name": "Vorbild",
+					"name": "Import - Vorbild",
 					"event": [
 						{
 							"listen": "test",
@@ -18131,7 +18131,7 @@
 					"response": []
 				},
 				{
-					"name": "Decoder Typ",
+					"name": "Import - Decoder Typ",
 					"event": [
 						{
 							"listen": "test",
@@ -18183,7 +18183,7 @@
 					"response": []
 				},
 				{
-					"name": "Decoder Typ Cv",
+					"name": "Import - Decoder Typ Cv",
 					"event": [
 						{
 							"listen": "test",
@@ -18235,7 +18235,7 @@
 					"response": []
 				},
 				{
-					"name": "Decoder Typ Funktion",
+					"name": "Import - Decoder Typ Funktion",
 					"event": [
 						{
 							"listen": "test",
@@ -18287,7 +18287,7 @@
 					"response": []
 				},
 				{
-					"name": "Produkt",
+					"name": "Import - Produkt",
 					"event": [
 						{
 							"listen": "test",
@@ -18339,7 +18339,7 @@
 					"response": []
 				},
 				{
-					"name": "Produkt Teil",
+					"name": "Import - Produkt Teil",
 					"event": [
 						{
 							"listen": "test",
@@ -18391,7 +18391,7 @@
 					"response": []
 				},
 				{
-					"name": "Decoder",
+					"name": "Import - Decoder",
 					"event": [
 						{
 							"listen": "test",
@@ -18443,7 +18443,7 @@
 					"response": []
 				},
 				{
-					"name": "Decoder Cv",
+					"name": "Import - Decoder Cv",
 					"event": [
 						{
 							"listen": "test",
@@ -18495,7 +18495,7 @@
 					"response": []
 				},
 				{
-					"name": "Decoder Funktion",
+					"name": "Import - Decoder Funktion",
 					"event": [
 						{
 							"listen": "test",
@@ -18547,7 +18547,7 @@
 					"response": []
 				},
 				{
-					"name": "Artikel",
+					"name": "Import - Artikel",
 					"event": [
 						{
 							"listen": "test",
@@ -18599,7 +18599,7 @@
 					"response": []
 				},
 				{
-					"name": "Anderung",
+					"name": "Import - Anderung",
 					"event": [
 						{
 							"listen": "test",
@@ -18651,7 +18651,7 @@
 					"response": []
 				},
 				{
-					"name": "Zug",
+					"name": "Import - Zug",
 					"event": [
 						{
 							"listen": "test",
@@ -18703,7 +18703,7 @@
 					"response": []
 				},
 				{
-					"name": "Zug Consist",
+					"name": "Import - Zug Consist",
 					"event": [
 						{
 							"listen": "test",
@@ -18781,7 +18781,7 @@
 			"name": "User",
 			"item": [
 				{
-					"name": "Search",
+					"name": "User - Search",
 					"event": [
 						{
 							"listen": "test",
@@ -18840,7 +18840,7 @@
 					"response": []
 				},
 				{
-					"name": "Register",
+					"name": "User - Register",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -18850,7 +18850,7 @@
 									"pm.environment.set(\"lastName\", pm.variables.replaceIn(\"{{$randomLastName}}\"));\r",
 									"pm.environment.set(\"username\", pm.variables.replaceIn(\"{{firstName}}{{$randomInt}}\"));\r",
 									"pm.environment.set(\"eMail\", pm.variables.replaceIn(\"{{firstName}}.{{lastName}}@{{$randomDomainName}}\"));\r",
-									"pm.environment.set(\"locale\", pm.variables.replaceIn(\"{{$randomLocale}}\"));\r",
+									"pm.environment.set(\"locale\", \"de\");\r",
 									"pm.environment.set(\"password\", pm.variables.replaceIn(\"{{$randomPassword}}\"));\r",
 									"var apiKey = pm.variables.get(\"mail_key\");\r",
 									"var header = {\r",
@@ -18920,7 +18920,7 @@
 					"response": []
 				},
 				{
-					"name": "Confirm Registration",
+					"name": "User - Confirm Registration",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -19021,7 +19021,7 @@
 					"response": []
 				},
 				{
-					"name": "Forgot Password",
+					"name": "User - Forgot Password",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -19092,7 +19092,7 @@
 					"response": []
 				},
 				{
-					"name": "Reset Password",
+					"name": "User - Reset Password",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -19197,7 +19197,7 @@
 					"response": []
 				},
 				{
-					"name": "Change Password",
+					"name": "User - Change Password",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -19267,7 +19267,7 @@
 					"response": []
 				},
 				{
-					"name": "Update",
+					"name": "User - Update",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -19364,7 +19364,7 @@
 					"response": []
 				},
 				{
-					"name": "Get",
+					"name": "User - Get",
 					"event": [
 						{
 							"listen": "test",
@@ -19434,7 +19434,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete",
+					"name": "User - Delete",
 					"event": [
 						{
 							"listen": "test",
@@ -19491,7 +19491,7 @@
 						"type": "text/javascript",
 						"exec": [
 							"pm.request.headers.upsert({ key: 'Accept', value: pm.variables.replaceIn(\"{{accept}}\") });",
-							"pm.request.headers.upsert({ key: 'Accept-Language', value: 'en-gb' });"
+							"pm.request.headers.upsert({ key: 'Accept-Language', value: 'de-de' });"
 						]
 					}
 				},
@@ -19510,7 +19510,7 @@
 			"name": "Shutdown",
 			"item": [
 				{
-					"name": "Shutdown",
+					"name": "Shutdown - Shutdown",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -19743,7 +19743,7 @@
 		},
 		{
 			"key": "bestellNrAdd",
-			"value": "3000"
+			"value": "3000.02"
 		},
 		{
 			"key": "bestellNrUpdate",
@@ -19947,11 +19947,11 @@
 		},
 		{
 			"key": "sondermodellAdd",
-			"value": "MM"
+			"value": "MUSEUM"
 		},
 		{
 			"key": "sondermodellUpdate",
-			"value": "MM"
+			"value": "INSIDER"
 		},
 		{
 			"key": "spurweiteAdd",

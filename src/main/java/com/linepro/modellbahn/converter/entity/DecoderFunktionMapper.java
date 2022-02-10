@@ -12,7 +12,7 @@ import com.linepro.modellbahn.model.DecoderFunktionModel;
 @Component(PREFIX + "DecoderFunktionMapper")
 public class DecoderFunktionMapper extends MapperImpl<DecoderFunktion, DecoderFunktionModel> {
 
-    public DecoderFunktionMapper() {
-        super(() -> new DecoderFunktionModel(), new DecoderFunktionTranscriber());
+    public DecoderFunktionMapper(DecoderFunktionTranscriber transcriber) {
+        super(() -> new DecoderFunktionModel(), transcriber);
     }
 }

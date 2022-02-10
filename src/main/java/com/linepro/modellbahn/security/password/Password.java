@@ -12,8 +12,8 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 
 @Documented
-@Target({ FIELD, ANNOTATION_TYPE })
 @Retention(RUNTIME)
+@Target({ FIELD, ANNOTATION_TYPE })
 @Constraint(validatedBy = {PasswordValiator.class})
 public @interface Password {
     String message() default "{com.linepro.modellbahn.validator.constraints.password.invalid}";

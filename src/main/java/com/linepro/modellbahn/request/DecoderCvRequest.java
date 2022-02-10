@@ -36,7 +36,7 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(SnakeCaseStrategy.class)
-@JsonPropertyOrder({ ApiNames.DECODER_ID, ApiNames.CV, ApiNames.BEZEICHNUNG, ApiNames.MINIMAL, ApiNames.MAXIMAL, ApiNames.WERKSEINSTELLUNG, ApiNames.WERT, ApiNames.DELETED })
+@JsonPropertyOrder({ ApiNames.DECODER_ID, ApiNames.CV, ApiNames.WERT, ApiNames.DELETED })
 @Schema(name = ApiNames.CV, description = "Decoder CV setting.")
 public class DecoderCvRequest implements ItemRequest {
 
@@ -52,10 +52,6 @@ public class DecoderCvRequest implements ItemRequest {
     @JsonProperty(ApiNames.CV)
     @Schema(description = "CV number", example = "63", accessMode = AccessMode.READ_ONLY)
     private Integer cv;
-
-    @JsonProperty(ApiNames.BEZEICHNUNG)
-    @Schema(description = "CV usage", example = "Geräuschlautstärke", accessMode = AccessMode.READ_ONLY)
-    private String bezeichnung;
 
     @JsonProperty(ApiNames.WERT)
     @Schema(description = "Assigned value", required = true)

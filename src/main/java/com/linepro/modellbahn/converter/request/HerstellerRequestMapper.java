@@ -12,8 +12,8 @@ import com.linepro.modellbahn.request.HerstellerRequest;
 @Component(PREFIX + "HerstellerRequestMapper")
 public class HerstellerRequestMapper extends MapperImpl<HerstellerRequest, Hersteller> {
 
-    public HerstellerRequestMapper() {
-        super(() -> new Hersteller(), new HerstellerRequestTranscriber());
+    public HerstellerRequestMapper(HerstellerRequestTranscriber transcriber) {
+        super(() -> new Hersteller(), transcriber);
     }
 
 }

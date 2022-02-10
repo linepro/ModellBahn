@@ -12,7 +12,7 @@ import com.linepro.modellbahn.request.EpochRequest;
 @Component(PREFIX + "EpochRequestMapper")
 public class EpochRequestMapper extends MapperImpl<EpochRequest, Epoch> {
 
-    public EpochRequestMapper() {
-        super(() -> new Epoch(), new EpochRequestTranscriber());
+    public EpochRequestMapper(EpochRequestTranscriber transcriber) {
+        super(() -> new Epoch(), transcriber);
     }
 }

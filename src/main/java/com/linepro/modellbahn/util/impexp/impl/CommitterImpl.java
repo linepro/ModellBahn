@@ -24,8 +24,9 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service(PREFIX + "CommitterImpl")
-public class CommitterImpl<R extends ItemRequest, E extends Item, M extends ItemModel> {
+public class CommitterImpl<R extends ItemRequest, E extends Item, M extends ItemModel> implements Committer<R, E, M> {
 
+    @Override
     @Transactional(
         propagation = REQUIRES_NEW,
         noRollbackFor= {

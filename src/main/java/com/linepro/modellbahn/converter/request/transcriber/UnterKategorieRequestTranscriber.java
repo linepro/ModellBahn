@@ -1,6 +1,9 @@
 package com.linepro.modellbahn.converter.request.transcriber;
 
+import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
+
+import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.converter.Transcriber;
 import com.linepro.modellbahn.entity.UnterKategorie;
@@ -10,6 +13,7 @@ import com.linepro.modellbahn.request.UnterKategorieRequest;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
+@Component(PREFIX + "UnterKategorieRequestTranscriber")
 public class UnterKategorieRequestTranscriber extends NamedRequestTranscriber<UnterKategorieRequest, UnterKategorie> implements Transcriber<UnterKategorieRequest, UnterKategorie> {
 
     private final KategorieLookup lookup;

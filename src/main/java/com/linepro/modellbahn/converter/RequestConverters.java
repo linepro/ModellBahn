@@ -36,6 +36,24 @@ import com.linepro.modellbahn.converter.request.VorbildRequestMapper;
 import com.linepro.modellbahn.converter.request.ZugConsistRequestMapper;
 import com.linepro.modellbahn.converter.request.ZugRequestMapper;
 import com.linepro.modellbahn.converter.request.ZugTypRequestMapper;
+import com.linepro.modellbahn.converter.request.transcriber.AnderungRequestTranscriber;
+import com.linepro.modellbahn.converter.request.transcriber.ArtikelRequestTranscriber;
+import com.linepro.modellbahn.converter.request.transcriber.BahnverwaltungRequestTranscriber;
+import com.linepro.modellbahn.converter.request.transcriber.DecoderCvRequestTranscriber;
+import com.linepro.modellbahn.converter.request.transcriber.DecoderFunktionRequestTranscriber;
+import com.linepro.modellbahn.converter.request.transcriber.DecoderRequestTranscriber;
+import com.linepro.modellbahn.converter.request.transcriber.DecoderTypCvRequestTranscriber;
+import com.linepro.modellbahn.converter.request.transcriber.DecoderTypFunktionRequestTranscriber;
+import com.linepro.modellbahn.converter.request.transcriber.DecoderTypRequestTranscriber;
+import com.linepro.modellbahn.converter.request.transcriber.EpochRequestTranscriber;
+import com.linepro.modellbahn.converter.request.transcriber.HerstellerRequestTranscriber;
+import com.linepro.modellbahn.converter.request.transcriber.NamedRequestTranscriber;
+import com.linepro.modellbahn.converter.request.transcriber.ProduktRequestTranscriber;
+import com.linepro.modellbahn.converter.request.transcriber.ProduktTeilRequestTranscriber;
+import com.linepro.modellbahn.converter.request.transcriber.UnterKategorieRequestTranscriber;
+import com.linepro.modellbahn.converter.request.transcriber.VorbildRequestTranscriber;
+import com.linepro.modellbahn.converter.request.transcriber.ZugConsistRequestTranscriber;
+import com.linepro.modellbahn.converter.request.transcriber.ZugRequestTranscriber;
 
 @Import({
     AchsfolgRequestMapper.class, 
@@ -68,8 +86,27 @@ import com.linepro.modellbahn.converter.request.ZugTypRequestMapper;
     VorbildRequestMapper.class, 
     ZugRequestMapper.class, 
     ZugConsistRequestMapper.class, 
-    ZugTypRequestMapper.class 
+    ZugTypRequestMapper.class,
+    
+    NamedRequestTranscriber.class, 
+    ArtikelRequestTranscriber.class, 
+    AnderungRequestTranscriber.class, 
+    BahnverwaltungRequestTranscriber.class, 
+    DecoderRequestTranscriber.class, 
+    DecoderCvRequestTranscriber.class, 
+    DecoderFunktionRequestTranscriber.class, 
+    DecoderTypRequestTranscriber.class, 
+    DecoderTypCvRequestTranscriber.class, 
+    DecoderTypFunktionRequestTranscriber.class, 
+    EpochRequestTranscriber.class, 
+    HerstellerRequestTranscriber.class, 
+    UnterKategorieRequestTranscriber.class, 
+    ProduktRequestTranscriber.class, 
+    ProduktTeilRequestTranscriber.class, 
+    VorbildRequestTranscriber.class, 
+    ZugRequestTranscriber.class, 
+    ZugConsistRequestTranscriber.class
 })
-@Configuration(PREFIX + "ModelConverters")
-public class ModelConverters {
+@Configuration(PREFIX + "RequestConverters")
+public class RequestConverters {
 }

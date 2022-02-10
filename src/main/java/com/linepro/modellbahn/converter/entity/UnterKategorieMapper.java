@@ -12,7 +12,7 @@ import com.linepro.modellbahn.model.UnterKategorieModel;
 @Component(PREFIX + "UnterKategorieMapper")
 public class UnterKategorieMapper extends MapperImpl<UnterKategorie, UnterKategorieModel> {
 
-    public UnterKategorieMapper() {
-        super(() -> new UnterKategorieModel(), new UnterKategorieTranscriber());
+    public UnterKategorieMapper(UnterKategorieTranscriber transcriber) {
+        super(() -> new UnterKategorieModel(), transcriber);
     }
 }

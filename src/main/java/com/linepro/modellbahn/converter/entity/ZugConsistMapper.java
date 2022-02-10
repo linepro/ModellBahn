@@ -14,7 +14,7 @@ import com.linepro.modellbahn.model.ZugConsistModel;
 public class ZugConsistMapper extends MapperImpl<ZugConsist, ZugConsistModel> {
 
     @Autowired
-    public ZugConsistMapper(ArtikelMapper artikelMapper) {
-        super(() -> new ZugConsistModel(), new ZugConsistTranscriber(artikelMapper));
+    public ZugConsistMapper(ZugConsistTranscriber transcriber) {
+        super(() -> new ZugConsistModel(), transcriber);
     }
 }

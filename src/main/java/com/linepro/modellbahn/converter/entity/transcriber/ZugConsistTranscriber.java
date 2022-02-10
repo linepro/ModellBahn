@@ -1,8 +1,11 @@
 package com.linepro.modellbahn.converter.entity.transcriber;
 
+import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 
 import java.util.Optional;
+
+import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.converter.Transcriber;
 import com.linepro.modellbahn.converter.entity.ArtikelMapper;
@@ -13,6 +16,7 @@ import com.linepro.modellbahn.model.ZugConsistModel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
+@Component(PREFIX + "ZugConsistTranscriber")
 public class ZugConsistTranscriber implements Transcriber<ZugConsist, ZugConsistModel> {
 
     private final ArtikelMapper artikelMapper;

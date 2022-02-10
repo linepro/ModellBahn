@@ -53,7 +53,7 @@ public class DataBeanProcessor implements BeanDefinitionRegistryPostProcessor {
                                                                                       .addConstructorArgReference(prefix + "Repository")
                                                                                       .addConstructorArgReference(prefix + "RequestMapper")
                                                                                       .addConstructorArgReference(prefix + "Lookup")
-                                                                                      .addConstructorArgReference(PREFIX + "CommitterImpl")
+                                                                                      .addConstructorArgReference((registry.containsBeanDefinition(prefix + "CommitterImpl") ? prefix : PREFIX) + "CommitterImpl")
                                                                                       .addConstructorArgReference(PREFIX + "CsvSchemaGenerator")
                                                                                       .addConstructorArgValue(requestClass)
                                                                                       .getBeanDefinition());

@@ -1,11 +1,15 @@
 package com.linepro.modellbahn.converter.entity.transcriber;
 
+import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
+
+import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.converter.impl.NamedAbbildungTranscriber;
 import com.linepro.modellbahn.entity.Vorbild;
 import com.linepro.modellbahn.model.VorbildModel;
 
+@Component(PREFIX + "VorbildTranscriber")
 public class VorbildTranscriber extends NamedAbbildungTranscriber<Vorbild, VorbildModel> {
 
     public VorbildTranscriber(com.linepro.modellbahn.converter.PathMapper PathMapper) {

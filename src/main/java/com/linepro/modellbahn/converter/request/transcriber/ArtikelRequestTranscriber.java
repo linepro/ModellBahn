@@ -1,8 +1,11 @@
 package com.linepro.modellbahn.converter.request.transcriber;
 
+import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 
 import java.util.Optional;
+
+import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.converter.Transcriber;
 import com.linepro.modellbahn.entity.Artikel;
@@ -16,6 +19,7 @@ import com.linepro.modellbahn.request.ArtikelRequest;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
+@Component(PREFIX + "ArtikelRequestTranscriber")
 public class ArtikelRequestTranscriber implements Transcriber<ArtikelRequest, Artikel> {
 
     private final ProduktLookup produktLookup;

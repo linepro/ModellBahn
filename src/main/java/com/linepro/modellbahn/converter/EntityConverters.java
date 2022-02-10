@@ -36,6 +36,26 @@ import com.linepro.modellbahn.converter.entity.VorbildMapper;
 import com.linepro.modellbahn.converter.entity.ZugConsistMapper;
 import com.linepro.modellbahn.converter.entity.ZugMapper;
 import com.linepro.modellbahn.converter.entity.ZugTypMapper;
+import com.linepro.modellbahn.converter.entity.transcriber.AnderungTranscriber;
+import com.linepro.modellbahn.converter.entity.transcriber.ArtikelTranscriber;
+import com.linepro.modellbahn.converter.entity.transcriber.BahnverwaltungTranscriber;
+import com.linepro.modellbahn.converter.entity.transcriber.DecoderCvTranscriber;
+import com.linepro.modellbahn.converter.entity.transcriber.DecoderFunktionTranscriber;
+import com.linepro.modellbahn.converter.entity.transcriber.DecoderTranscriber;
+import com.linepro.modellbahn.converter.entity.transcriber.DecoderTypCvTranscriber;
+import com.linepro.modellbahn.converter.entity.transcriber.DecoderTypFunktionTranscriber;
+import com.linepro.modellbahn.converter.entity.transcriber.DecoderTypTranscriber;
+import com.linepro.modellbahn.converter.entity.transcriber.EpochTranscriber;
+import com.linepro.modellbahn.converter.entity.transcriber.HerstellerTranscriber;
+import com.linepro.modellbahn.converter.entity.transcriber.KategorieTranscriber;
+import com.linepro.modellbahn.converter.entity.transcriber.ProduktTeilTranscriber;
+import com.linepro.modellbahn.converter.entity.transcriber.ProduktTranscriber;
+import com.linepro.modellbahn.converter.entity.transcriber.UnterKategorieTranscriber;
+import com.linepro.modellbahn.converter.entity.transcriber.VorbildTranscriber;
+import com.linepro.modellbahn.converter.entity.transcriber.ZugConsistTranscriber;
+import com.linepro.modellbahn.converter.entity.transcriber.ZugTranscriber;
+import com.linepro.modellbahn.converter.impl.NamedAbbildungTranscriber;
+import com.linepro.modellbahn.converter.impl.NamedTranscriber;
 
 @Import({
     AchsfolgMapper.class, 
@@ -69,7 +89,28 @@ import com.linepro.modellbahn.converter.entity.ZugTypMapper;
     ZugConsistMapper.class, 
     ZugMapper.class, 
     ZugTypMapper.class,
-    PathMapper.class
+    PathMapper.class,
+    
+    NamedTranscriber.class, 
+    NamedAbbildungTranscriber.class, 
+    AnderungTranscriber.class, 
+    ArtikelTranscriber.class, 
+    BahnverwaltungTranscriber.class, 
+    DecoderCvTranscriber.class, 
+    DecoderFunktionTranscriber.class, 
+    DecoderTranscriber.class, 
+    DecoderTypCvTranscriber.class, 
+    DecoderTypFunktionTranscriber.class, 
+    DecoderTypTranscriber.class, 
+    EpochTranscriber.class, 
+    HerstellerTranscriber.class, 
+    KategorieTranscriber.class, 
+    ProduktTranscriber.class, 
+    ProduktTeilTranscriber.class, 
+    UnterKategorieTranscriber.class, 
+    VorbildTranscriber.class, 
+    ZugConsistTranscriber.class, 
+    ZugTranscriber.class
     })
 @Configuration(PREFIX + "EntityConverters")
 public class EntityConverters {

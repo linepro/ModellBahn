@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.logging;
 
+import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -44,6 +45,7 @@ import org.slf4j.event.Level;
  *
  * - Parameter annotations only examine the ignore value.
  */
+@Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD,ElementType.PARAMETER,ElementType.TYPE})
 public @interface Logged {

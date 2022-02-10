@@ -16,8 +16,6 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.model.enums.DecoderStatus;
-import com.linepro.modellbahn.model.enums.Konfiguration;
-import com.linepro.modellbahn.model.enums.Stecker;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -43,9 +41,9 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(SnakeCaseStrategy.class)
-@JsonPropertyOrder({ ApiNames.DECODER_ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.ARTIKEL_ID, ApiNames.BEZEICHNUNG, ApiNames.I_MAX,
-                     ApiNames.PROTOKOLL, ApiNames.FAHRSTUFE, ApiNames.GERAUSCH, ApiNames.KONFIGURATION, ApiNames.STECKER, ApiNames.ADRESS,
-                     ApiNames.KAUFDATUM, ApiNames.WAHRUNG, ApiNames.PREIS, ApiNames.ANMERKUNG, ApiNames.STATUS, ApiNames.DELETED })
+@JsonPropertyOrder({ ApiNames.DECODER_ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.ARTIKEL_ID, ApiNames.BEZEICHNUNG,
+                     ApiNames.PROTOKOLL, ApiNames.FAHRSTUFE, ApiNames.ADRESS, ApiNames.KAUFDATUM, ApiNames.WAHRUNG, ApiNames.PREIS,
+                     ApiNames.ANMERKUNG, ApiNames.STATUS, ApiNames.DELETED })
 @Schema(name = ApiNames.DECODER, description = "Decoder - installed or spare.")
 public class DecoderRequest implements ItemRequest {
 
@@ -74,33 +72,17 @@ public class DecoderRequest implements ItemRequest {
     @Schema(description = "Decoder's description", example = "ESU Loksound")
     private String bezeichnung;
 
-    @JsonProperty(ApiNames.I_MAX)
-    @Schema(description = "Maximum current in A", example = "1.100", accessMode = AccessMode.READ_ONLY)
-    private BigDecimal iMax;
-
     @JsonProperty(ApiNames.PROTOKOLL)
     @Schema(description = "Decoder protocol", example = "MFX", required = true)
     private String protokoll;
-
-    @JsonProperty(ApiNames.FAHRSTUFE)
-    @Schema(description = "Decoder speed steps", example = "27", required = true)
-    private Integer fahrstufe;
 
     @JsonProperty(ApiNames.ADRESS)
     @Schema(description = "Decoder address", example = "28", required = true)
     private Integer adress;
 
-    @JsonProperty(ApiNames.GERAUSCH)
-    @Schema(description = "True if decoder supports sound", example = "true", accessMode = AccessMode.READ_ONLY)
-    private Boolean sound;
-
-    @JsonProperty(ApiNames.KONFIGURATION)
-    @Schema(description = "Configuration method", example = "CV", accessMode = AccessMode.READ_ONLY)
-    private Konfiguration konfiguration;
-
-    @JsonProperty(ApiNames.STECKER)
-    @Schema(description = "Stecker", example = "NEM352", accessMode = AccessMode.READ_ONLY)
-    private Stecker stecker;
+    @JsonProperty(ApiNames.FAHRSTUFE)
+    @Schema(description = "Decoder speed steps", example = "27", required = true)
+    private Integer fahrstufe;
 
     @JsonProperty(ApiNames.KAUFDATUM)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)

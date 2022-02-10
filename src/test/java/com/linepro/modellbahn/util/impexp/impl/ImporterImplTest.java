@@ -3,6 +3,7 @@ package com.linepro.modellbahn.util.impexp.impl;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
+import static org.mockito.quality.Strictness.LENIENT;
 
 import java.io.CharArrayReader;
 import java.math.BigDecimal;
@@ -20,12 +21,9 @@ import com.linepro.modellbahn.converter.Mapper;
 import com.linepro.modellbahn.entity.Decoder;
 import com.linepro.modellbahn.model.DecoderModel;
 import com.linepro.modellbahn.model.enums.DecoderStatus;
-import com.linepro.modellbahn.model.enums.Konfiguration;
-import com.linepro.modellbahn.model.enums.Stecker;
 import com.linepro.modellbahn.repository.lookup.Lookup;
 import com.linepro.modellbahn.request.DecoderRequest;
 import com.linepro.modellbahn.util.impexp.Importer;
-import static org.mockito.quality.Strictness.LENIENT;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = LENIENT)
@@ -35,12 +33,8 @@ public class ImporterImplTest {
     private static final String HERSTELLER = "ESU";
     private static final String BESTELL_NR = "62400";
     private static final String BEZEICHNUNG = "LokSound M4";
-    private static final BigDecimal I_MAX = BigDecimal.ONE;
     private static final String PROTOKOLL = "MFX";
     private static final Integer FAHRSTUFE = 127;
-    private static final Boolean GERAUSCH = true;
-    private static final Konfiguration KONFIGURATION = Konfiguration.CV;
-    private static final Stecker STECKER = Stecker.MTC21;
     private static final LocalDate KAUFDATUM = LocalDate.now();
     private static final String WAHRUNG = "EUR";
     private static final BigDecimal PREIS = BigDecimal.TEN;
@@ -67,12 +61,8 @@ public class ImporterImplTest {
                                                               .bestellNr(BESTELL_NR)
                                                               .artikelId(ARTIKEL_ID)
                                                               .bezeichnung(BEZEICHNUNG)
-                                                              .iMax(I_MAX)
                                                               .protokoll(PROTOKOLL)
                                                               .fahrstufe(FAHRSTUFE)
-                                                              .sound(GERAUSCH)
-                                                              .konfiguration(KONFIGURATION)
-                                                              .stecker(STECKER)
                                                               .kaufdatum(KAUFDATUM)
                                                               .wahrung(WAHRUNG)
                                                               .preis(PREIS)
@@ -81,8 +71,8 @@ public class ImporterImplTest {
                                                               .deleted(DELETED)
                                                               .build();
 
-    private static final String CSV = "decoderId,hersteller,bestellNr,bezeichnung,iMax,protokoll,fahrstufe,gerausch,konfiguration,stecker,kaufdatum,wahrung,preis,anmerkung,status,anleitungen,deleted\n" +
-                                      DECODER_ID + "," + HERSTELLER + "," + BESTELL_NR + ",\"" + BEZEICHNUNG + "\"," + I_MAX + "," + PROTOKOLL + "," + FAHRSTUFE + "," + GERAUSCH + "," + KONFIGURATION + "," + STECKER + "," + KAUFDATUM + "," + WAHRUNG + "," + PREIS + "," + ANMERKUNG + "," + STATUS + "," + ANLEITUNGEN + "," + DELETED +"\n";
+    private static final String CSV = "decoderId" + "," + "hersteller" + "," + "bestellNr" + "," + "bezeichnung" + "," + "protokoll" + "," + "fahrstufe" + "," + "kaufdatum" + "," + "wahrung" + "," + "preis" + "," + "anmerkung" + "," + "status" + "," + "anleitungen" + "," + "deleted\n" +
+                                      DECODER_ID  + "," + HERSTELLER   + "," + BESTELL_NR  + "," + BEZEICHNUNG + ","   + PROTOKOLL + ","   + FAHRSTUFE + ","   + KAUFDATUM + ","   + WAHRUNG + ","   + PREIS + ","   + ANMERKUNG + ","   + STATUS + ","   + ANLEITUNGEN + ","   + DELETED +"\n";
 
     private final CharArrayReader reader = new CharArrayReader(CSV.toCharArray());
 
@@ -95,7 +85,7 @@ public class ImporterImplTest {
     private Mapper<DecoderRequest,Decoder> mapper;  
 
     @Mock
-    private CommitterImpl<DecoderRequest, Decoder, DecoderModel> committer;
+    private Committer<DecoderRequest, Decoder, DecoderModel> committer;
 
     @Mock
     private Lookup<Decoder, DecoderModel> lookup;

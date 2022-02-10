@@ -8,14 +8,13 @@ import org.springframework.stereotype.Component;
 import com.linepro.modellbahn.converter.impl.MapperImpl;
 import com.linepro.modellbahn.converter.request.transcriber.ZugRequestTranscriber;
 import com.linepro.modellbahn.entity.Zug;
-import com.linepro.modellbahn.repository.lookup.ZugTypLookup;
 import com.linepro.modellbahn.request.ZugRequest;
 
 @Component(PREFIX + "ZugRequestMapper")
 public class ZugRequestMapper extends MapperImpl<ZugRequest, Zug> {
 
     @Autowired
-    public ZugRequestMapper(ZugTypLookup repository) {
-        super(() -> new Zug(), new ZugRequestTranscriber(repository));
+    public ZugRequestMapper(ZugRequestTranscriber transcriber) {
+        super(() -> new Zug(), transcriber);
     }
 }

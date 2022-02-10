@@ -49,7 +49,7 @@ public class ImporterImpl<R extends ItemRequest, E extends Item, M extends ItemM
 
     private final Mapper<R,E> mapper;
 
-    private final CommitterImpl<R,E,M> committer;
+    private final Committer<R, E, M> committer;
 
     private final Class<R> requestClass;
 
@@ -57,7 +57,7 @@ public class ImporterImpl<R extends ItemRequest, E extends Item, M extends ItemM
 
     private final Lookup<E,M> lookup;
 
-    public ImporterImpl(JpaRepository<E,Long> repository, Mapper<R,E> mapper, Lookup<E,M> lookup, CommitterImpl<R,E,M> committer, CsvSchemaGenerator generator, Class<R> requestClass) {
+    public ImporterImpl(JpaRepository<E,Long> repository, Mapper<R,E> mapper, Lookup<E,M> lookup, Committer<R, E, M> committer, CsvSchemaGenerator generator, Class<R> requestClass) {
         this.repository = repository;
         this.mapper = mapper;
         this.committer = committer;

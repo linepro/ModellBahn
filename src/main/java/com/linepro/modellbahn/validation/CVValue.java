@@ -25,8 +25,8 @@ import org.hibernate.validator.constraints.Range;
 @Null
 @Range(min=0, max=255, message = "{com.linepro.modellbahn.validator.constraints.cvvalue.range}")
 @ReportAsSingleViolation
-@Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
 @Retention(RUNTIME)
+@Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
 @Constraint(validatedBy = {})
 public @interface CVValue {
     String message() default "{com.linepro.modellbahn.validator.constraints.cvvalue.invalid}";

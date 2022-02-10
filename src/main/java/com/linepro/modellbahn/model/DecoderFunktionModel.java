@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.util.impexp.impl.SuppressExport;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -49,6 +50,7 @@ public class DecoderFunktionModel extends SpringdocModel<DecoderFunktionModel> i
     @Schema(description = "Decoder's id", example = "00001", accessMode = AccessMode.READ_ONLY)
     private String decoderId;
 
+    @SuppressExport
     @JsonProperty(ApiNames.ADRESS)
     @Schema(description = "Digital address", example = "80", required = true)
     private Integer adress;

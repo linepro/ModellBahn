@@ -12,7 +12,7 @@ import com.linepro.modellbahn.model.DecoderCvModel;
 @Component(PREFIX + "DecoderCvMapper")
 public class DecoderCvMapper extends MapperImpl<DecoderCv, DecoderCvModel> {
 
-    public DecoderCvMapper() {
-        super(() -> new DecoderCvModel(), new DecoderCvTranscriber());
+    public DecoderCvMapper(DecoderCvTranscriber transcriber) {
+        super(() -> new DecoderCvModel(), transcriber);
     }
 }

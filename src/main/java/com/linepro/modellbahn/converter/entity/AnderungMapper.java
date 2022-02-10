@@ -12,7 +12,7 @@ import com.linepro.modellbahn.model.AnderungModel;
 @Component(PREFIX + "AnderungMapper")
 public class AnderungMapper extends MapperImpl<Anderung, AnderungModel> {
 
-    public AnderungMapper() {
-        super(() -> new AnderungModel(), new AnderungTranscriber());
+    public AnderungMapper(AnderungTranscriber transcriber) {
+        super(() -> new AnderungModel(), transcriber);
     }
 }

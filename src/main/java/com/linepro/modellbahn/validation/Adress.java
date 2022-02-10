@@ -25,8 +25,8 @@ import org.hibernate.validator.constraints.ConstraintComposition;
 @DCCLongAdress
 @Magnetartikel
 @ReportAsSingleViolation
-@Target({ TYPE, ANNOTATION_TYPE })
 @Retention(RUNTIME)
+@Target({ TYPE, ANNOTATION_TYPE })
 @Constraint(validatedBy = {})
 public @interface Adress {
     String message() default "{com.linepro.modellbahn.validator.constraints.adress.invalid}";

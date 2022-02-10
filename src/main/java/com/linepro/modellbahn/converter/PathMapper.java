@@ -11,8 +11,8 @@ import com.linepro.modellbahn.io.FileStore;
 
 import lombok.RequiredArgsConstructor;
 
-@Component(PREFIX + "PathMapper")
 @RequiredArgsConstructor
+@Component(PREFIX + "PathMapper")
 public class PathMapper implements Mapper<Path, String> {
 
     @Autowired

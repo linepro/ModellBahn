@@ -5,7 +5,6 @@ import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.linepro.modellbahn.converter.PathMapper;
 import com.linepro.modellbahn.converter.entity.transcriber.BahnverwaltungTranscriber;
 import com.linepro.modellbahn.converter.impl.MapperImpl;
 import com.linepro.modellbahn.entity.Bahnverwaltung;
@@ -15,8 +14,8 @@ import com.linepro.modellbahn.model.BahnverwaltungModel;
 public class BahnverwaltungMapper extends MapperImpl<Bahnverwaltung, BahnverwaltungModel> {
 
     @Autowired
-    public BahnverwaltungMapper(PathMapper pathMapper) {
-        super(() -> new BahnverwaltungModel(), new BahnverwaltungTranscriber(pathMapper));
+    public BahnverwaltungMapper(BahnverwaltungTranscriber transcriber) {
+        super(() -> new BahnverwaltungModel(), transcriber);
     }
 
     @Override

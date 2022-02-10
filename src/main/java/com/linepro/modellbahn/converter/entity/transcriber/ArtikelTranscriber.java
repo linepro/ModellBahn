@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.converter.entity.transcriber;
 
+import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 import static com.linepro.modellbahn.util.exceptions.Result.attempt;
 import static com.linepro.modellbahn.util.exceptions.ResultCollector.success;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import com.linepro.modellbahn.converter.PathMapper;
@@ -25,6 +27,7 @@ import com.linepro.modellbahn.model.ProduktModel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
+@Component(PREFIX + "ArtikelTranscriber")
 public class ArtikelTranscriber implements Transcriber<Artikel, ArtikelModel> {
 
     private static final ArrayList<AnderungModel> KEIN_ANDERUNGEN = new ArrayList<>();

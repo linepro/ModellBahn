@@ -32,7 +32,7 @@ public class CsvSchemaGenerator {
     @ToString
     @EqualsAndHashCode
     @RequiredArgsConstructor
-    class CandidateColumn {
+    static class CandidateColumn {
         private final String name;
         private final ColumnType type;
     }
@@ -69,16 +69,29 @@ public class CsvSchemaGenerator {
                         .build();
     }
 
+    protected boolean isValue(Field f) {
+        return !Modifier.isStatic(f.getModifiers()) &&
+               !Modifier.isVolatile(f.getModifiers()) &&
+               !Modifier.isTransient(f.getModifiers());
+    }
+
+    protected boolean isExportable(Field f) {
+        JsonProperty p = f.getAnnotation(JsonProperty.class);
+        SuppressExport s = f.getAnnotation(SuppressExport.class);
+        return p != null && s == null;
+    }
+
+    protected boolean isSingleValue(Field f) {
+        return !Collection.class.isAssignableFrom(f.getType());
+    }
+    
     protected List<CandidateColumn> getCandidates(Class<?> modelClass) {
         return Stream.of(modelClass.getDeclaredFields())
-                 .filter(f -> !Modifier.isStatic(f.getModifiers()))
-                 .filter(f -> !Modifier.isVolatile(f.getModifiers()))
-                 .filter(f -> !Modifier.isTransient(f.getModifiers()))
-                 .filter(f -> f.getAnnotation(JsonProperty.class) != null)
-                 .filter(f -> f.getAnnotation(SuppressExport.class) == null)
-                 .filter(f -> !Collection.class.isAssignableFrom(f.getType()))
-                 .map(this::getCandidate)
-                 .collect(Collectors.toList());
+                     .filter(this::isValue)
+                     .filter(this::isExportable)
+                     .filter(this::isSingleValue)
+                     .map(this::getCandidate)
+                     .collect(Collectors.toList());
     }
 
     protected CandidateColumn getCandidate(Field f) {

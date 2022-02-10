@@ -1,11 +1,17 @@
 package com.linepro.modellbahn.converter.entity.transcriber;
 
+import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
+
+import org.springframework.stereotype.Component;
+
 import com.linepro.modellbahn.converter.PathMapper;
 import com.linepro.modellbahn.converter.impl.NamedAbbildungTranscriber;
 import com.linepro.modellbahn.entity.Hersteller;
 import com.linepro.modellbahn.model.HerstellerModel;
 
+@Component(PREFIX + "HerstellerTranscriber")
 public class HerstellerTranscriber extends NamedAbbildungTranscriber<Hersteller, HerstellerModel> {
+
     public HerstellerTranscriber(PathMapper pathMapper) {
         super(pathMapper);
     }

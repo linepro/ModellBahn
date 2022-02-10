@@ -1,13 +1,17 @@
 package com.linepro.modellbahn.converter.entity.transcriber;
 
+import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 import static com.linepro.modellbahn.persistence.util.ProxyUtils.isAvailable;
 
 import java.util.Optional;
+
+import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.converter.Transcriber;
 import com.linepro.modellbahn.entity.DecoderTypFunktion;
 import com.linepro.modellbahn.model.DecoderTypFunktionModel;
 
+@Component(PREFIX + "DecoderTypFunktionTranscriber")
 public class DecoderTypFunktionTranscriber implements Transcriber<DecoderTypFunktion,DecoderTypFunktionModel> {
 
     @Override
