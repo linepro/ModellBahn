@@ -50,13 +50,13 @@ public class ArtikelRepositoryTest {
 
     @Test
     public void testFindByArtikelId() throws Exception {
-        Optional<Artikel> found = artikelRepository.findByArtikelId("00001");
+        Optional<Artikel> found = artikelRepository.findByArtikelId("00000H");
 
         assertTrue(found.isPresent());
 
         Artikel artikel = found.get();
 
-        assertEquals("00001", artikel.getArtikelId());
+        assertEquals("00000H", artikel.getArtikelId());
         assertTrue(isAvailable(artikel.getProdukt()));
     }
 
