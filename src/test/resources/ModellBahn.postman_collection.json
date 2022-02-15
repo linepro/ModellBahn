@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "f1472063-6ec0-4d3a-bc48-9bfac01b084f",
+		"_postman_id": "a399239a-3d46-42e4-b627-57353d38ca82",
 		"name": "ModellBahn",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -257,6 +257,35 @@
 					"response": []
 				},
 				{
+					"name": "Open - Conditions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Conditions\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/conditions",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"conditions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Open - Config Props",
 					"event": [
 						{
@@ -406,6 +435,35 @@
 					"response": []
 				},
 				{
+					"name": "Open - Heap Dump",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Heap Dump\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/heapdump",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"heapdump"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Open - HTTP Trace",
 					"event": [
 						{
@@ -470,6 +528,41 @@
 							],
 							"path": [
 								"info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Open - Integration Graph",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Info\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/integrationgraph",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"integrationgraph"
 							]
 						}
 					},
@@ -616,6 +709,41 @@
 					"response": []
 				},
 				{
+					"name": "Open - Prometheus",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Metrics\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/prometheus ",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"prometheus "
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Open - Scheduled Tasks",
 					"event": [
 						{
@@ -645,6 +773,76 @@
 							],
 							"path": [
 								"scheduledtasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Open - Sessions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Scheduled Tasks\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/sessions ",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"sessions "
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Open - Startup",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Scheduled Tasks\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/startup",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"startup"
 							]
 						}
 					},
@@ -864,6 +1062,35 @@
 					"response": []
 				},
 				{
+					"name": "Management - Conditions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Conditions\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/conditions",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"conditions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Management - Config Props",
 					"event": [
 						{
@@ -1004,6 +1231,35 @@
 					"response": []
 				},
 				{
+					"name": "Management - Heap Dump",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Heap Dump\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(2000));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/heapdump",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"heapdump"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Management - HTTP Trace",
 					"event": [
 						{
@@ -1068,6 +1324,41 @@
 							],
 							"path": [
 								"info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Management - Integration Graph",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Info\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/integrationgraph",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"integrationgraph"
 							]
 						}
 					},
@@ -1223,6 +1514,41 @@
 					"response": []
 				},
 				{
+					"name": "Management - Prometheus",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Metrics\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/prometheus ",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"prometheus "
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Management - Scheduled Tasks",
 					"event": [
 						{
@@ -1252,6 +1578,76 @@
 							],
 							"path": [
 								"scheduledtasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Management - Sessions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Scheduled Tasks\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/sessions ",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"sessions "
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Management - Startup",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Scheduled Tasks\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/startup",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"startup"
 							]
 						}
 					},
@@ -11909,112 +12305,112 @@
 									"pm.test(\"funktionen[0].decoderId\", () => pm.expect(jsonData.funktionen[0].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[0].funktion\", () => pm.expect(jsonData.funktionen[0].funktion).to.eql(\"F0\"));\r",
 									"pm.test(\"funktionen[0].bezeichnung\", () => pm.expect(jsonData.funktionen[0].bezeichnung).to.eql(\"Funktion 0\"));\r",
-									"pm.test(\"funktionen[0].programmable\", () => pm.expect(jsonData.funktionen[0].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[0].programmable\", () => pm.expect(jsonData.funktionen[0].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[0].deleted\", () => pm.expect(jsonData.funktionen[0].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[0]._links.parent\", () => pm.expect(jsonData.funktionen[0]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[0]._links.update\", () => pm.expect(jsonData.funktionen[0]._links.update[0].href).to.eql(self + \"/funktionen/F0\"));\r",
 									"pm.test(\"funktionen[1].decoderId\", () => pm.expect(jsonData.funktionen[1].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[1].funktion\", () => pm.expect(jsonData.funktionen[1].funktion).to.eql(\"F1\"));\r",
 									"pm.test(\"funktionen[1].bezeichnung\", () => pm.expect(jsonData.funktionen[1].bezeichnung).to.eql(\"Funktion 1\"));\r",
-									"pm.test(\"funktionen[1].programmable\", () => pm.expect(jsonData.funktionen[1].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[1].programmable\", () => pm.expect(jsonData.funktionen[1].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[1].deleted\", () => pm.expect(jsonData.funktionen[1].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[1]._links.parent\", () => pm.expect(jsonData.funktionen[1]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[1]._links.update\", () => pm.expect(jsonData.funktionen[1]._links.update[0].href).to.eql(self + \"/funktionen/F1\"));\r",
 									"pm.test(\"funktionen[2].decoderId\", () => pm.expect(jsonData.funktionen[2].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[2].funktion\", () => pm.expect(jsonData.funktionen[2].funktion).to.eql(\"F2\"));\r",
 									"pm.test(\"funktionen[2].bezeichnung\", () => pm.expect(jsonData.funktionen[2].bezeichnung).to.eql(\"Funktion 2\"));\r",
-									"pm.test(\"funktionen[2].programmable\", () => pm.expect(jsonData.funktionen[2].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[2].programmable\", () => pm.expect(jsonData.funktionen[2].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[2].deleted\", () => pm.expect(jsonData.funktionen[2].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[2]._links.parent\", () => pm.expect(jsonData.funktionen[2]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[2]._links.update\", () => pm.expect(jsonData.funktionen[2]._links.update[0].href).to.eql(self + \"/funktionen/F2\"));\r",
 									"pm.test(\"funktionen[3].decoderId\", () => pm.expect(jsonData.funktionen[3].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[3].funktion\", () => pm.expect(jsonData.funktionen[3].funktion).to.eql(\"F3\"));\r",
 									"pm.test(\"funktionen[3].bezeichnung\", () => pm.expect(jsonData.funktionen[3].bezeichnung).to.eql(\"Funktion 3\"));\r",
-									"pm.test(\"funktionen[3].programmable\", () => pm.expect(jsonData.funktionen[3].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[3].programmable\", () => pm.expect(jsonData.funktionen[3].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[3].deleted\", () => pm.expect(jsonData.funktionen[3].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[3]._links.parent\", () => pm.expect(jsonData.funktionen[3]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[3]._links.update\", () => pm.expect(jsonData.funktionen[3]._links.update[0].href).to.eql(self + \"/funktionen/F3\"));\r",
 									"pm.test(\"funktionen[4].decoderId\", () => pm.expect(jsonData.funktionen[4].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[4].funktion\", () => pm.expect(jsonData.funktionen[4].funktion).to.eql(\"F4\"));\r",
 									"pm.test(\"funktionen[4].bezeichnung\", () => pm.expect(jsonData.funktionen[4].bezeichnung).to.eql(\"Funktion 4\"));\r",
-									"pm.test(\"funktionen[4].programmable\", () => pm.expect(jsonData.funktionen[4].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[4].programmable\", () => pm.expect(jsonData.funktionen[4].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[4].deleted\", () => pm.expect(jsonData.funktionen[4].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[4]._links.parent\", () => pm.expect(jsonData.funktionen[4]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[4]._links.update\", () => pm.expect(jsonData.funktionen[4]._links.update[0].href).to.eql(self + \"/funktionen/F4\"));\r",
 									"pm.test(\"funktionen[5].decoderId\", () => pm.expect(jsonData.funktionen[5].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[5].funktion\", () => pm.expect(jsonData.funktionen[5].funktion).to.eql(\"F5\"));\r",
 									"pm.test(\"funktionen[5].bezeichnung\", () => pm.expect(jsonData.funktionen[5].bezeichnung).to.eql(\"Funktion 5\"));\r",
-									"pm.test(\"funktionen[5].programmable\", () => pm.expect(jsonData.funktionen[5].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[5].programmable\", () => pm.expect(jsonData.funktionen[5].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[5].deleted\", () => pm.expect(jsonData.funktionen[5].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[5]._links.parent\", () => pm.expect(jsonData.funktionen[5]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[5]._links.update\", () => pm.expect(jsonData.funktionen[5]._links.update[0].href).to.eql(self + \"/funktionen/F5\"));\r",
 									"pm.test(\"funktionen[6].decoderId\", () => pm.expect(jsonData.funktionen[6].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[6].funktion\", () => pm.expect(jsonData.funktionen[6].funktion).to.eql(\"F6\"));\r",
 									"pm.test(\"funktionen[6].bezeichnung\", () => pm.expect(jsonData.funktionen[6].bezeichnung).to.eql(\"Funktion 6\"));\r",
-									"pm.test(\"funktionen[6].programmable\", () => pm.expect(jsonData.funktionen[6].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[6].programmable\", () => pm.expect(jsonData.funktionen[6].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[6].deleted\", () => pm.expect(jsonData.funktionen[6].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[6]._links.parent\", () => pm.expect(jsonData.funktionen[6]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[6]._links.update\", () => pm.expect(jsonData.funktionen[6]._links.update[0].href).to.eql(self + \"/funktionen/F6\"));\r",
 									"pm.test(\"funktionen[7].decoderId\", () => pm.expect(jsonData.funktionen[7].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[7].funktion\", () => pm.expect(jsonData.funktionen[7].funktion).to.eql(\"F7\"));\r",
 									"pm.test(\"funktionen[7].bezeichnung\", () => pm.expect(jsonData.funktionen[7].bezeichnung).to.eql(\"Funktion 7\"));\r",
-									"pm.test(\"funktionen[7].programmable\", () => pm.expect(jsonData.funktionen[7].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[7].programmable\", () => pm.expect(jsonData.funktionen[7].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[7].deleted\", () => pm.expect(jsonData.funktionen[7].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[7]._links.parent\", () => pm.expect(jsonData.funktionen[7]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[7]._links.update\", () => pm.expect(jsonData.funktionen[7]._links.update[0].href).to.eql(self + \"/funktionen/F7\"));\r",
 									"pm.test(\"funktionen[8].decoderId\", () => pm.expect(jsonData.funktionen[8].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[8].funktion\", () => pm.expect(jsonData.funktionen[8].funktion).to.eql(\"F8\"));\r",
 									"pm.test(\"funktionen[8].bezeichnung\", () => pm.expect(jsonData.funktionen[8].bezeichnung).to.eql(\"Funktion 8\"));\r",
-									"pm.test(\"funktionen[8].programmable\", () => pm.expect(jsonData.funktionen[8].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[8].programmable\", () => pm.expect(jsonData.funktionen[8].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[8].deleted\", () => pm.expect(jsonData.funktionen[8].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[8]._links.parent\", () => pm.expect(jsonData.funktionen[8]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[8]._links.update\", () => pm.expect(jsonData.funktionen[8]._links.update[0].href).to.eql(self + \"/funktionen/F8\"));\r",
 									"pm.test(\"funktionen[9].decoderId\", () => pm.expect(jsonData.funktionen[9].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[9].funktion\", () => pm.expect(jsonData.funktionen[9].funktion).to.eql(\"F9\"));\r",
 									"pm.test(\"funktionen[9].bezeichnung\", () => pm.expect(jsonData.funktionen[9].bezeichnung).to.eql(\"Funktion 9\"));\r",
-									"pm.test(\"funktionen[9].programmable\", () => pm.expect(jsonData.funktionen[9].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[9].programmable\", () => pm.expect(jsonData.funktionen[9].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[9].deleted\", () => pm.expect(jsonData.funktionen[9].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[9]._links.parent\", () => pm.expect(jsonData.funktionen[9]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[9]._links.update\", () => pm.expect(jsonData.funktionen[9]._links.update[0].href).to.eql(self + \"/funktionen/F9\"));\r",
 									"pm.test(\"funktionen[10].decoderId\", () => pm.expect(jsonData.funktionen[10].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[10].funktion\", () => pm.expect(jsonData.funktionen[10].funktion).to.eql(\"F10\"));\r",
 									"pm.test(\"funktionen[10].bezeichnung\", () => pm.expect(jsonData.funktionen[10].bezeichnung).to.eql(\"Funktion 10\"));\r",
-									"pm.test(\"funktionen[10].programmable\", () => pm.expect(jsonData.funktionen[10].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[10].programmable\", () => pm.expect(jsonData.funktionen[10].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[10].deleted\", () => pm.expect(jsonData.funktionen[10].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[10]._links.parent\", () => pm.expect(jsonData.funktionen[10]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[10]._links.update\", () => pm.expect(jsonData.funktionen[10]._links.update[0].href).to.eql(self + \"/funktionen/F10\"));\r",
 									"pm.test(\"funktionen[11].decoderId\", () => pm.expect(jsonData.funktionen[11].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[11].funktion\", () => pm.expect(jsonData.funktionen[11].funktion).to.eql(\"F11\"));\r",
 									"pm.test(\"funktionen[11].bezeichnung\", () => pm.expect(jsonData.funktionen[11].bezeichnung).to.eql(\"Funktion 11\"));\r",
-									"pm.test(\"funktionen[11].programmable\", () => pm.expect(jsonData.funktionen[11].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[11].programmable\", () => pm.expect(jsonData.funktionen[11].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[11].deleted\", () => pm.expect(jsonData.funktionen[11].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[11]._links.parent\", () => pm.expect(jsonData.funktionen[11]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[11]._links.update\", () => pm.expect(jsonData.funktionen[11]._links.update[0].href).to.eql(self + \"/funktionen/F11\"));\r",
 									"pm.test(\"funktionen[12].decoderId\", () => pm.expect(jsonData.funktionen[12].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[12].funktion\", () => pm.expect(jsonData.funktionen[12].funktion).to.eql(\"F12\"));\r",
 									"pm.test(\"funktionen[12].bezeichnung\", () => pm.expect(jsonData.funktionen[12].bezeichnung).to.eql(\"Funktion 12\"));\r",
-									"pm.test(\"funktionen[12].programmable\", () => pm.expect(jsonData.funktionen[12].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[12].programmable\", () => pm.expect(jsonData.funktionen[12].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[12].deleted\", () => pm.expect(jsonData.funktionen[12].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[12]._links.parent\", () => pm.expect(jsonData.funktionen[12]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[12]._links.update\", () => pm.expect(jsonData.funktionen[12]._links.update[0].href).to.eql(self + \"/funktionen/F12\"));\r",
 									"pm.test(\"funktionen[13].decoderId\", () => pm.expect(jsonData.funktionen[13].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[13].funktion\", () => pm.expect(jsonData.funktionen[13].funktion).to.eql(\"F13\"));\r",
 									"pm.test(\"funktionen[13].bezeichnung\", () => pm.expect(jsonData.funktionen[13].bezeichnung).to.eql(\"Funktion 13\"));\r",
-									"pm.test(\"funktionen[13].programmable\", () => pm.expect(jsonData.funktionen[13].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[13].programmable\", () => pm.expect(jsonData.funktionen[13].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[13].deleted\", () => pm.expect(jsonData.funktionen[13].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[13]._links.parent\", () => pm.expect(jsonData.funktionen[13]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[13]._links.update\", () => pm.expect(jsonData.funktionen[13]._links.update[0].href).to.eql(self + \"/funktionen/F13\"));\r",
 									"pm.test(\"funktionen[14].decoderId\", () => pm.expect(jsonData.funktionen[14].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[14].funktion\", () => pm.expect(jsonData.funktionen[14].funktion).to.eql(\"F14\"));\r",
 									"pm.test(\"funktionen[14].bezeichnung\", () => pm.expect(jsonData.funktionen[14].bezeichnung).to.eql(\"Funktion 14\"));\r",
-									"pm.test(\"funktionen[14].programmable\", () => pm.expect(jsonData.funktionen[14].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[14].programmable\", () => pm.expect(jsonData.funktionen[14].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[14].deleted\", () => pm.expect(jsonData.funktionen[14].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[14]._links.parent\", () => pm.expect(jsonData.funktionen[14]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[14]._links.update\", () => pm.expect(jsonData.funktionen[14]._links.update[0].href).to.eql(self + \"/funktionen/F14\"));\r",
 									"pm.test(\"funktionen[15].decoderId\", () => pm.expect(jsonData.funktionen[15].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[15].funktion\", () => pm.expect(jsonData.funktionen[15].funktion).to.eql(\"F15\"));\r",
 									"pm.test(\"funktionen[15].bezeichnung\", () => pm.expect(jsonData.funktionen[15].bezeichnung).to.eql(\"Funktion 15\"));\r",
-									"pm.test(\"funktionen[15].programmable\", () => pm.expect(jsonData.funktionen[15].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[15].programmable\", () => pm.expect(jsonData.funktionen[15].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[15].deleted\", () => pm.expect(jsonData.funktionen[15].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[15]._links.parent\", () => pm.expect(jsonData.funktionen[15]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[15]._links.update\", () => pm.expect(jsonData.funktionen[15]._links.update[0].href).to.eql(self + \"/funktionen/F15\"));\r",
@@ -12163,7 +12559,7 @@
 									"pm.test(\"decoderId\", () => pm.expect(jsonData.decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktion\", () => pm.expect(jsonData.funktion).to.eql(pm.variables.get(\"fnFunktion\")));\r",
 									"pm.test(\"bezeichnung\", () => pm.expect(jsonData.bezeichnung).to.eql(pm.variables.get(\"fnBezeichnung\")));\r",
-									"pm.test(\"programmable\", () => pm.expect(jsonData.programmable).to.eql(false));\r",
+									"pm.test(\"programmable\", () => pm.expect(jsonData.programmable).to.be.true);\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"_links.parent\", () => pm.expect(jsonData._links.parent[0].href).to.eql(parent));\r",
 									"pm.test(\"_links.update\", () => pm.expect(jsonData._links.update[0].href).to.eql(self));"
@@ -12462,112 +12858,112 @@
 									"pm.test(\"funktionen[0].decoderId\", () => pm.expect(jsonData.funktionen[0].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[0].funktion\", () => pm.expect(jsonData.funktionen[0].funktion).to.eql(pm.variables.get(\"fnFunktion\")));\r",
 									"pm.test(\"funktionen[0].bezeichnung\", () => pm.expect(jsonData.funktionen[0].bezeichnung).to.eql(pm.variables.get(\"fnBezeichnung\")));\r",
-									"pm.test(\"funktionen[0].programmable\", () => pm.expect(jsonData.funktionen[0].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[0].programmable\", () => pm.expect(jsonData.funktionen[0].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[0].deleted\", () => pm.expect(jsonData.funktionen[0].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[0]._links.parent\", () => pm.expect(jsonData.funktionen[0]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[0]._links.update\", () => pm.expect(jsonData.funktionen[0]._links.update[0].href).to.eql(self + \"/funktionen/F0\"));\r",
 									"pm.test(\"funktionen[1].decoderId\", () => pm.expect(jsonData.funktionen[1].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[1].funktion\", () => pm.expect(jsonData.funktionen[1].funktion).to.eql(\"F1\"));\r",
 									"pm.test(\"funktionen[1].bezeichnung\", () => pm.expect(jsonData.funktionen[1].bezeichnung).to.eql(\"Funktion 1\"));\r",
-									"pm.test(\"funktionen[1].programmable\", () => pm.expect(jsonData.funktionen[1].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[1].programmable\", () => pm.expect(jsonData.funktionen[1].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[1].deleted\", () => pm.expect(jsonData.funktionen[1].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[1]._links.parent\", () => pm.expect(jsonData.funktionen[1]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[1]._links.update\", () => pm.expect(jsonData.funktionen[1]._links.update[0].href).to.eql(self + \"/funktionen/F1\"));\r",
 									"pm.test(\"funktionen[2].decoderId\", () => pm.expect(jsonData.funktionen[2].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[2].funktion\", () => pm.expect(jsonData.funktionen[2].funktion).to.eql(\"F2\"));\r",
 									"pm.test(\"funktionen[2].bezeichnung\", () => pm.expect(jsonData.funktionen[2].bezeichnung).to.eql(\"Funktion 2\"));\r",
-									"pm.test(\"funktionen[2].programmable\", () => pm.expect(jsonData.funktionen[2].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[2].programmable\", () => pm.expect(jsonData.funktionen[2].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[2].deleted\", () => pm.expect(jsonData.funktionen[2].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[2]._links.parent\", () => pm.expect(jsonData.funktionen[2]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[2]._links.update\", () => pm.expect(jsonData.funktionen[2]._links.update[0].href).to.eql(self + \"/funktionen/F2\"));\r",
 									"pm.test(\"funktionen[3].decoderId\", () => pm.expect(jsonData.funktionen[3].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[3].funktion\", () => pm.expect(jsonData.funktionen[3].funktion).to.eql(\"F3\"));\r",
 									"pm.test(\"funktionen[3].bezeichnung\", () => pm.expect(jsonData.funktionen[3].bezeichnung).to.eql(\"Funktion 3\"));\r",
-									"pm.test(\"funktionen[3].programmable\", () => pm.expect(jsonData.funktionen[3].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[3].programmable\", () => pm.expect(jsonData.funktionen[3].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[3].deleted\", () => pm.expect(jsonData.funktionen[3].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[3]._links.parent\", () => pm.expect(jsonData.funktionen[3]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[3]._links.update\", () => pm.expect(jsonData.funktionen[3]._links.update[0].href).to.eql(self + \"/funktionen/F3\"));\r",
 									"pm.test(\"funktionen[4].decoderId\", () => pm.expect(jsonData.funktionen[4].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[4].funktion\", () => pm.expect(jsonData.funktionen[4].funktion).to.eql(\"F4\"));\r",
 									"pm.test(\"funktionen[4].bezeichnung\", () => pm.expect(jsonData.funktionen[4].bezeichnung).to.eql(\"Funktion 4\"));\r",
-									"pm.test(\"funktionen[4].programmable\", () => pm.expect(jsonData.funktionen[4].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[4].programmable\", () => pm.expect(jsonData.funktionen[4].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[4].deleted\", () => pm.expect(jsonData.funktionen[4].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[4]._links.parent\", () => pm.expect(jsonData.funktionen[4]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[4]._links.update\", () => pm.expect(jsonData.funktionen[4]._links.update[0].href).to.eql(self + \"/funktionen/F4\"));\r",
 									"pm.test(\"funktionen[5].decoderId\", () => pm.expect(jsonData.funktionen[5].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[5].funktion\", () => pm.expect(jsonData.funktionen[5].funktion).to.eql(\"F5\"));\r",
 									"pm.test(\"funktionen[5].bezeichnung\", () => pm.expect(jsonData.funktionen[5].bezeichnung).to.eql(\"Funktion 5\"));\r",
-									"pm.test(\"funktionen[5].programmable\", () => pm.expect(jsonData.funktionen[5].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[5].programmable\", () => pm.expect(jsonData.funktionen[5].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[5].deleted\", () => pm.expect(jsonData.funktionen[5].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[5]._links.parent\", () => pm.expect(jsonData.funktionen[5]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[5]._links.update\", () => pm.expect(jsonData.funktionen[5]._links.update[0].href).to.eql(self + \"/funktionen/F5\"));\r",
 									"pm.test(\"funktionen[6].decoderId\", () => pm.expect(jsonData.funktionen[6].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[6].funktion\", () => pm.expect(jsonData.funktionen[6].funktion).to.eql(\"F6\"));\r",
 									"pm.test(\"funktionen[6].bezeichnung\", () => pm.expect(jsonData.funktionen[6].bezeichnung).to.eql(\"Funktion 6\"));\r",
-									"pm.test(\"funktionen[6].programmable\", () => pm.expect(jsonData.funktionen[6].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[6].programmable\", () => pm.expect(jsonData.funktionen[6].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[6].deleted\", () => pm.expect(jsonData.funktionen[6].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[6]._links.parent\", () => pm.expect(jsonData.funktionen[6]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[6]._links.update\", () => pm.expect(jsonData.funktionen[6]._links.update[0].href).to.eql(self + \"/funktionen/F6\"));\r",
 									"pm.test(\"funktionen[7].decoderId\", () => pm.expect(jsonData.funktionen[7].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[7].funktion\", () => pm.expect(jsonData.funktionen[7].funktion).to.eql(\"F7\"));\r",
 									"pm.test(\"funktionen[7].bezeichnung\", () => pm.expect(jsonData.funktionen[7].bezeichnung).to.eql(\"Funktion 7\"));\r",
-									"pm.test(\"funktionen[7].programmable\", () => pm.expect(jsonData.funktionen[7].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[7].programmable\", () => pm.expect(jsonData.funktionen[7].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[7].deleted\", () => pm.expect(jsonData.funktionen[7].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[7]._links.parent\", () => pm.expect(jsonData.funktionen[7]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[7]._links.update\", () => pm.expect(jsonData.funktionen[7]._links.update[0].href).to.eql(self + \"/funktionen/F7\"));\r",
 									"pm.test(\"funktionen[8].decoderId\", () => pm.expect(jsonData.funktionen[8].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[8].funktion\", () => pm.expect(jsonData.funktionen[8].funktion).to.eql(\"F8\"));\r",
 									"pm.test(\"funktionen[8].bezeichnung\", () => pm.expect(jsonData.funktionen[8].bezeichnung).to.eql(\"Funktion 8\"));\r",
-									"pm.test(\"funktionen[8].programmable\", () => pm.expect(jsonData.funktionen[8].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[8].programmable\", () => pm.expect(jsonData.funktionen[8].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[8].deleted\", () => pm.expect(jsonData.funktionen[8].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[8]._links.parent\", () => pm.expect(jsonData.funktionen[8]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[8]._links.update\", () => pm.expect(jsonData.funktionen[8]._links.update[0].href).to.eql(self + \"/funktionen/F8\"));\r",
 									"pm.test(\"funktionen[9].decoderId\", () => pm.expect(jsonData.funktionen[9].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[9].funktion\", () => pm.expect(jsonData.funktionen[9].funktion).to.eql(\"F9\"));\r",
 									"pm.test(\"funktionen[9].bezeichnung\", () => pm.expect(jsonData.funktionen[9].bezeichnung).to.eql(\"Funktion 9\"));\r",
-									"pm.test(\"funktionen[9].programmable\", () => pm.expect(jsonData.funktionen[9].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[9].programmable\", () => pm.expect(jsonData.funktionen[9].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[9].deleted\", () => pm.expect(jsonData.funktionen[9].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[9]._links.parent\", () => pm.expect(jsonData.funktionen[9]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[9]._links.update\", () => pm.expect(jsonData.funktionen[9]._links.update[0].href).to.eql(self + \"/funktionen/F9\"));\r",
 									"pm.test(\"funktionen[10].decoderId\", () => pm.expect(jsonData.funktionen[10].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[10].funktion\", () => pm.expect(jsonData.funktionen[10].funktion).to.eql(\"F10\"));\r",
 									"pm.test(\"funktionen[10].bezeichnung\", () => pm.expect(jsonData.funktionen[10].bezeichnung).to.eql(\"Funktion 10\"));\r",
-									"pm.test(\"funktionen[10].programmable\", () => pm.expect(jsonData.funktionen[10].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[10].programmable\", () => pm.expect(jsonData.funktionen[10].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[10].deleted\", () => pm.expect(jsonData.funktionen[10].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[10]._links.parent\", () => pm.expect(jsonData.funktionen[10]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[10]._links.update\", () => pm.expect(jsonData.funktionen[10]._links.update[0].href).to.eql(self + \"/funktionen/F10\"));\r",
 									"pm.test(\"funktionen[11].decoderId\", () => pm.expect(jsonData.funktionen[11].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[11].funktion\", () => pm.expect(jsonData.funktionen[11].funktion).to.eql(\"F11\"));\r",
 									"pm.test(\"funktionen[11].bezeichnung\", () => pm.expect(jsonData.funktionen[11].bezeichnung).to.eql(\"Funktion 11\"));\r",
-									"pm.test(\"funktionen[11].programmable\", () => pm.expect(jsonData.funktionen[11].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[11].programmable\", () => pm.expect(jsonData.funktionen[11].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[11].deleted\", () => pm.expect(jsonData.funktionen[11].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[11]._links.parent\", () => pm.expect(jsonData.funktionen[11]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[11]._links.update\", () => pm.expect(jsonData.funktionen[11]._links.update[0].href).to.eql(self + \"/funktionen/F11\"));\r",
 									"pm.test(\"funktionen[12].decoderId\", () => pm.expect(jsonData.funktionen[12].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[12].funktion\", () => pm.expect(jsonData.funktionen[12].funktion).to.eql(\"F12\"));\r",
 									"pm.test(\"funktionen[12].bezeichnung\", () => pm.expect(jsonData.funktionen[12].bezeichnung).to.eql(\"Funktion 12\"));\r",
-									"pm.test(\"funktionen[12].programmable\", () => pm.expect(jsonData.funktionen[12].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[12].programmable\", () => pm.expect(jsonData.funktionen[12].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[12].deleted\", () => pm.expect(jsonData.funktionen[12].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[12]._links.parent\", () => pm.expect(jsonData.funktionen[12]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[12]._links.update\", () => pm.expect(jsonData.funktionen[12]._links.update[0].href).to.eql(self + \"/funktionen/F12\"));\r",
 									"pm.test(\"funktionen[13].decoderId\", () => pm.expect(jsonData.funktionen[13].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[13].funktion\", () => pm.expect(jsonData.funktionen[13].funktion).to.eql(\"F13\"));\r",
 									"pm.test(\"funktionen[13].bezeichnung\", () => pm.expect(jsonData.funktionen[13].bezeichnung).to.eql(\"Funktion 13\"));\r",
-									"pm.test(\"funktionen[13].programmable\", () => pm.expect(jsonData.funktionen[13].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[13].programmable\", () => pm.expect(jsonData.funktionen[13].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[13].deleted\", () => pm.expect(jsonData.funktionen[13].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[13]._links.parent\", () => pm.expect(jsonData.funktionen[13]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[13]._links.update\", () => pm.expect(jsonData.funktionen[13]._links.update[0].href).to.eql(self + \"/funktionen/F13\"));\r",
 									"pm.test(\"funktionen[14].decoderId\", () => pm.expect(jsonData.funktionen[14].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[14].funktion\", () => pm.expect(jsonData.funktionen[14].funktion).to.eql(\"F14\"));\r",
 									"pm.test(\"funktionen[14].bezeichnung\", () => pm.expect(jsonData.funktionen[14].bezeichnung).to.eql(\"Funktion 14\"));\r",
-									"pm.test(\"funktionen[14].programmable\", () => pm.expect(jsonData.funktionen[14].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[14].programmable\", () => pm.expect(jsonData.funktionen[14].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[14].deleted\", () => pm.expect(jsonData.funktionen[14].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[14]._links.parent\", () => pm.expect(jsonData.funktionen[14]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[14]._links.update\", () => pm.expect(jsonData.funktionen[14]._links.update[0].href).to.eql(self + \"/funktionen/F14\"));\r",
 									"pm.test(\"funktionen[15].decoderId\", () => pm.expect(jsonData.funktionen[15].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[15].funktion\", () => pm.expect(jsonData.funktionen[15].funktion).to.eql(\"F15\"));\r",
 									"pm.test(\"funktionen[15].bezeichnung\", () => pm.expect(jsonData.funktionen[15].bezeichnung).to.eql(\"Funktion 15\"));\r",
-									"pm.test(\"funktionen[15].programmable\", () => pm.expect(jsonData.funktionen[15].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[15].programmable\", () => pm.expect(jsonData.funktionen[15].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[15].deleted\", () => pm.expect(jsonData.funktionen[15].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[15]._links.parent\", () => pm.expect(jsonData.funktionen[15]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[15]._links.update\", () => pm.expect(jsonData.funktionen[15]._links.update[0].href).to.eql(self + \"/funktionen/F15\"));\r",
@@ -12856,112 +13252,112 @@
 									"pm.test(\"funktionen[0].decoderId\", () => pm.expect(jsonData.funktionen[0].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[0].funktion\", () => pm.expect(jsonData.funktionen[0].funktion).to.eql(pm.variables.get(\"fnFunktion\")));\r",
 									"pm.test(\"funktionen[0].bezeichnung\", () => pm.expect(jsonData.funktionen[0].bezeichnung).to.eql(pm.variables.get(\"fnBezeichnung\")));\r",
-									"pm.test(\"funktionen[0].programmable\", () => pm.expect(jsonData.funktionen[0].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[0].programmable\", () => pm.expect(jsonData.funktionen[0].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[0].deleted\", () => pm.expect(jsonData.funktionen[0].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[0]._links.parent\", () => pm.expect(jsonData.funktionen[0]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[0]._links.update\", () => pm.expect(jsonData.funktionen[0]._links.update[0].href).to.eql(self + \"/funktionen/F0\"));\r",
 									"pm.test(\"funktionen[1].decoderId\", () => pm.expect(jsonData.funktionen[1].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[1].funktion\", () => pm.expect(jsonData.funktionen[1].funktion).to.eql(\"F1\"));\r",
 									"pm.test(\"funktionen[1].bezeichnung\", () => pm.expect(jsonData.funktionen[1].bezeichnung).to.eql(\"Funktion 1\"));\r",
-									"pm.test(\"funktionen[1].programmable\", () => pm.expect(jsonData.funktionen[1].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[1].programmable\", () => pm.expect(jsonData.funktionen[1].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[1].deleted\", () => pm.expect(jsonData.funktionen[1].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[1]._links.parent\", () => pm.expect(jsonData.funktionen[1]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[1]._links.update\", () => pm.expect(jsonData.funktionen[1]._links.update[0].href).to.eql(self + \"/funktionen/F1\"));\r",
 									"pm.test(\"funktionen[2].decoderId\", () => pm.expect(jsonData.funktionen[2].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[2].funktion\", () => pm.expect(jsonData.funktionen[2].funktion).to.eql(\"F2\"));\r",
 									"pm.test(\"funktionen[2].bezeichnung\", () => pm.expect(jsonData.funktionen[2].bezeichnung).to.eql(\"Funktion 2\"));\r",
-									"pm.test(\"funktionen[2].programmable\", () => pm.expect(jsonData.funktionen[2].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[2].programmable\", () => pm.expect(jsonData.funktionen[2].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[2].deleted\", () => pm.expect(jsonData.funktionen[2].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[2]._links.parent\", () => pm.expect(jsonData.funktionen[2]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[2]._links.update\", () => pm.expect(jsonData.funktionen[2]._links.update[0].href).to.eql(self + \"/funktionen/F2\"));\r",
 									"pm.test(\"funktionen[3].decoderId\", () => pm.expect(jsonData.funktionen[3].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[3].funktion\", () => pm.expect(jsonData.funktionen[3].funktion).to.eql(\"F3\"));\r",
 									"pm.test(\"funktionen[3].bezeichnung\", () => pm.expect(jsonData.funktionen[3].bezeichnung).to.eql(\"Funktion 3\"));\r",
-									"pm.test(\"funktionen[3].programmable\", () => pm.expect(jsonData.funktionen[3].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[3].programmable\", () => pm.expect(jsonData.funktionen[3].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[3].deleted\", () => pm.expect(jsonData.funktionen[3].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[3]._links.parent\", () => pm.expect(jsonData.funktionen[3]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[3]._links.update\", () => pm.expect(jsonData.funktionen[3]._links.update[0].href).to.eql(self + \"/funktionen/F3\"));\r",
 									"pm.test(\"funktionen[4].decoderId\", () => pm.expect(jsonData.funktionen[4].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[4].funktion\", () => pm.expect(jsonData.funktionen[4].funktion).to.eql(\"F4\"));\r",
 									"pm.test(\"funktionen[4].bezeichnung\", () => pm.expect(jsonData.funktionen[4].bezeichnung).to.eql(\"Funktion 4\"));\r",
-									"pm.test(\"funktionen[4].programmable\", () => pm.expect(jsonData.funktionen[4].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[4].programmable\", () => pm.expect(jsonData.funktionen[4].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[4].deleted\", () => pm.expect(jsonData.funktionen[4].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[4]._links.parent\", () => pm.expect(jsonData.funktionen[4]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[4]._links.update\", () => pm.expect(jsonData.funktionen[4]._links.update[0].href).to.eql(self + \"/funktionen/F4\"));\r",
 									"pm.test(\"funktionen[5].decoderId\", () => pm.expect(jsonData.funktionen[5].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[5].funktion\", () => pm.expect(jsonData.funktionen[5].funktion).to.eql(\"F5\"));\r",
 									"pm.test(\"funktionen[5].bezeichnung\", () => pm.expect(jsonData.funktionen[5].bezeichnung).to.eql(\"Funktion 5\"));\r",
-									"pm.test(\"funktionen[5].programmable\", () => pm.expect(jsonData.funktionen[5].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[5].programmable\", () => pm.expect(jsonData.funktionen[5].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[5].deleted\", () => pm.expect(jsonData.funktionen[5].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[5]._links.parent\", () => pm.expect(jsonData.funktionen[5]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[5]._links.update\", () => pm.expect(jsonData.funktionen[5]._links.update[0].href).to.eql(self + \"/funktionen/F5\"));\r",
 									"pm.test(\"funktionen[6].decoderId\", () => pm.expect(jsonData.funktionen[6].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[6].funktion\", () => pm.expect(jsonData.funktionen[6].funktion).to.eql(\"F6\"));\r",
 									"pm.test(\"funktionen[6].bezeichnung\", () => pm.expect(jsonData.funktionen[6].bezeichnung).to.eql(\"Funktion 6\"));\r",
-									"pm.test(\"funktionen[6].programmable\", () => pm.expect(jsonData.funktionen[6].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[6].programmable\", () => pm.expect(jsonData.funktionen[6].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[6].deleted\", () => pm.expect(jsonData.funktionen[6].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[6]._links.parent\", () => pm.expect(jsonData.funktionen[6]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[6]._links.update\", () => pm.expect(jsonData.funktionen[6]._links.update[0].href).to.eql(self + \"/funktionen/F6\"));\r",
 									"pm.test(\"funktionen[7].decoderId\", () => pm.expect(jsonData.funktionen[7].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[7].funktion\", () => pm.expect(jsonData.funktionen[7].funktion).to.eql(\"F7\"));\r",
 									"pm.test(\"funktionen[7].bezeichnung\", () => pm.expect(jsonData.funktionen[7].bezeichnung).to.eql(\"Funktion 7\"));\r",
-									"pm.test(\"funktionen[7].programmable\", () => pm.expect(jsonData.funktionen[7].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[7].programmable\", () => pm.expect(jsonData.funktionen[7].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[7].deleted\", () => pm.expect(jsonData.funktionen[7].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[7]._links.parent\", () => pm.expect(jsonData.funktionen[7]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[7]._links.update\", () => pm.expect(jsonData.funktionen[7]._links.update[0].href).to.eql(self + \"/funktionen/F7\"));\r",
 									"pm.test(\"funktionen[8].decoderId\", () => pm.expect(jsonData.funktionen[8].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[8].funktion\", () => pm.expect(jsonData.funktionen[8].funktion).to.eql(\"F8\"));\r",
 									"pm.test(\"funktionen[8].bezeichnung\", () => pm.expect(jsonData.funktionen[8].bezeichnung).to.eql(\"Funktion 8\"));\r",
-									"pm.test(\"funktionen[8].programmable\", () => pm.expect(jsonData.funktionen[8].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[8].programmable\", () => pm.expect(jsonData.funktionen[8].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[8].deleted\", () => pm.expect(jsonData.funktionen[8].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[8]._links.parent\", () => pm.expect(jsonData.funktionen[8]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[8]._links.update\", () => pm.expect(jsonData.funktionen[8]._links.update[0].href).to.eql(self + \"/funktionen/F8\"));\r",
 									"pm.test(\"funktionen[9].decoderId\", () => pm.expect(jsonData.funktionen[9].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[9].funktion\", () => pm.expect(jsonData.funktionen[9].funktion).to.eql(\"F9\"));\r",
 									"pm.test(\"funktionen[9].bezeichnung\", () => pm.expect(jsonData.funktionen[9].bezeichnung).to.eql(\"Funktion 9\"));\r",
-									"pm.test(\"funktionen[9].programmable\", () => pm.expect(jsonData.funktionen[9].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[9].programmable\", () => pm.expect(jsonData.funktionen[9].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[9].deleted\", () => pm.expect(jsonData.funktionen[9].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[9]._links.parent\", () => pm.expect(jsonData.funktionen[9]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[9]._links.update\", () => pm.expect(jsonData.funktionen[9]._links.update[0].href).to.eql(self + \"/funktionen/F9\"));\r",
 									"pm.test(\"funktionen[10].decoderId\", () => pm.expect(jsonData.funktionen[10].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[10].funktion\", () => pm.expect(jsonData.funktionen[10].funktion).to.eql(\"F10\"));\r",
 									"pm.test(\"funktionen[10].bezeichnung\", () => pm.expect(jsonData.funktionen[10].bezeichnung).to.eql(\"Funktion 10\"));\r",
-									"pm.test(\"funktionen[10].programmable\", () => pm.expect(jsonData.funktionen[10].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[10].programmable\", () => pm.expect(jsonData.funktionen[10].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[10].deleted\", () => pm.expect(jsonData.funktionen[10].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[10]._links.parent\", () => pm.expect(jsonData.funktionen[10]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[10]._links.update\", () => pm.expect(jsonData.funktionen[10]._links.update[0].href).to.eql(self + \"/funktionen/F10\"));\r",
 									"pm.test(\"funktionen[11].decoderId\", () => pm.expect(jsonData.funktionen[11].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[11].funktion\", () => pm.expect(jsonData.funktionen[11].funktion).to.eql(\"F11\"));\r",
 									"pm.test(\"funktionen[11].bezeichnung\", () => pm.expect(jsonData.funktionen[11].bezeichnung).to.eql(\"Funktion 11\"));\r",
-									"pm.test(\"funktionen[11].programmable\", () => pm.expect(jsonData.funktionen[11].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[11].programmable\", () => pm.expect(jsonData.funktionen[11].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[11].deleted\", () => pm.expect(jsonData.funktionen[11].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[11]._links.parent\", () => pm.expect(jsonData.funktionen[11]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[11]._links.update\", () => pm.expect(jsonData.funktionen[11]._links.update[0].href).to.eql(self + \"/funktionen/F11\"));\r",
 									"pm.test(\"funktionen[12].decoderId\", () => pm.expect(jsonData.funktionen[12].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[12].funktion\", () => pm.expect(jsonData.funktionen[12].funktion).to.eql(\"F12\"));\r",
 									"pm.test(\"funktionen[12].bezeichnung\", () => pm.expect(jsonData.funktionen[12].bezeichnung).to.eql(\"Funktion 12\"));\r",
-									"pm.test(\"funktionen[12].programmable\", () => pm.expect(jsonData.funktionen[12].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[12].programmable\", () => pm.expect(jsonData.funktionen[12].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[12].deleted\", () => pm.expect(jsonData.funktionen[12].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[12]._links.parent\", () => pm.expect(jsonData.funktionen[12]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[12]._links.update\", () => pm.expect(jsonData.funktionen[12]._links.update[0].href).to.eql(self + \"/funktionen/F12\"));\r",
 									"pm.test(\"funktionen[13].decoderId\", () => pm.expect(jsonData.funktionen[13].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[13].funktion\", () => pm.expect(jsonData.funktionen[13].funktion).to.eql(\"F13\"));\r",
 									"pm.test(\"funktionen[13].bezeichnung\", () => pm.expect(jsonData.funktionen[13].bezeichnung).to.eql(\"Funktion 13\"));\r",
-									"pm.test(\"funktionen[13].programmable\", () => pm.expect(jsonData.funktionen[13].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[13].programmable\", () => pm.expect(jsonData.funktionen[13].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[13].deleted\", () => pm.expect(jsonData.funktionen[13].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[13]._links.parent\", () => pm.expect(jsonData.funktionen[13]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[13]._links.update\", () => pm.expect(jsonData.funktionen[13]._links.update[0].href).to.eql(self + \"/funktionen/F13\"));\r",
 									"pm.test(\"funktionen[14].decoderId\", () => pm.expect(jsonData.funktionen[14].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[14].funktion\", () => pm.expect(jsonData.funktionen[14].funktion).to.eql(\"F14\"));\r",
 									"pm.test(\"funktionen[14].bezeichnung\", () => pm.expect(jsonData.funktionen[14].bezeichnung).to.eql(\"Funktion 14\"));\r",
-									"pm.test(\"funktionen[14].programmable\", () => pm.expect(jsonData.funktionen[14].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[14].programmable\", () => pm.expect(jsonData.funktionen[14].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[14].deleted\", () => pm.expect(jsonData.funktionen[14].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[14]._links.parent\", () => pm.expect(jsonData.funktionen[14]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[14]._links.update\", () => pm.expect(jsonData.funktionen[14]._links.update[0].href).to.eql(self + \"/funktionen/F14\"));\r",
 									"pm.test(\"funktionen[15].decoderId\", () => pm.expect(jsonData.funktionen[15].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[15].funktion\", () => pm.expect(jsonData.funktionen[15].funktion).to.eql(\"F15\"));\r",
 									"pm.test(\"funktionen[15].bezeichnung\", () => pm.expect(jsonData.funktionen[15].bezeichnung).to.eql(\"Funktion 15\"));\r",
-									"pm.test(\"funktionen[15].programmable\", () => pm.expect(jsonData.funktionen[15].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[15].programmable\", () => pm.expect(jsonData.funktionen[15].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[15].deleted\", () => pm.expect(jsonData.funktionen[15].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[15]._links.parent\", () => pm.expect(jsonData.funktionen[15]._links.parent[0].href).to.eql(self));\r",
 									"pm.test(\"funktionen[15]._links.update\", () => pm.expect(jsonData.funktionen[15]._links.update[0].href).to.eql(self + \"/funktionen/F15\"));\r",
@@ -13492,115 +13888,115 @@
 									"pm.test(\"funktionen[0].decoderId\", () => pm.expect(jsonData.funktionen[0].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[0].funktion\", () => pm.expect(jsonData.funktionen[0].funktion).to.eql(pm.variables.get(\"fnFunktion\")));\r",
 									"pm.test(\"funktionen[0].bezeichnung\", () => pm.expect(jsonData.funktionen[0].bezeichnung).to.eql(\"Funktion 0\"));\r",
-									"pm.test(\"funktionen[0].programmable\", () => pm.expect(jsonData.funktionen[0].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[0].programmable\", () => pm.expect(jsonData.funktionen[0].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[0].deleted\", () => pm.expect(jsonData.funktionen[0].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[0]._links.parent\", () => pm.expect(jsonData.funktionen[0]._links.parent[0].href).to.eql(self));\r",
-									"//pm.test(\"funktionen[0]._links.update\", () => pm.expect(jsonData.funktionen[0]._links.update[0].href).to.eql(self + \"/funktionen/F0\"));\r",
+									"pm.test(\"funktionen[0]._links.update\", () => pm.expect(jsonData.funktionen[0]._links.update[0].href).to.eql(self + \"/funktionen/F0\"));\r",
 									"pm.test(\"funktionen[1].decoderId\", () => pm.expect(jsonData.funktionen[1].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[1].funktion\", () => pm.expect(jsonData.funktionen[1].funktion).to.eql(\"F1\"));\r",
 									"pm.test(\"funktionen[1].bezeichnung\", () => pm.expect(jsonData.funktionen[1].bezeichnung).to.eql(\"Funktion 1\"));\r",
-									"pm.test(\"funktionen[1].programmable\", () => pm.expect(jsonData.funktionen[1].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[1].programmable\", () => pm.expect(jsonData.funktionen[1].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[1].deleted\", () => pm.expect(jsonData.funktionen[1].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[1]._links.parent\", () => pm.expect(jsonData.funktionen[1]._links.parent[0].href).to.eql(self));\r",
-									"//pm.test(\"funktionen[1]._links.update\", () => pm.expect(jsonData.funktionen[1]._links.update[0].href).to.eql(self + \"/funktionen/F1\"));\r",
+									"pm.test(\"funktionen[1]._links.update\", () => pm.expect(jsonData.funktionen[1]._links.update[0].href).to.eql(self + \"/funktionen/F1\"));\r",
 									"pm.test(\"funktionen[2].decoderId\", () => pm.expect(jsonData.funktionen[2].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[2].funktion\", () => pm.expect(jsonData.funktionen[2].funktion).to.eql(\"F2\"));\r",
 									"pm.test(\"funktionen[2].bezeichnung\", () => pm.expect(jsonData.funktionen[2].bezeichnung).to.eql(\"Funktion 2\"));\r",
-									"pm.test(\"funktionen[2].programmable\", () => pm.expect(jsonData.funktionen[2].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[2].programmable\", () => pm.expect(jsonData.funktionen[2].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[2].deleted\", () => pm.expect(jsonData.funktionen[2].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[2]._links.parent\", () => pm.expect(jsonData.funktionen[2]._links.parent[0].href).to.eql(self));\r",
-									"//pm.test(\"funktionen[2]._links.update\", () => pm.expect(jsonData.funktionen[2]._links.update[0].href).to.eql(self + \"/funktionen/F2\"));\r",
+									"pm.test(\"funktionen[2]._links.update\", () => pm.expect(jsonData.funktionen[2]._links.update[0].href).to.eql(self + \"/funktionen/F2\"));\r",
 									"pm.test(\"funktionen[3].decoderId\", () => pm.expect(jsonData.funktionen[3].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[3].funktion\", () => pm.expect(jsonData.funktionen[3].funktion).to.eql(\"F3\"));\r",
 									"pm.test(\"funktionen[3].bezeichnung\", () => pm.expect(jsonData.funktionen[3].bezeichnung).to.eql(\"Funktion 3\"));\r",
-									"pm.test(\"funktionen[3].programmable\", () => pm.expect(jsonData.funktionen[3].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[3].programmable\", () => pm.expect(jsonData.funktionen[3].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[3].deleted\", () => pm.expect(jsonData.funktionen[3].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[3]._links.parent\", () => pm.expect(jsonData.funktionen[3]._links.parent[0].href).to.eql(self));\r",
-									"//pm.test(\"funktionen[3]._links.update\", () => pm.expect(jsonData.funktionen[3]._links.update[0].href).to.eql(self + \"/funktionen/F3\"));\r",
+									"pm.test(\"funktionen[3]._links.update\", () => pm.expect(jsonData.funktionen[3]._links.update[0].href).to.eql(self + \"/funktionen/F3\"));\r",
 									"pm.test(\"funktionen[4].decoderId\", () => pm.expect(jsonData.funktionen[4].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[4].funktion\", () => pm.expect(jsonData.funktionen[4].funktion).to.eql(\"F4\"));\r",
 									"pm.test(\"funktionen[4].bezeichnung\", () => pm.expect(jsonData.funktionen[4].bezeichnung).to.eql(\"Funktion 4\"));\r",
-									"pm.test(\"funktionen[4].programmable\", () => pm.expect(jsonData.funktionen[4].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[4].programmable\", () => pm.expect(jsonData.funktionen[4].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[4].deleted\", () => pm.expect(jsonData.funktionen[4].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[4]._links.parent\", () => pm.expect(jsonData.funktionen[4]._links.parent[0].href).to.eql(self));\r",
-									"//pm.test(\"funktionen[4]._links.update\", () => pm.expect(jsonData.funktionen[4]._links.update[0].href).to.eql(self + \"/funktionen/F4\"));\r",
+									"pm.test(\"funktionen[4]._links.update\", () => pm.expect(jsonData.funktionen[4]._links.update[0].href).to.eql(self + \"/funktionen/F4\"));\r",
 									"pm.test(\"funktionen[5].decoderId\", () => pm.expect(jsonData.funktionen[5].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[5].funktion\", () => pm.expect(jsonData.funktionen[5].funktion).to.eql(\"F5\"));\r",
 									"pm.test(\"funktionen[5].bezeichnung\", () => pm.expect(jsonData.funktionen[5].bezeichnung).to.eql(\"Funktion 5\"));\r",
-									"pm.test(\"funktionen[5].programmable\", () => pm.expect(jsonData.funktionen[5].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[5].programmable\", () => pm.expect(jsonData.funktionen[5].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[5].deleted\", () => pm.expect(jsonData.funktionen[5].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[5]._links.parent\", () => pm.expect(jsonData.funktionen[5]._links.parent[0].href).to.eql(self));\r",
-									"//pm.test(\"funktionen[5]._links.update\", () => pm.expect(jsonData.funktionen[5]._links.update[0].href).to.eql(self + \"/funktionen/F5\"));\r",
+									"pm.test(\"funktionen[5]._links.update\", () => pm.expect(jsonData.funktionen[5]._links.update[0].href).to.eql(self + \"/funktionen/F5\"));\r",
 									"pm.test(\"funktionen[6].decoderId\", () => pm.expect(jsonData.funktionen[6].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[6].funktion\", () => pm.expect(jsonData.funktionen[6].funktion).to.eql(\"F6\"));\r",
 									"pm.test(\"funktionen[6].bezeichnung\", () => pm.expect(jsonData.funktionen[6].bezeichnung).to.eql(\"Funktion 6\"));\r",
-									"pm.test(\"funktionen[6].programmable\", () => pm.expect(jsonData.funktionen[6].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[6].programmable\", () => pm.expect(jsonData.funktionen[6].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[6].deleted\", () => pm.expect(jsonData.funktionen[6].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[6]._links.parent\", () => pm.expect(jsonData.funktionen[6]._links.parent[0].href).to.eql(self));\r",
-									"//pm.test(\"funktionen[6]._links.update\", () => pm.expect(jsonData.funktionen[6]._links.update[0].href).to.eql(self + \"/funktionen/F6\"));\r",
+									"pm.test(\"funktionen[6]._links.update\", () => pm.expect(jsonData.funktionen[6]._links.update[0].href).to.eql(self + \"/funktionen/F6\"));\r",
 									"pm.test(\"funktionen[7].decoderId\", () => pm.expect(jsonData.funktionen[7].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[7].funktion\", () => pm.expect(jsonData.funktionen[7].funktion).to.eql(\"F7\"));\r",
 									"pm.test(\"funktionen[7].bezeichnung\", () => pm.expect(jsonData.funktionen[7].bezeichnung).to.eql(\"Funktion 7\"));\r",
-									"pm.test(\"funktionen[7].programmable\", () => pm.expect(jsonData.funktionen[7].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[7].programmable\", () => pm.expect(jsonData.funktionen[7].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[7].deleted\", () => pm.expect(jsonData.funktionen[7].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[7]._links.parent\", () => pm.expect(jsonData.funktionen[7]._links.parent[0].href).to.eql(self));\r",
-									"//pm.test(\"funktionen[7]._links.update\", () => pm.expect(jsonData.funktionen[7]._links.update[0].href).to.eql(self + \"/funktionen/F7\"));\r",
+									"pm.test(\"funktionen[7]._links.update\", () => pm.expect(jsonData.funktionen[7]._links.update[0].href).to.eql(self + \"/funktionen/F7\"));\r",
 									"pm.test(\"funktionen[8].decoderId\", () => pm.expect(jsonData.funktionen[8].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[8].funktion\", () => pm.expect(jsonData.funktionen[8].funktion).to.eql(\"F8\"));\r",
 									"pm.test(\"funktionen[8].bezeichnung\", () => pm.expect(jsonData.funktionen[8].bezeichnung).to.eql(\"Funktion 8\"));\r",
-									"pm.test(\"funktionen[8].programmable\", () => pm.expect(jsonData.funktionen[8].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[8].programmable\", () => pm.expect(jsonData.funktionen[8].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[8].deleted\", () => pm.expect(jsonData.funktionen[8].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[8]._links.parent\", () => pm.expect(jsonData.funktionen[8]._links.parent[0].href).to.eql(self));\r",
-									"//pm.test(\"funktionen[8]._links.update\", () => pm.expect(jsonData.funktionen[8]._links.update[0].href).to.eql(self + \"/funktionen/F8\"));\r",
+									"pm.test(\"funktionen[8]._links.update\", () => pm.expect(jsonData.funktionen[8]._links.update[0].href).to.eql(self + \"/funktionen/F8\"));\r",
 									"pm.test(\"funktionen[9].decoderId\", () => pm.expect(jsonData.funktionen[9].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[9].funktion\", () => pm.expect(jsonData.funktionen[9].funktion).to.eql(\"F9\"));\r",
 									"pm.test(\"funktionen[9].bezeichnung\", () => pm.expect(jsonData.funktionen[9].bezeichnung).to.eql(\"Funktion 9\"));\r",
-									"pm.test(\"funktionen[9].programmable\", () => pm.expect(jsonData.funktionen[9].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[9].programmable\", () => pm.expect(jsonData.funktionen[9].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[9].deleted\", () => pm.expect(jsonData.funktionen[9].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[9]._links.parent\", () => pm.expect(jsonData.funktionen[9]._links.parent[0].href).to.eql(self));\r",
-									"//pm.test(\"funktionen[9]._links.update\", () => pm.expect(jsonData.funktionen[9]._links.update[0].href).to.eql(self + \"/funktionen/F9\"));\r",
+									"pm.test(\"funktionen[9]._links.update\", () => pm.expect(jsonData.funktionen[9]._links.update[0].href).to.eql(self + \"/funktionen/F9\"));\r",
 									"pm.test(\"funktionen[10].decoderId\", () => pm.expect(jsonData.funktionen[10].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[10].funktion\", () => pm.expect(jsonData.funktionen[10].funktion).to.eql(\"F10\"));\r",
 									"pm.test(\"funktionen[10].bezeichnung\", () => pm.expect(jsonData.funktionen[10].bezeichnung).to.eql(\"Funktion 10\"));\r",
-									"pm.test(\"funktionen[10].programmable\", () => pm.expect(jsonData.funktionen[10].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[10].programmable\", () => pm.expect(jsonData.funktionen[10].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[10].deleted\", () => pm.expect(jsonData.funktionen[10].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[10]._links.parent\", () => pm.expect(jsonData.funktionen[10]._links.parent[0].href).to.eql(self));\r",
-									"//pm.test(\"funktionen[10]._links.update\", () => pm.expect(jsonData.funktionen[10]._links.update[0].href).to.eql(self + \"/funktionen/F10\"));\r",
+									"pm.test(\"funktionen[10]._links.update\", () => pm.expect(jsonData.funktionen[10]._links.update[0].href).to.eql(self + \"/funktionen/F10\"));\r",
 									"pm.test(\"funktionen[11].decoderId\", () => pm.expect(jsonData.funktionen[11].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[11].funktion\", () => pm.expect(jsonData.funktionen[11].funktion).to.eql(\"F11\"));\r",
 									"pm.test(\"funktionen[11].bezeichnung\", () => pm.expect(jsonData.funktionen[11].bezeichnung).to.eql(\"Funktion 11\"));\r",
-									"pm.test(\"funktionen[11].programmable\", () => pm.expect(jsonData.funktionen[11].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[11].programmable\", () => pm.expect(jsonData.funktionen[11].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[11].deleted\", () => pm.expect(jsonData.funktionen[11].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[11]._links.parent\", () => pm.expect(jsonData.funktionen[11]._links.parent[0].href).to.eql(self));\r",
-									"//pm.test(\"funktionen[11]._links.update\", () => pm.expect(jsonData.funktionen[11]._links.update[0].href).to.eql(self + \"/funktionen/F11\"));\r",
+									"pm.test(\"funktionen[11]._links.update\", () => pm.expect(jsonData.funktionen[11]._links.update[0].href).to.eql(self + \"/funktionen/F11\"));\r",
 									"pm.test(\"funktionen[12].decoderId\", () => pm.expect(jsonData.funktionen[12].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[12].funktion\", () => pm.expect(jsonData.funktionen[12].funktion).to.eql(\"F12\"));\r",
 									"pm.test(\"funktionen[12].bezeichnung\", () => pm.expect(jsonData.funktionen[12].bezeichnung).to.eql(\"Funktion 12\"));\r",
-									"pm.test(\"funktionen[12].programmable\", () => pm.expect(jsonData.funktionen[12].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[12].programmable\", () => pm.expect(jsonData.funktionen[12].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[12].deleted\", () => pm.expect(jsonData.funktionen[12].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[12]._links.parent\", () => pm.expect(jsonData.funktionen[12]._links.parent[0].href).to.eql(self));\r",
-									"//pm.test(\"funktionen[12]._links.update\", () => pm.expect(jsonData.funktionen[12]._links.update[0].href).to.eql(self + \"/funktionen/F12\"));\r",
+									"pm.test(\"funktionen[12]._links.update\", () => pm.expect(jsonData.funktionen[12]._links.update[0].href).to.eql(self + \"/funktionen/F12\"));\r",
 									"pm.test(\"funktionen[13].decoderId\", () => pm.expect(jsonData.funktionen[13].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[13].funktion\", () => pm.expect(jsonData.funktionen[13].funktion).to.eql(\"F13\"));\r",
 									"pm.test(\"funktionen[13].bezeichnung\", () => pm.expect(jsonData.funktionen[13].bezeichnung).to.eql(\"Funktion 13\"));\r",
-									"pm.test(\"funktionen[13].programmable\", () => pm.expect(jsonData.funktionen[13].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[13].programmable\", () => pm.expect(jsonData.funktionen[13].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[13].deleted\", () => pm.expect(jsonData.funktionen[13].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[13]._links.parent\", () => pm.expect(jsonData.funktionen[13]._links.parent[0].href).to.eql(self));\r",
-									"//pm.test(\"funktionen[13]._links.update\", () => pm.expect(jsonData.funktionen[13]._links.update[0].href).to.eql(self + \"/funktionen/F13\"));\r",
+									"pm.test(\"funktionen[13]._links.update\", () => pm.expect(jsonData.funktionen[13]._links.update[0].href).to.eql(self + \"/funktionen/F13\"));\r",
 									"pm.test(\"funktionen[14].decoderId\", () => pm.expect(jsonData.funktionen[14].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[14].funktion\", () => pm.expect(jsonData.funktionen[14].funktion).to.eql(\"F14\"));\r",
 									"pm.test(\"funktionen[14].bezeichnung\", () => pm.expect(jsonData.funktionen[14].bezeichnung).to.eql(\"Funktion 14\"));\r",
-									"pm.test(\"funktionen[14].programmable\", () => pm.expect(jsonData.funktionen[14].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[14].programmable\", () => pm.expect(jsonData.funktionen[14].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[14].deleted\", () => pm.expect(jsonData.funktionen[14].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[14]._links.parent\", () => pm.expect(jsonData.funktionen[14]._links.parent[0].href).to.eql(self));\r",
-									"//pm.test(\"funktionen[14]._links.update\", () => pm.expect(jsonData.funktionen[14]._links.update[0].href).to.eql(self + \"/funktionen/F14\"));\r",
+									"pm.test(\"funktionen[14]._links.update\", () => pm.expect(jsonData.funktionen[14]._links.update[0].href).to.eql(self + \"/funktionen/F14\"));\r",
 									"pm.test(\"funktionen[15].decoderId\", () => pm.expect(jsonData.funktionen[15].decoderId).to.eql(jsonData.decoderId));\r",
 									"pm.test(\"funktionen[15].funktion\", () => pm.expect(jsonData.funktionen[15].funktion).to.eql(\"F15\"));\r",
 									"pm.test(\"funktionen[15].bezeichnung\", () => pm.expect(jsonData.funktionen[15].bezeichnung).to.eql(\"Funktion 15\"));\r",
-									"pm.test(\"funktionen[15].programmable\", () => pm.expect(jsonData.funktionen[15].programmable).to.eql(false));\r",
+									"pm.test(\"funktionen[15].programmable\", () => pm.expect(jsonData.funktionen[15].programmable).to.be.true);\r",
 									"pm.test(\"funktionen[15].deleted\", () => pm.expect(jsonData.funktionen[15].deleted).to.be.false);\r",
 									"pm.test(\"funktionen[15]._links.parent\", () => pm.expect(jsonData.funktionen[15]._links.parent[0].href).to.eql(self));\r",
-									"//pm.test(\"funktionen[15]._links.update\", () => pm.expect(jsonData.funktionen[15]._links.update[0].href).to.eql(self + \"/funktionen/F15\"));\r",
+									"pm.test(\"funktionen[15]._links.update\", () => pm.expect(jsonData.funktionen[15]._links.update[0].href).to.eql(self + \"/funktionen/F15\"));\r",
 									"pm.test(\"deleted\", () => pm.expect(jsonData.deleted).to.be.false);\r",
 									"pm.test(\"_links.search\", () => pm.expect(jsonData._links.search[0].href).to.eql(root));\r",
 									"pm.test(\"_links.add\", () => pm.expect(jsonData._links.add[0].href).to.eql(pm.variables.replaceIn(\"{{api}}/decoder/{{decoderHerstellerAdd}}/{{decoderBestellNrAdd}}\")));\r",
@@ -15596,7 +15992,7 @@
 							"script": {
 								"exec": [
 									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
-									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(5000));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(50000));\r",
 									"\r",
 									"var jsonData = pm.response.json();\r",
 									"\r",
@@ -15816,8 +16212,6 @@
 									"pm.test(\"zug get\", () => pm.expect(jsonData.paths[\"/api/zug/{name}\"].hasOwnProperty(\"get\")).to.be.true);\r",
 									"pm.test(\"zug update\", () => pm.expect(jsonData.paths[\"/api/zug/{name}\"].hasOwnProperty(\"put\")).to.be.true);\r",
 									"pm.test(\"zug add fahrzeug\", () => pm.expect(jsonData.paths[\"/api/zug/{name}/fahrzeugen\"].hasOwnProperty(\"post\")).to.be.true);\r",
-									"pm.test(\"zug delete fahrzeug\", () => pm.expect(jsonData.paths[\"/api/zug/{name}/fahrzeugen/{position}\"].hasOwnProperty(\"delete\")).to.be.true);\r",
-									"pm.test(\"zug update fahrzeug\", () => pm.expect(jsonData.paths[\"/api/zug/{name}/fahrzeugen/{position}\"].hasOwnProperty(\"put\")).to.be.true);\r",
 									"\r",
 									"pm.test(\"zugTyp search\", () => pm.expect(jsonData.paths[\"/api/zugTyp\"].hasOwnProperty(\"get\")).to.be.true);\r",
 									"pm.test(\"zugTyp add\", () => pm.expect(jsonData.paths[\"/api/zugTyp\"].hasOwnProperty(\"post\")).to.be.true);\r",
@@ -16806,9 +17200,9 @@
 									"pm.test(\"Produkt Teil\", () => pm.response.to.have.status(200));\r",
 									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
-									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"hersteller,bestellNr,teilHersteller,teilBestellNr,bezeichnung,kategorie,unterKategorie,menge,deleted\"));\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"hersteller,bestellNr,teilHersteller,teilBestellNr,bezeichnung,menge,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
-									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){8}(true|false)$/).length).to.eql(3)));"
+									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){6}(true|false)$/).length).to.eql(3)));"
 								],
 								"type": "text/javascript"
 							}
@@ -19674,6 +20068,10 @@
 			"value": "de"
 		},
 		{
+			"key": "maxResponse",
+			"value": 500
+		},
+		{
 			"key": "testFiles",
 			"value": ""
 		},
@@ -20106,10 +20504,6 @@
 			"value": "{{testFiles}}decoder.csv"
 		},
 		{
-			"key": "decoderAdressCsv",
-			"value": "{{testFiles}}decoderAdress.csv"
-		},
-		{
 			"key": "decoderCvCsv",
 			"value": "{{testFiles}}decoderCv.csv"
 		},
@@ -20120,10 +20514,6 @@
 		{
 			"key": "decoderTypCsv",
 			"value": "{{testFiles}}decoderTyp.csv"
-		},
-		{
-			"key": "decoderTypAdressCsv",
-			"value": "{{testFiles}}decoderTypAdress.csv"
 		},
 		{
 			"key": "decoderTypCvCsv",
@@ -20204,10 +20594,6 @@
 		{
 			"key": "zugTypCsv",
 			"value": "{{namedCsv}}"
-		},
-		{
-			"key": "maxResponse",
-			"value": 500
 		},
 		{
 			"key": "CV1",

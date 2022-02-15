@@ -408,14 +408,12 @@ public class Artikel extends ItemImpl implements Comparable<Artikel> {
 
     /** The menge. */
     @Column(name = DBNames.MENGE, nullable = false)
-    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.menge.notnull}")
     @Min(value=1, message = "{com.linepro.modellbahn.validator.constraints.menge.positive}")
     private Integer menge;
 
     /** The menge. */
     @Column(name = DBNames.VERBLEIBENDE, nullable = false)
-    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.verbleibende.notnull}")
-    @Positive(message = "{com.linepro.modellbahn.validator.constraints.verbleibende.positive}")
+    @Min(value=0, message = "{com.linepro.modellbahn.validator.constraints.verbleibende.positive}")
     private Integer verbleibende;
 
     /** The anmerkung. */

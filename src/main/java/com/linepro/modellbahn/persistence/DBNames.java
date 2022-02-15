@@ -165,6 +165,7 @@ public interface DBNames {
     String ID_PATTERN = "[A-Z0-9]+";
     String FUNKTION_PATTERN = "(?:F\\d|F[12]\\d|F3[012]|K\\d|K1[012345]|S[0123456])";
     String NAME_PATTERN = "[A-Z0-9\\-\\.]+";
+    String BESTELL_NR_PATTERN = "[ \\/A-Z0-9\\-\\.]+";
     String USERNAME_PATTERN = "[A-Za-z0-9_\\-\\.]+";
     // Latin Basic + Extended-A + Extended-B + Greek + Cyrillic + Superscripts and Subscripts + Number Forms + Enclosed Alphanumerics
     String BEZEICHNUNG_PATTERN = "[\\u0020-\\u007e\\u00a1-\\u00ac\\u00ae-\\u024f\\u0370-\\u04ff\\u2070-\\u2071\\u2074-\\u209c\\u2150-\\u217f\\u2460-\\u24ff]+";

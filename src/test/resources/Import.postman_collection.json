@@ -1,165 +1,76 @@
 {
 	"info": {
-		"_postman_id": "c60dc902-c902-441c-a116-cdf87a091b8b",
-		"name": "ModellBahn-manual",
-		"description": "ModellBahn tests that crash newman (out of memory) or don't reliably work except in Runner.",
+		"_postman_id": "72523c45-74bc-448f-90c2-7ce94d30854e",
+		"name": "Import",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Management (Open)",
+			"name": "Start Up",
 			"item": [
 				{
-					"name": "Conditions",
+					"name": "Start Up - Probe",
 					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.log(\"Waiting for startup\");\r",
+									"\r",
+									"var health = pm.variables.replaceIn(\"{{management}}/health\");\r",
+									"\r",
+									"var retries = pm.variables.get(\"startRetries\");\r",
+									"var delay = pm.variables.get(\"startDelay\");\r",
+									"\r",
+									"function probe(retries, delay) {\r",
+									"    if (retries > 0) {\r",
+									"        console.log(\"Probing: \" + retries);\r",
+									"        setTimeout(delay);\r",
+									"        return pm.sendRequest(health, (err, response) => {\r",
+									"            if (response.code == 200) {\r",
+									"                console.log(\"Started!\");\r",
+									"                return true;\r",
+									"            } else {\r",
+									"                probe(--retries, delay);\r",
+									"            }\r",
+									"        });\r",
+									"    } else {\r",
+									"        console.log(\"Failed!\");\r",
+									"        return false;\r",
+									"    }\r",
+									"}\r",
+									"\r",
+									"var started = probe(retries, delay);\r",
+									"console.log(started);"
+								],
+								"type": "text/javascript"
+							}
+						},
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Conditions\", () => pm.response.to.have.status(200));\r",
-									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
+									"// Don't wrap in pm.test for fail hard...\r",
+									"pm.response.to.have.status(200);"
 								],
 								"type": "text/javascript"
 							}
 						}
 					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {}
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{management}}/conditions",
+							"raw": "{{management}}/health",
 							"host": [
 								"{{management}}"
 							],
 							"path": [
-								"conditions"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Heap Dump",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Heap Dump\", () => pm.response.to.have.status(200));\r",
-									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(2000));"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{management}}/heapdump",
-							"host": [
-								"{{management}}"
-							],
-							"path": [
-								"heapdump"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"auth": {
-				"type": "basic",
-				"basic": [
-					{
-						"key": "password",
-						"value": "{{basePassword}}",
-						"type": "string"
-					},
-					{
-						"key": "username",
-						"value": "{{baseUser}}",
-						"type": "string"
-					}
-				]
-			},
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				}
-			]
-		},
-		{
-			"name": "Management (Admin)",
-			"item": [
-				{
-					"name": "Conditions",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Conditions\", () => pm.response.to.have.status(401));\r",
-									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{management}}/conditions",
-							"host": [
-								"{{management}}"
-							],
-							"path": [
-								"conditions"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Heap Dump",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Heap Dump\", () => pm.response.to.have.status(401));\r",
-									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{management}}/heapdump",
-							"host": [
-								"{{management}}"
-							],
-							"path": [
-								"heapdump"
+								"health"
 							]
 						}
 					},
@@ -206,7 +117,7 @@
 			"name": "Import",
 			"item": [
 				{
-					"name": "Achsfolg",
+					"name": "Import - Achsfolg",
 					"event": [
 						{
 							"listen": "test",
@@ -258,7 +169,7 @@
 					"response": []
 				},
 				{
-					"name": "Antrieb",
+					"name": "Import - Antrieb",
 					"event": [
 						{
 							"listen": "test",
@@ -310,7 +221,7 @@
 					"response": []
 				},
 				{
-					"name": "Aufbau",
+					"name": "Import - Aufbau",
 					"event": [
 						{
 							"listen": "test",
@@ -362,7 +273,7 @@
 					"response": []
 				},
 				{
-					"name": "Bahnverwaltung",
+					"name": "Import - Bahnverwaltung",
 					"event": [
 						{
 							"listen": "test",
@@ -414,7 +325,7 @@
 					"response": []
 				},
 				{
-					"name": "Epoch",
+					"name": "Import - Epoch",
 					"event": [
 						{
 							"listen": "test",
@@ -466,7 +377,7 @@
 					"response": []
 				},
 				{
-					"name": "Gattung",
+					"name": "Import - Gattung",
 					"event": [
 						{
 							"listen": "test",
@@ -518,7 +429,7 @@
 					"response": []
 				},
 				{
-					"name": "Hersteller",
+					"name": "Import - Hersteller",
 					"event": [
 						{
 							"listen": "test",
@@ -570,7 +481,7 @@
 					"response": []
 				},
 				{
-					"name": "Kupplung",
+					"name": "Import - Kupplung",
 					"event": [
 						{
 							"listen": "test",
@@ -622,7 +533,7 @@
 					"response": []
 				},
 				{
-					"name": "Licht",
+					"name": "Import - Licht",
 					"event": [
 						{
 							"listen": "test",
@@ -674,7 +585,7 @@
 					"response": []
 				},
 				{
-					"name": "Kategorie",
+					"name": "Import - Kategorie",
 					"event": [
 						{
 							"listen": "test",
@@ -726,7 +637,7 @@
 					"response": []
 				},
 				{
-					"name": "Massstab",
+					"name": "Import - Massstab",
 					"event": [
 						{
 							"listen": "test",
@@ -778,7 +689,7 @@
 					"response": []
 				},
 				{
-					"name": "Motor Typ",
+					"name": "Import - Motor Typ",
 					"event": [
 						{
 							"listen": "test",
@@ -830,7 +741,7 @@
 					"response": []
 				},
 				{
-					"name": "Protokoll",
+					"name": "Import - Protokoll",
 					"event": [
 						{
 							"listen": "test",
@@ -882,7 +793,7 @@
 					"response": []
 				},
 				{
-					"name": "Sondermodell",
+					"name": "Import - Sondermodell",
 					"event": [
 						{
 							"listen": "test",
@@ -934,7 +845,7 @@
 					"response": []
 				},
 				{
-					"name": "Spurweite",
+					"name": "Import - Spurweite",
 					"event": [
 						{
 							"listen": "test",
@@ -986,7 +897,7 @@
 					"response": []
 				},
 				{
-					"name": "Steuerung",
+					"name": "Import - Steuerung",
 					"event": [
 						{
 							"listen": "test",
@@ -1038,7 +949,7 @@
 					"response": []
 				},
 				{
-					"name": "Zug Typ",
+					"name": "Import - Zug Typ",
 					"event": [
 						{
 							"listen": "test",
@@ -1090,7 +1001,7 @@
 					"response": []
 				},
 				{
-					"name": "Unter Kategorie",
+					"name": "Import - Unter Kategorie",
 					"event": [
 						{
 							"listen": "test",
@@ -1142,7 +1053,7 @@
 					"response": []
 				},
 				{
-					"name": "Vorbild",
+					"name": "Import - Vorbild",
 					"event": [
 						{
 							"listen": "test",
@@ -1194,7 +1105,7 @@
 					"response": []
 				},
 				{
-					"name": "Decoder Typ",
+					"name": "Import - Decoder Typ",
 					"event": [
 						{
 							"listen": "test",
@@ -1246,7 +1157,7 @@
 					"response": []
 				},
 				{
-					"name": "Decoder Typ Cv",
+					"name": "Import - Decoder Typ Cv",
 					"event": [
 						{
 							"listen": "test",
@@ -1298,7 +1209,7 @@
 					"response": []
 				},
 				{
-					"name": "Decoder Typ Funktion",
+					"name": "Import - Decoder Typ Funktion",
 					"event": [
 						{
 							"listen": "test",
@@ -1350,7 +1261,7 @@
 					"response": []
 				},
 				{
-					"name": "Produkt",
+					"name": "Import - Produkt",
 					"event": [
 						{
 							"listen": "test",
@@ -1402,7 +1313,7 @@
 					"response": []
 				},
 				{
-					"name": "Produkt Teil",
+					"name": "Import - Produkt Teil",
 					"event": [
 						{
 							"listen": "test",
@@ -1454,7 +1365,7 @@
 					"response": []
 				},
 				{
-					"name": "Decoder",
+					"name": "Import - Decoder",
 					"event": [
 						{
 							"listen": "test",
@@ -1506,59 +1417,7 @@
 					"response": []
 				},
 				{
-					"name": "Decoder Adress",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Decoder Adress\", () => pm.response.to.have.status(200));"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"protocolProfileBehavior": {
-						"disableCookies": true,
-						"disabledSystemHeaders": {
-							"accept": true
-						}
-					},
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Transfer-Encoding",
-								"value": "{{csvEncoding}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "data",
-									"contentType": "text/csv",
-									"type": "file",
-									"src": "{{decoderAdressCsv}}"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{api}}/data/decoderAdress",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"data",
-								"decoderAdress"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Decoder Cv",
+					"name": "Import - Decoder Cv",
 					"event": [
 						{
 							"listen": "test",
@@ -1610,7 +1469,7 @@
 					"response": []
 				},
 				{
-					"name": "Decoder Funktion",
+					"name": "Import - Decoder Funktion",
 					"event": [
 						{
 							"listen": "test",
@@ -1662,7 +1521,7 @@
 					"response": []
 				},
 				{
-					"name": "Artikel",
+					"name": "Import - Artikel",
 					"event": [
 						{
 							"listen": "test",
@@ -1714,7 +1573,7 @@
 					"response": []
 				},
 				{
-					"name": "Anderung",
+					"name": "Import - Anderung",
 					"event": [
 						{
 							"listen": "test",
@@ -1766,7 +1625,7 @@
 					"response": []
 				},
 				{
-					"name": "Zug",
+					"name": "Import - Zug",
 					"event": [
 						{
 							"listen": "test",
@@ -1818,7 +1677,7 @@
 					"response": []
 				},
 				{
-					"name": "Zug Consist",
+					"name": "Import - Zug Consist",
 					"event": [
 						{
 							"listen": "test",
@@ -1868,6 +1727,27 @@
 						}
 					},
 					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.request.headers.upsert({ key: 'Accept', value: 'application/json, text/html, application/xhtml+xml, application/xml' });",
+							"pm.request.headers.upsert({ key: 'Accept-Language', value: pm.variables.replaceIn(\"{{language}}\") });"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		}
@@ -1934,11 +1814,13 @@
 		},
 		{
 			"key": "mgmtPort",
-			"value": ":8087"
+			"value": ":8087",
+			"type": "string"
 		},
 		{
 			"key": "management",
-			"value": "{{proto}}{{host}}{{mgmtPort}}/management"
+			"value": "{{proto}}{{host}}{{mgmtPort}}/management",
+			"type": "string"
 		},
 		{
 			"key": "startRetries",
@@ -1961,140 +1843,136 @@
 			"value": 500
 		},
 		{
-			"key": "importFiles",
-			"value": "/D:/Users/JohnG/Development/JohnG/ModellBahn/"
+			"key": "dataFiles",
+			"value": "U:\\Development\\JohnG\\ModellBahn\\"
 		},
 		{
 			"key": "csvEncoding",
-			"value": "WINDOWS-1252"
+			"value": "WINDOWS-1251"
 		},
 		{
 			"key": "achsfolgCsv",
-			"value": "{{importFiles}}achsfolgen.csv"
+			"value": "{{dataFiles}}achsfolg.csv"
 		},
 		{
 			"key": "anderungCsv",
-			"value": "{{importFiles}}anderungen.csv"
+			"value": "{{dataFiles}}anderung.csv"
 		},
 		{
 			"key": "antriebCsv",
-			"value": "{{importFiles}}antrieben.csv"
+			"value": "{{dataFiles}}antrieb.csv"
 		},
 		{
 			"key": "artikelCsv",
-			"value": "{{importFiles}}artikeln.csv"
+			"value": "{{dataFiles}}artikel.csv"
 		},
 		{
 			"key": "aufbauCsv",
-			"value": "{{importFiles}}aufbauten.csv"
+			"value": "{{dataFiles}}aufbau.csv"
 		},
 		{
 			"key": "bahnverwaltungCsv",
-			"value": "{{importFiles}}bahnverwaltungen.csv"
+			"value": "{{dataFiles}}bahnverwaltung.csv"
 		},
 		{
 			"key": "consistCsv",
-			"value": "{{importFiles}}consist.csv"
+			"value": "{{dataFiles}}consist.csv"
 		},
 		{
 			"key": "decoderCsv",
-			"value": "{{importFiles}}decoder.csv"
-		},
-		{
-			"key": "decoderAdressCsv",
-			"value": "{{importFiles}}decoderadress.csv"
+			"value": "{{dataFiles}}decoder.csv"
 		},
 		{
 			"key": "decoderCvCsv",
-			"value": "{{importFiles}}decodercv.csv"
+			"value": "{{dataFiles}}decodercv.csv"
 		},
 		{
 			"key": "decoderFunktionCsv",
-			"value": "{{importFiles}}decoderfunktion.csv"
+			"value": "{{dataFiles}}decoderfunktion.csv"
 		},
 		{
 			"key": "decoderTypCsv",
-			"value": "{{importFiles}}decodertyp.csv"
+			"value": "{{dataFiles}}decodertyp.csv"
 		},
 		{
 			"key": "decoderTypCvCsv",
-			"value": "{{importFiles}}decodertypcv.csv"
+			"value": "{{dataFiles}}decodertypcv.csv"
 		},
 		{
 			"key": "decoderTypFunktionCsv",
-			"value": "{{importFiles}}decodertypfunktion.csv"
+			"value": "{{dataFiles}}decodertypfunktion.csv"
 		},
 		{
 			"key": "epochCsv",
-			"value": "{{importFiles}}epochen.csv"
+			"value": "{{dataFiles}}epoch.csv"
 		},
 		{
 			"key": "gattungCsv",
-			"value": "{{importFiles}}gattungen.csv"
+			"value": "{{dataFiles}}gattung.csv"
 		},
 		{
 			"key": "herstellerCsv",
-			"value": "{{importFiles}}herstellern.csv"
+			"value": "{{dataFiles}}hersteller.csv"
 		},
 		{
 			"key": "kategorieCsv",
-			"value": "{{importFiles}}kategorie.csv"
+			"value": "{{dataFiles}}kategorie.csv"
 		},
 		{
 			"key": "kupplungCsv",
-			"value": "{{importFiles}}kupplungen.csv"
+			"value": "{{dataFiles}}kupplung.csv"
 		},
 		{
 			"key": "lichtCsv",
-			"value": "{{importFiles}}lichten.csv"
+			"value": "{{dataFiles}}licht.csv"
 		},
 		{
 			"key": "massstabCsv",
-			"value": "{{importFiles}}massstaben.csv"
+			"value": "{{dataFiles}}massstab.csv"
 		},
 		{
 			"key": "motorTypCsv",
-			"value": "{{importFiles}}motortypen.csv"
+			"value": "{{dataFiles}}motortyp.csv"
 		},
 		{
 			"key": "produktCsv",
-			"value": "{{importFiles}}produkten.csv"
+			"value": "{{dataFiles}}produkt.csv"
 		},
 		{
 			"key": "protokollCsv",
-			"value": "{{importFiles}}protokollen.csv"
+			"value": "{{dataFiles}}protokoll.csv"
 		},
 		{
 			"key": "sondermodellCsv",
-			"value": "{{importFiles}}sondermodelln.csv"
+			"value": "{{dataFiles}}sondermodell.csv"
 		},
 		{
 			"key": "spurweiteCsv",
-			"value": "{{importFiles}}spurweiten.csv"
+			"value": "{{dataFiles}}spurweite.csv"
 		},
 		{
 			"key": "steuerungCsv",
-			"value": "{{importFiles}}steuerungen.csv"
+			"value": "{{dataFiles}}steuerung.csv"
 		},
 		{
 			"key": "teilCsv",
-			"value": "{{importFiles}}produktteilen.csv"
+			"value": "{{dataFiles}}teil.csv"
 		},
 		{
 			"key": "unterKategorieCsv",
-			"value": "{{importFiles}}unterkategorien.csv"
+			"value": "{{dataFiles}}unterkategorie.csv"
 		},
 		{
 			"key": "vorbildCsv",
-			"value": "{{importFiles}}vorbilder.csv"
+			"value": "{{dataFiles}}vorbild.csv"
 		},
 		{
 			"key": "zugCsv",
-			"value": "{{importFiles}}zugen.csv"
+			"value": "{{dataFiles}}zug.csv"
 		},
 		{
 			"key": "zugTypCsv",
-			"value": "{{importFiles}}zugtypen.csv"
+			"value": "{{dataFiles}}zugtyp.csv"
 		}
 	]
 }

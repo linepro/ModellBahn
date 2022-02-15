@@ -1,0 +1,2184 @@
+{
+	"info": {
+		"_postman_id": "3ba88b11-4079-4b0f-9ee5-e4527b268987",
+		"name": "Actuator",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Start Up",
+			"item": [
+				{
+					"name": "Start Up - Probe",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.log(\"Waiting for startup\");\r",
+									"\r",
+									"var health = pm.variables.replaceIn(\"{{management}}/health\");\r",
+									"\r",
+									"var retries = pm.variables.get(\"startRetries\");\r",
+									"var delay = pm.variables.get(\"startDelay\");\r",
+									"\r",
+									"function probe(retries, delay) {\r",
+									"    if (retries > 0) {\r",
+									"        console.log(\"Probing: \" + retries);\r",
+									"        setTimeout(delay);\r",
+									"        return pm.sendRequest(health, (err, response) => {\r",
+									"            if (response.code == 200) {\r",
+									"                console.log(\"Started!\");\r",
+									"                return true;\r",
+									"            } else {\r",
+									"                probe(--retries, delay);\r",
+									"            }\r",
+									"        });\r",
+									"    } else {\r",
+									"        console.log(\"Failed!\");\r",
+									"        return false;\r",
+									"    }\r",
+									"}\r",
+									"\r",
+									"var started = probe(retries, delay);\r",
+									"console.log(started);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Don't wrap in pm.test for fail hard...\r",
+									"pm.response.to.have.status(200);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/health",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"health"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{authPassword}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{authUser}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Management (Open)",
+			"item": [
+				{
+					"name": "Open - Actuator",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Actuator\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Open - Audit Events",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Audit Events\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/auditevents",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"auditevents"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Open - Beans",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Beans\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/beans",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"beans"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Open - Caches",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Caches\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/caches",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"caches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Open - Conditions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Conditions\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/conditions",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"conditions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Open - Config Props",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Config Props\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/configprops",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"configprops"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Open - Env",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Env\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/env",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"env"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Open - Flyway",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Flyway\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/flyway",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"flyway"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Open - Health",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Health\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(2500));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/health",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"health"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Open - Heap Dump",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Heap Dump\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/heapdump",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"heapdump"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Open - HTTP Trace",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"HTTP Trace\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/httptrace",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"httptrace"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Open - Info",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Info\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/info",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Open - Integration Graph",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Info\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/integrationgraph",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"integrationgraph"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Open - Log File",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Log File\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/logfile",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"logfile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Open - Loggers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Loggers\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/loggers",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"loggers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Open - Mappings",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Mappings\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/mappings",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"mappings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Open - Metrics",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Metrics\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/metrics",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"metrics"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Open - Prometheus",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Metrics\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/prometheus ",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"prometheus "
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Open - Scheduled Tasks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Scheduled Tasks\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/scheduledtasks",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"scheduledtasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Open - Sessions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Scheduled Tasks\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/sessions ",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"sessions "
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Open - Startup",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Scheduled Tasks\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/startup",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"startup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Open - Thread Dump",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Thread Dump\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/threaddump",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"threaddump"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.request.headers.upsert({ key: 'Accept', value: pm.variables.replaceIn(\"{{accept}}\") });",
+							"pm.request.headers.upsert({ key: 'Accept-Language', value: pm.variables.replaceIn(\"{{language}}\") });"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Management (Auth)",
+			"item": [
+				{
+					"name": "Management - Actuator",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Actuator\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Management - Audit Events",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Audit Events\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/auditevents",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"auditevents"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Management - Beans",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Beans\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/beans",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"beans"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Management - Caches",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Caches\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/caches",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"caches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Management - Conditions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Conditions\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(250));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/conditions",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"conditions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Management - Config Props",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Config Props\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/configprops",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"configprops"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Management - Env",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Env\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/env",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"env"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Management - Flyway",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Flyway\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/flyway",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"flyway"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Management - Health",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Health\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(2500));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/health",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"health"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Management - Heap Dump",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Heap Dump\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(2000));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/heapdump",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"heapdump"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Management - HTTP Trace",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"HTTP Trace\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/httptrace",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"httptrace"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Management - Info",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Info\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/info",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Management - Integration Graph",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Info\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/integrationgraph",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"integrationgraph"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Management - Log File",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Log File\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(6000));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.request.headers.upsert({ key: 'Accept', value: '*/*' });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/logfile",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"logfile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Management - Loggers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Loggers\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/loggers",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"loggers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Management - Mappings",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Mappings\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/mappings",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"mappings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Management - Metrics",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Metrics\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/metrics",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"metrics"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Management - Prometheus",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Metrics\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/prometheus ",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"prometheus "
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Management - Scheduled Tasks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Scheduled Tasks\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/scheduledtasks",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"scheduledtasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Management - Sessions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Scheduled Tasks\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/sessions ",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"sessions "
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Management - Startup",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Scheduled Tasks\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/startup",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"startup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Management - Thread Dump",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Thread Dump\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/threaddump",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"threaddump"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{authPassword}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{authUser}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.request.headers.upsert({ key: 'Accept', value: pm.variables.replaceIn(\"{{accept}}\") });",
+							"pm.request.headers.upsert({ key: 'Accept-Language', value: pm.variables.replaceIn(\"{{language}}\") });"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Open Api",
+			"item": [
+				{
+					"name": "Open Api - Get Docs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"response\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(50000));\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"openapi\", () => pm.expect(jsonData.openapi).to.eql( \"3.0.1\"));\r",
+									"\r",
+									"pm.test(\"info\", () => {\r",
+									"    pm.expect(jsonData.info.title).to.eql(\"ModellBahn API\");\r",
+									"\tpm.expect(jsonData.info.description).to.eql(\"ModellBahn datastore\");\r",
+									"\tpm.expect(jsonData.info.license.name).to.eql(\"MIT License\");\r",
+									"\tpm.expect(jsonData.info.license.url).to.eql(\"http://www.opensource.org/licenses/mit-license.php\");\r",
+									"\tpm.expect(jsonData.info.version).to.eql(\"1.0.0\");\r",
+									"\t});\r",
+									"\r",
+									"pm.test(\"externalDocs\", () => {\r",
+									"\tpm.expect(jsonData.externalDocs.description).to.eql(\"ModellBahn datastore\");\r",
+									"\tpm.expect(jsonData.externalDocs.url).to.eql(\"https://github.com/linepro/ModellBahn/docs\");\r",
+									"    });\r",
+									"\r",
+									"pm.test(\"servers\", () => {\r",
+									"\tpm.expect(jsonData.servers[0].url).to.eql(pm.variables.replaceIn(\"{{server}}\"));\r",
+									"\tpm.expect(jsonData.servers[0].description).to.eql(\"Generated server url\");\r",
+									"\t});\r",
+									"\r",
+									"pm.test(\"achsfolg search\", () => pm.expect(jsonData.paths[\"/api/achsfolg\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"achsfolg add\", () => pm.expect(jsonData.paths[\"/api/achsfolg\"].hasOwnProperty(\"post\")).to.be.true);\r",
+									"pm.test(\"achsfolg delete\", () => pm.expect(jsonData.paths[\"/api/achsfolg/{name}\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"achsfolg get\", () => pm.expect(jsonData.paths[\"/api/achsfolg/{name}\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"achsfolg update\", () => pm.expect(jsonData.paths[\"/api/achsfolg/{name}\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"\r",
+									"pm.test(\"antrieb search\", () => pm.expect(jsonData.paths[\"/api/antrieb\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"antrieb add\", () => pm.expect(jsonData.paths[\"/api/antrieb\"].hasOwnProperty(\"post\")).to.be.true);\r",
+									"pm.test(\"antrieb delete\", () => pm.expect(jsonData.paths[\"/api/antrieb/{name}\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"antrieb get\", () => pm.expect(jsonData.paths[\"/api/antrieb/{name}\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"antrieb update\", () => pm.expect(jsonData.paths[\"/api/antrieb/{name}\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"antrieb add abbildung\", () => pm.expect(jsonData.paths[\"/api/antrieb/{name}/abbildung\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"antrieb delete abbildung\", () => pm.expect(jsonData.paths[\"/api/antrieb/{name}/abbildung\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"\r",
+									"pm.test(\"artikel search\", () => pm.expect(jsonData.paths[\"/api/artikel\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"artikel add\", () => pm.expect(jsonData.paths[\"/api/artikel\"].hasOwnProperty(\"post\")).to.be.true);\r",
+									"pm.test(\"artikel delete\", () => pm.expect(jsonData.paths[\"/api/artikel/{artikelId}\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"artikel get\", () => pm.expect(jsonData.paths[\"/api/artikel/{artikelId}\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"artikel update\", () => pm.expect(jsonData.paths[\"/api/artikel/{artikelId}\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"artikel delete abbildung\", () => pm.expect(jsonData.paths[\"/api/artikel/{artikelId}/abbildung\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"artikel add abbildung\", () => pm.expect(jsonData.paths[\"/api/artikel/{artikelId}/abbildung\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"artikel add anderung\", () => pm.expect(jsonData.paths[\"/api/artikel/{artikelId}/anderungen\"].hasOwnProperty(\"post\")).to.be.true);\r",
+									"pm.test(\"artikel delete anderung\", () => pm.expect(jsonData.paths[\"/api/artikel/{artikelId}/anderungen/{anderungId}\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"artikel update anderung\", () => pm.expect(jsonData.paths[\"/api/artikel/{artikelId}/anderungen/{anderungId}\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"artikel delete grossansicht\", () => pm.expect(jsonData.paths[\"/api/artikel/{artikelId}/grossansicht\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"artikel add grossansicht\", () => pm.expect(jsonData.paths[\"/api/artikel/{artikelId}/grossansicht\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"\r",
+									"pm.test(\"aufbau search\", () => pm.expect(jsonData.paths[\"/api/aufbau\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"aufbau add\", () => pm.expect(jsonData.paths[\"/api/aufbau\"].hasOwnProperty(\"post\")).to.be.true);\r",
+									"pm.test(\"aufbau delete\", () => pm.expect(jsonData.paths[\"/api/aufbau/{name}\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"aufbau get\", () => pm.expect(jsonData.paths[\"/api/aufbau/{name}\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"aufbau update\", () => pm.expect(jsonData.paths[\"/api/aufbau/{name}\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"aufbau add abbildung\", () => pm.expect(jsonData.paths[\"/api/aufbau/{name}/abbildung\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"aufbau delete abbildung\", () => pm.expect(jsonData.paths[\"/api/aufbau/{name}/abbildung\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"\r",
+									"pm.test(\"bahnverwaltung search\", () => pm.expect(jsonData.paths[\"/api/bahnverwaltung\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"bahnverwaltung add\", () => pm.expect(jsonData.paths[\"/api/bahnverwaltung\"].hasOwnProperty(\"post\")).to.be.true);\r",
+									"pm.test(\"bahnverwaltung delete\", () => pm.expect(jsonData.paths[\"/api/bahnverwaltung/{name}\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"bahnverwaltung get\", () => pm.expect(jsonData.paths[\"/api/bahnverwaltung/{name}\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"bahnverwaltung update\", () => pm.expect(jsonData.paths[\"/api/bahnverwaltung/{name}\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"bahnverwaltung add abbildung\", () => pm.expect(jsonData.paths[\"/api/bahnverwaltung/{name}/abbildung\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"bahnverwaltung delete abbildung\", () => pm.expect(jsonData.paths[\"/api/bahnverwaltung/{name}/abbildung\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"\r",
+									"pm.test(\"decoder add\", () => pm.expect(jsonData.paths[\"/api/decoder/{hersteller}/{bestellNr}\"].hasOwnProperty(\"post\")).to.be.true);\r",
+									"pm.test(\"decoder search\", () => pm.expect(jsonData.paths[\"/api/decoder\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"decoder delete\", () => pm.expect(jsonData.paths[\"/api/decoder/{decoderId}\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"decoder get\", () => pm.expect(jsonData.paths[\"/api/decoder/{decoderId}\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"decoder update\", () => pm.expect(jsonData.paths[\"/api/decoder/{decoderId}\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"decoder update cv\", () => pm.expect(jsonData.paths[\"/api/decoder/{decoderId}/cvs/{cv}\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"decoder update funktion\", () => pm.expect(jsonData.paths[\"/api/decoder/{decoderId}/funktionen/{funktion}\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"\r",
+									"pm.test(\"decoderTyp search\", () => pm.expect(jsonData.paths[\"/api/decoderTyp\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"decoderTyp add\", () => pm.expect(jsonData.paths[\"/api/decoderTyp\"].hasOwnProperty(\"post\")).to.be.true);\r",
+									"pm.test(\"decoderTyp delete\", () => pm.expect(jsonData.paths[\"/api/decoderTyp/{hersteller}/{bestellNr}\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"decoderTyp get\", () => pm.expect(jsonData.paths[\"/api/decoderTyp/{hersteller}/{bestellNr}\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"decoderTyp update\", () => pm.expect(jsonData.paths[\"/api/decoderTyp/{hersteller}/{bestellNr}\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"decoderTyp delete anleitungen\", () => pm.expect(jsonData.paths[\"/api/decoderTyp/{hersteller}/{bestellNr}/anleitungen\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"decoderTyp add anleitungen\", () => pm.expect(jsonData.paths[\"/api/decoderTyp/{hersteller}/{bestellNr}/anleitungen\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"decoderTyp add cv\", () => pm.expect(jsonData.paths[\"/api/decoderTyp/{hersteller}/{bestellNr}/cvs\"].hasOwnProperty(\"post\")).to.be.true);\r",
+									"pm.test(\"decoderTyp delete cv\", () => pm.expect(jsonData.paths[\"/api/decoderTyp/{hersteller}/{bestellNr}/cvs/{cv}\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"decoderTyp update cv\", () => pm.expect(jsonData.paths[\"/api/decoderTyp/{hersteller}/{bestellNr}/cvs/{cv}\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"decoderTyp add funktion\", () => pm.expect(jsonData.paths[\"/api/decoderTyp/{hersteller}/{bestellNr}/funktionen\"].hasOwnProperty(\"post\")).to.be.true);\r",
+									"pm.test(\"decoderTyp delete funktion\", () => pm.expect(jsonData.paths[\"/api/decoderTyp/{hersteller}/{bestellNr}/funktionen/{funktion}\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"decoderTyp update funktion\", () => pm.expect(jsonData.paths[\"/api/decoderTyp/{hersteller}/{bestellNr}/funktionen/{funktion}\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"\r",
+									"pm.test(\"enums adressTyp\", () => pm.expect(jsonData.paths[\"/api/enums/adressTyp\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"enums anderungsTyp\", () => pm.expect(jsonData.paths[\"/api/enums/anderungsTyp\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"enums decoderStatus\", () => pm.expect(jsonData.paths[\"/api/enums/decoderStatus\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"enums konfiguration\", () => pm.expect(jsonData.paths[\"/api/enums/konfiguration\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"enums land\", () => pm.expect(jsonData.paths[\"/api/enums/land\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"enums leistungsubertragung\", () => pm.expect(jsonData.paths[\"/api/enums/leistungsubertragung\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"enums status\", () => pm.expect(jsonData.paths[\"/api/enums/status\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"enums stecker\", () => pm.expect(jsonData.paths[\"/api/enums/stecker\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"enums wahrung\", () => pm.expect(jsonData.paths[\"/api/enums/wahrung\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"\r",
+									"pm.test(\"epoch search\", () => pm.expect(jsonData.paths[\"/api/epoch\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"epoch add\", () => pm.expect(jsonData.paths[\"/api/epoch\"].hasOwnProperty(\"post\")).to.be.true);\r",
+									"pm.test(\"epoch delete\", () => pm.expect(jsonData.paths[\"/api/epoch/{name}\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"epoch get\", () => pm.expect(jsonData.paths[\"/api/epoch/{name}\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"epoch update\", () => pm.expect(jsonData.paths[\"/api/epoch/{name}\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"epoch add abbildung\", () => pm.expect(jsonData.paths[\"/api/epoch/{name}/abbildung\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"epoch delete abbildung\", () => pm.expect(jsonData.paths[\"/api/epoch/{name}/abbildung\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"\r",
+									"pm.test(\"gattung search\", () => pm.expect(jsonData.paths[\"/api/gattung\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"gattung add\", () => pm.expect(jsonData.paths[\"/api/gattung\"].hasOwnProperty(\"post\")).to.be.true);\r",
+									"pm.test(\"gattung delete\", () => pm.expect(jsonData.paths[\"/api/gattung/{name}\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"gattung get\", () => pm.expect(jsonData.paths[\"/api/gattung/{name}\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"gattung update\", () => pm.expect(jsonData.paths[\"/api/gattung/{name}\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"\r",
+									"pm.test(\"hersteller search\", () => pm.expect(jsonData.paths[\"/api/hersteller\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"hersteller add\", () => pm.expect(jsonData.paths[\"/api/hersteller\"].hasOwnProperty(\"post\")).to.be.true);\r",
+									"pm.test(\"hersteller delete\", () => pm.expect(jsonData.paths[\"/api/hersteller/{name}\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"hersteller get\", () => pm.expect(jsonData.paths[\"/api/hersteller/{name}\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"hersteller update\", () => pm.expect(jsonData.paths[\"/api/hersteller/{name}\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"hersteller add abbildung\", () => pm.expect(jsonData.paths[\"/api/hersteller/{name}/abbildung\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"hersteller delete abbildung\", () => pm.expect(jsonData.paths[\"/api/hersteller/{name}/abbildung\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"\r",
+									"pm.test(\"kategorie search\", () => pm.expect(jsonData.paths[\"/api/kategorie\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"kategorie add\", () => pm.expect(jsonData.paths[\"/api/kategorie\"].hasOwnProperty(\"post\")).to.be.true);\r",
+									"pm.test(\"kategorie delete\", () => pm.expect(jsonData.paths[\"/api/kategorie/{name}\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"kategorie get\", () => pm.expect(jsonData.paths[\"/api/kategorie/{name}\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"kategorie update\", () => pm.expect(jsonData.paths[\"/api/kategorie/{name}\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"kategorie add unterKategorie\", () => pm.expect(jsonData.paths[\"/api/kategorie/{kategorie}/unterKategorien\"].hasOwnProperty(\"post\")).to.be.true);\r",
+									"pm.test(\"kategorie delete unterKategorie\", () => pm.expect(jsonData.paths[\"/api/kategorie/{kategorie}/unterKategorien/{unterKategorie}\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"kategorie update unterKategorie\", () => pm.expect(jsonData.paths[\"/api/kategorie/{kategorie}/unterKategorien/{unterKategorie}\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"kategorie search unterKategorien\", () => pm.expect(jsonData.paths[\"/api/unterKategorien\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"\r",
+									"pm.test(\"kupplung search\", () => pm.expect(jsonData.paths[\"/api/kupplung\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"kupplung add\", () => pm.expect(jsonData.paths[\"/api/kupplung\"].hasOwnProperty(\"post\")).to.be.true);\r",
+									"pm.test(\"kupplung delete\", () => pm.expect(jsonData.paths[\"/api/kupplung/{name}\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"kupplung get\", () => pm.expect(jsonData.paths[\"/api/kupplung/{name}\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"kupplung update\", () => pm.expect(jsonData.paths[\"/api/kupplung/{name}\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"kupplung add abbildung\", () => pm.expect(jsonData.paths[\"/api/kupplung/{name}/abbildung\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"kupplung delete abbildung\", () => pm.expect(jsonData.paths[\"/api/kupplung/{name}/abbildung\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"\r",
+									"pm.test(\"licht search\", () => pm.expect(jsonData.paths[\"/api/licht\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"licht add\", () => pm.expect(jsonData.paths[\"/api/licht\"].hasOwnProperty(\"post\")).to.be.true);\r",
+									"pm.test(\"licht delete\", () => pm.expect(jsonData.paths[\"/api/licht/{name}\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"licht get\", () => pm.expect(jsonData.paths[\"/api/licht/{name}\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"licht update\", () => pm.expect(jsonData.paths[\"/api/licht/{name}\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"licht add abbildung\", () => pm.expect(jsonData.paths[\"/api/licht/{name}/abbildung\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"licht delete abbildung\", () => pm.expect(jsonData.paths[\"/api/licht/{name}/abbildung\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"\r",
+									"pm.test(\"massstab search\", () => pm.expect(jsonData.paths[\"/api/massstab\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"massstab add\", () => pm.expect(jsonData.paths[\"/api/massstab\"].hasOwnProperty(\"post\")).to.be.true);\r",
+									"pm.test(\"massstab delete\", () => pm.expect(jsonData.paths[\"/api/massstab/{name}\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"massstab get\", () => pm.expect(jsonData.paths[\"/api/massstab/{name}\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"massstab update\", () => pm.expect(jsonData.paths[\"/api/massstab/{name}\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"\r",
+									"pm.test(\"motorTyp search\", () => pm.expect(jsonData.paths[\"/api/motorTyp\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"motorTyp add\", () => pm.expect(jsonData.paths[\"/api/motorTyp\"].hasOwnProperty(\"post\")).to.be.true);\r",
+									"pm.test(\"motorTyp delete\", () => pm.expect(jsonData.paths[\"/api/motorTyp/{name}\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"motorTyp get\", () => pm.expect(jsonData.paths[\"/api/motorTyp/{name}\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"motorTyp update\", () => pm.expect(jsonData.paths[\"/api/motorTyp/{name}\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"motorTyp add abbildung\", () => pm.expect(jsonData.paths[\"/api/motorTyp/{name}/abbildung\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"motorTyp delete abbildung\", () => pm.expect(jsonData.paths[\"/api/motorTyp/{name}/abbildung\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"\r",
+									"pm.test(\"produkt search\", () => pm.expect(jsonData.paths[\"/api/produkt\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"produkt add\", () => pm.expect(jsonData.paths[\"/api/produkt\"].hasOwnProperty(\"post\")).to.be.true);\r",
+									"pm.test(\"produkt delete\", () => pm.expect(jsonData.paths[\"/api/produkt/{hersteller}/{bestellNr}\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"produkt get\", () => pm.expect(jsonData.paths[\"/api/produkt/{hersteller}/{bestellNr}\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"produkt update\", () => pm.expect(jsonData.paths[\"/api/produkt/{hersteller}/{bestellNr}\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"produkt delete abbildung\", () => pm.expect(jsonData.paths[\"/api/produkt/{hersteller}/{bestellNr}/abbildung\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"produkt add abbildung\", () => pm.expect(jsonData.paths[\"/api/produkt/{hersteller}/{bestellNr}/abbildung\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"produkt delete anleitungen\", () => pm.expect(jsonData.paths[\"/api/produkt/{hersteller}/{bestellNr}/anleitungen\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"produkt add anleitungen\", () => pm.expect(jsonData.paths[\"/api/produkt/{hersteller}/{bestellNr}/anleitungen\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"produkt delete explosionszeichnung\", () => pm.expect(jsonData.paths[\"/api/produkt/{hersteller}/{bestellNr}/explosionszeichnung\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"produkt add explosionszeichnung\", () => pm.expect(jsonData.paths[\"/api/produkt/{hersteller}/{bestellNr}/explosionszeichnung\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"produkt delete grossansicht\", () => pm.expect(jsonData.paths[\"/api/produkt/{hersteller}/{bestellNr}/grossansicht\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"produkt add grossansicht\", () => pm.expect(jsonData.paths[\"/api/produkt/{hersteller}/{bestellNr}/grossansicht\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"produkt add teil\", () => pm.expect(jsonData.paths[\"/api/produkt/{hersteller}/{bestellNr}/teilen\"].hasOwnProperty(\"post\")).to.be.true);\r",
+									"pm.test(\"produkt delete teil\", () => pm.expect(jsonData.paths[\"/api/produkt/{hersteller}/{bestellNr}/teilen/{teilHersteller}/{teilBestellNr}\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"produkt update teil\", () => pm.expect(jsonData.paths[\"/api/produkt/{hersteller}/{bestellNr}/teilen/{teilHersteller}/{teilBestellNr}\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"\r",
+									"pm.test(\"protokoll search\", () => pm.expect(jsonData.paths[\"/api/protokoll\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"protokoll add\", () => pm.expect(jsonData.paths[\"/api/protokoll\"].hasOwnProperty(\"post\")).to.be.true);\r",
+									"pm.test(\"protokoll delete\", () => pm.expect(jsonData.paths[\"/api/protokoll/{name}\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"protokoll get\", () => pm.expect(jsonData.paths[\"/api/protokoll/{name}\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"protokoll update\", () => pm.expect(jsonData.paths[\"/api/protokoll/{name}\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"protokoll add abbildung\", () => pm.expect(jsonData.paths[\"/api/protokoll/{name}/abbildung\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"protokoll delete abbildung\", () => pm.expect(jsonData.paths[\"/api/protokoll/{name}/abbildung\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"\r",
+									"pm.test(\"sondermodell search\", () => pm.expect(jsonData.paths[\"/api/sondermodell\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"sondermodell add\", () => pm.expect(jsonData.paths[\"/api/sondermodell\"].hasOwnProperty(\"post\")).to.be.true);\r",
+									"pm.test(\"sondermodell delete\", () => pm.expect(jsonData.paths[\"/api/sondermodell/{name}\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"sondermodell get\", () => pm.expect(jsonData.paths[\"/api/sondermodell/{name}\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"sondermodell update\", () => pm.expect(jsonData.paths[\"/api/sondermodell/{name}\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"\r",
+									"pm.test(\"spurweite search\", () => pm.expect(jsonData.paths[\"/api/spurweite\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"spurweite add\", () => pm.expect(jsonData.paths[\"/api/spurweite\"].hasOwnProperty(\"post\")).to.be.true);\r",
+									"pm.test(\"spurweite delete\", () => pm.expect(jsonData.paths[\"/api/spurweite/{name}\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"spurweite get\", () => pm.expect(jsonData.paths[\"/api/spurweite/{name}\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"spurweite update\", () => pm.expect(jsonData.paths[\"/api/spurweite/{name}\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"\r",
+									"pm.test(\"steuerung search\", () => pm.expect(jsonData.paths[\"/api/steuerung\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"steuerung add\", () => pm.expect(jsonData.paths[\"/api/steuerung\"].hasOwnProperty(\"post\")).to.be.true);\r",
+									"pm.test(\"steuerung delete\", () => pm.expect(jsonData.paths[\"/api/steuerung/{name}\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"steuerung get\", () => pm.expect(jsonData.paths[\"/api/steuerung/{name}\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"steuerung update\", () => pm.expect(jsonData.paths[\"/api/steuerung/{name}\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"steuerung add abbildung\", () => pm.expect(jsonData.paths[\"/api/steuerung/{name}/abbildung\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"steuerung delete abbildung\", () => pm.expect(jsonData.paths[\"/api/steuerung/{name}/abbildung\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"\r",
+									"pm.test(\"vorbild search\", () => pm.expect(jsonData.paths[\"/api/vorbild\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"vorbild add\", () => pm.expect(jsonData.paths[\"/api/vorbild\"].hasOwnProperty(\"post\")).to.be.true);\r",
+									"pm.test(\"vorbild delete\", () => pm.expect(jsonData.paths[\"/api/vorbild/{name}\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"vorbild get\", () => pm.expect(jsonData.paths[\"/api/vorbild/{name}\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"vorbild update\", () => pm.expect(jsonData.paths[\"/api/vorbild/{name}\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"vorbild add abbildung\", () => pm.expect(jsonData.paths[\"/api/vorbild/{name}/abbildung\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"vorbild delete abbildung\", () => pm.expect(jsonData.paths[\"/api/vorbild/{name}/abbildung\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"\r",
+									"pm.test(\"zug search\", () => pm.expect(jsonData.paths[\"/api/zug\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"zug add\", () => pm.expect(jsonData.paths[\"/api/zug\"].hasOwnProperty(\"post\")).to.be.true);\r",
+									"pm.test(\"zug delete\", () => pm.expect(jsonData.paths[\"/api/zug/{name}\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"zug get\", () => pm.expect(jsonData.paths[\"/api/zug/{name}\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"zug update\", () => pm.expect(jsonData.paths[\"/api/zug/{name}\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"zug add fahrzeug\", () => pm.expect(jsonData.paths[\"/api/zug/{name}/fahrzeugen\"].hasOwnProperty(\"post\")).to.be.true);\r",
+									"\r",
+									"pm.test(\"zugTyp search\", () => pm.expect(jsonData.paths[\"/api/zugTyp\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"zugTyp add\", () => pm.expect(jsonData.paths[\"/api/zugTyp\"].hasOwnProperty(\"post\")).to.be.true);\r",
+									"pm.test(\"zugTyp delete\", () => pm.expect(jsonData.paths[\"/api/zugTyp/{name}\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"zugTyp get\", () => pm.expect(jsonData.paths[\"/api/zugTyp/{name}\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"zugTyp update\", () => pm.expect(jsonData.paths[\"/api/zugTyp/{name}\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"\r",
+									"pm.test(\"user search\", () => pm.expect(jsonData.paths[\"/api/user\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"user delete\", () => pm.expect(jsonData.paths[\"/api/user/{name}\"].hasOwnProperty(\"delete\")).to.be.true);\r",
+									"pm.test(\"user get\", () => pm.expect(jsonData.paths[\"/api/user/{name}\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"user update\", () => pm.expect(jsonData.paths[\"/api/user/{name}\"].hasOwnProperty(\"put\")).to.be.true);\r",
+									"pm.test(\"user update password\", () => pm.expect(jsonData.paths[\"/api/user/{name}\"].hasOwnProperty(\"patch\")).to.be.true);\r",
+									"pm.test(\"register\", () => pm.expect(jsonData.paths[\"/api/register\"].hasOwnProperty(\"post\")).to.be.true);\r",
+									"pm.test(\"confirm registration\", () => pm.expect(jsonData.paths[\"/api/confirm\"].hasOwnProperty(\"post\")).to.be.true);\r",
+									"pm.test(\"forgot password\", () => pm.expect(jsonData.paths[\"/api/forgot\"].hasOwnProperty(\"post\")).to.be.true);\r",
+									"pm.test(\"reset password\", () => pm.expect(jsonData.paths[\"/api/reset\"].hasOwnProperty(\"post\")).to.be.true);\r",
+									"\r",
+									"pm.test(\"data export\", () => pm.expect(jsonData.paths[\"/api/data/{dataType}\"].hasOwnProperty(\"get\")).to.be.true);\r",
+									"pm.test(\"data import\", () => pm.expect(jsonData.paths[\"/api/data/{dataType}\"].hasOwnProperty(\"post\")).to.be.true);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{root}}/v3/api-docs.json",
+							"host": [
+								"{{root}}"
+							],
+							"path": [
+								"v3",
+								"api-docs.json"
+							]
+						},
+						"description": "http://LINEPRO2.home:8086/ModellBahn/api/swagger/swagger."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Shutdown",
+			"item": [
+				{
+					"name": "Shutdown - Shutdown",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Don't wrap in pm.test for fail hard...\r",
+									"pm.response.to.have.status(200);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true,
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{management}}/shutdown",
+							"host": [
+								"{{management}}"
+							],
+							"path": [
+								"shutdown"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{authPassword}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{authUser}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "{{basePassword}}",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "{{baseUser}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "proto",
+			"value": "https://"
+		},
+		{
+			"key": "host",
+			"value": "127.0.0.1"
+		},
+		{
+			"key": "port",
+			"value": ":8086"
+		},
+		{
+			"key": "server",
+			"value": "{{proto}}{{host}}{{port}}"
+		},
+		{
+			"key": "root",
+			"value": "{{server}}"
+		},
+		{
+			"key": "api",
+			"value": "{{root}}/api"
+		},
+		{
+			"key": "mgmtPort",
+			"value": ":8087"
+		},
+		{
+			"key": "management",
+			"value": "{{proto}}{{host}}{{mgmtPort}}/management"
+		},
+		{
+			"key": "startRetries",
+			"value": "10"
+		},
+		{
+			"key": "startDelay",
+			"value": "5000"
+		},
+		{
+			"key": "accept",
+			"value": "application/json, application/hal+json"
+		},
+		{
+			"key": "maxResponse",
+			"value": "5000",
+			"type": "string"
+		}
+	]
+}

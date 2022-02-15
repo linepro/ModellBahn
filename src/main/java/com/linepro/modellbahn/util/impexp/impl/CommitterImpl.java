@@ -55,15 +55,15 @@ public class CommitterImpl<R extends ItemRequest, E extends Item, M extends Item
 
         if (e instanceof ConstraintViolationException) {
             error = ((ConstraintViolationException) e).getConstraintViolations()
-                                                       .stream()
-                                                       .map(c -> c.getMessage())
-                                                       .collect(Collectors.joining(","));
+                                                      .stream()
+                                                      .map(c -> c.getMessage())
+                                                      .collect(Collectors.joining(",\n\t"));
         } else if (e.getCause() != null) {
             error = e.getCause().getMessage();
         } else {
             error = e.getMessage();
         }
 
-        return  MessageFormatter.arrayFormat("#{} - {}: {}", new Object[] { rowNum, request, error }).getMessage();
+        return  MessageFormatter.arrayFormat("#{} - {}:\n\t{}", new Object[] { rowNum, request, error }).getMessage();
     }
 }

@@ -346,7 +346,7 @@ public class Produkt extends ItemImpl implements Comparable<Produkt> {
 
     @Column(name = DBNames.BESTELL_NR, length = 50)
     @Size(max = 50, message = "{com.linepro.modellbahn.validator.constraints.maxLength}")
-    @Pattern(regexp = "^" + DBNames.NAME_PATTERN + "$", message = "{com.linepro.modellbahn.validator.constraints.bestellNr.invalid}")
+    @Pattern(regexp = "^" + DBNames.BESTELL_NR_PATTERN + "$", message = "{com.linepro.modellbahn.validator.constraints.bestellNr.invalid}")
     private String bestellNr;
 
     @Column(name = DBNames.BEZEICHNUNG, length = 100)
@@ -362,13 +362,12 @@ public class Produkt extends ItemImpl implements Comparable<Produkt> {
 
     /** The massstab. */
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Massstab.class)
-    @JoinColumn(name = DBNames.MASSSTAB_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk5"))
-    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.massstab.notnull}")
+    @JoinColumn(name = DBNames.MASSSTAB_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk5"))
     private Massstab massstab;
 
     /** The spurweite. */
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Spurweite.class)
-    @JoinColumn(name = DBNames.SPURWEITE_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk6"))
+    @JoinColumn(name = DBNames.SPURWEITE_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk6"))
     private Spurweite spurweite;
 
     /** The bahnverwaltung. */
