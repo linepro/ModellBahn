@@ -8,7 +8,7 @@ package com.linepro.modellbahn.model.enums;
  */
 public enum Status implements DescribedEnum {
 	
-    WUNSCHMODEL("wunschmodel"),
+    WUNSCHMODELL("wunschmodell"),
 	
     GEKAUFT("gekauft"),
 

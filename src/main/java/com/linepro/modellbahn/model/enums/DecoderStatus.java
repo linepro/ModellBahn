@@ -12,7 +12,7 @@ public enum DecoderStatus implements DescribedEnum {
 
     FREI("frei"),
 
-    BASTLER("bastler");
+    BASTELN("basteln");
 
     private final String description;
 

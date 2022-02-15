@@ -12614,7 +12614,7 @@
 									"pm.environment.set(\"protokoll\", \"DCC\");\r",
 									"pm.environment.set(\"fahrstufe\", 28);\r",
 									"pm.environment.set(\"adress\", new Number(pm.variables.replaceIn(\"{{adUpdate}}\")));\r",
-									"pm.environment.set(\"status\", \"BASTLER\");\r",
+									"pm.environment.set(\"status\", \"BASTELN\");\r",
 									"pm.environment.set(\"kaufdatum\", new Date(pm.variables.replaceIn(\"{{$randomDateRecent}}\")).toISOString().substring(0,10));\r",
 									"pm.environment.set(\"wahrung\", pm.variables.replaceIn(\"{{$randomCurrencyCode}}\"));\r",
 									"pm.environment.set(\"preis\", Number(pm.variables.replaceIn(\"{{$randomPrice}}\")));\r",
