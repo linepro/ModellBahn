@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a399239a-3d46-42e4-b627-57353d38ca82",
+		"_postman_id": "5d64037c-f91b-4f6a-989c-d3b711682b07",
 		"name": "ModellBahn",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -17559,7 +17559,7 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Transfer-Encoding",
+								"key": "Content-Encoding",
 								"value": "{{csvEncoding}}",
 								"type": "text"
 							}
@@ -17611,7 +17611,7 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Transfer-Encoding",
+								"key": "Content-Encoding",
 								"value": "{{csvEncoding}}",
 								"type": "text"
 							}
@@ -17663,7 +17663,7 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Transfer-Encoding",
+								"key": "Content-Encoding",
 								"value": "{{csvEncoding}}",
 								"type": "text"
 							}
@@ -17715,7 +17715,7 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Transfer-Encoding",
+								"key": "Content-Encoding",
 								"value": "{{csvEncoding}}",
 								"type": "text"
 							}
@@ -17767,7 +17767,7 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Transfer-Encoding",
+								"key": "Content-Encoding",
 								"value": "{{csvEncoding}}",
 								"type": "text"
 							}
@@ -17819,7 +17819,7 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Transfer-Encoding",
+								"key": "Content-Encoding",
 								"value": "{{csvEncoding}}",
 								"type": "text"
 							}
@@ -17871,7 +17871,7 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Transfer-Encoding",
+								"key": "Content-Encoding",
 								"value": "{{csvEncoding}}",
 								"type": "text"
 							}
@@ -17923,7 +17923,7 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Transfer-Encoding",
+								"key": "Content-Encoding",
 								"value": "{{csvEncoding}}",
 								"type": "text"
 							}
@@ -17975,7 +17975,7 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Transfer-Encoding",
+								"key": "Content-Encoding",
 								"value": "{{csvEncoding}}",
 								"type": "text"
 							}
@@ -18027,7 +18027,7 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Transfer-Encoding",
+								"key": "Content-Encoding",
 								"value": "{{csvEncoding}}",
 								"type": "text"
 							}
@@ -18079,7 +18079,7 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Transfer-Encoding",
+								"key": "Content-Encoding",
 								"value": "{{csvEncoding}}",
 								"type": "text"
 							}
@@ -18131,7 +18131,7 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Transfer-Encoding",
+								"key": "Content-Encoding",
 								"value": "{{csvEncoding}}",
 								"type": "text"
 							}
@@ -18183,7 +18183,7 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Transfer-Encoding",
+								"key": "Content-Encoding",
 								"value": "{{csvEncoding}}",
 								"type": "text"
 							}
@@ -18235,7 +18235,7 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Transfer-Encoding",
+								"key": "Content-Encoding",
 								"value": "{{csvEncoding}}",
 								"type": "text"
 							}
@@ -18287,7 +18287,7 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Transfer-Encoding",
+								"key": "Content-Encoding",
 								"value": "{{csvEncoding}}",
 								"type": "text"
 							}
@@ -18339,7 +18339,7 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Transfer-Encoding",
+								"key": "Content-Encoding",
 								"value": "{{csvEncoding}}",
 								"type": "text"
 							}
@@ -18391,7 +18391,7 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Transfer-Encoding",
+								"key": "Content-Encoding",
 								"value": "{{csvEncoding}}",
 								"type": "text"
 							}
@@ -18443,7 +18443,7 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Transfer-Encoding",
+								"key": "Content-Encoding",
 								"value": "{{csvEncoding}}",
 								"type": "text"
 							}
@@ -18495,7 +18495,7 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Transfer-Encoding",
+								"key": "Content-Encoding",
 								"value": "{{csvEncoding}}",
 								"type": "text"
 							}
@@ -18547,7 +18547,7 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Transfer-Encoding",
+								"key": "Content-Encoding",
 								"value": "{{csvEncoding}}",
 								"type": "text"
 							}
@@ -18599,7 +18599,7 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Transfer-Encoding",
+								"key": "Content-Encoding",
 								"value": "{{csvEncoding}}",
 								"type": "text"
 							}
@@ -18651,7 +18651,7 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Transfer-Encoding",
+								"key": "Content-Encoding",
 								"value": "{{csvEncoding}}",
 								"type": "text"
 							}
@@ -18703,7 +18703,7 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Transfer-Encoding",
+								"key": "Content-Encoding",
 								"value": "{{csvEncoding}}",
 								"type": "text"
 							}
@@ -18755,7 +18755,7 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Transfer-Encoding",
+								"key": "Content-Encoding",
 								"value": "{{csvEncoding}}",
 								"type": "text"
 							}
@@ -18807,7 +18807,7 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Transfer-Encoding",
+								"key": "Content-Encoding",
 								"value": "{{csvEncoding}}",
 								"type": "text"
 							}
@@ -18859,7 +18859,7 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Transfer-Encoding",
+								"key": "Content-Encoding",
 								"value": "{{csvEncoding}}",
 								"type": "text"
 							}
@@ -18911,7 +18911,7 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Transfer-Encoding",
+								"key": "Content-Encoding",
 								"value": "{{csvEncoding}}",
 								"type": "text"
 							}
@@ -18963,7 +18963,7 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Transfer-Encoding",
+								"key": "Content-Encoding",
 								"value": "{{csvEncoding}}",
 								"type": "text"
 							}
@@ -19015,7 +19015,7 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Transfer-Encoding",
+								"key": "Content-Encoding",
 								"value": "{{csvEncoding}}",
 								"type": "text"
 							}
@@ -19067,7 +19067,7 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Transfer-Encoding",
+								"key": "Content-Encoding",
 								"value": "{{csvEncoding}}",
 								"type": "text"
 							}
@@ -19119,7 +19119,7 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Transfer-Encoding",
+								"key": "Content-Encoding",
 								"value": "{{csvEncoding}}",
 								"type": "text"
 							}

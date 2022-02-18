@@ -41,9 +41,6 @@ import lombok.ToString;
 @Schema(name = ApiNames.ACHSFOLG, description = "Axle configuration - VDEV/VMEV/UIC-System")
 public class AchsfolgRequest implements NamedItemRequest {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -6909340041601385795L;
 
     @JsonProperty(ApiNames.NAMEN)

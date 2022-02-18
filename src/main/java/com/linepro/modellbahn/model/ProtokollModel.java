@@ -44,7 +44,7 @@ import lombok.ToString;
 @Schema(name = ApiNames.PROTOKOLL, description = "Digital protocoll.")
 public class ProtokollModel extends SpringdocModel<ProtokollModel> implements NamedWithAbbildungModel, Comparable<ProtokollModel> {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 7647449441748472360L;
 
     @JsonProperty(ApiNames.NAMEN)
     @Schema(description = "Protocoll code", example = "MFX", required = true)

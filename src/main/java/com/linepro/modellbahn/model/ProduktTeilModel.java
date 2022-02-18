@@ -45,7 +45,7 @@ import lombok.ToString;
 @Schema(name = ApiNames.TEIL, description = "Part of product (spares for rolling stock - contents for set &c).")
 public class ProduktTeilModel extends SpringdocModel<ProduktTeilModel> implements ItemModel, Comparable<ProduktTeilModel> {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -8428759848507149673L;
 
     @JsonProperty(ApiNames.HERSTELLER)
     @Schema(description = "Manufacturer", accessMode = AccessMode.READ_ONLY)

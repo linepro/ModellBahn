@@ -44,7 +44,7 @@ import lombok.ToString;
 @Schema(name = ApiNames.SPURWEITE, description = "Track gauge - NEM 010.")
 public class SpurweiteModel extends SpringdocModel<SpurweiteModel> implements NamedItemModel, Comparable<SpurweiteModel> {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -2687232616916918614L;
 
     @JsonProperty(ApiNames.NAMEN)
     @Schema(description = "Spurweite code", example = "H0", required = true)

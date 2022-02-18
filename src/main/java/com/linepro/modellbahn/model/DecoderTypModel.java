@@ -75,6 +75,10 @@ public class DecoderTypModel extends SpringdocModel<DecoderTypModel> implements 
     @Schema(description = "Default protocoll", required = true)
     private String protokoll;
 
+    @JsonProperty(ApiNames.FAHRSTUFE)
+    @Schema(description = "Default speed steps", example = "127", required = true)
+    private Integer fahrstufe;
+
     @JsonProperty(ApiNames.ADRESS_TYP)
     @Schema(description = "Address type", required = true)
     private AdressTyp adressTyp;
@@ -86,10 +90,6 @@ public class DecoderTypModel extends SpringdocModel<DecoderTypModel> implements 
     @JsonProperty(ApiNames.SPAN)
     @Schema(description = "Number of addresses consumed (1-16)", example = "1", required = true)
     private Integer span;
-
-    @JsonProperty(ApiNames.FAHRSTUFE)
-    @Schema(description = "Default speed steps", example = "127", required = true)
-    private Integer fahrstufe;
 
     @JsonProperty(ApiNames.GERAUSCH)
     @Schema(description = "True if decoder supports sound", example = "true", required = true)

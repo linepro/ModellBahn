@@ -41,7 +41,7 @@ import lombok.ToString;
 @Schema(name = ApiNames.TEIL, description = "Part of product (spares for rolling stock - contents for set &c).")
 public class ProduktTeilRequest implements ItemRequest {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1170423547001905564L;
 
     @JsonProperty(ApiNames.HERSTELLER)
     @Schema(description = "Manufacturer", accessMode = AccessMode.READ_ONLY)

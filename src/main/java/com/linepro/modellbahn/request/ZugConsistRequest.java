@@ -40,9 +40,6 @@ import lombok.ToString;
 @Schema(name = ApiNames.CONSIST, description = "Rolling stock by poisition in a train.")
 public class ZugConsistRequest implements ItemRequest {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -819994633399521641L;
 
     @JsonProperty(ApiNames.ZUG)

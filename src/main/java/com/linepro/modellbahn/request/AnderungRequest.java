@@ -43,9 +43,6 @@ import lombok.ToString;
 @Schema(name = ApiNames.ANDERUNG, description = "Changes tp an article")
 public class AnderungRequest implements ItemRequest {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -8878833872433935687L;
 
     @JsonProperty(ApiNames.ARTIKEL_ID)

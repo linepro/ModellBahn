@@ -11,7 +11,9 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.util.impexp.impl.FileNameImport;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 import lombok.AllArgsConstructor;
@@ -36,13 +38,10 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(SnakeCaseStrategy.class)
-@JsonPropertyOrder({ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.DELETED })
+@JsonPropertyOrder({ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.ABBILDUNG, ApiNames.DELETED })
 @Schema(name = ApiNames.MOTOR_TYP, description = "Type of motor - Märklin coding.")
 public class MotorTypRequest implements NamedItemRequest {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -1623681950051682454L;
 
     @JsonProperty(ApiNames.NAMEN)
@@ -52,6 +51,11 @@ public class MotorTypRequest implements NamedItemRequest {
     @JsonProperty(ApiNames.BEZEICHNUNG)
     @Schema(description = "Motor Type description", example = "Scheibenkollektor (klein)")
     private String bezeichnung;
+
+    @Hidden
+    @FileNameImport
+    @JsonProperty(ApiNames.ABBILDUNG)
+    private String abbildung;
 
     @JsonProperty(ApiNames.DELETED)
     @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)

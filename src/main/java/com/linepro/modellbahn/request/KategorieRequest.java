@@ -45,9 +45,6 @@ import lombok.ToString;
 @Schema(name = ApiNames.KATEGORIE, description = "Category.")
 public class KategorieRequest implements NamedItemRequest {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 462317735129932397L;
 
     @JsonProperty(ApiNames.NAMEN)

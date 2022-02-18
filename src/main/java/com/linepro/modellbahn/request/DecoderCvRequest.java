@@ -40,9 +40,6 @@ import lombok.ToString;
 @Schema(name = ApiNames.CV, description = "Decoder CV setting.")
 public class DecoderCvRequest implements ItemRequest {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 7009349959055063317L;
 
     @JsonProperty(ApiNames.DECODER_ID)

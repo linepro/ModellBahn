@@ -49,10 +49,11 @@ import lombok.ToString;
     ApiNames.LANGE, ApiNames.MASSSTAB, ApiNames.SPURWEITE, ApiNames.EPOCH, ApiNames.BAHNVERWALTUNG, ApiNames.VORBILD, ApiNames.GATTUNG, ApiNames.BETREIBSNUMMER,
     ApiNames.BAUZEIT, ApiNames.ACHSFOLG, ApiNames.SONDERMODELL, ApiNames.AUFBAU, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.STEUERUNG,
     ApiNames.DECODER_HERSTELLER, ApiNames.DECODER_BESTELL_NR, ApiNames.MOTOR_TYP, ApiNames.ANMERKUNG, ApiNames.ANLEITUNGEN,
-    ApiNames.EXPLOSIONSZEICHNUNG, ApiNames.TEILEN, ApiNames.ABBILDUNG, ApiNames.GROSSANSICHT, ApiNames.DELETED, ApiNames.LINKS })
+    ApiNames.EXPLOSIONSZEICHNUNG, ApiNames.ABBILDUNG, ApiNames.GROSSANSICHT, ApiNames.DELETED, ApiNames.TEILEN, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.PRODUKT)
 @Schema(name = ApiNames.PRODUKT, description = "Product - template for article.")
 public class ProduktModel extends SpringdocModel<ProduktModel> implements ItemModel, Comparable<ProduktModel> {
+
     private static final long serialVersionUID = 2584784787206478907L;
 
     @JsonProperty(ApiNames.HERSTELLER)
@@ -160,11 +161,6 @@ public class ProduktModel extends SpringdocModel<ProduktModel> implements ItemMo
     @Schema(description = "Parts diagram URL", example = "http://localhost/Modelbahn/produkt/MARKLIN/3000/explosionszeichnung.pdf", accessMode = AccessMode.READ_ONLY)
     private String explosionszeichnung;
 
-    @SuppressExport
-    @JsonProperty(ApiNames.TEILEN)
-    @Schema(implementation = ProduktTeilModel.class, description = "Product components", accessMode = AccessMode.READ_ONLY)
-    private List<ProduktTeilModel> teilen;
-
     @JsonProperty(ApiNames.ABBILDUNG)
     @Schema(description = "Image URL", example = "http://localhost:8086/ModellBahn/produkt/MARKLIN/3000/abbildung.jpg", accessMode = AccessMode.READ_ONLY)
     private String abbildung;
@@ -172,6 +168,11 @@ public class ProduktModel extends SpringdocModel<ProduktModel> implements ItemMo
     @JsonProperty(ApiNames.GROSSANSICHT)
     @Schema(description = "Large Image URL", example = "http://localhost:8086/ModellBahn/produkt/MARKLIN/3000/grossansicht.jpg", accessMode = AccessMode.READ_ONLY)
     private String grossansicht;
+
+    @SuppressExport
+    @JsonProperty(ApiNames.TEILEN)
+    @Schema(implementation = ProduktTeilModel.class, description = "Product components", accessMode = AccessMode.READ_ONLY)
+    private List<ProduktTeilModel> teilen;
 
     @JsonProperty(ApiNames.DELETED)
     @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)

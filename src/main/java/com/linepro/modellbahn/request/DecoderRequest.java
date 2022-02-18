@@ -47,9 +47,6 @@ import lombok.ToString;
 @Schema(name = ApiNames.DECODER, description = "Decoder - installed or spare.")
 public class DecoderRequest implements ItemRequest {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 5179582335912818583L;
 
     @JsonProperty(ApiNames.DECODER_ID)
@@ -77,7 +74,7 @@ public class DecoderRequest implements ItemRequest {
     private String protokoll;
 
     @JsonProperty(ApiNames.ADRESS)
-    @Schema(description = "Decoder address", example = "28", required = true)
+    @Schema(description = "Digital address", example = "28", required = true)
     private Integer adress;
 
     @JsonProperty(ApiNames.FAHRSTUFE)

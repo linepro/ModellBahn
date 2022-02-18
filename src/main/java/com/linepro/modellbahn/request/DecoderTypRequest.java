@@ -16,7 +16,9 @@ import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.model.enums.AdressTyp;
 import com.linepro.modellbahn.model.enums.Konfiguration;
 import com.linepro.modellbahn.model.enums.Stecker;
+import com.linepro.modellbahn.util.impexp.impl.FileNameImport;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 import lombok.AllArgsConstructor;
@@ -43,13 +45,10 @@ import lombok.ToString;
 @JsonNaming(SnakeCaseStrategy.class)
 @JsonPropertyOrder({ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.I_MAX, ApiNames.PROTOKOLL,
         ApiNames.FAHRSTUFE, ApiNames.ADRESS_TYP, ApiNames.ADRESS, ApiNames.SPAN, ApiNames.GERAUSCH, ApiNames.KONFIGURATION,
-        ApiNames.STECKER, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.DELETED })
+        ApiNames.STECKER, ApiNames.ANLEITUNGEN, ApiNames.DELETED })
 @Schema(name = ApiNames.DECODER_TYP, description = "Decoder type - template for Decoder.")
 public class DecoderTypRequest implements ItemRequest {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 6138762036136774557L;
 
     @JsonProperty(ApiNames.HERSTELLER)
@@ -65,7 +64,7 @@ public class DecoderTypRequest implements ItemRequest {
     private String bezeichnung;
 
     @JsonProperty(ApiNames.I_MAX)
-    @Schema(description = "Maximum current in mA", example = "1100")
+    @Schema(description = "Maximum current in A", example = "1.100")
     private BigDecimal iMax;
 
     @JsonProperty(ApiNames.PROTOKOLL)
@@ -111,6 +110,11 @@ public class DecoderTypRequest implements ItemRequest {
     @JsonProperty(ApiNames.STECKER)
     @Schema(description = "Stecker", example = "NEM352")
     private Stecker stecker;
+
+    @Hidden
+    @FileNameImport(keyFields = {ApiNames.HERSTELLER, ApiNames.BESTELL_NR})
+    @JsonProperty(ApiNames.ANLEITUNGEN)
+    private String anleitungen;
 
     @JsonProperty(ApiNames.DELETED)
     @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)

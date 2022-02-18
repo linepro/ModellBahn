@@ -40,9 +40,6 @@ import lombok.ToString;
 @Schema(name = ApiNames.ZUG, description = "A running train configuration.")
 public class ZugRequest implements NamedItemRequest {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -7193297060925496336L;
 
     @JsonProperty(ApiNames.NAMEN)

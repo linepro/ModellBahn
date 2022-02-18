@@ -40,9 +40,6 @@ import lombok.ToString;
 @Schema(name = ApiNames.MASSSTAB, description = "Scale - NEM 010.")
 public class MassstabRequest implements NamedItemRequest {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 3575526665369943113L;
 
     @JsonProperty(ApiNames.NAMEN)

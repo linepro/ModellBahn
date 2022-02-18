@@ -56,6 +56,7 @@ public class DataBeanProcessor implements BeanDefinitionRegistryPostProcessor {
                                                                                       .addConstructorArgReference((registry.containsBeanDefinition(prefix + "CommitterImpl") ? prefix : PREFIX) + "CommitterImpl")
                                                                                       .addConstructorArgReference(PREFIX + "CsvSchemaGenerator")
                                                                                       .addConstructorArgValue(requestClass)
+                                                                                      .addConstructorArgReference(PREFIX + "FileStoreImpl")
                                                                                       .getBeanDefinition());
         } catch (ClassNotFoundException e) {
             log.error("Could not create beans for {}: {}", name, e.getMessage(), e);

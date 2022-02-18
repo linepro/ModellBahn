@@ -40,9 +40,6 @@ import lombok.ToString;
 @Schema(name = ApiNames.GATTUNG, description = "Rolling stock class (amalgamation of Baureihe and Gattung).")
 public class GattungRequest implements NamedItemRequest {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 8603401290477148399L;
 
     @JsonProperty(ApiNames.NAMEN)

@@ -16,7 +16,9 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.model.enums.LeistungsUbertragung;
+import com.linepro.modellbahn.util.impexp.impl.FileNameImport;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 import lombok.AllArgsConstructor;
@@ -54,9 +56,6 @@ import lombok.ToString;
 @Schema(name = ApiNames.VORBILD, description = "A real world prototype.")
 public class VorbildRequest implements NamedItemRequest {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 4344748764447403298L;
 
     @JsonProperty(ApiNames.NAMEN)
@@ -232,6 +231,11 @@ public class VorbildRequest implements NamedItemRequest {
     @JsonProperty(ApiNames.DREHGESTELLBAUART)
     @Schema(description = "Bogie Manufacturer and type", example = "Y 25")
     private String drehgestellBauart;
+
+    @Hidden
+    @FileNameImport
+    @JsonProperty(ApiNames.ABBILDUNG)
+    private String abbildung;
 
     @JsonProperty(ApiNames.DELETED)
     @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)

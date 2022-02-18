@@ -15,7 +15,9 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.util.impexp.impl.FileNameImport;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 import lombok.AllArgsConstructor;
@@ -41,14 +43,13 @@ import lombok.ToString;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(SnakeCaseStrategy.class)
 @JsonPropertyOrder({ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.KATEGORIE, ApiNames.UNTER_KATEGORIE,
-    ApiNames.LANGE, ApiNames.MASSSTAB, ApiNames.SPURWEITE, ApiNames.EPOCH, ApiNames.BAHNVERWALTUNG, ApiNames.GATTUNG, ApiNames.BETREIBSNUMMER,
+    ApiNames.LANGE, ApiNames.MASSSTAB, ApiNames.SPURWEITE, ApiNames.EPOCH, ApiNames.BAHNVERWALTUNG, ApiNames.VORBILD, ApiNames.GATTUNG, ApiNames.BETREIBSNUMMER,
     ApiNames.BAUZEIT, ApiNames.ACHSFOLG, ApiNames.SONDERMODELL, ApiNames.AUFBAU, ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.STEUERUNG,
-    ApiNames.DECODER_HERSTELLER, ApiNames.DECODER_BESTELL_NR, ApiNames.MOTOR_TYP, ApiNames.ANMERKUNG, ApiNames.DELETED })
+    ApiNames.DECODER_HERSTELLER, ApiNames.DECODER_BESTELL_NR, ApiNames.MOTOR_TYP, ApiNames.ANMERKUNG, ApiNames.ANLEITUNGEN,
+    ApiNames.EXPLOSIONSZEICHNUNG, ApiNames.ABBILDUNG, ApiNames.GROSSANSICHT, ApiNames.DELETED })
 @Schema(name = ApiNames.PRODUKT, description = "Product - template for article.")
 public class ProduktRequest implements ItemRequest {
-    /**
-     * 
-     */
+
     private static final long serialVersionUID = -1251072878651679859L;
 
     @JsonProperty(ApiNames.HERSTELLER)
@@ -64,11 +65,11 @@ public class ProduktRequest implements ItemRequest {
     private String bezeichnung;
 
     @JsonProperty(ApiNames.KATEGORIE)
-    @Schema(description = "Category and subcategory", required = true)
+    @Schema(description = "Category", required = true)
     private String kategorie;
 
     @JsonProperty(ApiNames.UNTER_KATEGORIE)
-    @Schema(description = "Category and subcategory", required = true)
+    @Schema(description = "Subcategory", required = true)
     private String unterKategorie;
 
     @JsonProperty(ApiNames.LANGE)
@@ -76,23 +77,27 @@ public class ProduktRequest implements ItemRequest {
     private BigDecimal lange;
 
     @JsonProperty(ApiNames.MASSSTAB)
-    @Schema(description = "Scale")
+    @Schema(description = "Scale", example = "H0")
     private String massstab;
 
     @JsonProperty(ApiNames.SPURWEITE)
-    @Schema(description = "Track gauge")
+    @Schema(description = "Track gauge", example = "H0")
     private String spurweite;
 
     @JsonProperty(ApiNames.EPOCH)
-    @Schema(description = "ERA")
+    @Schema(description = "ERA", example = "IV")
     private String epoch;
 
     @JsonProperty(ApiNames.BAHNVERWALTUNG)
-    @Schema(description = "Railway company")
+    @Schema(description = "Railway company", example = "DB")
     private String bahnverwaltung;
 
+    @JsonProperty(ApiNames.VORBILD)
+    @Schema(description = "Prototype", example = "BR89.0")
+    private String vorbild;
+
     @JsonProperty(ApiNames.GATTUNG)
-    @Schema(description = "Vehicle class")
+    @Schema(description = "Vehicle class", example = "BR89.0")
     private String gattung;
 
     @JsonProperty(ApiNames.BETREIBSNUMMER)
@@ -105,44 +110,64 @@ public class ProduktRequest implements ItemRequest {
     private LocalDate bauzeit;
 
     @JsonProperty(ApiNames.ACHSFOLG)
-    @Schema(description = "Axle configuration")
+    @Schema(description = "Axle configuration", example = "CH2T")
     private String achsfolg;
 
     @JsonProperty(ApiNames.SONDERMODELL)
-    @Schema(description = "Special model indicator")
+    @Schema(description = "Special model indicator", example = "MHI")
     private String sondermodell;
 
     @JsonProperty(ApiNames.AUFBAU)
-    @Schema(description = "Construction")
+    @Schema(description = "Construction", example = "LK")
     private String aufbau;
 
     @JsonProperty(ApiNames.LICHT)
-    @Schema(description = "Light configuration")
+    @Schema(description = "Light Configuration", example = "L1V")
     private String licht;
 
     @JsonProperty(ApiNames.KUPPLUNG)
-    @Schema(description = "Coupling configuration")
+    @Schema(description = "Coupling configuration", example = "RELEX")
     private String kupplung;
 
     @JsonProperty(ApiNames.STEUERUNG)
-    @Schema(description = "Control method")
+    @Schema(description = "Control method", example = "Digital")
     private String steuerung;
 
     @JsonProperty(ApiNames.DECODER_HERSTELLER)
-    @Schema(description = "Decoder type")
+    @Schema(description = "Decoder Manufacturer", example = "ESU")
     private String decoderTypHersteller;
 
     @JsonProperty(ApiNames.DECODER_BESTELL_NR)
-    @Schema(description = "Decoder type")
+    @Schema(description = "Decoder Part Number", example = "62400")
     private String decoderTypBestellNr;
 
     @JsonProperty(ApiNames.MOTOR_TYP)
-    @Schema(description = "Motor type")
+    @Schema(description = "Motor type", example = "5*")
     private String motorTyp;
 
     @JsonProperty(ApiNames.ANMERKUNG)
     @Schema(description = "Remarks", example = "Ex set")
     private String anmerkung;
+
+    @Hidden
+    @FileNameImport(keyFields = {ApiNames.HERSTELLER, ApiNames.BESTELL_NR})
+    @JsonProperty(ApiNames.ANLEITUNGEN)
+    private String anleitungen;
+
+    @Hidden
+    @FileNameImport(keyFields = {ApiNames.HERSTELLER, ApiNames.BESTELL_NR})
+    @JsonProperty(ApiNames.EXPLOSIONSZEICHNUNG)
+    private String explosionszeichnung;
+
+    @Hidden
+    @FileNameImport(keyFields = {ApiNames.HERSTELLER, ApiNames.BESTELL_NR})
+    @JsonProperty(ApiNames.ABBILDUNG)
+    private String abbildung;
+
+    @Hidden
+    @FileNameImport(keyFields = {ApiNames.HERSTELLER, ApiNames.BESTELL_NR})
+    @JsonProperty(ApiNames.GROSSANSICHT)
+    private String grossansicht;
 
     @JsonProperty(ApiNames.DELETED)
     @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)

@@ -40,9 +40,6 @@ import lombok.ToString;
 @Schema(name = ApiNames.FUNKTION, description = "Decoder function mapping.")
 public class DecoderFunktionRequest implements ItemRequest {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 8189766846221554166L;
 
     @JsonProperty(ApiNames.DECODER_ID)

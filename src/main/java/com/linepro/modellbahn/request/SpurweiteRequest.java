@@ -40,9 +40,6 @@ import lombok.ToString;
 @Schema(name = ApiNames.SPURWEITE, description = "Track gauge - NEM 010.")
 public class SpurweiteRequest implements NamedItemRequest {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 8680422431409421043L;
 
     @JsonProperty(ApiNames.NAMEN)

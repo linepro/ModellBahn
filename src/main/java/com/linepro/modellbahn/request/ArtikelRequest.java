@@ -16,7 +16,9 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.model.enums.Status;
+import com.linepro.modellbahn.util.impexp.impl.FileNameImport;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 import lombok.AllArgsConstructor;
@@ -43,13 +45,11 @@ import lombok.ToString;
 @JsonNaming(SnakeCaseStrategy.class)
 @JsonPropertyOrder({ApiNames.ARTIKEL_ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.KAUFDATUM,
     ApiNames.LICHT, ApiNames.KUPPLUNG, ApiNames.STEUERUNG, ApiNames.MOTOR_TYP, ApiNames.KAUFDATUM, ApiNames.WAHRUNG,
-    ApiNames.PREIS, ApiNames.MENGE, ApiNames.VERBLEIBENDE, ApiNames.ANMERKUNG, ApiNames.BELADUNG, ApiNames.STATUS, ApiNames.DELETED })
+    ApiNames.PREIS, ApiNames.MENGE, ApiNames.VERBLEIBENDE, ApiNames.ANMERKUNG, ApiNames.BELADUNG, ApiNames.STATUS,
+    ApiNames.ABBILDUNG, ApiNames.GROSSANSICHT, ApiNames.DELETED })
 @Schema(name = ApiNames.ARTIKEL, description = "An article - may differ from product because of modificiations")
 public class ArtikelRequest implements ItemRequest {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -8523444184107253035L;
 
     @JsonProperty(ApiNames.ARTIKEL_ID)
@@ -116,6 +116,16 @@ public class ArtikelRequest implements ItemRequest {
     @JsonProperty(ApiNames.STATUS)
     @Schema(description = "Status", example = "GEKAUFT", required = true)
     private Status status;
+
+    @Hidden
+    @FileNameImport(keyFields = {ApiNames.ARTIKEL_ID})
+    @JsonProperty(ApiNames.ABBILDUNG)
+    private String abbildung;
+
+    @Hidden
+    @FileNameImport(keyFields = {ApiNames.ARTIKEL_ID})
+    @JsonProperty(ApiNames.GROSSANSICHT)
+    private String grossansicht;
 
     @JsonProperty(ApiNames.DELETED)
     @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)
