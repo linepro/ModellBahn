@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.entity;
 
+import static com.linepro.modellbahn.util.ToStringBuilder.summary;
+
 import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.time.LocalDate;
@@ -523,13 +525,13 @@ public class Artikel extends ItemImpl implements Comparable<Artikel> {
         return new ToStringBuilder(this)
             .appendSuper(super.toString())
             .append("artikelId", artikelId)
-            .append("produkt", produkt)
+            .append("produkt", summary(produkt))
             .append("kaufdatum", kaufdatum)
             .append("wahrung", wahrung)
-            .append("steuerung", steuerung)
-            .append("motorTyp", motorTyp)
-            .append("licht", licht)
-            .append("kupplung", kupplung)
+            .append("steuerung", summary(steuerung))
+            .append("motorTyp", summary(motorTyp))
+            .append("licht", summary(licht))
+            .append("kupplung", summary(kupplung))
             .append("bezeichnung", bezeichnung)
             .append("preis", preis)
             .append("menge", menge)

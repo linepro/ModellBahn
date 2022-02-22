@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.entity;
 
+import static com.linepro.modellbahn.util.ToStringBuilder.summary;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -129,7 +131,7 @@ public class DecoderTypFunktion extends ItemImpl implements Comparable<DecoderTy
     public String toString() {
         return new ToStringBuilder(this)
             .appendSuper(super.toString())
-            .append("decoderTyp", decoderTyp)
+            .append("decoderTyp", summary(decoderTyp))
             .append("funktion", funktion)
             .append("bezeichnung", bezeichnung)
             .append("programmable", programmable)

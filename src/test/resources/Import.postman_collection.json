@@ -1848,7 +1848,7 @@
 		},
 		{
 			"key": "csvEncoding",
-			"value": "ISO-8859-1"
+			"value": "WINDOWS-1251"
 		},
 		{
 			"key": "achsfolgCsv",

@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.entity;
 
+import static com.linepro.modellbahn.util.ToStringBuilder.summary;
+
 import javax.persistence.AttributeOverride;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -73,7 +75,7 @@ public class UnterKategorie extends NamedItemImpl {
     public String toString() {
         return new ToStringBuilder(this)
             .appendSuper(super.toString())
-            .append("kategorie", kategorie.getName())
+            .append("kategorie", summary(kategorie))
             .toString();
     }
 }

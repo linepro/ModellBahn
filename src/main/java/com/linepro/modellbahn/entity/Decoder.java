@@ -328,15 +328,15 @@ public class Decoder extends ItemImpl implements Comparable<Decoder> {
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                        .appendSuper(super.toString())
-                        .append("decoderId", decoderId)
-                        .append("bezeichnung", bezeichnung)
-                        .append("decoderTyp", decoderTyp)
-                        .append("protokoll", protokoll)
-                        .append("fahrstufe", fahrstufe)
-                        .append("status", status)
-                        .append("cvs", cvs)
-                        .append("funktionen", funktionen)
-                        .toString();
+            .appendSuper(super.toString())
+            .append("decoderId", decoderId)
+            .append("bezeichnung", bezeichnung)
+            .append("decoderTyp", decoderTyp)
+            .append("protokoll", protokoll)
+            .append("fahrstufe", fahrstufe)
+            .append("status", status)
+            .append("cvs", cvs)
+            .append("funktionen", funktionen)
+            .toString();
     }
 }

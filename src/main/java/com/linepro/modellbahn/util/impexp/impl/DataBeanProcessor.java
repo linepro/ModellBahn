@@ -48,16 +48,27 @@ public class DataBeanProcessor implements BeanDefinitionRegistryPostProcessor {
 
             Class<?> requestClass = Class.forName("com.linepro.modellbahn.request." + name + "Request");
 
-            registry.registerBeanDefinition(prefix + "Importer", BeanDefinitionBuilder.genericBeanDefinition(ImporterImpl.class)
-                                                                                      .setLazyInit(true)
-                                                                                      .addConstructorArgReference(prefix + "Repository")
-                                                                                      .addConstructorArgReference(prefix + "RequestMapper")
-                                                                                      .addConstructorArgReference(prefix + "Lookup")
-                                                                                      .addConstructorArgReference((registry.containsBeanDefinition(prefix + "CommitterImpl") ? prefix : PREFIX) + "CommitterImpl")
-                                                                                      .addConstructorArgReference(PREFIX + "CsvSchemaGenerator")
-                                                                                      .addConstructorArgValue(requestClass)
-                                                                                      .addConstructorArgReference(PREFIX + "FileStoreImpl")
-                                                                                      .getBeanDefinition());
+            if (name.equals("Decoder")) {
+                registry.registerBeanDefinition(prefix + "Importer", BeanDefinitionBuilder.genericBeanDefinition(DecoderImporterImpl.class)
+                                .setLazyInit(true)
+                                .addConstructorArgReference(prefix + "Repository")
+                                .addConstructorArgReference(prefix + "RequestMapper")
+                                .addConstructorArgReference(prefix + "Lookup")
+                                .addConstructorArgReference(PREFIX + "CsvSchemaGenerator")
+                                .addConstructorArgReference(PREFIX + "FileStoreImpl")
+                                .addConstructorArgReference(PREFIX + "DecoderCreator")
+                                .getBeanDefinition());
+            } else {
+                registry.registerBeanDefinition(prefix + "Importer", BeanDefinitionBuilder.genericBeanDefinition(ImporterImpl.class)
+                                                                                          .setLazyInit(true)
+                                                                                          .addConstructorArgReference(prefix + "Repository")
+                                                                                          .addConstructorArgReference(prefix + "RequestMapper")
+                                                                                          .addConstructorArgReference(prefix + "Lookup")
+                                                                                          .addConstructorArgReference(PREFIX + "CsvSchemaGenerator")
+                                                                                          .addConstructorArgValue(requestClass)
+                                                                                          .addConstructorArgReference(PREFIX + "FileStoreImpl")
+                                                                                          .getBeanDefinition());
+            }
         } catch (ClassNotFoundException e) {
             log.error("Could not create beans for {}: {}", name, e.getMessage(), e);
         }

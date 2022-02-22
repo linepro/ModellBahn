@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.entity;
 
+import static com.linepro.modellbahn.util.ToStringBuilder.summary;
+
 import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.time.LocalDate;
@@ -527,24 +529,24 @@ public class Produkt extends ItemImpl implements Comparable<Produkt> {
     public String toString() {
         return new ToStringBuilder(this)
             .appendSuper(super.toString())
-            .append("hersteller", hersteller)
+            .append("hersteller", summary(hersteller))
             .append("bestellNr", bestellNr)
             .append("bezeichnung", bezeichnung)
-            .append("unterKategorie", unterKategorie)
-            .append("massstab", massstab)
-            .append("spurweite", spurweite)
-            .append("bahnverwaltung", bahnverwaltung)
-            .append("gattung", gattung)
-            .append("epoch", epoch)
-            .append("achsfolg", achsfolg)
-            .append("sondermodell", sondermodell)
-            .append("aufbau", aufbau)
-            .append("licht", licht)
-            .append("kupplung", kupplung)
-            .append("vorbild", vorbild)
-            .append("steuerung", steuerung)
-            .append("decoderTyp", decoderTyp)
-            .append("motorTyp", motorTyp)
+            .append("unterKategorie", summary(unterKategorie))
+            .append("massstab", summary(massstab))
+            .append("spurweite", summary(spurweite))
+            .append("bahnverwaltung", summary(bahnverwaltung))
+            .append("gattung", summary(gattung))
+            .append("epoch", summary(epoch))
+            .append("achsfolg", summary(achsfolg))
+            .append("sondermodell", summary(sondermodell))
+            .append("aufbau", summary(aufbau))
+            .append("licht", summary(licht))
+            .append("kupplung", summary(kupplung))
+            .append("vorbild", summary(vorbild))
+            .append("steuerung", summary(steuerung))
+            .append("decoderTyp", summary(decoderTyp))
+            .append("motorTyp", summary(motorTyp))
             .append("anmerkung", anmerkung)
             .append("betreibsnummer", betreibsnummer)
             .append("bauzeit", bauzeit)
@@ -553,6 +555,7 @@ public class Produkt extends ItemImpl implements Comparable<Produkt> {
             .append("lange", lange)
             .append("abbildung", abbildung)
             .append("grossansicht", grossansicht)
+            .append("teilen", teilen)
             .toString();
     }
 }

@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.entity;
 
+import static com.linepro.modellbahn.util.ToStringBuilder.summary;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -144,8 +146,8 @@ public class ProduktTeil extends ItemImpl implements Comparable<ProduktTeil> {
     public String toString() {
         return new ToStringBuilder(this)
             .appendSuper(super.toString())
-            .append("produkt", produkt)
-            .append("teil", teil)
+            .append("produkt", summary(produkt))
+            .append("teil", summary(teil))
             .append("menge", menge)
             .toString();
     }

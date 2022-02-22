@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.entity;
 
+import static com.linepro.modellbahn.util.ToStringBuilder.summary;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -123,8 +125,8 @@ public class DecoderCv extends ItemImpl implements Comparable<DecoderCv>{
     public String toString() {
         return new ToStringBuilder(this)
             .appendSuper(super.toString())
-            .append("decoder", decoder)
-            .append("cv", cv)
+            .append("decoder", summary(decoder))
+            .append("cv", summary(cv))
             .append("wert",  wert)
             .toString();
     }

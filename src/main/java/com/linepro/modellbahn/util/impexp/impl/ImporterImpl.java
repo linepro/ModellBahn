@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.validation.ConstraintViolationException;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.helpers.MessageFormatter;
@@ -17,7 +19,6 @@ import org.springframework.beans.PropertyAccessor;
 import org.springframework.beans.PropertyAccessorFactory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
-import org.springframework.transaction.UnexpectedRollbackException;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -58,20 +59,16 @@ public class ImporterImpl<R extends ItemRequest, E extends Item, M extends ItemM
 
     private final Lookup<E, M> lookup;
 
-    private final Committer<R, E, M> committer;
-
     private final CsvSchemaGenerator generator;
 
     private final Class<R> requestClass;
 
     private final FileStore fileStore;
 
-    public ImporterImpl(JpaRepository<E, Long> repository, Mapper<R, E> mapper, Lookup<E, M> lookup, Committer<R, E, M> committer,
-                    CsvSchemaGenerator generator, Class<R> requestClass, FileStore fileStore) {
+    public ImporterImpl(JpaRepository<E, Long> repository, Mapper<R, E> mapper, Lookup<E, M> lookup, CsvSchemaGenerator generator, Class<R> requestClass, FileStore fileStore) {
         this.repository = repository;
         this.mapper = mapper;
         this.lookup = lookup;
-        this.committer = committer;
         this.generator = generator;
         this.requestClass = requestClass;
         this.fileStore = fileStore;
@@ -99,13 +96,20 @@ public class ImporterImpl<R extends ItemRequest, E extends Item, M extends ItemM
                 try {
                     R request = reader.readValue(line);
 
-                    E entity = mapper.convert(request);
+                    E entity = create(request);
 
-                    addFileNames(fileFields, entity, request);
+                    entity = mapper.apply(request, entity);
+
+                    entity = addFileNames(fileFields, entity, request);
 
                     try {
-                        committer.saveOrUpdate(repository, lookup, mapper, rowNum, request, entity, errors);
-                    } catch (UnexpectedRollbackException e) {
+                        repository.saveAndFlush(entity);
+                    } catch (Exception e) {
+                        String error = getError(rowNum, "unreadable entry", e);
+
+                        errors.add(error);
+
+                        log.error("Error importing {}: {}", error, e);
                     }
                 } catch (Exception e) {
                     String error = getError(rowNum, "unreadable entry", e);
@@ -129,7 +133,14 @@ public class ImporterImpl<R extends ItemRequest, E extends Item, M extends ItemM
         }
     }
 
-    protected void addFileNames(List<Field> fileFields, E entity, R request) {
+    protected E create(R request) {
+        E entity = mapper.convert(request);
+
+        return lookup.find(entity)
+                     .orElse(entity);
+    }
+
+    protected E addFileNames(List<Field> fileFields, E entity, R request) {
         if (!fileFields.isEmpty()) {
             JsonRootName jsonRootName = requestClass.getAnnotation(JsonRootName.class);
 
@@ -169,6 +180,8 @@ public class ImporterImpl<R extends ItemRequest, E extends Item, M extends ItemM
                 }
             });
         }
+
+        return entity;
     }
 
     /**
@@ -180,14 +193,19 @@ public class ImporterImpl<R extends ItemRequest, E extends Item, M extends ItemM
         return Arrays.asList(headerLine.replace("\"", "").split(","));
     }
 
-    private String getError(int rowNum, Object request, Throwable e) {
+    protected String getError(int rowNum, Object request, Throwable e) {
         String error = null;
 
         if (e.getCause() != null) {
-            error = e.getCause().getMessage();
+            e = e.getCause();
         }
 
-        if (!StringUtils.hasText(error)) {
+        if (e instanceof ConstraintViolationException) {
+            error = ((ConstraintViolationException) e).getConstraintViolations()
+                                                      .stream()
+                                                      .map(c -> c.getMessage())
+                                                      .collect(Collectors.joining(",\n\t"));
+        } else if (!StringUtils.hasText(error)) {
             error = e.getMessage();
         }
 

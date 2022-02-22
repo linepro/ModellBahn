@@ -45,8 +45,8 @@ public class Bahnverwaltung extends NamedWithAbbildungImpl {
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .appendSuper(super.toString())
-                .append("land", land)
-                .toString();
+            .appendSuper(super.toString())
+            .append("land", land)
+            .toString();
     }
 }

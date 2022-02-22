@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.entity;
 
+import static com.linepro.modellbahn.util.ToStringBuilder.summary;
+
 import java.time.LocalDate;
 
 import javax.persistence.Column;
@@ -139,7 +141,7 @@ public class Anderung extends ItemImpl implements Comparable<Anderung> {
     public String toString() {
         return new ToStringBuilder(this)
             .appendSuper(super.toString())
-            .append("artikel", artikel)
+            .append("artikel", summary(artikel))
             .append("anderungId", anderungId)
             .append("anderungsDatum", anderungsDatum)
             .append("anderungsTyp",  anderungsTyp)

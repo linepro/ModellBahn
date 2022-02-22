@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.entity;
 
+import static com.linepro.modellbahn.util.ToStringBuilder.summary;
+
 import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.util.HashSet;
@@ -304,11 +306,11 @@ public class DecoderTyp extends ItemImpl implements Comparable<DecoderTyp>, With
     public String toString() {
         return new ToStringBuilder(this)
             .appendSuper(super.toString())
-            .append("hersteller", hersteller)
+            .append("hersteller", summary(hersteller))
             .append("bestellNr", bestellNr)
             .append("bezeichnung",  bezeichnung)
             .append("iMax",  iMax)
-            .append("protokoll",  protokoll)
+            .append("protokoll",  summary(protokoll))
             .append("fahrstufe",  fahrstufe)
             .append("sound",  sound)
             .append("konfiguration",  konfiguration)

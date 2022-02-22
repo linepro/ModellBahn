@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.entity;
 
+import static com.linepro.modellbahn.util.ToStringBuilder.summary;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -166,8 +168,8 @@ public class ZugConsist extends ItemImpl implements Comparable<ZugConsist> {
     public String toString() {
         return new ToStringBuilder(this)
             .appendSuper(super.toString())
-            .append("zug", zug)
-            .append("artikel", artikel)
+            .append("zug", summary(zug))
+            .append("artikel", summary(artikel))
             .append("position", position)
             .toString();
     }

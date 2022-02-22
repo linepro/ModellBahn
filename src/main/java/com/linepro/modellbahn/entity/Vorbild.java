@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.entity;
 
+import static com.linepro.modellbahn.util.ToStringBuilder.summary;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -347,11 +349,11 @@ public class Vorbild extends NamedWithAbbildungImpl {
     public String toString() {
         return new ToStringBuilder(this)
             .appendSuper(super.toString())
-            .append("gattung", gattung)
-            .append("unterKategorie", unterKategorie)
-            .append("bahnverwaltung", bahnverwaltung)
+            .append("gattung", summary(gattung))
+            .append("unterKategorie", summary(unterKategorie))
+            .append("bahnverwaltung", summary(bahnverwaltung))
             .append("antrieb", antrieb)
-            .append("achsfolg", achsfolg)
+            .append("achsfolg", summary(achsfolg))
             .append("hersteller", hersteller)
             .append("bauzeit", bauzeit)
             .append("menge", menge)

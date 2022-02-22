@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.entity;
 
+import static com.linepro.modellbahn.util.ToStringBuilder.summary;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -173,6 +175,10 @@ public class Zug extends NamedItemImpl {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).appendSuper(super.toString()).append("zugTyp", zugTyp).append("consist", consist).toString();
+        return new ToStringBuilder(this)
+            .appendSuper(super.toString())
+            .append("zugTyp", summary(zugTyp))
+            .append("consist", consist)
+            .toString();
     }
 }
