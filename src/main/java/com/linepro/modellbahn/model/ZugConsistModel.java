@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.util.impexp.impl.SuppressExport;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -56,6 +57,7 @@ public class ZugConsistModel extends SpringdocModel<ZugConsistModel> implements 
     @Schema(description = "Train code", example = "BAVARIA", accessMode = AccessMode.READ_ONLY)
     private String zug;
 
+    @SuppressExport
     @JsonProperty(ApiNames.ZUG_BEZEICHNUNG)
     @Schema(description = "Train code", example = "BAVARIA", accessMode = AccessMode.READ_ONLY)
     private String zugBezeichnung;
@@ -68,6 +70,7 @@ public class ZugConsistModel extends SpringdocModel<ZugConsistModel> implements 
     @Schema(description = "Artikel id", example = "00001", required = true)
     private String artikelId;
 
+    @SuppressExport
     @JsonProperty(ApiNames.ARTIKEL_BEZEICHNUNG)
     @Schema(description = "Artikel id", example = "00001", required = true)
     private String artikelBezeichnung;
@@ -76,6 +79,7 @@ public class ZugConsistModel extends SpringdocModel<ZugConsistModel> implements 
     @Schema(description = "Manufacturer", example = "Marklin", accessMode = AccessMode.READ_ONLY)
     private String hersteller;
 
+    @SuppressExport
     @JsonProperty(ApiNames.HERSTELLER_BEZEICHNUNG)
     @Schema(description = "Manufacturer", example = "Marklin", accessMode = AccessMode.READ_ONLY)
     private String herstellerBezeichnung;
@@ -92,6 +96,7 @@ public class ZugConsistModel extends SpringdocModel<ZugConsistModel> implements 
     @Schema(description = "Category and subcategory", accessMode = AccessMode.READ_ONLY)
     private String kategorie;
 
+    @SuppressExport
     @JsonProperty(ApiNames.KATEGORIE_BEZEICHNUNG)
     @Schema(description = "Category and subcategory", accessMode = AccessMode.READ_ONLY)
     private String kategorieBezeichnung;
@@ -100,6 +105,7 @@ public class ZugConsistModel extends SpringdocModel<ZugConsistModel> implements 
     @Schema(description = "Category and subcategory", accessMode = AccessMode.READ_ONLY)
     private String unterKategorie;
 
+    @SuppressExport
     @JsonProperty(ApiNames.UNTER_KATEGORIE_BEZEICHNUNG)
     @Schema(description = "Category and subcategory", accessMode = AccessMode.READ_ONLY)
     private String unterKategorieBezeichnung;
@@ -112,6 +118,7 @@ public class ZugConsistModel extends SpringdocModel<ZugConsistModel> implements 
     @Schema(description = "Railway company", accessMode = AccessMode.READ_ONLY)
     private String bahnverwaltung;
 
+    @SuppressExport
     @JsonProperty(ApiNames.BAHNVERWALTUNG_BEZEICHNUNG)
     @Schema(description = "Railway company", accessMode = AccessMode.READ_ONLY)
     private String bahnverwaltungBezeichnung;
@@ -120,6 +127,7 @@ public class ZugConsistModel extends SpringdocModel<ZugConsistModel> implements 
     @Schema(description = "Vehicle class", accessMode = AccessMode.READ_ONLY)
     private String gattung;
 
+    @SuppressExport
     @JsonProperty(ApiNames.GATTUNG_BEZEICHNUNG)
     @Schema(description = "Vehicle class", accessMode = AccessMode.READ_ONLY)
     private String gattungBezeichnung;

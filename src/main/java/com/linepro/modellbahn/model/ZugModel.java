@@ -63,6 +63,7 @@ public class ZugModel extends SpringdocModel<ZugModel> implements NamedItemModel
     @Schema(description = "Train type")
     private String zugTyp;
 
+    @SuppressExport
     @JsonProperty(ApiNames.ZUG_TYP_BEZEICHNUNG)
     @Schema(description = "Train type Description", example = "„Bavaria“", accessMode = AccessMode.READ_ONLY)
     private String zugTypBezeichnung;

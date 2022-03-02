@@ -60,6 +60,7 @@ public class DecoderTypModel extends SpringdocModel<DecoderTypModel> implements 
     @Schema(description = "Manufacturer", required = true)
     private String hersteller;
 
+    @SuppressExport
     @JsonProperty(ApiNames.HERSTELLER_BEZEICHNUNG)
     @Schema(description = "Manufacturer", required = true)
     private String herstellerBezeichnung;
@@ -80,6 +81,7 @@ public class DecoderTypModel extends SpringdocModel<DecoderTypModel> implements 
     @Schema(description = "Default protocol", required = true)
     private String protokoll;
 
+    @SuppressExport
     @JsonProperty(ApiNames.PROTOKOLL_BEZEICHNUNG)
     @Schema(description = "Default protocol", required = true)
     private String protokollBezeichnung;

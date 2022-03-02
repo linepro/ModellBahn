@@ -53,6 +53,7 @@ public class ProduktTeilModel extends SpringdocModel<ProduktTeilModel> implement
     @Schema(description = "Manufacturer", accessMode = AccessMode.READ_ONLY)
     private String hersteller;
 
+    @SuppressExport
     @JsonProperty(ApiNames.HERSTELLER_BEZEICHNUNG)
     @Schema(description = "Manufacturer", example = "Marklin", accessMode = AccessMode.READ_ONLY)
     private String herstellerBezeichnung;
@@ -65,6 +66,7 @@ public class ProduktTeilModel extends SpringdocModel<ProduktTeilModel> implement
     @Schema(description = "Sub product Manufacturer", accessMode = AccessMode.READ_ONLY)
     private String teilHersteller;
 
+    @SuppressExport
     @JsonProperty(ApiNames.TEIL_HERSTELLER_BEZEICHNUNG)
     @Schema(description = "Manufacturer", example = "Marklin", accessMode = AccessMode.READ_ONLY)
     private String teilHerstellerBezeichnung;
@@ -82,6 +84,7 @@ public class ProduktTeilModel extends SpringdocModel<ProduktTeilModel> implement
     @Schema(description = "Category and subcategory", required = true)
     private String kategorie;
 
+    @SuppressExport
     @JsonProperty(ApiNames.KATEGORIE_BEZEICHNUNG)
     @Schema(description = "Category and subcategory", accessMode = AccessMode.READ_ONLY)
     private String kategorieBezeichnung;
@@ -90,6 +93,7 @@ public class ProduktTeilModel extends SpringdocModel<ProduktTeilModel> implement
     @Schema(description = "Category and subcategory", required = true)
     private String unterKategorie;
 
+    @SuppressExport
     @JsonProperty(ApiNames.UNTER_KATEGORIE_BEZEICHNUNG)
     @Schema(description = "Category and subcategory", accessMode = AccessMode.READ_ONLY)
     private String unterKategorieBezeichnung;

@@ -1,2 +1,2 @@
-kategorie,kategorieBezeichnung,name,bezeichnung,deleted
-TEST,,UNTER,Unter Test,false
+kategorie,name,bezeichnung,deleted
+TEST,UNTER,Unter Test,false

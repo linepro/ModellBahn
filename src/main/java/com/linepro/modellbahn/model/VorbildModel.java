@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.hateoas.Hateoas.PagedSchema;
 import com.linepro.modellbahn.model.enums.LeistungsUbertragung;
+import com.linepro.modellbahn.util.impexp.impl.SuppressExport;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -69,6 +70,7 @@ public class VorbildModel extends SpringdocModel<VorbildModel> implements NamedW
     @Schema(description = "Rolling stock class", example = "BR 89.0", required = true)
     private String gattung;
 
+    @SuppressExport
     @JsonProperty(ApiNames.GATTUNG_BEZEICHNUNG)
     @Schema(description = "Rolling stock class", example = "BR 89.0", accessMode = AccessMode.READ_ONLY)
     private String gattungBezeichnung;
@@ -81,6 +83,7 @@ public class VorbildModel extends SpringdocModel<VorbildModel> implements NamedW
     @Schema(description = "Category and subcategory", required = true)
     private String kategorie;
 
+    @SuppressExport
     @JsonProperty(ApiNames.KATEGORIE_BEZEICHNUNG)
     @Schema(description = "Category and subcategory", accessMode = AccessMode.READ_ONLY)
     private String kategorieBezeichnung;
@@ -89,6 +92,7 @@ public class VorbildModel extends SpringdocModel<VorbildModel> implements NamedW
     @Schema(description = "Category and subcategory", required = true)
     private String unterKategorie;
 
+    @SuppressExport
     @JsonProperty(ApiNames.UNTER_KATEGORIE_BEZEICHNUNG)
     @Schema(description = "Category and subcategory", accessMode = AccessMode.READ_ONLY)
     private String unterKategorieBezeichnung;
@@ -97,6 +101,7 @@ public class VorbildModel extends SpringdocModel<VorbildModel> implements NamedW
     @Schema(description = "Railway company", required = true)
     private String bahnverwaltung;
 
+    @SuppressExport
     @JsonProperty(ApiNames.BAHNVERWALTUNG_BEZEICHNUNG)
     @Schema(description = "Railway company", accessMode = AccessMode.READ_ONLY)
     private String bahnverwaltungBezeichnung;
@@ -122,6 +127,7 @@ public class VorbildModel extends SpringdocModel<VorbildModel> implements NamedW
     @Schema(description = "Drive method")
     private String antrieb;
 
+    @SuppressExport
     @JsonProperty(ApiNames.ANTRIEB_BEZEICHNUNG)
     @Schema(description = "Drive method", accessMode = AccessMode.READ_ONLY)
     private String antriebBezeichnung;
@@ -130,6 +136,7 @@ public class VorbildModel extends SpringdocModel<VorbildModel> implements NamedW
     @Schema(description = "Axle configuration")
     private String achsfolg;
 
+    @SuppressExport
     @JsonProperty(ApiNames.ACHSFOLG_BEZEICHNUNG)
     @Schema(description = "Axle configuration", accessMode = AccessMode.READ_ONLY)
     private String achsfolgBezeichnung;

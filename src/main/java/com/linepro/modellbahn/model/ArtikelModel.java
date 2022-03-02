@@ -71,6 +71,7 @@ public class ArtikelModel extends SpringdocModel<ArtikelModel> implements ItemMo
     @Schema(description = "Manufacturer", example = "Marklin", accessMode = AccessMode.READ_ONLY)
     private String hersteller;
 
+    @SuppressExport
     @JsonProperty(ApiNames.HERSTELLER_BEZEICHNUNG)
     @Schema(description = "Manufacturer", example = "Marklin", accessMode = AccessMode.READ_ONLY)
     private String herstellerBezeichnung;
@@ -87,6 +88,7 @@ public class ArtikelModel extends SpringdocModel<ArtikelModel> implements ItemMo
     @Schema(description = "Category and subcategory", accessMode = AccessMode.READ_ONLY)
     private String kategorie;
 
+    @SuppressExport
     @JsonProperty(ApiNames.KATEGORIE_BEZEICHNUNG)
     @Schema(description = "Category and subcategory", accessMode = AccessMode.READ_ONLY)
     private String kategorieBezeichnung;
@@ -95,6 +97,7 @@ public class ArtikelModel extends SpringdocModel<ArtikelModel> implements ItemMo
     @Schema(description = "Category and subcategory", accessMode = AccessMode.READ_ONLY)
     private String unterKategorie;
 
+    @SuppressExport
     @JsonProperty(ApiNames.UNTER_KATEGORIE_BEZEICHNUNG)
     @Schema(description = "Category and subcategory", accessMode = AccessMode.READ_ONLY)
     private String unterKategorieBezeichnung;
@@ -107,6 +110,7 @@ public class ArtikelModel extends SpringdocModel<ArtikelModel> implements ItemMo
     @Schema(description = "Scale", example = "H0", accessMode = AccessMode.READ_ONLY)
     private String massstab;
 
+    @SuppressExport
     @JsonProperty(ApiNames.MASSSTAB_BEZEICHNUNG)
     @Schema(description = "Scale", example = "H0")
     private String massstabBezeichnung;
@@ -115,6 +119,7 @@ public class ArtikelModel extends SpringdocModel<ArtikelModel> implements ItemMo
     @Schema(description = "Track gauge", example = "H0", accessMode = AccessMode.READ_ONLY)
     private String spurweite;
 
+    @SuppressExport
     @JsonProperty(ApiNames.SPURWEITE_BEZEICHNUNG)
     @Schema(description = "Track gauge", example = "H0")
     private String spurweiteBezeichnung;
@@ -123,6 +128,7 @@ public class ArtikelModel extends SpringdocModel<ArtikelModel> implements ItemMo
     @Schema(description = "ERA", example = "IV", accessMode = AccessMode.READ_ONLY)
     private String epoch;
 
+    @SuppressExport
     @JsonProperty(ApiNames.EPOCH_BEZEICHNUNG)
     @Schema(description = "ERA", example = "IV")
     private String epochBezeichnung;
@@ -131,6 +137,7 @@ public class ArtikelModel extends SpringdocModel<ArtikelModel> implements ItemMo
     @Schema(description = "Railway company", example = "DB", accessMode = AccessMode.READ_ONLY)
     private String bahnverwaltung;
 
+    @SuppressExport
     @JsonProperty(ApiNames.BAHNVERWALTUNG_BEZEICHNUNG)
     @Schema(description = "Railway company", example = "DB")
     private String bahnverwaltungBezeichnung;
@@ -143,6 +150,7 @@ public class ArtikelModel extends SpringdocModel<ArtikelModel> implements ItemMo
     @Schema(description = "Vehicle class", example = "BR89.0", accessMode = AccessMode.READ_ONLY)
     private String gattung;
 
+    @SuppressExport
     @JsonProperty(ApiNames.GATTUNG_BEZEICHNUNG)
     @Schema(description = "Vehicle class", example = "BR89.0")
     private String gattungBezeichnung;
@@ -155,6 +163,7 @@ public class ArtikelModel extends SpringdocModel<ArtikelModel> implements ItemMo
     @Schema(description = "Axle configuration", example = "CH2T", accessMode = AccessMode.READ_ONLY)
     private String achsfolg;
 
+    @SuppressExport
     @JsonProperty(ApiNames.ACHSFOLG_BEZEICHNUNG)
     @Schema(description = "Axle configuration", example = "CH2T")
     private String achsfolgBezeichnung;
@@ -163,6 +172,7 @@ public class ArtikelModel extends SpringdocModel<ArtikelModel> implements ItemMo
     @Schema(description = "Special model indicator", example = "MHI", accessMode = AccessMode.READ_ONLY)
     private String sondermodell;
 
+    @SuppressExport
     @JsonProperty(ApiNames.SONDERMODELL_BEZEICHNUNG)
     @Schema(description = "Special model indicator", example = "MHI")
     private String sondermodellBezeichnung;
@@ -171,6 +181,7 @@ public class ArtikelModel extends SpringdocModel<ArtikelModel> implements ItemMo
     @Schema(description = "Construction", example = "LK", accessMode = AccessMode.READ_ONLY)
     private String aufbau;
 
+    @SuppressExport
     @JsonProperty(ApiNames.AUFBAU_BEZEICHNUNG)
     @Schema(description = "Construction", example = "LK")
     private String aufbauBezeichnung;
@@ -179,6 +190,7 @@ public class ArtikelModel extends SpringdocModel<ArtikelModel> implements ItemMo
     @Schema(description = "Light Configuration", example = "L1V")
     private String licht;
 
+    @SuppressExport
     @JsonProperty(ApiNames.LICHT_BEZEICHNUNG)
     @Schema(description = "Light Configuration", example = "L1V")
     private String lichtBezeichnung;
@@ -187,6 +199,7 @@ public class ArtikelModel extends SpringdocModel<ArtikelModel> implements ItemMo
     @Schema(description = "Coupling configuration", example = "RELEX")
     private String kupplung;
 
+    @SuppressExport
     @JsonProperty(ApiNames.KUPPLUNG_BEZEICHNUNG)
     @Schema(description = "Coupling configuration", example = "RELEX")
     private String kupplungBezeichnung;
@@ -195,6 +208,7 @@ public class ArtikelModel extends SpringdocModel<ArtikelModel> implements ItemMo
     @Schema(description = "Control method", example = "Digital")
     private String steuerung;
 
+    @SuppressExport
     @JsonProperty(ApiNames.STEUERUNG_BEZEICHNUNG)
     @Schema(description = "Control method", example = "Digital")
     private String steuerungBezeichnung;
@@ -203,6 +217,7 @@ public class ArtikelModel extends SpringdocModel<ArtikelModel> implements ItemMo
     @Schema(description = "Motor type", example = "5*")
     private String motorTyp;
 
+    @SuppressExport
     @JsonProperty(ApiNames.MOTOR_TYP_BEZEICHNUNG)
     @Schema(description = "Motor type", example = "5*")
     private String motorTypBezeichnung;

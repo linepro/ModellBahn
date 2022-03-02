@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.model.enums.AnderungsTyp;
+import com.linepro.modellbahn.util.impexp.impl.SuppressExport;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -53,6 +54,7 @@ public class AnderungModel extends SpringdocModel<AnderungModel> implements Item
     @Schema(description = "Artikel id", example = "00001", accessMode = AccessMode.READ_ONLY)
     private String artikelId;
 
+    @SuppressExport
     @JsonProperty(ApiNames.ARTIKEL_BEZEICHNUNG)
     @Schema(description = "Artikel id", example = "00001", accessMode = AccessMode.READ_ONLY)
     private String artikelBezeichnung;

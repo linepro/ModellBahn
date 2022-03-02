@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "5d64037c-f91b-4f6a-989c-d3b711682b07",
+		"_postman_id": "e8df890e-0c94-4fc7-9f54-c9e7f76bbabe",
 		"name": "ModellBahn",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -16960,9 +16960,9 @@
 									"pm.test(\"Unter Kategorie\", () => pm.response.to.have.status(200));\r",
 									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
-									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"kategorie,kategorieBezeichnung,name,bezeichnung,deleted\"));\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"kategorie,name,bezeichnung,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
-									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){4}(true|false)$/).length).to.eql(3)));"
+									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){3}(true|false)$/).length).to.eql(3)));"
 								],
 								"type": "text/javascript"
 							}

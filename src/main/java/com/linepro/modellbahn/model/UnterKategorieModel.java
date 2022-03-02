@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.hateoas.Hateoas.PagedSchema;
+import com.linepro.modellbahn.util.impexp.impl.SuppressExport;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -50,6 +51,7 @@ public class UnterKategorieModel extends SpringdocModel<UnterKategorieModel> imp
     @Schema(description = "Category coding", example = "LOKOMOTIV", accessMode = AccessMode.READ_ONLY)
     private String kategorie;
 
+    @SuppressExport
     @JsonProperty(ApiNames.KATEGORIE_BEZEICHNUNG)
     @Schema(description = "Category description", example = "Lokomotiv", accessMode = AccessMode.READ_ONLY)
     private String kategorieBezeichnung;

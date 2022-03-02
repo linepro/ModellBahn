@@ -67,6 +67,7 @@ public class DecoderModel extends SpringdocModel<DecoderModel> implements ItemMo
     @Schema(description = "Manufacturer", example = "ESU", accessMode = AccessMode.READ_ONLY)
     private String hersteller;
 
+    @SuppressExport
     @JsonProperty(ApiNames.HERSTELLER_BEZEICHNUNG)
     @Schema(description = "Manufacturer", example = "ESU", accessMode = AccessMode.READ_ONLY)
     private String herstellerBezeichnung;
@@ -91,6 +92,7 @@ public class DecoderModel extends SpringdocModel<DecoderModel> implements ItemMo
     @Schema(description = "Decoder protocol", example = "MFX", required = true)
     private String protokoll;
 
+    @SuppressExport
     @JsonProperty(ApiNames.PROTOKOLL_BEZEICHNUNG)
     @Schema(description = "Decoder protocol", example = "MFX", required = true)
     private String protokollBezeichnung;
