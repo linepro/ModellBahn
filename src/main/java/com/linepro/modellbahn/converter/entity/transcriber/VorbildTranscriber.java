@@ -20,15 +20,21 @@ public class VorbildTranscriber extends NamedAbbildungTranscriber<Vorbild, Vorbi
     public VorbildModel apply(Vorbild source, VorbildModel destination) {
         if (isAvailable(source) && isAvailable(destination)) {
             destination.setGattung(source.getGattung().getName());
+            destination.setGattungBezeichnung(source.getGattung().getBezeichnung());
             destination.setKategorie(getCode(source.getUnterKategorie().getKategorie()));
+            destination.setKategorieBezeichnung(getBezeichnung(source.getUnterKategorie().getKategorie()));
             destination.setUnterKategorie(getCode(source.getUnterKategorie()));
+            destination.setUnterKategorieBezeichnung(getBezeichnung(source.getUnterKategorie()));
             destination.setBahnverwaltung(getCode(source.getBahnverwaltung()));
+            destination.setBahnverwaltungBezeichnung(getBezeichnung(source.getBahnverwaltung()));
             destination.setHersteller(source.getHersteller());
             destination.setBauzeit(source.getBauzeit());
             destination.setMenge(source.getMenge());
             destination.setBetreibsNummer(source.getBetreibsNummer());
             destination.setAntrieb(getCode(source.getAntrieb()));
+            destination.setAntriebBezeichnung(getBezeichnung(source.getAntrieb()));
             destination.setAchsfolg(getCode(source.getAchsfolg()));
+            destination.setAchsfolgBezeichnung(getBezeichnung(source.getAchsfolg()));
             destination.setAnfahrzugkraft(source.getAnfahrzugkraft());
             destination.setLeistung(source.getLeistung());
             destination.setDienstgewicht(source.getDienstgewicht());

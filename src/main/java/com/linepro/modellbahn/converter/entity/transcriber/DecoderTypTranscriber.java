@@ -39,6 +39,7 @@ public class DecoderTypTranscriber implements Transcriber<DecoderTyp, DecoderTyp
     public DecoderTypModel apply(DecoderTyp source, DecoderTypModel destination) {
         if (isAvailable(source) && isAvailable(destination)) {
             destination.setHersteller(getCode(source.getHersteller()));
+            destination.setHerstellerBezeichnung(getBezeichnung(source.getHersteller()));
             destination.setBestellNr(source.getBestellNr());
             destination.setBezeichnung(source.getBezeichnung());
             destination.setIMax(source.getIMax());
@@ -51,6 +52,7 @@ public class DecoderTypTranscriber implements Transcriber<DecoderTyp, DecoderTyp
             destination.setStecker(source.getStecker());
             destination.setAnleitungen(PathMapper.convert(source.getAnleitungen()));
             destination.setProtokoll(getCode(source.getProtokoll()));
+            destination.setProtokollBezeichnung(getBezeichnung(source.getProtokoll()));
             destination.setAdressTyp(source.getAdressTyp());
             destination.setAdress(source.getAdress());
             destination.setSpan(source.getSpan());

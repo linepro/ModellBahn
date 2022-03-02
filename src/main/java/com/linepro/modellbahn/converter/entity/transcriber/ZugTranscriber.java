@@ -31,6 +31,7 @@ public class ZugTranscriber extends NamedTranscriber<Zug, ZugModel> {
     public ZugModel apply(Zug source, ZugModel destination) {
         if (isAvailable(source) && isAvailable(destination)) {
             destination.setZugTyp(getCode(source.getZugTyp()));
+            destination.setZugTypBezeichnung(getBezeichnung(source.getZugTyp()));
 
             destination.setConsist(
                             isAvailable(source.getConsist()) ?

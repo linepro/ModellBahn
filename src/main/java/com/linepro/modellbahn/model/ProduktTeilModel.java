@@ -39,8 +39,10 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(SnakeCaseStrategy.class)
-@JsonPropertyOrder({ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.TEIL_HERSTELLER, ApiNames.TEIL_BESTELL_NR, ApiNames.BEZEICHNUNG,
-    ApiNames.KATEGORIE, ApiNames.UNTER_KATEGORIE, ApiNames.MENGE, ApiNames.DELETED, ApiNames.LINKS })
+@JsonPropertyOrder({ApiNames.HERSTELLER, ApiNames.HERSTELLER_BEZEICHNUNG, ApiNames.BESTELL_NR, ApiNames.TEIL_HERSTELLER,
+    ApiNames.TEIL_HERSTELLER_BEZEICHNUNG, ApiNames.TEIL_BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.KATEGORIE,
+    ApiNames.KATEGORIE_BEZEICHNUNG, ApiNames.UNTER_KATEGORIE, ApiNames.UNTER_KATEGORIE_BEZEICHNUNG, ApiNames.MENGE,
+    ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.TEILEN)
 @Schema(name = ApiNames.TEIL, description = "Part of product (spares for rolling stock - contents for set &c).")
 public class ProduktTeilModel extends SpringdocModel<ProduktTeilModel> implements ItemModel, Comparable<ProduktTeilModel> {
@@ -51,6 +53,10 @@ public class ProduktTeilModel extends SpringdocModel<ProduktTeilModel> implement
     @Schema(description = "Manufacturer", accessMode = AccessMode.READ_ONLY)
     private String hersteller;
 
+    @JsonProperty(ApiNames.HERSTELLER_BEZEICHNUNG)
+    @Schema(description = "Manufacturer", example = "Marklin", accessMode = AccessMode.READ_ONLY)
+    private String herstellerBezeichnung;
+
     @JsonProperty(ApiNames.BESTELL_NR)
     @Schema(description = "Part number", example = "3000", accessMode = AccessMode.READ_ONLY)
     private String bestellNr;
@@ -58,6 +64,10 @@ public class ProduktTeilModel extends SpringdocModel<ProduktTeilModel> implement
     @JsonProperty(ApiNames.TEIL_HERSTELLER)
     @Schema(description = "Sub product Manufacturer", accessMode = AccessMode.READ_ONLY)
     private String teilHersteller;
+
+    @JsonProperty(ApiNames.TEIL_HERSTELLER_BEZEICHNUNG)
+    @Schema(description = "Manufacturer", example = "Marklin", accessMode = AccessMode.READ_ONLY)
+    private String teilHerstellerBezeichnung;
 
     @JsonProperty(ApiNames.TEIL_BESTELL_NR)
     @Schema(description = "Sub product Part number", example = "3000", accessMode = AccessMode.READ_ONLY)
@@ -68,15 +78,21 @@ public class ProduktTeilModel extends SpringdocModel<ProduktTeilModel> implement
     @Schema(description = "Description", example = "Dampftenderlok BR 89.0", accessMode = AccessMode.READ_ONLY)
     private String bezeichnung;
 
-    @SuppressExport
     @JsonProperty(ApiNames.KATEGORIE)
-    @Schema(description = "Category", example = "LOKOMOTIV", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Category and subcategory", required = true)
     private String kategorie;
 
-    @SuppressExport
+    @JsonProperty(ApiNames.KATEGORIE_BEZEICHNUNG)
+    @Schema(description = "Category and subcategory", accessMode = AccessMode.READ_ONLY)
+    private String kategorieBezeichnung;
+
     @JsonProperty(ApiNames.UNTER_KATEGORIE)
-    @Schema(description = "Sub Category", example = "DAMPF", accessMode = AccessMode.READ_ONLY)
+    @Schema(description = "Category and subcategory", required = true)
     private String unterKategorie;
+
+    @JsonProperty(ApiNames.UNTER_KATEGORIE_BEZEICHNUNG)
+    @Schema(description = "Category and subcategory", accessMode = AccessMode.READ_ONLY)
+    private String unterKategorieBezeichnung;
 
     @JsonProperty(ApiNames.MENGE)
     @Schema(description = "Number included", example = "1", required = true)

@@ -59,7 +59,8 @@ import lombok.experimental.SuperBuilder;
         subgraphs = {
             @NamedSubgraph(name = "zug.zugTyp",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "name")
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
             }),
             @NamedSubgraph(name = "zug.consist",
             attributeNodes = {
@@ -84,7 +85,8 @@ import lombok.experimental.SuperBuilder;
         subgraphs = {
             @NamedSubgraph(name = "zug.zugType",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "name")
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
             }),
             @NamedSubgraph(name = "zug.consist",
                 attributeNodes = {
@@ -112,24 +114,29 @@ import lombok.experimental.SuperBuilder;
             }),
             @NamedSubgraph(name = "zug.hersteller",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "name")
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
             }),
             @NamedSubgraph(name = "zug.unterkategorie",
             attributeNodes = {
                 @NamedAttributeNode(value = "kategorie", subgraph = "zug.kategorie"),
-                @NamedAttributeNode(value = "name")
+                @NamedAttributeNode(value = "name"),
+                @NamedAttributeNode(value = "bezeichnung")
             }),
             @NamedSubgraph(name = "zug.kategorie",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "name")
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
             }),
             @NamedSubgraph(name = "zug.bahnverwaltung",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "name")
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
             }),
             @NamedSubgraph(name = "zug.gattung",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "name")
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
             })
         })
     })

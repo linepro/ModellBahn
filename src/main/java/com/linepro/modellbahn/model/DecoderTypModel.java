@@ -46,9 +46,10 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(SnakeCaseStrategy.class)
-@JsonPropertyOrder({ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG, ApiNames.I_MAX, ApiNames.PROTOKOLL,
-        ApiNames.FAHRSTUFE, ApiNames.ADRESS_TYP, ApiNames.ADRESS, ApiNames.SPAN, ApiNames.GERAUSCH, ApiNames.KONFIGURATION,
-        ApiNames.STECKER, ApiNames.ANLEITUNGEN, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.DELETED, ApiNames.LINKS })
+@JsonPropertyOrder({ApiNames.HERSTELLER, ApiNames.HERSTELLER_BEZEICHNUNG, ApiNames.BESTELL_NR, ApiNames.BEZEICHNUNG,
+    ApiNames.I_MAX, ApiNames.PROTOKOLL, ApiNames.PROTOKOLL_BEZEICHNUNG, ApiNames.FAHRSTUFE, ApiNames.ADRESS_TYP, 
+    ApiNames.ADRESS, ApiNames.SPAN, ApiNames.GERAUSCH, ApiNames.KONFIGURATION, ApiNames.STECKER, ApiNames.ANLEITUNGEN,
+    ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.DECODER_TYP)
 @Schema(name = ApiNames.DECODER_TYP, description = "Decoder type - template for Decoder.")
 public class DecoderTypModel extends SpringdocModel<DecoderTypModel> implements ItemModel, Comparable<DecoderTypModel> {
@@ -58,6 +59,10 @@ public class DecoderTypModel extends SpringdocModel<DecoderTypModel> implements 
     @JsonProperty(ApiNames.HERSTELLER)
     @Schema(description = "Manufacturer", required = true)
     private String hersteller;
+
+    @JsonProperty(ApiNames.HERSTELLER_BEZEICHNUNG)
+    @Schema(description = "Manufacturer", required = true)
+    private String herstellerBezeichnung;
 
     @JsonProperty(ApiNames.BESTELL_NR)
     @Schema(description = "Product numer", example = "62499", required = true)
@@ -72,8 +77,12 @@ public class DecoderTypModel extends SpringdocModel<DecoderTypModel> implements 
     private BigDecimal iMax;
 
     @JsonProperty(ApiNames.PROTOKOLL)
-    @Schema(description = "Default protocoll", required = true)
+    @Schema(description = "Default protocol", required = true)
     private String protokoll;
+
+    @JsonProperty(ApiNames.PROTOKOLL_BEZEICHNUNG)
+    @Schema(description = "Default protocol", required = true)
+    private String protokollBezeichnung;
 
     @JsonProperty(ApiNames.FAHRSTUFE)
     @Schema(description = "Default speed steps", example = "127", required = true)

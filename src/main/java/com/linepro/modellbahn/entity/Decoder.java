@@ -77,7 +77,8 @@ import lombok.experimental.SuperBuilder;
             }),
             @NamedSubgraph(name = "decoder.hersteller",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "name")
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
             }),
         }),
     @NamedEntityGraph(name="decoder.noChildren",
@@ -104,15 +105,18 @@ import lombok.experimental.SuperBuilder;
             }),
             @NamedSubgraph(name = "decoder.artikel",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "artikelId")
+                    @NamedAttributeNode(value = "artikelId"),
+                    @NamedAttributeNode(value = "bezeichnung")
             }),
             @NamedSubgraph(name = "decoder.hersteller",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "name")
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
             }),
             @NamedSubgraph(name = "decoder.protokoll",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "name")
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
             })
         }),
     @NamedEntityGraph(name="decoder.withChildren",
@@ -137,15 +141,18 @@ import lombok.experimental.SuperBuilder;
             }),
             @NamedSubgraph(name = "decoder.artikel",
             attributeNodes = {
-                @NamedAttributeNode(value = "artikelId")
+                @NamedAttributeNode(value = "artikelId"),
+                @NamedAttributeNode(value = "bezeichnung")
             }),
             @NamedSubgraph(name = "decoder.hersteller",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "name")
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
             }),
             @NamedSubgraph(name = "decoder.protokoll",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "name")
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
             }),
             @NamedSubgraph(name = "decoder.cvs",
                 attributeNodes = {

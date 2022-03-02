@@ -43,7 +43,8 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(SnakeCaseStrategy.class)
-@JsonPropertyOrder({ApiNames.ZUG_TYP, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.FAHRZEUGEN, ApiNames.DELETED, ApiNames.LINKS })
+@JsonPropertyOrder({ApiNames.ZUG_TYP, ApiNames.ZUG_TYP_BEZEICHNUNG, ApiNames.NAMEN, ApiNames.BEZEICHNUNG, ApiNames.FAHRZEUGEN,
+    ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.ZUG)
 @Schema(name = ApiNames.ZUG, description = "A running train configuration.")
 public class ZugModel extends SpringdocModel<ZugModel> implements NamedItemModel, Comparable<ZugModel> {
@@ -51,7 +52,7 @@ public class ZugModel extends SpringdocModel<ZugModel> implements NamedItemModel
     private static final long serialVersionUID = -3702381278455257877L;
 
     @JsonProperty(ApiNames.NAMEN)
-    @Schema(description = "Train code", example = "BAVARIA", required = true)
+    @Schema(description = "Train code", example = "BAVARIA")
     private String name;
 
     @JsonProperty(ApiNames.BEZEICHNUNG)
@@ -59,8 +60,12 @@ public class ZugModel extends SpringdocModel<ZugModel> implements NamedItemModel
     private String bezeichnung;
 
     @JsonProperty(ApiNames.ZUG_TYP)
-    @Schema(description = "Train type", required = true)
+    @Schema(description = "Train type")
     private String zugTyp;
+
+    @JsonProperty(ApiNames.ZUG_TYP_BEZEICHNUNG)
+    @Schema(description = "Train type Description", example = "„Bavaria“", accessMode = AccessMode.READ_ONLY)
+    private String zugTypBezeichnung;
 
     @JsonProperty(ApiNames.LANGE)
     @Schema(description = "Length over puffers in cm.", example = "11.00", accessMode = AccessMode.READ_ONLY)

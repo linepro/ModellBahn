@@ -56,12 +56,6 @@ import lombok.experimental.SuperBuilder;
         subgraphs = {
             @NamedSubgraph(name = "consist.zug",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "zugTyp", subgraph = "consist.zugTyp"),
-                    @NamedAttributeNode(value = "bezeichnung"),
-            }),
-            @NamedSubgraph(name = "consist.zugTyp",
-                attributeNodes = {
                     @NamedAttributeNode(value = "name")
             }),
             @NamedSubgraph(name = "consist.artikel",
@@ -85,24 +79,29 @@ import lombok.experimental.SuperBuilder;
             }),
             @NamedSubgraph(name = "consist.hersteller",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "name")
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
             }),
             @NamedSubgraph(name = "consist.unterkategorie",
             attributeNodes = {
                 @NamedAttributeNode(value = "kategorie", subgraph = "consist.kategorie"),
-                @NamedAttributeNode(value = "name")
+                @NamedAttributeNode(value = "name"),
+                @NamedAttributeNode(value = "bezeichnung")
             }),
             @NamedSubgraph(name = "consist.kategorie",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "name")
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
             }),
             @NamedSubgraph(name = "consist.bahnverwaltung",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "name")
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
             }),
             @NamedSubgraph(name = "consist.gattung",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "name")
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
             })
         })
     })

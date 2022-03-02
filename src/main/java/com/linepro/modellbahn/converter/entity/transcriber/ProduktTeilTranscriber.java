@@ -21,12 +21,16 @@ public class ProduktTeilTranscriber implements Transcriber<ProduktTeil, ProduktT
     public ProduktTeilModel apply(ProduktTeil source, ProduktTeilModel destination) {
         if (isAvailable(source) && isAvailable(destination)) {
             destination.setHersteller(source.getProdukt().getHersteller().getName());
+            destination.setHerstellerBezeichnung(source.getProdukt().getHersteller().getBezeichnung());
             destination.setBestellNr(source.getProdukt().getBestellNr());
             destination.setTeilHersteller(source.getTeil().getHersteller().getName());
+            destination.setTeilHerstellerBezeichnung(source.getTeil().getHersteller().getBezeichnung());
             destination.setTeilBestellNr(source.getTeil().getBestellNr());
             destination.setBezeichnung(source.getTeil().getBezeichnung());
             destination.setKategorie(getCode(source.getTeil().getUnterKategorie().getKategorie()));
+            destination.setKategorieBezeichnung(getBezeichnung(source.getTeil().getUnterKategorie().getKategorie()));
             destination.setUnterKategorie(getCode(source.getTeil().getUnterKategorie()));
+            destination.setUnterKategorieBezeichnung(getBezeichnung(source.getTeil().getUnterKategorie()));
             destination.setMenge(source.getMenge());
             destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
         }

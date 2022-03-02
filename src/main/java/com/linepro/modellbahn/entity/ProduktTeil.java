@@ -61,7 +61,8 @@ import lombok.experimental.SuperBuilder;
             }),
             @NamedSubgraph(name = "produkt.hersteller",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "name")
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
             }),
             @NamedSubgraph(name = "produktTeil.teil",
                 attributeNodes = {
@@ -72,16 +73,19 @@ import lombok.experimental.SuperBuilder;
             }),
             @NamedSubgraph(name = "teil.hersteller",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "name")
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
             }),
             @NamedSubgraph(name = "teil.unterKategorie",
                 attributeNodes = {
                         @NamedAttributeNode(value = "kategorie", subgraph = "teil.kategorie"),
-                        @NamedAttributeNode(value = "name")
+                        @NamedAttributeNode(value = "name"),
+                        @NamedAttributeNode(value = "bezeichnung")
             }),
             @NamedSubgraph(name = "teil.kategorie",
                 attributeNodes = {
-                    @NamedAttributeNode(value = "name")
+                    @NamedAttributeNode(value = "name"),
+                    @NamedAttributeNode(value = "bezeichnung")
             })
         })
     })

@@ -44,16 +44,17 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(SnakeCaseStrategy.class)
-@JsonPropertyOrder({ApiNames.NAMEN, ApiNames.GATTUNG, ApiNames.BEZEICHNUNG, ApiNames.UNTER_KATEGORIE,
-        ApiNames.BAHNVERWALTUNG, ApiNames.HERSTELLER, ApiNames.BAUZEIT, ApiNames.MENGE, ApiNames.BETREIBSNUMMER,
-        ApiNames.ANTRIEB, ApiNames.ACHSFOLG, ApiNames.ANFAHRZUGKRAFT, ApiNames.LEISTUNG, ApiNames.DIENSTGEWICHT,
-        ApiNames.GESCHWINDIGKEIT, ApiNames.LANGE, ApiNames.AUSSERDIENST, ApiNames.DMTREIBRAD, ApiNames.DMLAUFRADVORN,
-        ApiNames.DMLAUFRADHINTEN, ApiNames.ZYLINDER, ApiNames.DMZYLINDER, ApiNames.KOLBENHUB, ApiNames.KESSELUBERDRUCK,
-        ApiNames.ROSTFLACHE, ApiNames.UBERHITZERFLACHE, ApiNames.WASSERVORRAT, ApiNames.VERDAMPFUNG, ApiNames.STEUERUNG,
-        ApiNames.FAHRMOTOREN, ApiNames.MOTORBAUART, ApiNames.LEISTUNGSUBERTRAGUNG, ApiNames.REICHWEITE,
-        ApiNames.KAPAZITAT, ApiNames.KLASSE, ApiNames.SITZPLATZEKL1, ApiNames.SITZPLATZEKL2, ApiNames.SITZPLATZEKL3,
-        ApiNames.SITZPLATZEKL4, ApiNames.AUFBAU, ApiNames.TRIEBKOPF, ApiNames.MITTELWAGEN, ApiNames.DREHGESTELLBAUART,
-        ApiNames.ABBILDUNG, ApiNames.DELETED, ApiNames.LINKS })
+@JsonPropertyOrder({ApiNames.NAMEN, ApiNames.GATTUNG, ApiNames.GATTUNG_BEZEICHNUNG, ApiNames.BEZEICHNUNG, ApiNames.BAHNVERWALTUNG,
+    ApiNames.BAHNVERWALTUNG_BEZEICHNUNG, ApiNames.HERSTELLER, ApiNames.KATEGORIE, ApiNames.KATEGORIE_BEZEICHNUNG,
+    ApiNames.UNTER_KATEGORIE, ApiNames.UNTER_KATEGORIE_BEZEICHNUNG, ApiNames.ACHSFOLG, ApiNames.ACHSFOLG_BEZEICHNUNG,
+    ApiNames.ANTRIEB, ApiNames.ANTRIEB_BEZEICHNUNG, ApiNames.AUFBAU, ApiNames.AUSSERDIENST, ApiNames.BAUZEIT,
+    ApiNames.BETREIBSNUMMER, ApiNames.ANFAHRZUGKRAFT, ApiNames.DIENSTGEWICHT, ApiNames.DMLAUFRADHINTEN, ApiNames.DMLAUFRADVORN,
+    ApiNames.DMTREIBRAD, ApiNames.DMZYLINDER, ApiNames.DREHGESTELLBAUART, ApiNames.FAHRMOTOREN, ApiNames.GESCHWINDIGKEIT,
+    ApiNames.KAPAZITAT, ApiNames.KESSELUBERDRUCK, ApiNames.KLASSE, ApiNames.KOLBENHUB, ApiNames.LANGE, ApiNames.LEISTUNG,
+    ApiNames.LEISTUNGSUBERTRAGUNG, ApiNames.MENGE, ApiNames.MITTELWAGEN, ApiNames.MOTORBAUART, ApiNames.REICHWEITE,
+    ApiNames.ROSTFLACHE, ApiNames.SITZPLATZEKL1, ApiNames.SITZPLATZEKL2, ApiNames.SITZPLATZEKL3, ApiNames.SITZPLATZEKL4,
+    ApiNames.TRIEBKOPF, ApiNames.UBERHITZERFLACHE, ApiNames.VERDAMPFUNG, ApiNames.WASSERVORRAT, ApiNames.ZYLINDER,
+    ApiNames.ABBILDUNG, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.VORBILD)
 @Schema(name = ApiNames.VORBILD, description = "A real world prototype.")
 public class VorbildModel extends SpringdocModel<VorbildModel> implements NamedWithAbbildungModel, Comparable<VorbildModel> {
@@ -68,6 +69,10 @@ public class VorbildModel extends SpringdocModel<VorbildModel> implements NamedW
     @Schema(description = "Rolling stock class", example = "BR 89.0", required = true)
     private String gattung;
 
+    @JsonProperty(ApiNames.GATTUNG_BEZEICHNUNG)
+    @Schema(description = "Rolling stock class", example = "BR 89.0", accessMode = AccessMode.READ_ONLY)
+    private String gattungBezeichnung;
+
     @JsonProperty(ApiNames.BEZEICHNUNG)
     @Schema(description = "Description", example = "Dampftenderlok BR 89.0")
     private String bezeichnung;
@@ -76,13 +81,25 @@ public class VorbildModel extends SpringdocModel<VorbildModel> implements NamedW
     @Schema(description = "Category and subcategory", required = true)
     private String kategorie;
 
+    @JsonProperty(ApiNames.KATEGORIE_BEZEICHNUNG)
+    @Schema(description = "Category and subcategory", accessMode = AccessMode.READ_ONLY)
+    private String kategorieBezeichnung;
+
     @JsonProperty(ApiNames.UNTER_KATEGORIE)
     @Schema(description = "Category and subcategory", required = true)
     private String unterKategorie;
 
+    @JsonProperty(ApiNames.UNTER_KATEGORIE_BEZEICHNUNG)
+    @Schema(description = "Category and subcategory", accessMode = AccessMode.READ_ONLY)
+    private String unterKategorieBezeichnung;
+
     @JsonProperty(ApiNames.BAHNVERWALTUNG)
     @Schema(description = "Railway company", required = true)
     private String bahnverwaltung;
+
+    @JsonProperty(ApiNames.BAHNVERWALTUNG_BEZEICHNUNG)
+    @Schema(description = "Railway company", accessMode = AccessMode.READ_ONLY)
+    private String bahnverwaltungBezeichnung;
 
     @JsonProperty(ApiNames.HERSTELLER)
     @Schema(description = "Manunfacturer", example = "Henschel")
@@ -105,9 +122,17 @@ public class VorbildModel extends SpringdocModel<VorbildModel> implements NamedW
     @Schema(description = "Drive method")
     private String antrieb;
 
+    @JsonProperty(ApiNames.ANTRIEB_BEZEICHNUNG)
+    @Schema(description = "Drive method", accessMode = AccessMode.READ_ONLY)
+    private String antriebBezeichnung;
+
     @JsonProperty(ApiNames.ACHSFOLG)
     @Schema(description = "Axle configuration")
     private String achsfolg;
+
+    @JsonProperty(ApiNames.ACHSFOLG_BEZEICHNUNG)
+    @Schema(description = "Axle configuration", accessMode = AccessMode.READ_ONLY)
+    private String achsfolgBezeichnung;
 
     @JsonProperty(ApiNames.ANFAHRZUGKRAFT)
     @Schema(description = "Tractive Effort in kN", example = "300")

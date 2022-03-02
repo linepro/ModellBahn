@@ -43,6 +43,7 @@ public class DecoderTranscriber implements Transcriber<Decoder, DecoderModel> {
 
             destination.setDecoderId(source.getDecoderId());
             destination.setHersteller(decoderTyp.getHersteller());
+            destination.setHerstellerBezeichnung(decoderTyp.getHerstellerBezeichnung());
             destination.setBestellNr(decoderTyp.getBestellNr());
             destination.setBezeichnung(source.getBezeichnung());
             destination.setArtikelId(source.getArtikel() != null ? source.getArtikel().getArtikelId() : null);
@@ -59,6 +60,7 @@ public class DecoderTranscriber implements Transcriber<Decoder, DecoderModel> {
             destination.setPreis(source.getPreis());
             destination.setAnmerkung(source.getAnmerkung());
             destination.setProtokoll(getCode(source.getProtokoll()));
+            destination.setProtokollBezeichnung(getBezeichnung(source.getProtokoll()));
             destination.setAdressTyp(decoderTyp.getAdressTyp());
             destination.setAdress(source.getAdress());
             destination.setSpan(decoderTyp.getSpan());

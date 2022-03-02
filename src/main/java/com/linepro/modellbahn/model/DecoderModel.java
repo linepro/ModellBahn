@@ -49,9 +49,10 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(SnakeCaseStrategy.class)
-@JsonPropertyOrder({ApiNames.DECODER_ID, ApiNames.HERSTELLER, ApiNames.BESTELL_NR, ApiNames.ARTIKEL_ID, ApiNames.BEZEICHNUNG,
-    ApiNames.I_MAX, ApiNames.PROTOKOLL, ApiNames.FAHRSTUFE, ApiNames.ADRESS, ApiNames.GERAUSCH, ApiNames.KONFIGURATION,
-    ApiNames.STECKER, ApiNames.STATUS, ApiNames.ANLEITUNGEN, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.DELETED, ApiNames.LINKS })
+@JsonPropertyOrder({ApiNames.DECODER_ID, ApiNames.HERSTELLER, ApiNames.HERSTELLER_BEZEICHNUNG, ApiNames.BESTELL_NR,
+    ApiNames.ARTIKEL_ID, ApiNames.BEZEICHNUNG, ApiNames.I_MAX, ApiNames.PROTOKOLL, ApiNames.PROTOKOLL_BEZEICHNUNG,
+    ApiNames.FAHRSTUFE, ApiNames.ADRESS, ApiNames.GERAUSCH, ApiNames.KONFIGURATION, ApiNames.STECKER, ApiNames.STATUS,
+    ApiNames.ANLEITUNGEN, ApiNames.CVS, ApiNames.FUNKTIONEN, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.DECODER)
 @Schema(name = ApiNames.DECODER, description = "Decoder - installed or spare.")
 public class DecoderModel extends SpringdocModel<DecoderModel> implements ItemModel, Comparable<DecoderModel> {
@@ -65,6 +66,10 @@ public class DecoderModel extends SpringdocModel<DecoderModel> implements ItemMo
     @JsonProperty(ApiNames.HERSTELLER)
     @Schema(description = "Manufacturer", example = "ESU", accessMode = AccessMode.READ_ONLY)
     private String hersteller;
+
+    @JsonProperty(ApiNames.HERSTELLER_BEZEICHNUNG)
+    @Schema(description = "Manufacturer", example = "ESU", accessMode = AccessMode.READ_ONLY)
+    private String herstellerBezeichnung;
 
     @JsonProperty(ApiNames.BESTELL_NR)
     @Schema(description = "Product numer", example = "62499", accessMode = AccessMode.READ_ONLY)
@@ -85,6 +90,10 @@ public class DecoderModel extends SpringdocModel<DecoderModel> implements ItemMo
     @JsonProperty(ApiNames.PROTOKOLL)
     @Schema(description = "Decoder protocol", example = "MFX", required = true)
     private String protokoll;
+
+    @JsonProperty(ApiNames.PROTOKOLL_BEZEICHNUNG)
+    @Schema(description = "Decoder protocol", example = "MFX", required = true)
+    private String protokollBezeichnung;
 
     @JsonProperty(ApiNames.ADRESS_TYP)
     @Schema(description = "Address type", accessMode = AccessMode.READ_ONLY)

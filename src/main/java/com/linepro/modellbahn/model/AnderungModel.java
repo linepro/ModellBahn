@@ -41,7 +41,8 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonNaming(SnakeCaseStrategy.class)
-@JsonPropertyOrder({ ApiNames.ARTIKEL_ID, ApiNames.ANDERUNG_ID, ApiNames.ANDERUNGSDATUM, ApiNames.ANDERUNGS_TYP, ApiNames.BEZEICHNUNG, ApiNames.MENGE, ApiNames.ANMERKUNG, ApiNames.DELETED, ApiNames.LINKS })
+@JsonPropertyOrder({ ApiNames.ARTIKEL_ID, ApiNames.ARTIKEL_BEZEICHNUNG, ApiNames.ANDERUNG_ID, ApiNames.ANDERUNGSDATUM,
+    ApiNames.ANDERUNGS_TYP, ApiNames.BEZEICHNUNG, ApiNames.MENGE, ApiNames.ANMERKUNG, ApiNames.DELETED, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.ANDERUNG)
 @Schema(name = ApiNames.ANDERUNG, description = "Changes tp an article")
 public class AnderungModel extends SpringdocModel<AnderungModel> implements ItemModel, Comparable<AnderungModel> {
@@ -51,6 +52,10 @@ public class AnderungModel extends SpringdocModel<AnderungModel> implements Item
     @JsonProperty(ApiNames.ARTIKEL_ID)
     @Schema(description = "Artikel id", example = "00001", accessMode = AccessMode.READ_ONLY)
     private String artikelId;
+
+    @JsonProperty(ApiNames.ARTIKEL_BEZEICHNUNG)
+    @Schema(description = "Artikel id", example = "00001", accessMode = AccessMode.READ_ONLY)
+    private String artikelBezeichnung;
 
     @JsonProperty(ApiNames.ANDERUNG_ID)
     @Schema(description = "Change number", example = "00001", accessMode = AccessMode.READ_ONLY)
