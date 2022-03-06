@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -151,39 +152,39 @@ public class ArtikelCriterion extends AbstractCriterion {
     private Boolean deleted;
 
     @Override
-    public Predicate[] getCriteria(CriteriaBuilder criteriaBuilder, Root<?> artikel) {
+    public Predicate[] getCriteria(CriteriaBuilder criteriaBuilder, CriteriaQuery<?> query, Root<?> artikel) {
         List<Predicate> where = new ArrayList<>();
         addCondition(criteriaBuilder, artikel, where, DBNames.ARTIKEL_ID, getArtikelId());
         if (StringUtils.hasText(getHersteller()) || StringUtils.hasText(getBestellNr())) {
             Join<?, ?> produkt = artikel.join(DBNames.PRODUKT);
-            if (StringUtils.hasText(getHersteller())) {
-                addJoinCondition(criteriaBuilder, produkt, where, DBNames.HERSTELLER, getHersteller());
-            }
-            addCondition(criteriaBuilder, produkt, where, DBNames.BESTELL_NR, getBestellNr());
+            List<Predicate> on = new ArrayList<>();
+            addJoinCondition(criteriaBuilder, produkt, on, DBNames.HERSTELLER, DBNames.BEZEICHNUNG, getHersteller());
+            addCondition(criteriaBuilder, produkt, on, "bestellNr", getBestellNr());
             if (StringUtils.hasText(getKategorie()) || StringUtils.hasText(getUnterKategorie())) {
-                Join<?, ?> unterkategorie = produkt.join(DBNames.UNTER_KATEGORIE);
-                if (StringUtils.hasText(getKategorie())) {
-                    addJoinCondition(criteriaBuilder, unterkategorie, where, DBNames.KATEGORIE, getKategorie());
-                }
-                addCondition(criteriaBuilder, unterkategorie, where, DBNames.NAME, getUnterKategorie());
+                Join<?,?> unterkategorie = produkt.join(DBNames.UNTER_KATEGORIE);
+                List<Predicate> onKategorie = new ArrayList<>();
+                addJoinCondition(criteriaBuilder, unterkategorie, onKategorie, DBNames.KATEGORIE, DBNames.BEZEICHNUNG, getKategorie());
+                addCondition(criteriaBuilder, unterkategorie, onKategorie, DBNames.BEZEICHNUNG, getUnterKategorie());
+                unterkategorie.on(asArray(onKategorie));
             }
-            addJoinCondition(criteriaBuilder, produkt, where, DBNames.MASSSTAB, getMassstab());
-            addJoinCondition(criteriaBuilder, produkt, where, DBNames.SPURWEITE, getSpurweite());
-            addJoinCondition(criteriaBuilder, produkt, where, DBNames.EPOCH, getEpoch());
-            addJoinCondition(criteriaBuilder, produkt, where, DBNames.BAHNVERWALTUNG, getBahnverwaltung());
-            addJoinCondition(criteriaBuilder, produkt, where, DBNames.GATTUNG, getGattung());
-            addJoinCondition(criteriaBuilder, produkt, where, DBNames.ACHSFOLG, getAchsfolg());
-            addJoinCondition(criteriaBuilder, produkt, where, DBNames.SONDERMODELL, getSondermodell());
-            addJoinCondition(criteriaBuilder, produkt, where, DBNames.AUFBAU, getAufbau());
-            addCondition(criteriaBuilder, produkt, where, DBNames.BETREIBSNUMMER, getBetreibsnummer());
-            addCondition(criteriaBuilder, produkt, where, DBNames.LANGE, getLange());
+            addJoinCondition(criteriaBuilder, produkt, on, DBNames.MASSSTAB, DBNames.BEZEICHNUNG, getMassstab());
+            addJoinCondition(criteriaBuilder, produkt, on, DBNames.SPURWEITE, DBNames.BEZEICHNUNG, getSpurweite());
+            addJoinCondition(criteriaBuilder, produkt, on, DBNames.EPOCH, DBNames.BEZEICHNUNG, getEpoch());
+            addJoinCondition(criteriaBuilder, produkt, on, DBNames.BAHNVERWALTUNG, DBNames.BEZEICHNUNG, getBahnverwaltung());
+            addJoinCondition(criteriaBuilder, produkt, on, DBNames.GATTUNG, DBNames.BEZEICHNUNG, getGattung());
+            addJoinCondition(criteriaBuilder, produkt, on, DBNames.ACHSFOLG, DBNames.BEZEICHNUNG, getAchsfolg());
+            addJoinCondition(criteriaBuilder, produkt, on, DBNames.SONDERMODELL, DBNames.BEZEICHNUNG, getSondermodell());
+            addJoinCondition(criteriaBuilder, produkt, on, DBNames.AUFBAU, DBNames.BEZEICHNUNG, getAufbau());
+            addCondition(criteriaBuilder, produkt, on, DBNames.BETREIBSNUMMER, getBetreibsnummer());
+            addCondition(criteriaBuilder, produkt, on, DBNames.LANGE, getLange());
+            produkt.on(asArray(on));
         }
         addCondition(criteriaBuilder, artikel, where, DBNames.BEZEICHNUNG, getBezeichnung());
-        addJoinCondition(criteriaBuilder, artikel, where, DBNames.LICHT, getLicht());
-        addJoinCondition(criteriaBuilder, artikel, where, DBNames.KUPPLUNG, getKupplung());
-        addJoinCondition(criteriaBuilder, artikel, where, DBNames.STEUERUNG, getSteuerung());
-        addJoinCondition(criteriaBuilder, artikel, where, DBNames.DECODER, getDecoder());
-        addJoinCondition(criteriaBuilder, artikel, where, DBNames.MOTOR_TYP, getMotorTyp());
+        addJoinCondition(criteriaBuilder, artikel, where, DBNames.LICHT, DBNames.BEZEICHNUNG, getLicht());
+        addJoinCondition(criteriaBuilder, artikel, where, DBNames.KUPPLUNG, DBNames.BEZEICHNUNG, getKupplung());
+        addJoinCondition(criteriaBuilder, artikel, where, DBNames.STEUERUNG, DBNames.BEZEICHNUNG, getSteuerung());
+        addJoinCondition(criteriaBuilder, artikel, where, DBNames.DECODER, DBNames.DECODER_ID, getDecoder());
+        addJoinCondition(criteriaBuilder, artikel, where, DBNames.MOTOR_TYP, DBNames.BEZEICHNUNG, getMotorTyp());
         addCondition(criteriaBuilder, artikel, where, DBNames.KAUFDATUM, getKaufdatum());
         addCondition(criteriaBuilder, artikel, where, DBNames.WAHRUNG, getWahrung());
         addCondition(criteriaBuilder, artikel, where, DBNames.PREIS, getPreis());
@@ -192,7 +193,7 @@ public class ArtikelCriterion extends AbstractCriterion {
         addCondition(criteriaBuilder, artikel, where, DBNames.ANMERKUNG, getAnmerkung());
         addCondition(criteriaBuilder, artikel, where, DBNames.BELADUNG, getBeladung());
         addCondition(criteriaBuilder, artikel, where, DBNames.STATUS, getStatus());
-        return where.toArray(new Predicate[0]);
+        return asArray(where);
     }
 
     @Override

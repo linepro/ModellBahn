@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -100,26 +101,28 @@ public class DecoderCriterion extends AbstractCriterion {
     private Boolean deleted;
 
     @Override
-    public Predicate[] getCriteria(CriteriaBuilder criteriaBuilder, Root<?> decoder) {
+    public Predicate[] getCriteria(CriteriaBuilder criteriaBuilder, CriteriaQuery<?> query, Root<?> decoder) {
         List<Predicate> where = new ArrayList<>();
         addCondition(criteriaBuilder, decoder, where, DBNames.DECODER_ID, getDecoderId());
         addCondition(criteriaBuilder, decoder, where, DBNames.BEZEICHNUNG, getBezeichnung());
         if (StringUtils.hasText(getHersteller()) || StringUtils.hasText(getBestellNr()) || getIMax() != null ||
             getSound() != null || getKonfiguration() != null || getStecker() != null) {
             Join<?,?> decoderTyp = decoder.join(DBNames.DECODER_TYP);
-            addJoinCondition(criteriaBuilder, decoderTyp, where, DBNames.HERSTELLER, getHersteller());
-            addCondition(criteriaBuilder, decoderTyp, where, DBNames.BESTELL_NR, getBestellNr());
-            addCondition(criteriaBuilder, decoderTyp, where, DBNames.I_MAX, getIMax());
-            addCondition(criteriaBuilder, decoderTyp, where, DBNames.SOUND, getSound());
-            addCondition(criteriaBuilder, decoderTyp, where, DBNames.KONFIGURATION, getKonfiguration());
-            addCondition(criteriaBuilder, decoderTyp, where, DBNames.STECKER, getStecker());
+            List<Predicate> on = new ArrayList<>();
+            addJoinCondition(criteriaBuilder, decoderTyp, on, DBNames.HERSTELLER, DBNames.BEZEICHNUNG, getHersteller());
+            addCondition(criteriaBuilder, decoderTyp, on, "bestellNr", getBestellNr());
+            addCondition(criteriaBuilder, decoderTyp, on, DBNames.I_MAX, getIMax());
+            addCondition(criteriaBuilder, decoderTyp, on, DBNames.SOUND, getSound());
+            addCondition(criteriaBuilder, decoderTyp, on, DBNames.KONFIGURATION, getKonfiguration());
+            addCondition(criteriaBuilder, decoderTyp, on, DBNames.STECKER, getStecker());
+            decoderTyp.on(asArray(on));
         }
-        addJoinCondition(criteriaBuilder, decoder, where, DBNames.PROTOKOLL, getProtokoll());
+        addJoinCondition(criteriaBuilder, decoder, where, DBNames.PROTOKOLL, DBNames.BEZEICHNUNG, getProtokoll());
         addCondition(criteriaBuilder, decoder, where, DBNames.FAHRSTUFE, getFahrstufe());
         addCondition(criteriaBuilder, decoder, where, DBNames.STATUS, getStatus());
         addCondition(criteriaBuilder, decoder, where, DBNames.DELETED, getDeleted());
 
-        return where.toArray(new Predicate[0]);
+        return asArray(where);
     }
 
     @Override

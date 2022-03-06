@@ -37,7 +37,7 @@ public class SearchableRepositoryImpl<E> extends SimpleJpaRepository<E, Long> im
         CriteriaQuery<E> criteriaQuery = criteriaBuilder.createQuery(persistentClass);
 
         Root<E> root = criteriaQuery.from(persistentClass);
-        Predicate[] where = criterion.getCriteria(criteriaBuilder, root);
+        Predicate[] where = criterion.getCriteria(criteriaBuilder, criteriaQuery, root);
         criteriaQuery = criteriaQuery.where(where);
 
         TypedQuery<E> typedQuery = entityManager.createQuery(criteriaQuery);

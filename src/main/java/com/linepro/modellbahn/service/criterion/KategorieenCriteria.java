@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -15,17 +16,25 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class KategorieenCriteria implements Criterion {
+public class KategorieenCriteria extends AbstractCriterion {
 
-    private final Optional<List<String>> kategorieen;
+    private final Optional<List<String>> optKategorieen;
 
     @Override
-    public Predicate[] getCriteria(CriteriaBuilder criteriaBuilder, Root<?> kategorie) {
+    public Predicate[] getCriteria(CriteriaBuilder criteriaBuilder, CriteriaQuery<?> query, Root<?> kategorie) {
         List<Predicate> where = new ArrayList<>();
-        if (kategorieen.isPresent()) {
-            where.add(criteriaBuilder.in(kategorie.get(DBNames.NAME)).value(kategorieen.get()));
+
+        if (optKategorieen.isPresent()) {
+            List<String> kategorieen = optKategorieen.get();
+
+            if (kategorieen.size() == 1) {
+                addCondition(criteriaBuilder, kategorie, where, DBNames.BEZEICHNUNG, kategorieen.get(0));
+            } else {
+                where.add(criteriaBuilder.in(kategorie.get(DBNames.NAME)).value(kategorieen));
+            }
         }
-        return where.toArray(new Predicate[0]);
+
+        return asArray(where);
     }
 
     @Override

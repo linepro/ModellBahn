@@ -1,18 +1,19 @@
 package com.linepro.modellbahn.service.criterion;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.From;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 
 import org.springframework.util.StringUtils;
 
-import com.linepro.modellbahn.persistence.DBNames;
-
 public abstract class AbstractCriterion implements Criterion {
 
+    private static final Predicate[] PREDICATES = new Predicate[0];
     private static final String ANY_CHAR = "?";
     private static final String ANY_STRING = "*";
 
@@ -23,15 +24,22 @@ public abstract class AbstractCriterion implements Criterion {
 
     protected List<Predicate> addCondition(CriteriaBuilder criteriaBuilder, From<?,?> root, List<Predicate> where, String columnName, String name) {
         if (StringUtils.hasText(name)) {
-            if (name.contains(ANY_STRING) || name.contains(ANY_CHAR)) {
-                String pattern = name.replaceAll(ESCAPE + ANY_STRING, SQL_ANY_STRING).replaceAll(ESCAPE + ANY_CHAR, SQL_ANY_CHAR);
-                where.add(criteriaBuilder.like(root.<String>get(columnName), pattern));
+            if (hasWildcard(name)) {
+                where.add(criteriaBuilder.like(root.<String>get(columnName), resolveWildcards(name)));
             } else {
                 where.add(criteriaBuilder.equal(root.get(columnName), name));
             }
         }
 
         return where;
+    }
+
+    protected String resolveWildcards(String name) {
+        return name.replaceAll(ESCAPE + ANY_STRING, SQL_ANY_STRING).replaceAll(ESCAPE + ANY_CHAR, SQL_ANY_CHAR);
+    }
+
+    protected boolean hasWildcard(String name) {
+        return name.contains(ANY_STRING) || name.contains(ANY_CHAR);
     }
 
     protected List<Predicate> addCondition(CriteriaBuilder criteriaBuilder, From<?,?> root, List<Predicate> where, String columnName, Number number) {
@@ -66,11 +74,18 @@ public abstract class AbstractCriterion implements Criterion {
         return where;
     }
 
-    protected List<Predicate> addJoinCondition(CriteriaBuilder criteriaBuilder, From<?,?> root, List<Predicate> where, String columnName, String name) {
-        if (StringUtils.hasText(name)) {
-            addCondition(criteriaBuilder, root.join(columnName), where, DBNames.NAME, name);
+    protected List<Predicate> addJoinCondition(CriteriaBuilder criteriaBuilder, From<?,?> root, List<Predicate> where, String relationName, String columnName, String value) {
+        if (StringUtils.hasText(value)) {
+            Join<?, ?> join = root.join(relationName);
+            List<Predicate> on = new ArrayList<>();
+            addCondition(criteriaBuilder, join, on, columnName, value);
+            join.on(asArray(on));
         }
 
         return where;
+    }
+
+    protected Predicate[] asArray(List<Predicate> on) {
+        return on.toArray(PREDICATES);
     }
 }

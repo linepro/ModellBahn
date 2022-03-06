@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -206,24 +207,25 @@ public class VorbildCriterion extends AbstractCriterion {
     private Boolean deleted;
 
     @Override
-    public Predicate[] getCriteria(CriteriaBuilder criteriaBuilder, Root<?> vorbild) {
+    public Predicate[] getCriteria(CriteriaBuilder criteriaBuilder, CriteriaQuery<?> query, Root<?> vorbild) {
         List<Predicate> where = new ArrayList<>();
-        addJoinCondition(criteriaBuilder, vorbild, where, DBNames.GATTUNG, getGattung());
+        addCondition(criteriaBuilder, vorbild, where, DBNames.NAME, getName());
+        addJoinCondition(criteriaBuilder, vorbild, where, DBNames.GATTUNG, DBNames.BEZEICHNUNG, getGattung());
         addCondition(criteriaBuilder, vorbild, where, DBNames.BEZEICHNUNG, getBezeichnung());
         if (StringUtils.hasText(getKategorie()) || StringUtils.hasText(getUnterKategorie())) {
             Join<?,?> unterkategorie = vorbild.join(DBNames.UNTER_KATEGORIE);
-            if (StringUtils.hasText(getKategorie())) {
-                addJoinCondition(criteriaBuilder, unterkategorie, where, DBNames.KATEGORIE, getKategorie());
-            }
-            addCondition(criteriaBuilder, unterkategorie, where, DBNames.NAME, getUnterKategorie());
+            List<Predicate> on = new ArrayList<>();
+            addJoinCondition(criteriaBuilder, unterkategorie, on, DBNames.KATEGORIE, DBNames.BEZEICHNUNG, getKategorie());
+            addCondition(criteriaBuilder, unterkategorie, on, DBNames.BEZEICHNUNG, getUnterKategorie());
+            unterkategorie.on(asArray(on));
         }
-        addCondition(criteriaBuilder, vorbild, where, DBNames.BAHNVERWALTUNG, getBahnverwaltung());
+        addJoinCondition(criteriaBuilder, vorbild, where, DBNames.BAHNVERWALTUNG, DBNames.BEZEICHNUNG, getBahnverwaltung());
         addCondition(criteriaBuilder, vorbild, where, DBNames.HERSTELLER, getHersteller());
         addCondition(criteriaBuilder, vorbild, where, DBNames.BAUZEIT, getBauzeit());
         addCondition(criteriaBuilder, vorbild, where, DBNames.MENGE, getMenge());
         addCondition(criteriaBuilder, vorbild, where, DBNames.BETREIBSNUMMER, getBetreibsNummer());
-        addJoinCondition(criteriaBuilder, vorbild, where, DBNames.ANTRIEB, getAntrieb());
-        addJoinCondition(criteriaBuilder, vorbild, where, DBNames.ACHSFOLG, getAchsfolg());
+        addJoinCondition(criteriaBuilder, vorbild, where, DBNames.ANTRIEB, DBNames.BEZEICHNUNG, getAntrieb());
+        addJoinCondition(criteriaBuilder, vorbild, where, DBNames.ACHSFOLG, DBNames.BEZEICHNUNG, getAchsfolg());
         addCondition(criteriaBuilder, vorbild, where, DBNames.ANFAHRZUGKRAFT, getAnfahrzugkraft());
         addCondition(criteriaBuilder, vorbild, where, DBNames.LEISTUNG, getLeistung());
         addCondition(criteriaBuilder, vorbild, where, DBNames.DIENSTGEWICHT, getDienstgewicht());
@@ -257,7 +259,7 @@ public class VorbildCriterion extends AbstractCriterion {
         addCondition(criteriaBuilder, vorbild, where, DBNames.DREHGESTELLBAUART, getDrehgestellBauart());
         addCondition(criteriaBuilder, vorbild, where, DBNames.DELETED, getDeleted());
 
-        return where.toArray(new Predicate[0]);
+        return asArray(where);
     }
 
     @Override

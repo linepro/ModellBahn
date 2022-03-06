@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -64,20 +65,20 @@ public class DecoderTypCriterion extends AbstractCriterion {
     private Boolean deleted;
 
     @Override
-    public Predicate[] getCriteria(CriteriaBuilder criteriaBuilder, Root<?> decoderTyp) {
+    public Predicate[] getCriteria(CriteriaBuilder criteriaBuilder, CriteriaQuery<?> query, Root<?> decoderTyp) {
         List<Predicate> where = new ArrayList<>();
-        addJoinCondition(criteriaBuilder, decoderTyp, where, DBNames.HERSTELLER, getHersteller());
-        addCondition(criteriaBuilder, decoderTyp, where, DBNames.BESTELL_NR, getBestellNr());
+        addJoinCondition(criteriaBuilder, decoderTyp, where, DBNames.HERSTELLER, DBNames.BEZEICHNUNG, getHersteller());
+        addCondition(criteriaBuilder, decoderTyp, where, "bestellNr", getBestellNr());
         addCondition(criteriaBuilder, decoderTyp, where, DBNames.BEZEICHNUNG, getBezeichnung());
         addCondition(criteriaBuilder, decoderTyp, where, DBNames.I_MAX, getIMax());
-        addJoinCondition(criteriaBuilder, decoderTyp, where, DBNames.PROTOKOLL, getProtokoll());
+        addJoinCondition(criteriaBuilder, decoderTyp, where, DBNames.PROTOKOLL, DBNames.BEZEICHNUNG, getProtokoll());
         addCondition(criteriaBuilder, decoderTyp, where, DBNames.FAHRSTUFE, getFahrstufe());
         addCondition(criteriaBuilder, decoderTyp, where, DBNames.SOUND, getSound());
         addCondition(criteriaBuilder, decoderTyp, where, DBNames.KONFIGURATION, getKonfiguration());
         addCondition(criteriaBuilder, decoderTyp, where, DBNames.STECKER, getStecker());
         addCondition(criteriaBuilder, decoderTyp, where, DBNames.DELETED, getDeleted());
 
-        return where.toArray(new Predicate[0]);
+        return asArray(where);
     }
 
     @Override

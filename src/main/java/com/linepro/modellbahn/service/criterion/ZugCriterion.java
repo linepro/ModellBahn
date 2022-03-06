@@ -5,11 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Join;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
-import org.springframework.util.StringUtils;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.linepro.modellbahn.controller.impl.ApiNames;
@@ -45,16 +43,13 @@ public class ZugCriterion extends AbstractCriterion {
     private Boolean deleted;
 
     @Override
-    public Predicate[] getCriteria(CriteriaBuilder criteriaBuilder, Root<?> zug) {
+    public Predicate[] getCriteria(CriteriaBuilder criteriaBuilder, CriteriaQuery<?> query, Root<?> zug) {
         List<Predicate> where = new ArrayList<>();
         addCondition(criteriaBuilder, zug, where, DBNames.NAME, getName());
         addCondition(criteriaBuilder, zug, where, DBNames.BEZEICHNUNG, getBezeichnung());
         addCondition(criteriaBuilder, zug, where, DBNames.DELETED, getDeleted());
-        if (StringUtils.hasText(getZugTyp())) {
-            Join<?,?> zugTyp = zug.join(DBNames.ZUG_TYP);
-            addJoinCondition(criteriaBuilder, zugTyp, where, DBNames.NAME, getZugTyp());
-        }
-        return where.toArray(new Predicate[0]);
+        addJoinCondition(criteriaBuilder, zug, where, DBNames.ZUG_TYP, DBNames.BEZEICHNUNG, getZugTyp());
+        return asArray(where);
     }
 
     @Override

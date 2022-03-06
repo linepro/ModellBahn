@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -35,11 +36,11 @@ public class NamedCriterion extends AbstractCriterion {
     private Boolean deleted;
 
     @Override
-    public Predicate[] getCriteria(CriteriaBuilder criteriaBuilder, Root<?> root) {
+    public Predicate[] getCriteria(CriteriaBuilder criteriaBuilder, CriteriaQuery<?> query, Root<?> root) {
         List<Predicate> where = new ArrayList<>();
         addCondition(criteriaBuilder, root, where, DBNames.NAME, getName());
         addCondition(criteriaBuilder, root, where, DBNames.BEZEICHNUNG, getBezeichnung());
         addCondition(criteriaBuilder, root, where, DBNames.DELETED, getDeleted());
-        return where.toArray(new Predicate[0]);
+        return asArray(where);
     }
 }

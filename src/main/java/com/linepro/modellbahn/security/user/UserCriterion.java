@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -102,7 +103,7 @@ public class UserCriterion extends AbstractCriterion {
     private List<String> roles;
 
     @Override
-    public Predicate[] getCriteria(CriteriaBuilder criteriaBuilder, Root<?> user) {
+    public Predicate[] getCriteria(CriteriaBuilder criteriaBuilder, CriteriaQuery<?> query, Root<?> user) {
         List<Predicate> where = new ArrayList<>();
         addCondition(criteriaBuilder, user, where, DBNames.NAME, getUsername());
         addCondition(criteriaBuilder, user, where, DBNames.EMAIL, getEmail());
@@ -116,7 +117,7 @@ public class UserCriterion extends AbstractCriterion {
             where.add(criteriaBuilder.in(user.get(DBNames.ROLES)).value(getRoles()));
         }
         
-        return where.toArray(new Predicate[0]);
+        return asArray(where);
     }
 
     @Override
