@@ -23,8 +23,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -53,8 +51,8 @@ public class OpenApiConfiguration {
     protected static final class IndexPageTransformer extends SwaggerIndexPageTransformer {
         private OpenApiConfiguration config;
 
-        protected IndexPageTransformer(SwaggerUiConfigProperties uiConfig, SwaggerUiOAuthProperties oAuthProperties, SwaggerUiConfigParameters configParameters, ObjectMapper objectMapper, OpenApiConfiguration config, SwaggerWelcomeCommon welcome) {
-            super(uiConfig, oAuthProperties, configParameters, objectMapper, welcome);
+        protected IndexPageTransformer(SwaggerUiConfigProperties uiConfig, SwaggerUiOAuthProperties oAuthProperties, SwaggerUiConfigParameters configParameters, OpenApiConfiguration config, SwaggerWelcomeCommon welcome) {
+            super(uiConfig, oAuthProperties, configParameters, welcome);
 
             swaggerUiConfig.setDisableSwaggerDefaultUrl(true);
 
@@ -131,7 +129,7 @@ public class OpenApiConfiguration {
         }
 
     @Bean(PREFIX + "SwaggerIndexPageTransformer")
-    public SwaggerIndexPageTransformer getSwaggerIndexPageTransformer(SwaggerUiConfigProperties swaggerUiConfig, SwaggerUiOAuthProperties swaggerUiOAuthProperties, SwaggerUiConfigParameters configParameters, ObjectMapper objectMapper, SwaggerWelcomeCommon welcome) {
-        return new IndexPageTransformer(swaggerUiConfig, swaggerUiOAuthProperties, configParameters, objectMapper, this, welcome);
+    public SwaggerIndexPageTransformer getSwaggerIndexPageTransformer(SwaggerUiConfigProperties swaggerUiConfig, SwaggerUiOAuthProperties swaggerUiOAuthProperties, SwaggerUiConfigParameters configParameters, SwaggerWelcomeCommon welcome) {
+        return new IndexPageTransformer(swaggerUiConfig, swaggerUiOAuthProperties, configParameters, this, welcome);
     }
 }

@@ -68,21 +68,31 @@ management:
          enabled: true
       info:
          enabled: true
+      integrationgraph:
+         enabled: true
       logfile:
          enabled: true
       loggers:
          enabled: true
+      mappings:
+         enabled: true
       metrics:
          enabled: true
-      mappings:
+      prometheus:
          enabled: true
       scheduledtasks:
          enabled: true
+      sessions:
+         enabled: true
       shutdown:
+         enabled: true
+      startup:
          enabled: true
       threaddump:
          enabled: true
    endpoints:
+      discovery:
+          enabled: true
       enabled-by-default: false
       jmx:
          exposure:
@@ -90,7 +100,7 @@ management:
       web:
          base-path: /management
          exposure:
-            include: auditevents,beans,caches,configprops,env,flyway,health,heapdump,httptrace,info,logfile,loggers,metrics,mappings,scheduledtasks,shutdown,threaddump
+            include: "*"
    health:
       defaults:
          enabled: false
@@ -108,6 +118,13 @@ management:
          enabled: true
    server:
       port: 8087
+      ssl:
+         enabled: true
+         key-store-type: PKCS12
+         key-store: classpath:keystore.p12
+         key-store-password: password
+         key-alias: linepro-dev
+         key-password: password
 
 spring:
    application:
