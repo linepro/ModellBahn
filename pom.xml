@@ -117,7 +117,7 @@
         <metrics.version>0.5.1.RELEASE</metrics.version>
         <prometheus.version>0.15.0</prometheus.version>
         <springdoc-openapi.version>1.6.4</springdoc-openapi.version>
-        <spring-cloud.version>2021.0.0</spring-cloud.version>
+        <spring-cloud.version>2021.0.2</spring-cloud.version>
         <zxcvbn.version>1.5.2</zxcvbn.version>
 
         <!-- database -->
