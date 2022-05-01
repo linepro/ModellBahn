@@ -23,6 +23,7 @@ import org.springframework.context.annotation.Import;
     LichtService.class,
     MassstabService.class,
     MotorTypService.class,
+    NameGeneratorImpl.class,
     ProduktService.class,
     ProtokollService.class,
     SondermodellService.class,
