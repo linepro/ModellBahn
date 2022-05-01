@@ -71,8 +71,7 @@ import lombok.experimental.SuperBuilder;
         @Index(name = DBNames.PRODUKT + "_IX12", columnList = DBNames.KUPPLUNG_ID),
         @Index(name = DBNames.PRODUKT + "_IX13", columnList = DBNames.VORBILD_ID),
         @Index(name = DBNames.PRODUKT + "_IX14", columnList = DBNames.STEUERUNG_ID),
-        @Index(name = DBNames.PRODUKT + "_IX15", columnList = DBNames.DECODER_TYP_ID),
-        @Index(name = DBNames.PRODUKT + "_IX16", columnList = DBNames.MOTOR_TYP_ID)
+        @Index(name = DBNames.PRODUKT + "_IX15", columnList = DBNames.MOTOR_TYP_ID)
     }, uniqueConstraints = {
         @UniqueConstraint(name = DBNames.PRODUKT + "_UC1", columnNames = { DBNames.HERSTELLER_ID, DBNames.BESTELL_NR })
     })
@@ -121,7 +120,6 @@ import lombok.experimental.SuperBuilder;
             @NamedAttributeNode(value = "kupplung", subgraph = "produkt.kupplung"),
             @NamedAttributeNode(value = "vorbild", subgraph = "produkt.vorbild"),
             @NamedAttributeNode(value = "steuerung", subgraph = "produkt.steuerung"),
-            @NamedAttributeNode(value = "decoderTyp", subgraph = "produkt.decoderTyp"),
             @NamedAttributeNode(value = "motorTyp", subgraph = "produkt.motorTyp"),
             @NamedAttributeNode(value = "anmerkung"),
             @NamedAttributeNode(value = "betreibsnummer"),
@@ -209,17 +207,6 @@ import lombok.experimental.SuperBuilder;
                     @NamedAttributeNode(value = "name"),
                     @NamedAttributeNode(value = "bezeichnung")
                 }),
-            @NamedSubgraph(name = "produkt.decoderTyp",
-                attributeNodes = {
-                    @NamedAttributeNode(value = "hersteller", subgraph = "produkt.decoderHersteller"),
-                    @NamedAttributeNode(value = "bestellNr"),
-                    @NamedAttributeNode(value = "bezeichnung")
-                }),
-            @NamedSubgraph(name = "produkt.decoderHersteller",
-                attributeNodes = {
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
-                }),
             @NamedSubgraph(name = "produkt.motorTyp",
                 attributeNodes = {
                     @NamedAttributeNode(value = "name"),
@@ -243,7 +230,6 @@ import lombok.experimental.SuperBuilder;
             @NamedAttributeNode(value = "kupplung", subgraph = "produkt.kupplung"),
             @NamedAttributeNode(value = "vorbild", subgraph = "produkt.vorbild"),
             @NamedAttributeNode(value = "steuerung", subgraph = "produkt.steuerung"),
-            @NamedAttributeNode(value = "decoderTyp", subgraph = "produkt.decoderTyp"),
             @NamedAttributeNode(value = "motorTyp", subgraph = "produkt.motorTyp"),
             @NamedAttributeNode(value = "teilen", subgraph = "produkt.teilen")
         },
@@ -324,17 +310,6 @@ import lombok.experimental.SuperBuilder;
                     @NamedAttributeNode(value = "name"),
                     @NamedAttributeNode(value = "bezeichnung")
                 }),
-            @NamedSubgraph(name = "produkt.decoderTyp",
-                attributeNodes = {
-                    @NamedAttributeNode(value = "hersteller", subgraph = "produkt.decoderHersteller"),
-                    @NamedAttributeNode(value = "bestellNr"),
-                    @NamedAttributeNode(value = "bezeichnung")
-                }),
-            @NamedSubgraph(name = "produkt.decoderHersteller",
-                attributeNodes = {
-                    @NamedAttributeNode(value = "name"),
-                    @NamedAttributeNode(value = "bezeichnung")
-                }),
             @NamedSubgraph(name = "produkt.motorTyp",
                 attributeNodes = {
                     @NamedAttributeNode(value = "name"),
@@ -381,7 +356,7 @@ public class Produkt extends ItemImpl implements Comparable<Produkt> {
 
     /** The hersteller. */
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Hersteller.class, optional = false)
-    @JoinColumn(name = DBNames.HERSTELLER_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk16"))
+    @JoinColumn(name = DBNames.HERSTELLER_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk15"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.hersteller.notnull}")
     private Hersteller hersteller;
 
@@ -461,14 +436,9 @@ public class Produkt extends ItemImpl implements Comparable<Produkt> {
     @JoinColumn(name = DBNames.STEUERUNG_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk13"))
     private Steuerung steuerung;
 
-    /** The decoder typ. */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class)
-    @JoinColumn(name = DBNames.DECODER_TYP_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk14"))
-    private DecoderTyp decoderTyp;
-
     /** The motor typ. */
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = MotorTyp.class)
-    @JoinColumn(name = DBNames.MOTOR_TYP_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk15"))
+    @JoinColumn(name = DBNames.MOTOR_TYP_ID, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT + "_fk14"))
     private MotorTyp motorTyp;
 
     /** The anmerkung. */
@@ -510,6 +480,33 @@ public class Produkt extends ItemImpl implements Comparable<Produkt> {
     @Column(name = DBNames.GROSSANSICHT, length = 512)
     @Convert(converter = PathConverter.class)
     private Path grossansicht;
+
+    /** The decoderTypen. */
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.PRODUKT, targetEntity = ProduktDecoderTyp.class, orphanRemoval = true)
+    @Builder.Default
+    private Set<ProduktDecoderTyp> decoderTypen = new HashSet<>();
+
+    public void addDecoderTyp(DecoderTyp decoderTyp) {
+        if (decoderTypen == null) { 
+            decoderTypen = new HashSet<>(); 
+        }
+
+        decoderTypen.add(
+            ProduktDecoderTyp.builder()
+                             .produkt(this)
+                             .decoderTyp(decoderTyp)
+                             .deleted(false)
+                             .build()
+                             );
+    }
+
+
+    public void removeDecoderTyp(DecoderTyp decoderTyp) {
+        decoderTypen.stream()
+                    .filter(t -> t.getDecoderTyp().equals(decoderTyp))
+                    .findFirst()
+                    .map(x -> decoderTypen.remove(x));
+    }
 
     /** The teilen. */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.PRODUKT, targetEntity = ProduktTeil.class, orphanRemoval = true)
@@ -584,7 +581,6 @@ public class Produkt extends ItemImpl implements Comparable<Produkt> {
             .append("kupplung", summary(kupplung))
             .append("vorbild", summary(vorbild))
             .append("steuerung", summary(steuerung))
-            .append("decoderTyp", summary(decoderTyp))
             .append("motorTyp", summary(motorTyp))
             .append("anmerkung", anmerkung)
             .append("betreibsnummer", betreibsnummer)
@@ -594,6 +590,7 @@ public class Produkt extends ItemImpl implements Comparable<Produkt> {
             .append("lange", lange)
             .append("abbildung", abbildung)
             .append("grossansicht", grossansicht)
+            .append("decoderTypen", decoderTypen)
             .append("teilen", teilen)
             .toString();
     }

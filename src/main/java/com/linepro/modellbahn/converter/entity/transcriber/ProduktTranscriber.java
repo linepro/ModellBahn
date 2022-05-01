@@ -12,9 +12,11 @@ import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.converter.PathMapper;
 import com.linepro.modellbahn.converter.Transcriber;
+import com.linepro.modellbahn.converter.entity.ProduktDecoderTypMapper;
 import com.linepro.modellbahn.converter.entity.ProduktTeilMapper;
 import com.linepro.modellbahn.converter.entity.UnterKategorieMapper;
 import com.linepro.modellbahn.entity.Produkt;
+import com.linepro.modellbahn.model.ProduktDecoderTypModel;
 import com.linepro.modellbahn.model.ProduktModel;
 import com.linepro.modellbahn.model.ProduktTeilModel;
 import com.linepro.modellbahn.model.UnterKategorieModel;
@@ -25,9 +27,13 @@ import lombok.RequiredArgsConstructor;
 @Component(PREFIX + "ProduktTranscriber")
 public class ProduktTranscriber implements Transcriber<Produkt, ProduktModel> {
 
+    private static final ArrayList<ProduktDecoderTypModel> KEIN_DECODER_TYPEN = new ArrayList<>();
+
     private static final ArrayList<ProduktTeilModel> KEIN_TEILEN = new ArrayList<>();
 
     private final UnterKategorieMapper unterKategorieMapper;
+
+    private final ProduktDecoderTypMapper decoderTypenMapper;
 
     private final ProduktTeilMapper teilMapper;
 
@@ -73,11 +79,6 @@ public class ProduktTranscriber implements Transcriber<Produkt, ProduktModel> {
             destination.setKupplungBezeichnung(getBezeichnung(source.getKupplung()));
             destination.setSteuerung(getCode(source.getSteuerung()));
             destination.setSteuerungBezeichnung(getBezeichnung(source.getSteuerung()));
-            if (isAvailable(source.getDecoderTyp())) {
-                destination.setDecoderTypHersteller(getCode(source.getDecoderTyp().getHersteller()));
-                destination.setDecoderTypHerstellerBezeichnung(getBezeichnung(source.getDecoderTyp().getHersteller()));
-                destination.setDecoderTypBestellNr(source.getDecoderTyp().getBestellNr());
-            }
             destination.setMotorTyp(getCode(source.getMotorTyp()));
             destination.setMotorTypBezeichnung(getBezeichnung(source.getMotorTyp()));
             destination.setAnleitungen(PathMapper.convert(source.getAnleitungen()));
@@ -86,7 +87,19 @@ public class ProduktTranscriber implements Transcriber<Produkt, ProduktModel> {
             destination.setGrossansicht(PathMapper.convert(source.getGrossansicht()));
             destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
 
-            destination.setTeilen(
+            destination.setDecoderTypen(
+                            isAvailable(source.getDecoderTypen()) ?
+                                source.getDecoderTypen()
+                                      .stream()
+                                      .sorted()
+                                      .map(t -> attempt(() -> decoderTypenMapper.convert(t)))
+                                      .collect(success())
+                                      .getValue()
+                                      .orElse(KEIN_DECODER_TYPEN) :
+                                KEIN_DECODER_TYPEN
+                      );
+
+                      destination.setTeilen(
                             isAvailable(source.getTeilen()) ?
                                 source.getTeilen()
                                       .stream()

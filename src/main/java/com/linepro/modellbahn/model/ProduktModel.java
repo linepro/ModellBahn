@@ -52,8 +52,7 @@ import lombok.ToString;
     ApiNames.GATTUNG, ApiNames.GATTUNG_BEZEICHNUNG, ApiNames.BETREIBSNUMMER, ApiNames.BAUZEIT, ApiNames.ACHSFOLG, 
     ApiNames.ACHSFOLG_BEZEICHNUNG, ApiNames.SONDERMODELL, ApiNames.SONDERMODELL_BEZEICHNUNG, ApiNames.AUFBAU,
     ApiNames.AUFBAU_BEZEICHNUNG, ApiNames.LICHT, ApiNames.LICHT_BEZEICHNUNG, ApiNames.KUPPLUNG, ApiNames.KUPPLUNG_BEZEICHNUNG,
-    ApiNames.STEUERUNG, ApiNames.STEUERUNG_BEZEICHNUNG, ApiNames.DECODER_HERSTELLER, ApiNames.DECODER_HERSTELLER_BEZEICHNUNG,
-    ApiNames.DECODER_BESTELL_NR, ApiNames.MOTOR_TYP, ApiNames.MOTOR_TYP_BEZEICHNUNG, ApiNames.ANMERKUNG, ApiNames.ANLEITUNGEN,
+    ApiNames.STEUERUNG, ApiNames.STEUERUNG_BEZEICHNUNG, ApiNames.DECODER_TYPEN, ApiNames.MOTOR_TYP, ApiNames.MOTOR_TYP_BEZEICHNUNG, ApiNames.ANMERKUNG, ApiNames.ANLEITUNGEN,
     ApiNames.EXPLOSIONSZEICHNUNG, ApiNames.ABBILDUNG, ApiNames.GROSSANSICHT, ApiNames.DELETED, ApiNames.TEILEN, ApiNames.LINKS })
 @Relation(collectionRelation = ApiNames.DATA, itemRelation = ApiNames.PRODUKT)
 @Schema(name = ApiNames.PRODUKT, description = "Product - template for article.")
@@ -79,7 +78,7 @@ public class ProduktModel extends SpringdocModel<ProduktModel> implements ItemMo
     private String bezeichnung;
 
     @JsonProperty(ApiNames.KATEGORIE)
-    @Schema(description = "Category and subcategory", required = true)
+    @Schema(description = "Category", required = true)
     private String kategorie;
 
     @SuppressExport
@@ -212,19 +211,6 @@ public class ProduktModel extends SpringdocModel<ProduktModel> implements ItemMo
     @Schema(description = "Control method", example = "Digital")
     private String steuerungBezeichnung;
 
-    @JsonProperty(ApiNames.DECODER_HERSTELLER)
-    @Schema(description = "Decoder Manufacturer", example = "ESU")
-    private String decoderTypHersteller;
-
-    @SuppressExport
-    @JsonProperty(ApiNames.DECODER_HERSTELLER_BEZEICHNUNG)
-    @Schema(description = "Decoder Manufacturer", example = "ESU")
-    private String decoderTypHerstellerBezeichnung;
-
-    @JsonProperty(ApiNames.DECODER_BESTELL_NR)
-    @Schema(description = "Decoder Part Number", example = "62400")
-    private String decoderTypBestellNr;
-
     @JsonProperty(ApiNames.MOTOR_TYP)
     @Schema(description = "Motor type", example = "5*")
     private String motorTyp;
@@ -253,6 +239,11 @@ public class ProduktModel extends SpringdocModel<ProduktModel> implements ItemMo
     @JsonProperty(ApiNames.GROSSANSICHT)
     @Schema(description = "Large Image URL", example = "http://localhost:8086/ModellBahn/produkt/MARKLIN/3000/grossansicht.jpg", accessMode = AccessMode.READ_ONLY)
     private String grossansicht;
+
+    @SuppressExport
+    @JsonProperty(ApiNames.DECODER_TYPEN)
+    @Schema(implementation = ProduktDecoderTypModel.class, description = "Product decoder types", accessMode = AccessMode.READ_ONLY)
+    private List<ProduktDecoderTypModel> decoderTypen;
 
     @SuppressExport
     @JsonProperty(ApiNames.TEILEN)

@@ -27,6 +27,7 @@ public interface DBNames {
     String MASSSTAB = "massstab";
     String MOTOR_TYP = "motorTyp";
     String PRODUKT = "produkt";
+    String PRODUKT_DECODER_TYP = "produktDecoderTyp";
     String PRODUKT_TEIL = "produktTeil";
     String PROTOKOLL = "protokoll";
     String SONDERMODELL = "sondermodell";

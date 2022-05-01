@@ -66,6 +66,7 @@ public interface ApiNames {
     String DECODER_HERSTELLER_BEZEICHNUNG = "decoderHerstellerBezeichnung";
     String DECODER_ID = "decoderId";
     String DECODER_STATUS = "decoderStatus";
+    String DECODER_TYPEN = "decoderTypen";
     String DECODER_TYP_BEZEICHNUNG = "decoderTypBezeichnung";
     String DELETED = "deleted";
     String DEZIMAL = "dezimal";

@@ -25,6 +25,7 @@ import com.linepro.modellbahn.converter.entity.KupplungMapper;
 import com.linepro.modellbahn.converter.entity.LichtMapper;
 import com.linepro.modellbahn.converter.entity.MassstabMapper;
 import com.linepro.modellbahn.converter.entity.MotorTypMapper;
+import com.linepro.modellbahn.converter.entity.ProduktDecoderTypMapper;
 import com.linepro.modellbahn.converter.entity.ProduktMapper;
 import com.linepro.modellbahn.converter.entity.ProduktTeilMapper;
 import com.linepro.modellbahn.converter.entity.ProtokollMapper;
@@ -48,6 +49,7 @@ import com.linepro.modellbahn.converter.entity.transcriber.DecoderTypTranscriber
 import com.linepro.modellbahn.converter.entity.transcriber.EpochTranscriber;
 import com.linepro.modellbahn.converter.entity.transcriber.HerstellerTranscriber;
 import com.linepro.modellbahn.converter.entity.transcriber.KategorieTranscriber;
+import com.linepro.modellbahn.converter.entity.transcriber.ProduktDecoderTypTranscriber;
 import com.linepro.modellbahn.converter.entity.transcriber.ProduktTeilTranscriber;
 import com.linepro.modellbahn.converter.entity.transcriber.ProduktTranscriber;
 import com.linepro.modellbahn.converter.entity.transcriber.UnterKategorieTranscriber;
@@ -79,6 +81,7 @@ import com.linepro.modellbahn.converter.impl.NamedTranscriber;
     MassstabMapper.class, 
     MotorTypMapper.class, 
     ProduktMapper.class, 
+    ProduktDecoderTypMapper.class,
     ProduktTeilMapper.class, 
     ProtokollMapper.class, 
     SondermodellMapper.class, 
@@ -106,6 +109,7 @@ import com.linepro.modellbahn.converter.impl.NamedTranscriber;
     HerstellerTranscriber.class, 
     KategorieTranscriber.class, 
     ProduktTranscriber.class, 
+    ProduktDecoderTypTranscriber.class,
     ProduktTeilTranscriber.class, 
     UnterKategorieTranscriber.class, 
     VorbildTranscriber.class, 

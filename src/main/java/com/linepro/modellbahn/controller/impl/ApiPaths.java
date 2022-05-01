@@ -26,6 +26,7 @@ public interface ApiPaths {
 
     String ARTIKEL_ROOT                = API_ROOT + ApiNames.ARTIKEL;
     String ADD_ARTIKEL                 = ARTIKEL_ROOT;
+    String DUPLICATE_ARTIKEL           = ARTIKEL_ROOT + "/{" + ApiNames.ARTIKEL_ID + ":" + DBNames.ID_PATTERN + "}";
     String GET_ARTIKEL                 = ARTIKEL_ROOT + "/{" + ApiNames.ARTIKEL_ID + ":" + DBNames.ID_PATTERN + "}";
     String SEARCH_ARTIKEL              = ARTIKEL_ROOT;
     String DELETE_ARTIKEL              = ARTIKEL_ROOT + "/{" + ApiNames.ARTIKEL_ID + ":" + DBNames.ID_PATTERN + "}";
@@ -60,6 +61,7 @@ public interface ApiPaths {
 
     String DECODER_ROOT            = API_ROOT + ApiNames.DECODER;
     String ADD_DECODER             = DECODER_ROOT + "/{" + ApiNames.HERSTELLER + ":" + DBNames.NAME_PATTERN + "}/{" + ApiNames.BESTELL_NR + ":" + DBNames.NAME_PATTERN + "}";
+    String DUPLICATE_DECODER       = DECODER_ROOT + "/{" + ApiNames.DECODER_ID + "}";
     String GET_DECODER             = DECODER_ROOT + "/{" + ApiNames.DECODER_ID + ":" + DBNames.ID_PATTERN + "}";
     String SEARCH_DECODER          = DECODER_ROOT;
     String DELETE_DECODER          = DECODER_ROOT + "/{" + ApiNames.DECODER_ID + ":" + DBNames.ID_PATTERN + "}";
@@ -69,6 +71,7 @@ public interface ApiPaths {
 
     String DECODER_TYP_ROOT               = API_ROOT + ApiNames.DECODER_TYP;
     String ADD_DECODER_TYP                = DECODER_TYP_ROOT;
+    String DUPLICATE_DECODER_TYP          = DECODER_TYP_ROOT + "/{" + ApiNames.HERSTELLER + ":" + DBNames.NAME_PATTERN + "}/{" + ApiNames.BESTELL_NR + ":" + DBNames.NAME_PATTERN + "}";
     String GET_DECODER_TYP                = DECODER_TYP_ROOT + "/{" + ApiNames.HERSTELLER + ":" + DBNames.NAME_PATTERN + "}/{" + ApiNames.BESTELL_NR + ":" + DBNames.NAME_PATTERN + "}";
     String SEARCH_DECODER_TYP             = DECODER_TYP_ROOT;
     String DELETE_DECODER_TYP             = DECODER_TYP_ROOT + "/{" + ApiNames.HERSTELLER + ":" + DBNames.NAME_PATTERN + "}/{" + ApiNames.BESTELL_NR + ":" + DBNames.NAME_PATTERN + "}";
@@ -166,6 +169,7 @@ public interface ApiPaths {
 
     String PRODUKT_ROOT                       = API_ROOT + ApiNames.PRODUKT;
     String ADD_PRODUKT                        = PRODUKT_ROOT;
+    String DUPLICATE_PRODUKT                  = PRODUKT_ROOT + "/{" + ApiNames.HERSTELLER + ":" + DBNames.NAME_PATTERN + "}/{" + ApiNames.BESTELL_NR + ":" + DBNames.NAME_PATTERN + "}";
     String GET_PRODUKT                        = PRODUKT_ROOT + "/{" + ApiNames.HERSTELLER + ":" + DBNames.NAME_PATTERN + "}/{" + ApiNames.BESTELL_NR + ":" + DBNames.NAME_PATTERN + "}";
     String SEARCH_PRODUKT                     = PRODUKT_ROOT;
     String DELETE_PRODUKT                     = PRODUKT_ROOT + "/{" + ApiNames.HERSTELLER + ":" + DBNames.NAME_PATTERN + "}/{" + ApiNames.BESTELL_NR + ":" + DBNames.NAME_PATTERN + "}";
