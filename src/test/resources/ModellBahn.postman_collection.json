@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "e8df890e-0c94-4fc7-9f54-c9e7f76bbabe",
+		"_postman_id": "03742785-a34f-4a3e-acab-0d22a9dbaad5",
 		"name": "ModellBahn",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -540,7 +540,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Info\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"Info\", () => pm.response.to.have.status(401));\r",
 									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
 								],
 								"type": "text/javascript"
@@ -732,12 +732,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{management}}/prometheus ",
+							"raw": "{{management}}/prometheus",
 							"host": [
 								"{{management}}"
 							],
 							"path": [
-								"prometheus "
+								"prometheus"
 							]
 						}
 					},
@@ -802,12 +802,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{management}}/sessions ",
+							"raw": "{{management}}/sessions",
 							"host": [
 								"{{management}}"
 							],
 							"path": [
-								"sessions "
+								"sessions"
 							]
 						}
 					},
@@ -893,8 +893,7 @@
 					"script": {
 						"type": "text/javascript",
 						"exec": [
-							"pm.request.headers.upsert({ key: 'Accept', value: pm.variables.replaceIn(\"{{accept}}\") });",
-							"pm.request.headers.upsert({ key: 'Accept-Language', value: pm.variables.replaceIn(\"{{language}}\") });"
+							""
 						]
 					}
 				},
@@ -1207,6 +1206,16 @@
 								],
 								"type": "text/javascript"
 							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Heap Dump causes postman to crash because of the response size\r",
+									"postman.setNextRequest(\"Management - HTTP Trace\");"
+								],
+								"type": "text/javascript"
+							}
 						}
 					],
 					"protocolProfileBehavior": {
@@ -1336,7 +1345,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Info\", () => pm.response.to.have.status(200));\r",
+									"pm.test(\"Integration Graph\", () => pm.response.to.have.status(200));\r",
 									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
 								],
 								"type": "text/javascript"
@@ -1520,7 +1529,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Metrics\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"Prometheus\", () => pm.response.to.have.status(401));\r",
 									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
 								],
 								"type": "text/javascript"
@@ -1537,12 +1546,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{management}}/prometheus ",
+							"raw": "{{management}}/prometheus",
 							"host": [
 								"{{management}}"
 							],
 							"path": [
-								"prometheus "
+								"prometheus"
 							]
 						}
 					},
@@ -1590,7 +1599,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Scheduled Tasks\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"Sessions\", () => pm.response.to.have.status(401));\r",
 									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
 								],
 								"type": "text/javascript"
@@ -1607,12 +1616,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{management}}/sessions ",
+							"raw": "{{management}}/sessions",
 							"host": [
 								"{{management}}"
 							],
 							"path": [
-								"sessions "
+								"sessions"
 							]
 						}
 					},
@@ -1625,7 +1634,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Scheduled Tasks\", () => pm.response.to.have.status(401));\r",
+									"pm.test(\"Startup\", () => pm.response.to.have.status(401));\r",
 									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));"
 								],
 								"type": "text/javascript"
@@ -1710,8 +1719,7 @@
 					"script": {
 						"type": "text/javascript",
 						"exec": [
-							"pm.request.headers.upsert({ key: 'Accept', value: pm.variables.replaceIn(\"{{accept}}\") });",
-							"pm.request.headers.upsert({ key: 'Accept-Language', value: pm.variables.replaceIn(\"{{language}}\") });"
+							""
 						]
 					}
 				},
@@ -13534,9 +13542,9 @@
 									"pm.environment.set(\"spurweite\", \"H0\");\r",
 									"pm.environment.set(\"epoch\", \"III\");\r",
 									"pm.environment.set(\"bahnverwaltung\", \"DB\");\r",
-									"pm.environment.set(\"gattung\", \"BR89.0\");\r",
+									"pm.environment.set(\"gattung\", \"BR-89.0\");\r",
 									"pm.environment.set(\"betreibsnummer\", \"89 006\");\r",
-									"pm.environment.set(\"achsfolg\", \"CH2T\");\r",
+									"pm.environment.set(\"achsfolg\", \"C-H2T\");\r",
 									"pm.environment.set(\"aufbau\", \"LK\");\r",
 									"pm.environment.set(\"licht\", \"L1V\");\r",
 									"pm.environment.set(\"kupplung\", \"RELEX\");\r",
@@ -15229,7 +15237,7 @@
 									"pm.environment.set(\"cnLokUnterKategorie\", \"DAMPF\");\r",
 									"pm.environment.set(\"cnLokLange\", new Number(\"11.00\"));\r",
 									"pm.environment.set(\"cnLokBahnverwaltung\", \"DB\");\r",
-									"pm.environment.set(\"cnLokGattung\", \"BR89.0\");\r",
+									"pm.environment.set(\"cnLokGattung\", \"BR-89.0\");\r",
 									"pm.environment.set(\"cnLokBetreibsnummer\", \"89 006\");\r",
 									"pm.environment.set(\"cnLokKupplung\", \"RELEX\");\r",
 									"pm.environment.set(\"cnLokAbbildung\", pm.variables.replaceIn(\"{{server}}/data/produkt/{{cnLokHersteller}}/{{cnLokBestellNr}}/abbildung.jpg\"));"
@@ -17040,7 +17048,7 @@
 									"pm.test(\"Decoder Typ\", () => pm.response.to.have.status(200));\r",
 									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
-									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"hersteller,bestellNr,bezeichnung,iMax,protokoll,adressTyp,adress,span,fahrstufe,gerausch,motor,outputs,servos,konfiguration,stecker,anleitungen,deleted\"));\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"hersteller,bestellNr,bezeichnung,iMax,protokoll,fahrstufe,adressTyp,adress,span,gerausch,motor,outputs,servos,konfiguration,stecker,anleitungen,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
 									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){16}(true|false)$/).length).to.eql(3)));"
 								],
@@ -17200,9 +17208,9 @@
 									"pm.test(\"Produkt Teil\", () => pm.response.to.have.status(200));\r",
 									"pm.test(\"duration\", () => pm.expect(pm.response.responseTime).to.be.below(pm.variables.get(\"maxResponse\")));\r",
 									"var csv = pm.response.text().split(/\\r?\\n/);\r",
-									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"hersteller,bestellNr,teilHersteller,teilBestellNr,bezeichnung,menge,deleted\"));\r",
+									"pm.test(\"Header\", () => pm.expect(csv[0]).to.eql(\"hersteller,bestellNr,teilHersteller,teilBestellNr,kategorie,unterKategorie,menge,deleted\"));\r",
 									"var data = csv.slice(1,csv.length-1);\r",
-									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){6}(true|false)$/).length).to.eql(3)));"
+									"data.forEach(r => pm.test(\"Data: \" + r, () =>  pm.expect(r.match(/^((?:\"[^\"]*?\"|[^,]*?),){7}(true|false)$/).length).to.eql(3)));"
 								],
 								"type": "text/javascript"
 							}
@@ -20077,11 +20085,11 @@
 		},
 		{
 			"key": "achsfolgAdd",
-			"value": "1C1H2T"
+			"value": "1-C1-H2T"
 		},
 		{
 			"key": "achsfolgUpdate",
-			"value": "COCO"
+			"value": "CO-CO"
 		},
 		{
 			"key": "adSpanAdd",
@@ -20241,11 +20249,11 @@
 		},
 		{
 			"key": "gattungAdd",
-			"value": "BR89.0"
+			"value": "BR-89.0"
 		},
 		{
 			"key": "gattungUpdate",
-			"value": "BR89.0"
+			"value": "BR-89.0"
 		},
 		{
 			"key": "herstellerAdd",
