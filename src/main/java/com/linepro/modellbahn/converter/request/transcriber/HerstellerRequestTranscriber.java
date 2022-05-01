@@ -6,9 +6,14 @@ import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.entity.Hersteller;
 import com.linepro.modellbahn.request.HerstellerRequest;
+import com.linepro.modellbahn.service.NameGenerator;
 
 @Component(PREFIX + "HerstellerRequestTranscriber")
 public class HerstellerRequestTranscriber extends NamedRequestTranscriber<HerstellerRequest, Hersteller> {
+
+    public HerstellerRequestTranscriber(NameGenerator generator) {
+        super(generator);
+    }
 
     @Override
     public Hersteller apply(HerstellerRequest source, Hersteller destination) {

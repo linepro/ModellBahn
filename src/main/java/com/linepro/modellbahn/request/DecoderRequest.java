@@ -15,7 +15,10 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.linepro.modellbahn.controller.impl.ApiNames;
+import com.linepro.modellbahn.model.enums.AdressTyp;
 import com.linepro.modellbahn.model.enums.DecoderStatus;
+import com.linepro.modellbahn.model.enums.Konfiguration;
+import com.linepro.modellbahn.model.enums.Stecker;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -57,6 +60,10 @@ public class DecoderRequest implements ItemRequest {
     @Schema(description = "Manufacturer", example = "ESU", accessMode = AccessMode.READ_ONLY)
     private String hersteller;
 
+    @JsonProperty(ApiNames.HERSTELLER_BEZEICHNUNG)
+    @Schema(description = "Manufacturer", example = "ESU", accessMode = AccessMode.READ_ONLY)
+    private String herstellerBezeichnung;
+
     @JsonProperty(ApiNames.BESTELL_NR)
     @Schema(description = "Product numer", example = "62499", accessMode = AccessMode.READ_ONLY)
     private String bestellNr;
@@ -69,17 +76,57 @@ public class DecoderRequest implements ItemRequest {
     @Schema(description = "Decoder's description", example = "ESU Loksound")
     private String bezeichnung;
 
+    @JsonProperty(ApiNames.I_MAX)
+    @Schema(description = "Maximum current in A", example = "1.100", accessMode = AccessMode.READ_ONLY)
+    private BigDecimal iMax;
+
     @JsonProperty(ApiNames.PROTOKOLL)
     @Schema(description = "Decoder protocol", example = "MFX", required = true)
     private String protokoll;
+
+    @JsonProperty(ApiNames.PROTOKOLL_BEZEICHNUNG)
+    @Schema(description = "Decoder protocol", example = "MFX", required = true)
+    private String protokollBezeichnung;
+
+    @JsonProperty(ApiNames.ADRESS_TYP)
+    @Schema(description = "Address type", accessMode = AccessMode.READ_ONLY)
+    private AdressTyp adressTyp;
 
     @JsonProperty(ApiNames.ADRESS)
     @Schema(description = "Digital address", example = "28", required = true)
     private Integer adress;
 
+    @JsonProperty(ApiNames.SPAN)
+    @Schema(description = "Number of addresses consumed (1-16)", example = "1", accessMode = AccessMode.READ_ONLY)
+    private Integer span;
+
     @JsonProperty(ApiNames.FAHRSTUFE)
     @Schema(description = "Decoder speed steps", example = "27", required = true)
     private Integer fahrstufe;
+
+    @JsonProperty(ApiNames.GERAUSCH)
+    @Schema(description = "True if decoder supports sound", example = "true", accessMode = AccessMode.READ_ONLY)
+    private Boolean sound;
+
+    @JsonProperty(ApiNames.MOTOR)
+    @Schema(description = "True if decoder controls motor speed", example = "true", accessMode = AccessMode.READ_ONLY)
+    private Boolean motor;
+
+    @JsonProperty(ApiNames.OUTPUTS)
+    @Schema(description = "Number of function outputs", example = "2", accessMode = AccessMode.READ_ONLY)
+    private Integer outputs;
+
+    @JsonProperty(ApiNames.SERVOS)
+    @Schema(description = "Number of servo outputs", example = "2", accessMode = AccessMode.READ_ONLY)
+    private Integer servos;
+
+    @JsonProperty(ApiNames.KONFIGURATION)
+    @Schema(description = "Configuration method", example = "CV", accessMode = AccessMode.READ_ONLY)
+    private Konfiguration konfiguration;
+
+    @JsonProperty(ApiNames.STECKER)
+    @Schema(description = "Stecker", example = "NEM352", accessMode = AccessMode.READ_ONLY)
+    private Stecker stecker;
 
     @JsonProperty(ApiNames.KAUFDATUM)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
@@ -101,6 +148,10 @@ public class DecoderRequest implements ItemRequest {
     @JsonProperty(ApiNames.STATUS)
     @Schema(description = "Decoder status", example = "INSTALIERT", required = true)
     private DecoderStatus status;
+
+    @JsonProperty(ApiNames.ANLEITUNGEN)
+    @Schema(description = "Instructions URL", example = "http://localhost/Modelbahn/decoderTyp/ESU/62400/anleitungen.pdf", accessMode = AccessMode.READ_ONLY)
+    private String anleitungen;
 
     @JsonProperty(ApiNames.DELETED)
     @Schema(description = "True if soft deleted", example = "false", accessMode = AccessMode.READ_ONLY)

@@ -9,14 +9,17 @@ import com.linepro.modellbahn.converter.Transcriber;
 import com.linepro.modellbahn.entity.UnterKategorie;
 import com.linepro.modellbahn.repository.lookup.KategorieLookup;
 import com.linepro.modellbahn.request.UnterKategorieRequest;
+import com.linepro.modellbahn.service.NameGenerator;
 
-import lombok.RequiredArgsConstructor;
-
-@RequiredArgsConstructor
 @Component(PREFIX + "UnterKategorieRequestTranscriber")
 public class UnterKategorieRequestTranscriber extends NamedRequestTranscriber<UnterKategorieRequest, UnterKategorie> implements Transcriber<UnterKategorieRequest, UnterKategorie> {
 
     private final KategorieLookup lookup;
+
+    public UnterKategorieRequestTranscriber(NameGenerator generator, KategorieLookup lookup) {
+        super(generator);
+        this.lookup = lookup;
+    }
 
     @Override
     public UnterKategorie apply(UnterKategorieRequest source, UnterKategorie destination) {

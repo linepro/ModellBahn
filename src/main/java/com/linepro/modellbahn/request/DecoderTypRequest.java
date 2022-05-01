@@ -17,6 +17,7 @@ import com.linepro.modellbahn.model.enums.AdressTyp;
 import com.linepro.modellbahn.model.enums.Konfiguration;
 import com.linepro.modellbahn.model.enums.Stecker;
 import com.linepro.modellbahn.util.impexp.impl.FileNameImport;
+import com.linepro.modellbahn.util.impexp.impl.SuppressExport;
 
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -55,6 +56,11 @@ public class DecoderTypRequest implements ItemRequest {
     @Schema(description = "Manufacturer", required = true)
     private String hersteller;
 
+    @SuppressExport
+    @JsonProperty(ApiNames.HERSTELLER_BEZEICHNUNG)
+    @Schema(description = "Manufacturer", required = true)
+    private String herstellerBezeichnung;
+
     @JsonProperty(ApiNames.BESTELL_NR)
     @Schema(description = "Product numer", example = "62499", required = true)
     private String bestellNr;
@@ -68,7 +74,7 @@ public class DecoderTypRequest implements ItemRequest {
     private BigDecimal iMax;
 
     @JsonProperty(ApiNames.PROTOKOLL)
-    @Schema(description = "Default protocoll", required = true)
+    @Schema(description = "Default protocol", required = true)
     private String protokoll;
 
     @JsonProperty(ApiNames.FAHRSTUFE)
@@ -114,6 +120,7 @@ public class DecoderTypRequest implements ItemRequest {
     @Hidden
     @FileNameImport(keyFields = {ApiNames.HERSTELLER, ApiNames.BESTELL_NR})
     @JsonProperty(ApiNames.ANLEITUNGEN)
+    @Schema(description = "Instructions URL", example = "http://localhost/Modelbahn/produkt/MARKLIN/3000/betrieb_3000.pdf", accessMode = AccessMode.READ_ONLY)
     private String anleitungen;
 
     @JsonProperty(ApiNames.DELETED)

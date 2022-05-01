@@ -14,10 +14,8 @@ import com.linepro.modellbahn.repository.lookup.BahnverwaltungLookup;
 import com.linepro.modellbahn.repository.lookup.GattungLookup;
 import com.linepro.modellbahn.repository.lookup.UnterKategorieLookup;
 import com.linepro.modellbahn.request.VorbildRequest;
+import com.linepro.modellbahn.service.NameGenerator;
 
-import lombok.RequiredArgsConstructor;
-
-@RequiredArgsConstructor
 @Component(PREFIX + "VorbildRequestTranscriber")
 public class VorbildRequestTranscriber extends NamedRequestTranscriber<VorbildRequest, Vorbild> {
 
@@ -30,6 +28,15 @@ public class VorbildRequestTranscriber extends NamedRequestTranscriber<VorbildRe
         private final BahnverwaltungLookup bahnverwaltungLookup;
 
         private final AchsfolgLookup achsfolgLookup;
+
+        public VorbildRequestTranscriber(NameGenerator generator, UnterKategorieLookup unterKategorieLookup, GattungLookup gattungLookup, BahnverwaltungLookup bahnverwaltungLookup, AntriebLookup antriebLookup, AchsfolgLookup achsfolgLookup) {
+            super(generator);
+            this.gattungLookup = gattungLookup;
+            this.unterKategorieLookup = unterKategorieLookup;
+            this.antriebLookup = antriebLookup;
+            this.bahnverwaltungLookup = bahnverwaltungLookup;
+            this.achsfolgLookup = achsfolgLookup;
+        }
 
         public Vorbild apply(VorbildRequest source, Vorbild destination) {
             if (isAvailable(source) && isAvailable(destination)) {

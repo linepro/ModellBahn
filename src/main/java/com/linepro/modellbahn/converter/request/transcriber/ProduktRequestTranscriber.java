@@ -87,10 +87,11 @@ public class ProduktRequestTranscriber implements Transcriber<ProduktRequest, Pr
             destination.setLicht(lichtLookup.find(source.getLicht()).orElse(null));
             destination.setKupplung(kupplungLookup.find(source.getKupplung()).orElse(null));
             destination.setSteuerung(steuerungLookup.find(source.getSteuerung()).orElse(null));
-            destination.setDecoderTyp(decoderTypLookup.find(source.getDecoderTypHersteller(), source.getDecoderTypBestellNr()).orElse(null));
             destination.setMotorTyp(motorTypLookup.find(source.getMotorTyp()).orElse(null));
             destination.setLange(source.getLange());
             destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
+
+            //destination.addDecoderTyp(decoderTypLookup.find(source.getDecoderTypHersteller(), source.getDecoderTypBestellNr()).orElse(null));
         }
 
         return destination;

@@ -56,6 +56,10 @@ public class ProduktRequest implements ItemRequest {
     @Schema(description = "Manufacturer", example = "Marklin", accessMode = AccessMode.READ_ONLY)
     private String hersteller;
 
+    @JsonProperty(ApiNames.HERSTELLER_BEZEICHNUNG)
+    @Schema(description = "Manufacturer", example = "Marklin", accessMode = AccessMode.READ_ONLY)
+    private String herstellerBezeichnung;
+
     @JsonProperty(ApiNames.BESTELL_NR)
     @Schema(description = "Part number", example = "3000", accessMode = AccessMode.READ_ONLY)
     private String bestellNr;
@@ -92,6 +96,10 @@ public class ProduktRequest implements ItemRequest {
     @Schema(description = "Railway company", example = "DB")
     private String bahnverwaltung;
 
+    @JsonProperty(ApiNames.BAHNVERWALTUNG_BEZEICHNUNG)
+    @Schema(description = "Railway company", example = "DB")
+    private String bahnverwaltungBezeichnung;
+
     @JsonProperty(ApiNames.VORBILD)
     @Schema(description = "Prototype", example = "BR89.0")
     private String vorbild;
@@ -99,6 +107,10 @@ public class ProduktRequest implements ItemRequest {
     @JsonProperty(ApiNames.GATTUNG)
     @Schema(description = "Vehicle class", example = "BR89.0")
     private String gattung;
+
+    @JsonProperty(ApiNames.GATTUNG_BEZEICHNUNG)
+    @Schema(description = "Vehicle class", example = "BR89.0")
+    private String gattungBezeichnung;
 
     @JsonProperty(ApiNames.BETREIBSNUMMER)
     @Schema(description = "Service number", example = "89 006")
@@ -113,9 +125,17 @@ public class ProduktRequest implements ItemRequest {
     @Schema(description = "Axle configuration", example = "CH2T")
     private String achsfolg;
 
+    @JsonProperty(ApiNames.ACHSFOLG_BEZEICHNUNG)
+    @Schema(description = "Axle configuration", example = "CH2T")
+    private String achsfolgBezeichnung;
+
     @JsonProperty(ApiNames.SONDERMODELL)
     @Schema(description = "Special model indicator", example = "MHI")
     private String sondermodell;
+
+    @JsonProperty(ApiNames.SONDERMODELL_BEZEICHNUNG)
+    @Schema(description = "Special model indicator", example = "MHI")
+    private String sondermodellBezeichnung;
 
     @JsonProperty(ApiNames.AUFBAU)
     @Schema(description = "Construction", example = "LK")
@@ -136,6 +156,10 @@ public class ProduktRequest implements ItemRequest {
     @JsonProperty(ApiNames.DECODER_HERSTELLER)
     @Schema(description = "Decoder Manufacturer", example = "ESU")
     private String decoderTypHersteller;
+
+    @JsonProperty(ApiNames.DECODER_HERSTELLER_BEZEICHNUNG)
+    @Schema(description = "Decoder Manufacturer", example = "ESU")
+    private String decoderTypHerstellerBezeichnung;
 
     @JsonProperty(ApiNames.DECODER_BESTELL_NR)
     @Schema(description = "Decoder Part Number", example = "62400")
