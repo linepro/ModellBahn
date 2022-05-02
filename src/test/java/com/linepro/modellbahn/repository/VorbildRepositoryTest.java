@@ -48,7 +48,7 @@ public class VorbildRepositoryTest {
 
     @Test
     public void testFindByName() throws Exception {
-        Optional<Vorbild> found = vorbildRepository.findByName("BR89.0");
+        Optional<Vorbild> found = vorbildRepository.findByName("BR-89.0");
 
         assertTrue(found.isPresent());
 
@@ -65,7 +65,7 @@ public class VorbildRepositoryTest {
         Page<Vorbild> page = vorbildRepository.findAll(Pageable.unpaged());
 
         List<Vorbild> vorbild = page.getContent();
-        assertEquals(7, vorbild.size());
+        assertEquals(8, vorbild.size());
         assertTrue(isAvailable(vorbild.get(0).getUnterKategorie()));
         assertTrue(isAvailable(vorbild.get(0).getBahnverwaltung()));
         assertTrue(isAvailable(vorbild.get(0).getGattung()));

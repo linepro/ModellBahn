@@ -48,7 +48,7 @@ public class ImporterImplTest {
     private static final String BESTELL_NR = "66666";
     private static final String BEZEICHNUNG = "LokPilot Test";
     private static final Boolean DELETED = false;
-    private static final Integer FAHRSTUFE = 127;
+    private static final Integer FAHRSTUFE = 128;
     private static final String HERSTELLER = "ESU";
     private static final BigDecimal I_MAX = new BigDecimal("1.10");
     private static final Konfiguration KONFIGURATION = Konfiguration.CV;
