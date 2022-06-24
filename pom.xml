@@ -92,7 +92,7 @@
         <maven-site-plugin.version>4.0.0-M1</maven-site-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M6</maven-surefire-plugin.version>
         <maven-surefire-report-plugin.version>3.0.0-M6</maven-surefire-report-plugin.version>
-        <spring-boot-maven-plugin.version>2.6.7</spring-boot-maven-plugin.version>
+        <spring-boot-maven-plugin.version>2.7.1</spring-boot-maven-plugin.version>
         <springdoc-openapi-maven-plugin.version>1.4</springdoc-openapi-maven-plugin.version>
         <versions-maven-plugin.version>2.10.0</versions-maven-plugin.version>
         <wagon-ssh.version>3.5.1</wagon-ssh.version>
