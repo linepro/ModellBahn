@@ -49,9 +49,9 @@ import lombok.RequiredArgsConstructor;
 @Configuration(PREFIX + "WebSecurityConfig")
 @EnableWebSecurity(debug = true)
 @RequiredArgsConstructor
+@SuppressWarnings("deprecation")
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @SuppressWarnings("deprecation")
     protected static final MediaTypeRequestMatcher JSON_MATCHER = new MediaTypeRequestMatcher(
                     MediaType.APPLICATION_JSON,
                     MediaType.APPLICATION_JSON_UTF8,

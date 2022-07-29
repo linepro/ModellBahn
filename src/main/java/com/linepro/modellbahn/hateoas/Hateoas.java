@@ -125,7 +125,7 @@ public class Hateoas {
          *   ]
          */
         ObjectSchema href = new ObjectSchema();
-        href.addProperties(ApiNames.HREF, new StringSchema().description("Relation URL").example("https://localhost:8086/ModellBahn/api/achsfolg/1CD32T35").readOnly(true));
+        href.addProperty(ApiNames.HREF, new StringSchema().description("Relation URL").example("https://localhost:8086/ModellBahn/api/achsfolg/1CD32T35").readOnly(true));
         
         ArraySchema rels = new ArraySchema();
         rels.setItems(href);
@@ -133,7 +133,7 @@ public class Hateoas {
 
         JsonNode example = objectMapper.readTree("{\"self\": [ { \"href\": \"https://linepro2.home:8086/ModellBahn/api/achsfolg/1CD32T35\" } ] }");
         ObjectSchema links = new ObjectSchema();
-        links.addProperties("rels", rels);
+        links.addProperty("rels", rels);
         links.description("HATEOAS Links").example(example).readOnly(true);
 
         return openApi -> {

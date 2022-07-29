@@ -91,7 +91,7 @@ public class ProduktRequestTranscriber implements Transcriber<ProduktRequest, Pr
             destination.setLange(source.getLange());
             destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
 
-            //destination.addDecoderTyp(decoderTypLookup.find(source.getDecoderTypHersteller(), source.getDecoderTypBestellNr()).orElse(null));
+            destination.addDecoderTyp(decoderTypLookup.find(source.getDecoderTypHersteller(), source.getDecoderTypBestellNr()).orElse(null));
         }
 
         return destination;
