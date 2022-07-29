@@ -11,9 +11,11 @@ import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 import java.util.Arrays;
 
 import org.springdoc.core.Constants;
+import org.springdoc.core.SpringDocConfigProperties;
 import org.springdoc.core.SwaggerUiConfigParameters;
 import org.springdoc.core.SwaggerUiConfigProperties;
 import org.springdoc.core.SwaggerUiOAuthProperties;
+import org.springdoc.core.providers.ObjectMapperProvider;
 import org.springdoc.webmvc.ui.SwaggerIndexPageTransformer;
 import org.springdoc.webmvc.ui.SwaggerWelcomeCommon;
 import org.springframework.beans.factory.annotation.Value;
@@ -51,8 +53,8 @@ public class OpenApiConfiguration {
     protected static final class IndexPageTransformer extends SwaggerIndexPageTransformer {
         private OpenApiConfiguration config;
 
-        protected IndexPageTransformer(SwaggerUiConfigProperties uiConfig, SwaggerUiOAuthProperties oAuthProperties, SwaggerUiConfigParameters configParameters, OpenApiConfiguration config, SwaggerWelcomeCommon welcome) {
-            super(uiConfig, oAuthProperties, configParameters, welcome);
+        protected IndexPageTransformer(SwaggerUiConfigProperties uiConfig, SwaggerUiOAuthProperties oAuthProperties, SwaggerUiConfigParameters configParameters, OpenApiConfiguration config, SwaggerWelcomeCommon welcome, SpringDocConfigProperties configProperties) {
+            super(uiConfig, oAuthProperties, configParameters, welcome, new ObjectMapperProvider(configProperties));
 
             swaggerUiConfig.setDisableSwaggerDefaultUrl(true);
 
@@ -129,7 +131,7 @@ public class OpenApiConfiguration {
         }
 
     @Bean(PREFIX + "SwaggerIndexPageTransformer")
-    public SwaggerIndexPageTransformer getSwaggerIndexPageTransformer(SwaggerUiConfigProperties swaggerUiConfig, SwaggerUiOAuthProperties swaggerUiOAuthProperties, SwaggerUiConfigParameters configParameters, SwaggerWelcomeCommon welcome) {
-        return new IndexPageTransformer(swaggerUiConfig, swaggerUiOAuthProperties, configParameters, this, welcome);
+    public SwaggerIndexPageTransformer getSwaggerIndexPageTransformer(SwaggerUiConfigProperties swaggerUiConfig, SwaggerUiOAuthProperties swaggerUiOAuthProperties, SwaggerUiConfigParameters configParameters, SwaggerWelcomeCommon welcome, SpringDocConfigProperties configProperties) {
+        return new IndexPageTransformer(swaggerUiConfig, swaggerUiOAuthProperties, configParameters, this, welcome, configProperties);
     }
 }
