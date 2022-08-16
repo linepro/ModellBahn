@@ -126,7 +126,7 @@
         <zxcvbn.version>1.7.0</zxcvbn.version>
 
         <!-- database -->
-        <org.flywaydb.flyway-core.version>8.5.11</org.flywaydb.flyway-core.version>
+        <org.flywaydb.flyway-core.version>9.1.4</org.flywaydb.flyway-core.version>
         <org.hsqldb.hsqldb.version>2.5.1</org.hsqldb.hsqldb.version>
         <com.h2database.h2.version>2.1.212</com.h2database.h2.version>
         <org.mariadb.jdbc.mariadb-java-client.version>2.6.2</org.mariadb.jdbc.mariadb-java-client.version>
