@@ -93,7 +93,7 @@
         <maven-release-plugin.version>3.0.0-M6</maven-release-plugin.version>
         <maven-replacer-plugin.version>1.5.3</maven-replacer-plugin.version>
         <maven-resources-plugin.version>3.3.0</maven-resources-plugin.version>
-        <maven-scm-plugin.version>2.0.0-M1</maven-scm-plugin.version>
+        <maven-scm-plugin.version>2.0.0-M2</maven-scm-plugin.version>
         <maven-site-plugin.version>4.0.0-M3</maven-site-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
         <maven-surefire-report-plugin.version>3.0.0-M7</maven-surefire-report-plugin.version>
@@ -117,12 +117,12 @@
         <guava.version>31.1-jre</guava.version>
         <jackson.version>2.13.1</jackson.version>
         <junidecode.version>0.4.1</junidecode.version>
-        <libphonenumber.version>8.12.52</libphonenumber.version>
+        <libphonenumber.version>8.12.53</libphonenumber.version>
         <logstash-logback-encoder.version>7.2</logstash-logback-encoder.version>
         <metrics.version>0.5.1.RELEASE</metrics.version>
         <prometheus.version>0.15.0</prometheus.version>
         <springdoc-openapi.version>1.6.9</springdoc-openapi.version>
-        <spring-cloud.version>2022.0.0-M2</spring-cloud.version>
+        <spring-cloud.version>2022.0.0-SNAPSHOT</spring-cloud.version>
         <zxcvbn.version>1.7.0</zxcvbn.version>
 
         <!-- database -->
@@ -139,7 +139,7 @@
         <!-- javascript serving -->
         <org.webjars.webjars-locator-core.version>0.52</org.webjars.webjars-locator-core.version>
         <org.webjars.modellbahn-ui.version>1.1.0</org.webjars.modellbahn-ui.version>
-        <org.webjars.swagger-ui.version>4.11.1</org.webjars.swagger-ui.version>
+        <org.webjars.swagger-ui.version>4.13.2</org.webjars.swagger-ui.version>
 
         <lib.dir>${project.build.directory}${file.separator}lib${file.separator}</lib.dir>
         <webjars.dir>${project.build.directory}${file.separator}webjars${file.separator}</webjars.dir>
