@@ -132,7 +132,7 @@ spring:
    config:
       use-legacy-processing: true
    datasource:
-      url: jdbc:h2:./modellbahn;TRACE_LEVEL_FILE=4;TRACE_LEVEL_SYSTEM_OUT=1;AUTO_SERVER=TRUE;AUTO_SERVER_PORT=8088
+      url: jdbc:h2:./modellbahn;MODE=LEGACY;TRACE_LEVEL_FILE=4;TRACE_LEVEL_SYSTEM_OUT=1;AUTO_SERVER=TRUE;AUTO_SERVER_PORT=8088
       driverClassName: org.h2.Driver
       username: sa
       password: password
