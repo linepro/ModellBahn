@@ -25,7 +25,9 @@ import org.springframework.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.RuntimeJsonMappingException;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
@@ -94,25 +96,9 @@ public class ImporterImpl<R extends ItemRequest, E extends Item, M extends ItemM
 
             for (String line = lineReader.readLine(); line != null; rowNum++, line = lineReader.readLine()) {
                 try {
-                    R request = reader.readValue(line);
-
-                    E entity = create(request);
-
-                    entity = mapper.apply(request, entity);
-
-                    entity = addFileNames(fileFields, entity, request);
-
-                    try {
-                        repository.saveAndFlush(entity);
-                    } catch (Exception e) {
-                        String error = getError(rowNum, "unreadable entry", e);
-
-                        errors.add(error);
-
-                        log.error("Error importing {}: {}", error, e);
-                    }
+                    processRow(fileFields, reader, rowNum, errors, line);
                 } catch (Exception e) {
-                    String error = getError(rowNum, "unreadable entry", e);
+                    String error = getError(rowNum, line, e);
 
                     errors.add(error);
 
@@ -182,6 +168,27 @@ public class ImporterImpl<R extends ItemRequest, E extends Item, M extends ItemM
         }
 
         return entity;
+    }
+
+    protected void processRow(List<Field> fileFields, ObjectReader reader, int rowNum, List<String> errors, String line)
+                    throws JsonProcessingException, JsonMappingException {
+        R request = reader.readValue(line);
+
+        E entity = create(request);
+
+        entity = mapper.apply(request, entity);
+
+        entity = addFileNames(fileFields, entity, request);
+
+        try {
+            repository.saveAndFlush(entity);
+        } catch (Exception e) {
+            String error = getError(rowNum, request, e);
+
+            errors.add(error);
+
+            log.error("Error importing {}: {}", error, e);
+        }
     }
 
     /**
