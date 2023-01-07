@@ -7,7 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.validation.constraints.NotNull;
 
 import com.linepro.modellbahn.entity.Item;
 import com.linepro.modellbahn.persistence.DBNames;
@@ -39,7 +38,6 @@ public abstract class ItemImpl implements Item {
 
 	/** The soft deleted state. */
     @Column(name=DBNames.DELETED, length=5, nullable = false)
-    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.deleted.notnull}")
 	private Boolean deleted;
 
     @Override

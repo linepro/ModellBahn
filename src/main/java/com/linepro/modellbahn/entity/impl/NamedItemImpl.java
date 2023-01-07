@@ -2,10 +2,6 @@ package com.linepro.modellbahn.entity.impl;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -36,16 +32,12 @@ public class NamedItemImpl extends ItemImpl implements NamedItem, Comparable<Nam
      * The name.
      */
     @Column(name = DBNames.NAME, length = 50, nullable = false)
-    @Pattern(regexp = "^" + DBNames.NAME_PATTERN + "$", message = "{com.linepro.modellbahn.validator.constraints.name.invalid}")
-    @NotEmpty(message = "{com.linepro.modellbahn.validator.constraints.name.notempty}")
     private String name;
 
     /**
      * The bezeichnung.
      */
     @Column(name = DBNames.BEZEICHNUNG, length = 100)
-    @Size(max = 100, message = "{com.linepro.modellbahn.validator.constraints.maxLength}")
-    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.bezeichnung.notnull}")
     private String bezeichnung;
 
     @Override
