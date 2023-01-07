@@ -58,6 +58,15 @@ public class DataBeanProcessor implements BeanDefinitionRegistryPostProcessor {
                                 .addConstructorArgReference(PREFIX + "FileStoreImpl")
                                 .addConstructorArgReference(PREFIX + "DecoderCreator")
                                 .getBeanDefinition());
+            } else if (name.equals("Produkt")) {
+                    registry.registerBeanDefinition(prefix + "Importer", BeanDefinitionBuilder.genericBeanDefinition(ProduktImporterImpl.class)
+                                    .setLazyInit(true)
+                                    .addConstructorArgReference(prefix + "Repository")
+                                    .addConstructorArgReference(prefix + "RequestMapper")
+                                    .addConstructorArgReference(prefix + "Lookup")
+                                    .addConstructorArgReference(PREFIX + "CsvSchemaGenerator")
+                                    .addConstructorArgReference(PREFIX + "FileStoreImpl")
+                                    .getBeanDefinition());
             } else {
                 registry.registerBeanDefinition(prefix + "Importer", BeanDefinitionBuilder.genericBeanDefinition(ImporterImpl.class)
                                                                                           .setLazyInit(true)

@@ -124,6 +124,33 @@ public class ProduktController extends AbstractItemController<ProduktModel, Prod
         return deleted(service.delete(herstellerStr, bestellNr));
     }
 
+    @PostMapping(path = ApiPaths.ADD_PRODUKT_DECODER_TYP, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
+    @Operation(summary = "Adds a Decoder Typ to a Produkt", description = "", operationId = "add", tags = { ApiNames.PRODUKT }, responses = {
+        @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktTeilModel.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "405", description = "Validation exception", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
+                })
+    public ResponseEntity<?> addDecoderTyp(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @PathVariable(ApiNames.TYP_HERSTELLER) String typHerstellerStr, @PathVariable(ApiNames.TYP_BESTELL_NR) String typBestellNr) {
+        return added(service.addDecoderTyp(herstellerStr, bestellNr, typHerstellerStr, typBestellNr));
+    }
+
+    @DeleteMapping(path = ApiPaths.DELETE_PRODUKT_DECODER_TYP)
+    @Operation(summary = "Removes a Decoder Typ from a Produkt", description = "", operationId = "delete", tags = { ApiNames.PRODUKT }, responses = {
+        @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
+        @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class))),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserMessage.class)))
+                })
+    public ResponseEntity<?> deleteDecoderTyp(@PathVariable(ApiNames.HERSTELLER) String herstellerStr, @PathVariable(ApiNames.BESTELL_NR) String bestellNr, @PathVariable(ApiNames.TYP_HERSTELLER) String typHerstellerStr, @PathVariable(ApiNames.TYP_BESTELL_NR) String typBestellNr) {
+        return deleted(service.deleteDecoderTyp(herstellerStr, bestellNr, typHerstellerStr, typBestellNr));
+    }
+
     @PostMapping(path = ApiPaths.ADD_PRODUKT_TEIL, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
     @Operation(summary = "Adds a component of a Produkt", description = "", operationId = "add", tags = { ApiNames.TEIL }, responses = {
         @ApiResponse(responseCode = "201", description = "Successful operation", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ProduktTeilModel.class)) }),

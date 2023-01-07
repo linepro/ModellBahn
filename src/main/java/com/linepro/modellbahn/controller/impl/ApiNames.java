@@ -147,6 +147,8 @@ public interface ApiNames {
     String TELEFON = "telefon";
     String TOOLTIP = "tooltip";
     String TRIEBKOPF = "triebkopf";
+    String TYP_BESTELL_NR = "typBestellNr";
+    String TYP_HERSTELLER = "typHersteller";
     String UBERHITZERFLACHE = "uberhitzerflache";
     String UNTER_KATEGORIEN = "unterKategorien";
     String UNTER_KATEGORIE_BEZEICHNUNG = "unterKategorieBezeichnung";

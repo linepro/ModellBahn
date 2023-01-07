@@ -8,7 +8,9 @@ package com.linepro.modellbahn.service.impl;
  */
 import static com.linepro.modellbahn.ModellBahnApplication.PREFIX;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,11 +22,15 @@ import com.linepro.modellbahn.controller.impl.ApiNames;
 import com.linepro.modellbahn.converter.entity.ProduktMapper;
 import com.linepro.modellbahn.converter.entity.ProduktTeilMapper;
 import com.linepro.modellbahn.converter.request.ProduktRequestMapper;
+import com.linepro.modellbahn.entity.DecoderTyp;
 import com.linepro.modellbahn.entity.Produkt;
+import com.linepro.modellbahn.entity.ProduktDecoderTyp;
 import com.linepro.modellbahn.entity.ProduktTeil;
 import com.linepro.modellbahn.io.FileService;
 import com.linepro.modellbahn.model.ProduktModel;
 import com.linepro.modellbahn.model.ProduktTeilModel;
+import com.linepro.modellbahn.repository.DecoderTypRepository;
+import com.linepro.modellbahn.repository.ProduktDecoderTypRepository;
 import com.linepro.modellbahn.repository.ProduktRepository;
 import com.linepro.modellbahn.repository.ProduktTeilRepository;
 import com.linepro.modellbahn.repository.lookup.ProduktLookup;
@@ -42,15 +48,40 @@ public class ProduktService extends ItemServiceImpl<ProduktModel, ProduktRequest
 
     private final ProduktTeilMapper teilMapper;
 
+    private final DecoderTypRepository decoderTypRepository;
+
+    private final ProduktDecoderTypRepository produktDecoderTypRepository;
+
     @Autowired
     public ProduktService(ProduktRepository repository, ProduktRequestMapper produktRequestMapper, ProduktMapper produktMapper, FileService fileService, 
-                    ProduktTeilRepository teilRepository, ProduktTeilMapper teilMapper, ProduktLookup lookup) {
+                    ProduktTeilRepository teilRepository, ProduktTeilMapper teilMapper, ProduktLookup lookup, DecoderTypRepository decoderTypRepository,
+                    ProduktDecoderTypRepository produktDecoderTypRepository) {
         super(repository, produktRequestMapper, produktMapper, lookup);
         this.repository = repository;
         this.fileService = fileService;
 
         this.teilRepository = teilRepository;
         this.teilMapper = teilMapper;
+        this.decoderTypRepository = decoderTypRepository;
+        this.produktDecoderTypRepository = produktDecoderTypRepository;
+    }
+
+    @Override
+    public ProduktModel add(ProduktRequest request) {
+        Produkt produkt = requestMapper.convert(request);
+        produkt.setDeleted(false);
+
+        Set<ProduktDecoderTyp> typen = new HashSet<>(produkt.getDecoderTypen());
+        produkt.getDecoderTypen().clear();
+
+        if (typen != null && !typen.isEmpty()) {
+            produkt = repository.saveAndFlush(produkt);
+            for (ProduktDecoderTyp t : typen) {
+                produkt.addDecoderTyp(t.getDecoderTyp());
+            }
+        }
+
+        return entityMapper.convert(repository.saveAndFlush(produkt));
     }
 
     public Optional<ProduktModel> get(String hersteller, String bestellNr) {
@@ -63,6 +94,36 @@ public class ProduktService extends ItemServiceImpl<ProduktModel, ProduktRequest
 
     public boolean delete(String hersteller, String bestellNr) {
         return super.delete(ProduktModel.builder().hersteller(hersteller).bestellNr(bestellNr).build());
+    }
+
+
+    @Transactional
+    public Optional<ProduktModel> addDecoderTyp(String hersteller, String bestellNr, String decoderTypHersteller, String decoderTypBestellNr) {
+        Optional<Produkt> produktFound = repository.findByBestellNr(hersteller, bestellNr);
+        Optional<DecoderTyp> decoderTypFound = decoderTypRepository.findByBestellNr(decoderTypHersteller, decoderTypBestellNr);
+
+        if (decoderTypFound.isPresent() && produktFound.isPresent()) {
+            DecoderTyp decoderTyp = decoderTypFound.get();
+            Produkt produkt = produktFound.get();
+
+             produkt.addDecoderTyp(decoderTyp);
+
+             repository.saveAndFlush(produkt);
+
+             return get(hersteller, bestellNr);
+        }
+
+        return Optional.empty();
+    }
+
+    @Transactional
+    public boolean deleteDecoderTyp(String hersteller, String bestellNr, String typHersteller, String typBestellNr) {
+        return produktDecoderTypRepository.findByTeil(hersteller, bestellNr, typHersteller, typBestellNr)
+                             .map(t -> {
+                                 produktDecoderTypRepository.delete(t);
+                                 return true;
+                                 })
+                             .orElse(false);
     }
 
     @Transactional

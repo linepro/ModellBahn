@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Component;
 
 import com.linepro.modellbahn.converter.Transcriber;
+import com.linepro.modellbahn.entity.DecoderTyp;
 import com.linepro.modellbahn.entity.Produkt;
 import com.linepro.modellbahn.repository.lookup.AchsfolgLookup;
 import com.linepro.modellbahn.repository.lookup.AufbauLookup;
@@ -91,7 +92,24 @@ public class ProduktRequestTranscriber implements Transcriber<ProduktRequest, Pr
             destination.setLange(source.getLange());
             destination.setDeleted(Optional.ofNullable(source.getDeleted()).orElse(Boolean.FALSE));
 
-            destination.addDecoderTyp(decoderTypLookup.find(source.getDecoderTypHersteller(), source.getDecoderTypBestellNr()).orElse(null));
+            Optional<DecoderTyp> optDecoderTyp = decoderTypLookup.find(source.getDecoderTypHersteller(), source.getDecoderTypBestellNr());
+
+            if (optDecoderTyp.isPresent()) {
+                if (isAvailable(destination.getDecoderTypen())) {
+                    DecoderTyp decoderTyp = optDecoderTyp.get();
+                    if (destination.getDecoderTypen()
+                                   .stream()
+                                   .noneMatch(t -> t.getDecoderTyp().equals(decoderTyp))) {
+                        destination.addDecoderTyp(decoderTyp);
+                    }
+                } else {
+                    destination.addDecoderTyp(optDecoderTyp.get());
+                }
+            } else {
+                if (isAvailable(destination.getDecoderTypen())) {
+                    destination.getDecoderTypen().clear();
+                }
+            }
         }
 
         return destination;

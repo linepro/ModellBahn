@@ -58,14 +58,15 @@ INSERT INTO produkt (id, hersteller_id, bestell_nr, bezeichnung, unter_kategorie
 VALUES (1424, 348, '37607', 'TEE „Mediolanum“', 615, 88, 412, 497, 197, 72, 241, 1381, '601 001', DATE '1957-01-01', 15, 491, 36, 395, 379, 507, 465, 'BR 601 001', 'static/data/produkt/MARKLIN/37607/anleitungen.pdf', 'static/data/produkt/MARKLIN/37607/explosionszeichnungen.pdf', 'static/data/produkt/MARKLIN/37607/abbildung.jpg', 'static/data/produkt/MARKLIN/37607/grossansicht.jpg', FALSE);
 ALTER TABLE produkt ALTER COLUMN id RESTART WITH 1425;
 
-INSERT INTO produkt_decoder_typ (produkt_id, decoder_typ_id, deleted)
-VALUES (1419, 946, FALSE);
-INSERT INTO produkt_decoder_typ (produkt_id, decoder_typ_id, deleted)
-VALUES (1421, 970, FALSE);
-INSERT INTO produkt_decoder_typ (produkt_id, decoder_typ_id, deleted)
-VALUES (1422, 1049, FALSE);
-INSERT INTO produkt_decoder_typ (produkt_id, decoder_typ_id, deleted)
-VALUES (1424, 1170, FALSE);
+INSERT INTO produkt_decoder_typ (id, produkt_id, decoder_typ_id, deleted)
+VALUES (1, 1419, 946, FALSE);
+INSERT INTO produkt_decoder_typ (id, produkt_id, decoder_typ_id, deleted)
+VALUES (2, 1421, 970, FALSE);
+INSERT INTO produkt_decoder_typ (id, produkt_id, decoder_typ_id, deleted)
+VALUES (3, 1422, 1049, FALSE);
+INSERT INTO produkt_decoder_typ (id, produkt_id, decoder_typ_id, deleted)
+VALUES (4, 1424, 1170, FALSE);
+ALTER TABLE person ALTER COLUMN id RESTART WITH 5;
 
 INSERT INTO artikel (id, artikel_id, produkt_id, bezeichnung, licht_id, kupplung_id, steuerung_id, motor_typ_id, kaufdatum, wahrung, preis, menge, verbleibende, anmerkung, beladung, status, abbildung, grossansicht, deleted)
 VALUES (1422, '000010', 1419, 'Lufthansa Airport-Express', 389, 379, 507, 465, DATE '2014-03-31', 'EUR', 90, 1, 1, 'BR 111 049', NULL, 'GEKAUFT', NULL, NULL, FALSE);
