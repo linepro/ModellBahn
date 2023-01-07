@@ -28,7 +28,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -148,23 +147,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
-        // @formatter:off
-        String[] apiDocs = new String[] {
-            SWAGGER,
-            docConfig.getApiDocsPath(),
-            resourceEndpoints.getSwaggerResources()
-        };
-
-        web.ignoring()
-           .antMatchers(INSECURE_RESOURCES)
-           .antMatchers(INSECURE_URLS)
-           .antMatchers(apiDocs);
-    }
-
-    @Override
     protected void configure(HttpSecurity http) throws Exception {
         // @formatter:off
+        String[] apiDocs = new String[] {
+                        SWAGGER,
+                        docConfig.getApiDocsPath(),
+                        resourceEndpoints.getSwaggerResources()
+                    };
+
         String[] endPoints = resourceEndpoints.getEndPoints()
                 .keySet()
                 .stream()
@@ -194,6 +184,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                   .antMatchers(ApiPaths.MANAGEMENT_PUBLIC).permitAll()
                   .antMatchers(ApiPaths.MANAGEMENT_SECURED).hasAuthority(ADMIN_AUTHORITY)
                   .antMatchers(endPoints).hasAnyAuthority(ADMIN_AUTHORITY, USER_AUTHORITY)
+                  .antMatchers(INSECURE_RESOURCES).permitAll()
+                  .antMatchers(INSECURE_URLS).permitAll()
+                  .antMatchers(apiDocs).permitAll()
             .and().formLogin()
                   .loginPage(LOGIN_ENDPOINT)
                   .loginProcessingUrl(LOGIN_ENDPOINT)
