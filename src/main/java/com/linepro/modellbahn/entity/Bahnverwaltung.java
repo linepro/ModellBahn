@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,7 +38,9 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @Cacheable
 @Unique(message = "{com.linepro.modellbahn.validator.constraints.bahnverwaltung.notunique}")
-public class Bahnverwaltung extends NamedWithAbbildungImpl {
+public class Bahnverwaltung extends NamedWithAbbildungImpl implements Serializable {
+
+    private static final long serialVersionUID = 5530555691539153846L;
 
     @Column(name = DBNames.LAND, length = 2)
     @Country(message = "{com.linepro.modellbahn.validator.constraints.land.invalid}")

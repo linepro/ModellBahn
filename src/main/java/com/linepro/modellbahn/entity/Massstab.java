@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -35,5 +37,7 @@ import lombok.experimental.SuperBuilder;
 @ToString(callSuper = true)
 @Cacheable
 @Unique(message = "{com.linepro.modellbahn.validator.constraints.massstab.notunique}")
-public class Massstab extends NamedItemImpl {
+public class Massstab extends NamedItemImpl implements Serializable {
+
+    private static final long serialVersionUID = 4831926952121261678L;
 }

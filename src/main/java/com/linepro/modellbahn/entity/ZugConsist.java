@@ -2,6 +2,8 @@ package com.linepro.modellbahn.entity;
 
 import static com.linepro.modellbahn.util.ToStringBuilder.summary;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -110,7 +112,9 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ZugConsist extends ItemImpl implements Comparable<ZugConsist> {
+public class ZugConsist extends ItemImpl implements Comparable<ZugConsist>, Serializable {
+
+    private static final long serialVersionUID = 2214049553913095030L;
 
     /** The zug. */
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Zug.class, optional = false)

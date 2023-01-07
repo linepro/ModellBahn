@@ -2,6 +2,7 @@ package com.linepro.modellbahn.entity;
 
 import static com.linepro.modellbahn.util.ToStringBuilder.summary;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -142,7 +143,9 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @Cacheable
 @Unique(message = "{com.linepro.modellbahn.validator.constraints.vorbild.notunique}")
-public class Vorbild extends NamedWithAbbildungImpl {
+public class Vorbild extends NamedWithAbbildungImpl implements Serializable {
+
+    private static final long serialVersionUID = 7453100750045217726L;
 
     /** The gattung. */
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Gattung.class)

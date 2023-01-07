@@ -2,6 +2,8 @@ package com.linepro.modellbahn.entity;
 
 import static com.linepro.modellbahn.util.ToStringBuilder.summary;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -71,7 +73,9 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @Unique(message = "{com.linepro.modellbahn.validator.constraints.decoderTypFunktion.notunique}")
-public class DecoderTypFunktion extends ItemImpl implements Comparable<DecoderTypFunktion> {
+public class DecoderTypFunktion extends ItemImpl implements Comparable<DecoderTypFunktion>, Serializable {
+
+    private static final long serialVersionUID = -1491772469878179312L;
 
     /** The decoder typ. */
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class, optional = false)

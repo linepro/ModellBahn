@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -33,5 +35,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @Cacheable
 @Unique(message = "{com.linepro.modellbahn.validator.constraints.spurweite.notunique}")
-public class Spurweite extends NamedItemImpl {
+public class Spurweite extends NamedItemImpl implements Serializable {
+
+    private static final long serialVersionUID = -4330015019144928275L;
 }

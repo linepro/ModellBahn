@@ -2,6 +2,7 @@ package com.linepro.modellbahn.entity;
 
 import static com.linepro.modellbahn.util.ToStringBuilder.summary;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.time.LocalDate;
@@ -387,7 +388,9 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Artikel extends ItemImpl implements Comparable<Artikel> {
+public class Artikel extends ItemImpl implements Comparable<Artikel>, Serializable {
+
+    private static final long serialVersionUID = 6886994930195738830L;
 
     /** The abbildung. */
     @Column(name = DBNames.ARTIKEL_ID, length = 6, nullable = false, updatable = false)

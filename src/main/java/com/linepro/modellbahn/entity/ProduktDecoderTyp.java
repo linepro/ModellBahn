@@ -4,12 +4,9 @@ import static com.linepro.modellbahn.util.ToStringBuilder.summary;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -25,12 +22,10 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import com.linepro.modellbahn.model.SoftDelete;
+import com.linepro.modellbahn.entity.impl.ItemImpl;
 import com.linepro.modellbahn.persistence.DBNames;
 import com.linepro.modellbahn.util.ToStringBuilder;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -38,8 +33,8 @@ import lombok.experimental.SuperBuilder;
 
 /**
  * ProduktDecoderTyp.
- * Part of a product (Bill of materials).
- * E.g. Locomotives and Carriages in a set
+ * Decoder Types used by a product (Bill of materials).
+ * E.g. c80
  * @author  $Author:$
  * @version $Id:$
  */
@@ -87,40 +82,21 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@IdClass(com.linepro.modellbahn.entity.ProduktDecoderTyp.ProduktDecoderTypId.class)
-public class ProduktDecoderTyp implements Comparable<ProduktDecoderTyp>, SoftDelete {
+public class ProduktDecoderTyp extends ItemImpl implements Comparable<ProduktDecoderTyp>,  Serializable {
 
-    @Data
-    @AllArgsConstructor
-    public static class ProduktDecoderTypId implements Serializable {
-
-        private static final long serialVersionUID = 6583606792160123265L;
-
-        /** The produkt. */
-        private Produkt produkt;
-
-        /** The decoder typ */
-        private DecoderTyp decoderTyp;
-    }
+    private static final long serialVersionUID = -7794241214945101524L;
 
     /** The produkt. */
-    @Id
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Produkt.class, optional = false)
     @JoinColumn(name = DBNames.PRODUKT_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT_DECODER_TYP + "_fk1"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.produkt.notnull}")
     private Produkt produkt;
 
     /** The decoder typ */
-    @Id
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Produkt.class, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = DecoderTyp.class, optional = false)
     @JoinColumn(name = DBNames.DECODER_TYP_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.PRODUKT_DECODER_TYP + "_fk2"))
     @NotNull(message = "{com.linepro.modellbahn.validator.constraints.decoderTyp.notnull}")
     private DecoderTyp decoderTyp;
-
-    /** The soft deleted state. */
-    @Column(name=DBNames.DELETED, length=5, nullable = false)
-    @NotNull(message = "{com.linepro.modellbahn.validator.constraints.deleted.notnull}")
-    private Boolean deleted;
 
     @Override
     public int compareTo(ProduktDecoderTyp other) {

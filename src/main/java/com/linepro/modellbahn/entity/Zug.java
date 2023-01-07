@@ -2,6 +2,7 @@ package com.linepro.modellbahn.entity;
 
 import static com.linepro.modellbahn.util.ToStringBuilder.summary;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -147,7 +148,9 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @Cacheable
 @Unique(message = "{com.linepro.modellbahn.validator.constraints.zug.notunique}")
-public class Zug extends NamedItemImpl {
+public class Zug extends NamedItemImpl implements Serializable {
+
+    private static final long serialVersionUID = -8230873387981532381L;
 
     /** The zugTyp. */
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = ZugTyp.class, optional = false)

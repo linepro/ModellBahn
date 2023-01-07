@@ -2,6 +2,8 @@ package com.linepro.modellbahn.entity;
 
 import static com.linepro.modellbahn.util.ToStringBuilder.summary;
 
+import java.io.Serializable;
+
 import javax.persistence.AttributeOverride;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -64,7 +66,9 @@ import lombok.experimental.SuperBuilder;
 @Cacheable
 @AttributeOverride(name = DBNames.NAME, column = @Column(name = DBNames.NAME, length = 50))
 @Unique(message = "{com.linepro.modellbahn.validator.constraints.unterKategorie.notunique}")
-public class UnterKategorie extends NamedItemImpl {
+public class UnterKategorie extends NamedItemImpl implements Serializable {
+
+    private static final long serialVersionUID = 3367541339276711857L;
 
     /** The kategorie. */
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Kategorie.class, optional = false)

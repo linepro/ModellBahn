@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -33,5 +35,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @Cacheable
 @Unique(message = "{com.linepro.modellbahn.validator.constraints.gattung.notunique}")
-public class Gattung extends NamedItemImpl {
+public class Gattung extends NamedItemImpl implements Serializable {
+
+    private static final long serialVersionUID = 4865593634219752241L;
 }

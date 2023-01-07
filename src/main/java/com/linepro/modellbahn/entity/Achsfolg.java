@@ -5,6 +5,8 @@
  */
 package com.linepro.modellbahn.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -38,5 +40,8 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @Cacheable
 @Unique(message = "{com.linepro.modellbahn.validator.constraints.achsfolg.notunique}")
-public class Achsfolg extends NamedItemImpl {
+public class Achsfolg extends NamedItemImpl implements Serializable {
+    
+    private static final long serialVersionUID = 8097861389769442034L;
+
 }

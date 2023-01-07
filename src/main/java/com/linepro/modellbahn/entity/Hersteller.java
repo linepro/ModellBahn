@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,7 +42,9 @@ import lombok.experimental.SuperBuilder;
 @Cacheable
 @Unique(message = "{com.linepro.modellbahn.validator.constraints.hersteller.notunique}")
 @Telefon(message = "{com.linepro.modellbahn.validator.constraints.telephone.invalid}")
-public class Hersteller extends NamedWithAbbildungImpl implements HasTelefon {
+public class Hersteller extends NamedWithAbbildungImpl implements HasTelefon, Serializable {
+
+    private static final long serialVersionUID = 2387714456346775322L;
 
     /** The url. */
     @URL(message = "{com.linepro.modellbahn.validator.constraints.url.invalid}")

@@ -1,5 +1,7 @@
 package com.linepro.modellbahn.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,7 +38,10 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @Cacheable
 @Unique(message = "{com.linepro.modellbahn.validator.constraints.epoch.notunique}")
-public class Epoch extends NamedWithAbbildungImpl {
+public class Epoch extends NamedWithAbbildungImpl implements Serializable {
+
+    private static final long serialVersionUID = -2775082120253161739L;
+
     @Column(name = DBNames.START_YEAR)
     @Positive(message = "{com.linepro.modellbahn.validator.constraints.startYear}")
     private Integer startYear;

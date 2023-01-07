@@ -2,6 +2,8 @@ package com.linepro.modellbahn.entity;
 
 import static com.linepro.modellbahn.util.ToStringBuilder.summary;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -94,7 +96,9 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ProduktTeil extends ItemImpl implements Comparable<ProduktTeil> {
+public class ProduktTeil extends ItemImpl implements Comparable<ProduktTeil>, Serializable {
+
+    private static final long serialVersionUID = 7327672353872329868L;
 
     /** The produkt. */
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Produkt.class, optional = false)

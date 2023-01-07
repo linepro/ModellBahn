@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.entity;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -66,7 +67,9 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @Cacheable
 @Unique(message = "{com.linepro.modellbahn.validator.constraints.kategorie.notunique}")
-public class Kategorie extends NamedItemImpl {
+public class Kategorie extends NamedItemImpl implements Serializable {
+
+    private static final long serialVersionUID = 8955288186584960707L;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = DBNames.KATEGORIE, targetEntity = UnterKategorie.class, orphanRemoval = true)
     @Builder.Default

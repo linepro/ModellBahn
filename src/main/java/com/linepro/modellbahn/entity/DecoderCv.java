@@ -2,6 +2,8 @@ package com.linepro.modellbahn.entity;
 
 import static com.linepro.modellbahn.util.ToStringBuilder.summary;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -69,7 +71,9 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-public class DecoderCv extends ItemImpl implements Comparable<DecoderCv>{
+public class DecoderCv extends ItemImpl implements Comparable<DecoderCv>, Serializable {
+
+    private static final long serialVersionUID = 8866741926143732381L;
 
     /** The decoder. */
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Decoder.class, optional = false)

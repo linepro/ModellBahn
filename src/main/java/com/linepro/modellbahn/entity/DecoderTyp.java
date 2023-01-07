@@ -2,6 +2,7 @@ package com.linepro.modellbahn.entity;
 
 import static com.linepro.modellbahn.util.ToStringBuilder.summary;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.util.HashSet;
@@ -152,7 +153,9 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @Cacheable
 @Unique(message = "{com.linepro.modellbahn.validator.constraints.decodertyp.notunique}")
-public class DecoderTyp extends ItemImpl implements Comparable<DecoderTyp>, WithAdress {
+public class DecoderTyp extends ItemImpl implements Comparable<DecoderTyp>, Serializable, WithAdress {
+
+    private static final long serialVersionUID = 5762063141505598731L;
 
     /** The hersteller. */
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Hersteller.class, optional = false)

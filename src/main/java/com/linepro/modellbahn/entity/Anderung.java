@@ -2,6 +2,7 @@ package com.linepro.modellbahn.entity;
 
 import static com.linepro.modellbahn.util.ToStringBuilder.summary;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
@@ -71,7 +72,9 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Anderung extends ItemImpl implements Comparable<Anderung> {
+public class Anderung extends ItemImpl implements Comparable<Anderung>, Serializable {
+
+    private static final long serialVersionUID = 538555390577591608L;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Artikel.class, optional = false)
     @JoinColumn(name = DBNames.ARTIKEL_ID, nullable = false, referencedColumnName = DBNames.ID, foreignKey = @ForeignKey(name = DBNames.ANDERUNG + "_fk1"))

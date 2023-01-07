@@ -1,5 +1,6 @@
 package com.linepro.modellbahn.entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -197,7 +198,9 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Decoder extends ItemImpl implements Comparable<Decoder> {
+public class Decoder extends ItemImpl implements Comparable<Decoder>, Serializable {
+
+    private static final long serialVersionUID = 7312378200177095945L;
 
     @Column(name = DBNames.DECODER_ID, unique = true, length = 6, nullable = false, updatable = false)
     @Pattern(regexp = "^" + DBNames.ID_PATTERN + "$", message = "{com.linepro.modellbahn.validator.constraints.decoderId.invalid}")

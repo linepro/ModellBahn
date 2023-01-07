@@ -2,6 +2,7 @@ package com.linepro.modellbahn.entity;
 
 import static com.linepro.modellbahn.util.ToStringBuilder.summary;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.time.LocalDate;
@@ -352,7 +353,9 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @Unique(message = "{com.linepro.modellbahn.validator.constraints.produkt.notunique}")
-public class Produkt extends ItemImpl implements Comparable<Produkt> {
+public class Produkt extends ItemImpl implements Comparable<Produkt>, Serializable {
+
+    private static final long serialVersionUID = -4501425347573070091L;
 
     /** The hersteller. */
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Hersteller.class, optional = false)
@@ -487,6 +490,9 @@ public class Produkt extends ItemImpl implements Comparable<Produkt> {
     private Set<ProduktDecoderTyp> decoderTypen = new HashSet<>();
 
     public void addDecoderTyp(DecoderTyp decoderTyp) {
+        if (decoderTyp == null)
+            return;
+
         if (decoderTypen == null) { 
             decoderTypen = new HashSet<>(); 
         }
@@ -514,9 +520,13 @@ public class Produkt extends ItemImpl implements Comparable<Produkt> {
     private Set<ProduktTeil> teilen = new HashSet<>();
 
     public void addTeil(ProduktTeil teil) {
+        if (teil == null)
+            return;
+
         if (teilen == null) { 
             teilen = new HashSet<>(); 
         }
+
         teil.setProdukt(this);
         teil.setDeleted(false);
         teilen.add(teil);
